@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NUVA - Verification</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    font-family: Arial, sans-serif;
+    color: #fff;
+  }
+
+  .nuva-logo {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: conic-gradient(from 200deg,#6ad7ff,#5b9cff 90deg,#9b6aff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+  .nuva-logo:after {
+    content: "";
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.7), transparent);
+    transform: translateY(8px);
+    opacity: 0.15;
+  }
+  .grid {
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 6px;
+    justify-items: center;
+    align-items: center;
+    opacity: 0.25;
+  }
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: linear-gradient(180deg,#fff,#cfe8ff);
+  }
+  .dot.center {
+    transform: scale(1.5);
+    background: linear-gradient(180deg,#6a11cb,#2575fc);
+  }
+  .nuva-text {
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #fff;
+    z-index: 1;
+  }
+
+  h1 { font-size: 48px; margin: 5px 0 0 0; text-shadow: 0 0 12px rgba(0,0,0,0.5);}
+  h2 { font-size: 24px; margin: 5px 0 15px 0; text-align: center;}
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  input {
+    width: 90%;
+    padding: 12px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+  }
+
+  input:focus { outline: none; box-shadow: 0 0 6px #00e6e6; }
+
+  button {
+    width: 250px;
+    padding: 14px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #fe4f04, #ff7a2d);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover { background: linear-gradient(90deg, #0033cc, #001a80); }
+
+  .resend {
+    margin-top: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #ffd966;
+    text-decoration: underline;
+  }
+  .resend:hover { color: #ffffff; }
+</style>
+</head>
+<body>
+
+<div class="nuva-logo">
+  <div class="grid">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot center"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+  <div class="nuva-text">NUVA</div>
+</div>
+
+<h1>NUVA</h1>
+<h2>Enter Verification Code</h2>
+
+<form action="\verify" method="POST">
+  <input type="text" name="verification_code" placeholder="Enter code" required>
+  <a href="index.html"><button type="button">Verify</button></a>
+</form>
+
+<div class="resend" onclick="resendCode()">Didn't receive the code? Resend</div>
+</body>
+</html>

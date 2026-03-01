@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NUVA - Create Account</title>
+<style>
+  body { 
+    margin: 0; 
+    height: 100vh;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    background: linear-gradient(135deg, #1e3c72, #2a5298); 
+    font-family: Arial, sans-serif; 
+    color: #fff; 
+  }
+  .nuva-logo { 
+    position: relative;
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50%;
+    background: conic-gradient(from 200deg,#6ad7ff,#5b9cff 90deg,#9b6aff);
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    overflow: hidden;
+    margin-top: 30px; 
+    margin-bottom: 15px; 
+    font-weight: bold; 
+    font-size: 18px; 
+    color: #fff; 
+    text-align: center;
+  }
+  .nuva-logo:after { 
+    content: ""; 
+    position: absolute; 
+    width: 55px; 
+    height: 55px; 
+    border-radius: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.7), transparent);
+    transform: translateY(8px); 
+    opacity: 0.15; 
+  }
+  .grid { 
+    position: absolute; 
+    display: grid; 
+    grid-template-columns: repeat(3,1fr); 
+    gap: 6px;
+    justify-items: center; 
+    align-items: center; 
+    opacity: 0.25; 
+  }
+  .dot { 
+    width: 12px; 
+    height: 12px; 
+    border-radius: 50%; 
+    background: linear-gradient(180deg,#fff,#cfe8ff);
+  }
+  .dot.center { 
+    transform: scale(1.5); 
+    background: linear-gradient(180deg,#6a11cb,#2575fc);
+  }
+  .nuva-text { 
+    font-size: 18px; 
+    font-weight: 900; 
+    letter-spacing: 1px; 
+    color: #fff; 
+    z-index: 1; 
+  }
+  h1 { 
+    font-size: 48px; 
+    margin: 5px 0 0 0; 
+    text-shadow: 0 0 12px rgba(0,0,0,0.5);
+  }
+  h2 { 
+    font-size: 24px; 
+    margin: 5px 0 15px 0;
+  }
+  form { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    width: 100%; 
+    max-width: 400px; 
+  }
+  input, select { 
+    width: 90%; 
+    padding: 12px; 
+    margin: 8px 0; 
+    border: none; 
+    border-radius: 8px; 
+    font-size: 15px; 
+  }
+  input:focus, select:focus { 
+    outline: none; 
+    box-shadow: 0 0 6px #00e6e6; 
+  }
+  button {
+    width: 200px; 
+    padding: 14px; 
+    margin-top: 25px; 
+    border: none; 
+    border-radius: 8px;
+    background: linear-gradient(90deg, #fe4f04, #ff7a2d); 
+    color: white; 
+    font-size: 16px;
+    font-weight: bold; 
+    cursor: pointer; 
+    transition: 0.3s;
+  }
+  button:hover { 
+    background: linear-gradient(90deg, #0033cc, #001a80); 
+  }
+  button:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+  }
+  .error-message { 
+    color: #ff6666; 
+    margin-top: -5px; 
+    margin-bottom: 10px; 
+    font-size: 14px; 
+    display: none; 
+    width: 90%;
+    text-align: center;
+    background: rgba(255,255,255,0.1);
+    padding: 8px;
+    border-radius: 5px;
+  }
+  .success-message {
+    color: #66ff66;
+    margin-top: 10px;
+    font-size: 14px;
+    display: none;
+    width: 90%;
+    text-align: center;
+    background: rgba(255,255,255,0.1);
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .login-link {
+    margin-top: 20px;
+    color: #cfe8ff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .login-link:hover {
+    text-decoration: underline;
+  }
+  .form-group {
+    width: 90%;
+    margin-bottom: 15px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #cfe8ff;
+  }
+  .password-strength {
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+  }
+  .strength-weak { color: #ff6666; }
+  .strength-medium { color: #ffa500; }
+  .strength-strong { color: #66ff66; }
+</style>
+</head>
+<body>
+
+<div class="nuva-logo">
+  <div class="grid">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot center"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+  <div class="nuva-text">NUVA</div>
+</div>
+
+<h1>NUVA</h1>
+<h2>Create Your Account</h2>
+
+<form id="signinForm">
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+  </div>
+
+  <div class="form-group">
+    <label for="lastName">Last Name</label>
+    <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
+  </div>
+
+  <div class="form-group">
+    <label for="gender">Gender</label>
+    <select id="gender" name="gender" required>
+      <option value="" disabled selected>Select Gender</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="dob">Date of Birth</label>
+    <input type="date" id="dob" name="dob" required>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+  </div>
+
+  <div class="form-group">
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" placeholder="Create a password" required>
+    <div class="password-strength" id="passwordStrength"></div>
+  </div>
+
+  <div class="form-group">
+    <label for="confirmPassword">Confirm Password</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+  </div>
+
+  <div class="error-message" id="error-msg"></div>
+  <div class="success-message" id="success-msg"></div>
+
+  <button type="submit" id="submitBtn">Create Account</button>
+</form>
+
+<a href="login.html" class="login-link">Already have an account? Log in</a>
+
+<script>
+// User Storage System
+class UserStorage {
+    constructor() {
+        this.users = JSON.parse(localStorage.getItem('nuva_users')) || [];
+    }
+
+    generateId() {
+        return 'user_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    saveUsers() {
+        localStorage.setItem('nuva_users', JSON.stringify(this.users));
+    }
+
+    userExists(email, phone) {
+        return this.users.some(user => 
+            user.email === email || user.phone === phone
+        );
+    }
+
+    createUser(userData) {
+        const newUser = {
+            id: this.generateId(),
+            ...userData,
+            createdAt: new Date().toISOString(),
+            lastLogin: null,
+            isActive: true
+        };
+        this.users.push(newUser);
+        this.saveUsers();
+        return newUser;
+    }
+
+    getAllUsers() {
+        return this.users;
+    }
+
+    getUserByEmailOrPhone(emailOrPhone) {
+        return this.users.find(user => 
+            user.email === emailOrPhone || user.phone === emailOrPhone
+        );
+    }
+
+    validateUser(emailOrPhone, password) {
+        const user = this.getUserByEmailOrPhone(emailOrPhone);
+        return user && user.password === password ? user : null;
+    }
+}
+
+// Initialize user storage
+const userStorage = new UserStorage();
+
+// DOM Elements
+const signinForm = document.getElementById('signinForm');
+const errorMsg = document.getElementById('error-msg');
+const successMsg = document.getElementById('success-msg');
+const submitBtn = document.getElementById('submitBtn');
+const passwordStrength = document.getElementById('passwordStrength');
+
+// Password strength checker
+function checkPasswordStrength(password) {
+    let strength = 0;
+    let feedback = '';
+
+    if (password.length >= 8) strength++;
+    if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+    if (password.match(/\d/)) strength++;
+    if (password.match(/[^a-zA-Z\d]/)) strength++;
+
+    if (strength === 0) {
+        return { level: 'weak', message: 'Very weak password' };
+    } else if (strength === 1) {
+        return { level: 'weak', message: 'Weak password' };
+    } else if (strength === 2) {
+        return { level: 'medium', message: 'Medium strength password' };
+    } else if (strength === 3) {
+        return { level: 'medium', message: 'Good password' };
+    } else {
+        return { level: 'strong', message: 'Strong password' };
+    }
+}
+
+// Real-time password strength display
+document.getElementById('password').addEventListener('input', function(e) {
+    const password = e.target.value;
+    if (password.length > 0) {
+        const strength = checkPasswordStrength(password);
+        passwordStrength.textContent = strength.message;
+        passwordStrength.className = `password-strength strength-${strength.level}`;
+        passwordStrength.style.display = 'block';
+    } else {
+        passwordStrength.style.display = 'none';
+    }
+});
+
+// Form submission handler
+signinForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Get form data
+    const formData = {
+        firstName: document.getElementById('firstName').value.trim(),
+        lastName: document.getElementById('lastName').value.trim(),
+        gender: document.getElementById('gender').value,
+        dob: document.getElementById('dob').value,
+        email: document.getElementById('email').value.trim().toLowerCase(),
+        phone: document.getElementById('phone').value.trim(),
+        password: document.getElementById('password').value
+    };
+
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    // Validate form
+    if (!validateForm(formData, confirmPassword)) {
+        return;
+    }
+
+    // Disable button and show loading
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Creating Account...';
+
+    try {
+        // Check if user already exists
+        if (userStorage.userExists(formData.email, formData.phone)) {
+            showError('An account with this email or phone number already exists.');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Create Account';
+            return;
+        }
+
+        // Create new user
+        const newUser = userStorage.createUser(formData);
+        
+        showSuccess('Account created successfully! Redirecting to login...');
+        
+        // Clear form
+        signinForm.reset();
+        passwordStrength.style.display = 'none';
+        
+        // Store current user session
+        const userSession = {
+            id: newUser.id,
+            firstName: newUser.firstName,
+            lastName: newUser.lastName,
+            email: newUser.email,
+            isLoggedIn: false,
+            accountCreated: true
+        };
+        
+        sessionStorage.setItem('newUser', JSON.stringify(userSession));
+        
+        // Redirect to login page after delay
+        setTimeout(() => {
+            window.location.href = 'login.html?newuser=true';
+        }, 2000);
+        
+    } catch (error) {
+        showError('Error creating account. Please try again.');
+        console.error('Signup error:', error);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Create Account';
+    }
+});
+
+// Form validation
+function validateForm(data, confirmPassword) {
+    hideMessages();
+
+    // Check required fields
+    const requiredFields = ['firstName', 'lastName', 'gender', 'dob', 'email', 'phone', 'password'];
+    for (let field of requiredFields) {
+        if (!data[field]) {
+            showError(`Please fill in the ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}`);
+            return false;
+        }
+    }
+
+    // Name validation
+    if (data.firstName.length < 2) {
+        showError('First name must be at least 2 characters long');
+        return false;
+    }
+
+    if (data.lastName.length < 2) {
+        showError('Last name must be at least 2 characters long');
+        return false;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.email)) {
+        showError('Please enter a valid email address');
+        return false;
+    }
+
+    // Phone validation
+    const phoneRegex = /^\+?[\d\s-()]{10,}$/;
+    if (!phoneRegex.test(data.phone)) {
+        showError('Please enter a valid phone number');
+        return false;
+    }
+
+    // Password validation
+    if (data.password.length < 6) {
+        showError('Password must be at least 6 characters long');
+        return false;
+    }
+
+    // Password confirmation
+    if (data.password !== confirmPassword) {
+        showError('Passwords do not match');
+        return false;
+    }
+
+    // Date of birth validation
+    const dob = new Date(data.dob);
+    const today = new Date();
+    const age = today.getFullYear() - dob.getFullYear();
+    
+    if (age < 16) {
+        showError('You must be at least 16 years old to create an account');
+        return false;
+    }
+
+    if (age > 100) {
+        showError('Please enter a valid date of birth');
+        return false;
+    }
+
+    return true;
+}
+
+// Utility functions
+function showError(message) {
+    errorMsg.textContent = message;
+    errorMsg.style.display = 'block';
+    successMsg.style.display = 'none';
+}
+
+function showSuccess(message) {
+    successMsg.textContent = message;
+    successMsg.style.display = 'block';
+    errorMsg.style.display = 'none';
+}
+
+function hideMessages() {
+    errorMsg.style.display = 'none';
+    successMsg.style.display = 'none';
+}
+
+// Real-time password match validation
+document.getElementById('confirmPassword').addEventListener('input', function() {
+    const password = document.getElementById('password').value;
+    const confirmPassword = this.value;
+    
+    if (confirmPassword.length > 0 && password !== confirmPassword) {
+        this.style.borderColor = '#ff6666';
+    } else {
+        this.style.borderColor = '';
+    }
+});
+
+// Auto-format phone number
+document.getElementById('phone').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    
+    if (value.length > 0) {
+        // Auto-add Uganda country code if not present
+        if (!value.startsWith('256') && value.length === 9) {
+            value = '256' + value;
+        }
+        
+        // Format as +256 XXX XXX XXX
+        if (value.startsWith('256') && value.length === 12) {
+            value = '+' + value.replace(/(\d{3})(\d{3})(\d{3})(\d{3})/, '$1 $2 $3 $4');
+        }
+    }
+    
+    e.target.value = value;
+});
+
+// Initialize form with today's date for age calculation
+document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date();
+    const maxDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
+    const minDate = new Date(today.getFullYear() - 100, today.getMonth(), today.getDate());
+    
+    document.getElementById('dob').max = maxDate.toISOString().split('T')[0];
+    document.getElementById('dob').min = minDate.toISOString().split('T')[0];
+    
+    // Test function to verify storage is working
+    console.log('Total registered users:', userStorage.getAllUsers().length);
+});
+
+// Enhanced email validation
+document.getElementById('email').addEventListener('blur', function() {
+    const email = this.value.trim();
+    if (email && userStorage.userExists(email, '')) {
+        showError('This email is already registered');
+    }
+});
+
+// Enhanced phone validation
+document.getElementById('phone').addEventListener('blur', function() {
+    const phone = this.value.trim();
+    if (phone && userStorage.userExists('', phone)) {
+        showError('This phone number is already registered');
+    }
+});
+</script>
+
+</body>
+</html>

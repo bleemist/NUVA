@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NUVA - Course Recommendations</title>
+<style>
+  html, body { 
+    margin: 0; 
+    font-family: Arial, sans-serif; 
+    background: #f4f6f8; 
+    display: flex; 
+    flex-direction: column; 
+    min-height: 100vh; 
+  }
+  header { 
+    background: linear-gradient(135deg, #1e3c72, #2a5298); 
+    color: white; 
+    padding: 20px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 15px; 
+  }
+  header h1 { 
+    margin: 0; 
+    font-size: 28px; 
+  }
+  .nuva-logo { 
+    position: relative; 
+    width: 60px; 
+    height: 60px; 
+    border-radius: 50%; 
+    background: conic-gradient(from 200deg,#6ad7ff,#5b9cff 90deg,#9b6aff); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-weight: bold; 
+    color: white; 
+    font-size: 18px; 
+  }
+  main { 
+    flex: 1; 
+    max-width: 1000px; 
+    margin: 40px auto; 
+    padding: 40px; 
+    background: white; 
+    border-radius: 12px; 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
+    width: 90%; 
+  }
+  h2 { 
+    text-align: center; 
+    color: #1e3c72; 
+    margin-bottom: 30px; 
+  }
+  .weight-summary { 
+    background: #e8f4fd; 
+    padding: 25px; 
+    border-radius: 10px; 
+    margin-bottom: 30px; 
+    border-left: 5px solid #1e3c72;
+  }
+  .weight-summary h3 { 
+    margin-top: 0; 
+    color: #1e3c72; 
+    border-bottom: 2px solid #1e3c72;
+    padding-bottom: 10px;
+  }
+  .weight-item { 
+    display: flex; 
+    justify-content: space-between; 
+    margin: 12px 0; 
+    padding: 8px 0;
+    border-bottom: 1px solid #d1e7f7;
+  }
+  .weight-breakdown {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    border: 1px solid #dee2e6;
+  }
+  .breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    font-size: 14px;
+  }
+  .breakdown-item.essential {
+    color: #155724;
+    font-weight: bold;
+  }
+  .breakdown-item.other {
+    color: #856404;
+  }
+  .result-card { 
+    border: 1px solid #ddd; 
+    border-radius: 10px; 
+    padding: 25px; 
+    margin-bottom: 25px; 
+    background: #f9f9f9; 
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .result-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  .result-card h3 { 
+    margin-top: 0; 
+    color: #1e3c72; 
+    padding-right: 100px;
+  }
+  .result-card p { 
+    margin: 8px 0; 
+    line-height: 1.5;
+  }
+  .match-score { 
+    position: absolute; 
+    top: 20px; 
+    right: 20px; 
+    background: #1e3c72; 
+    color: white; 
+    padding: 8px 15px; 
+    border-radius: 20px; 
+    font-weight: bold; 
+    font-size: 14px;
+  }
+  .match-score.high {
+    background: #28a745;
+  }
+  .match-score.medium {
+    background: #ffc107;
+    color: #212529;
+  }
+  .match-score.low {
+    background: #dc3545;
+  }
+  .eligibility-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+  .eligible {
+    background: #d4edda;
+    color: #155724;
+  }
+  .not-eligible {
+    background: #f8d7da;
+    color: #721c24;
+  }
+  .course-details {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    border-left: 4px solid #1e3c72;
+  }
+  .subject-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0;
+  }
+  .subject-tag {
+    background: #e9ecef;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    color: #495057;
+  }
+  .subject-tag.essential {
+    background: #d1ecf1;
+    color: #0c5460;
+    font-weight: bold;
+  }
+  .action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  .btn-primary {
+    background: linear-gradient(90deg, #fe4f04, #ff7a2d);
+    color: white;
+  }
+  .btn-primary:hover {
+    background: linear-gradient(90deg, #0033cc, #001a80);
+    transform: translateY(-2px);
+  }
+  .btn-secondary {
+    background: #6c757d;
+    color: white;
+  }
+  .btn-secondary:hover {
+    background: #545b62;
+    transform: translateY(-2px);
+  }
+  .no-results {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6c757d;
+  }
+  .no-results h3 {
+    color: #1e3c72;
+    margin-bottom: 15px;
+  }
+  .results-count {
+    text-align: center;
+    color: #6c757d;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  footer { 
+    background: #1e3c72; 
+    color: white; 
+    padding: 20px; 
+    text-align: center; 
+    margin-top: auto;
+  }
+  footer a { 
+    color: #ffd966; 
+    text-decoration: none; 
+  }
+  footer a:hover { 
+    text-decoration: underline; 
+  }
+  .weight-calculation {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 15px;
+  }
+  .calculation-step {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nuva-logo">NUVA</div>
+  <h1>NUVA - Course Recommendations</h1>
+</header>
+
+<main>
+  <h2>Your Personalized Course Recommendations</h2>
+  
+  <div id="weight-summary" class="weight-summary">
+    <h3>Your Weight Calculation Summary</h3>
+    <div id="weight-details"></div>
+  </div>
+  
+  <div id="results-info" class="results-count"></div>
+  
+  <div id="results-container"></div>
+
+  <div class="action-buttons">
+    <button class="btn btn-primary" onclick="window.location.href='course-input.html'">
+      Get New Recommendations
+    </button>
+    <button class="btn btn-secondary" onclick="window.location.href='dashboard.html'">
+      Back to Dashboard
+    </button>
+  </div>
+</main>
+
+<footer>
+  &copy; 2025 BLEEMIST COMPANIES. All rights fully reserved under <strong>MUYANJA ANDREW</strong>. 
+  | Contact: <a href="mailto:bleemistorg@gmail.com">NUVA Org | Email and Consultation Center</a>
+</footer>
+
+<script>
+// Get stored data from sessionStorage
+const recommendations = JSON.parse(sessionStorage.getItem('courseRecommendations') || '[]');
+const weights = JSON.parse(sessionStorage.getItem('weights') || '{}');
+const submissionData = JSON.parse(sessionStorage.getItem('submissionData') || '{}');
+const totalCourses = sessionStorage.getItem('totalCourses') || '0';
+const principalSubjects = JSON.parse(sessionStorage.getItem('principalSubjects') || '[]');
+const principalGrades = JSON.parse(sessionStorage.getItem('principalGrades') || '[]');
+
+const weightContainer = document.getElementById('weight-details');
+const resultsContainer = document.getElementById('results-container');
+const resultsInfo = document.getElementById('results-info');
+
+// Display weight summary with detailed breakdown
+function displayWeightSummary() {
+    if (weights && Object.keys(weights).length > 0) {
+        let html = '';
+        
+        // Basic weight information
+        html += `
+            <div class="weight-item">
+                <strong>O-Level Weight:</strong> 
+                <span>${weights.oLevel || 0}</span>
+            </div>
+            ${weights.genderBonus ? `
+            <div class="weight-item">
+                <strong>Gender Bonus:</strong> 
+                <span>+${weights.genderBonus}</span>
+            </div>
+            ` : ''}
+            <div class="weight-item">
+                <strong>Subsidiary Subject:</strong> 
+                <span>${weights.subsidiary || 0}</span>
+            </div>
+            <div class="weight-item">
+                <strong>General Paper:</strong> 
+                <span>${weights.generalPaper || 1}</span>
+            </div>
+        `;
+        
+        // Principal subjects breakdown
+        if (weights.principalSubjects && weights.principalSubjects.length > 0) {
+            html += `<div class="weight-item"><strong>Principal Subjects:</strong></div>`;
+            
+            weights.principalSubjects.forEach(subject => {
+                const multiplierText = subject.multiplier === 3 ? '×3 (Essential)' : '×2 (Other)';
+                html += `
+                    <div class="weight-item" style="margin-left: 20px; font-size: 0.9em;">
+                        ${subject.subject}: ${subject.grade} 
+                        (${subject.points} points ${multiplierText}) = 
+                        <strong>${subject.weightedPoints}</strong>
+                    </div>
+                `;
+            });
+            
+            // Show essential vs other breakdown
+            if (weights.essentialSubjects > 0 || weights.otherSubjects > 0) {
+                html += `
+                    <div class="weight-breakdown">
+                        <div class="breakdown-item essential">
+                            <span>Essential Subjects Total:</span>
+                            <strong>${weights.essentialSubjects || 0}</strong>
+                        </div>
+                        <div class="breakdown-item other">
+                            <span>Other Subjects Total:</span>
+                            <strong>${weights.otherSubjects || 0}</strong>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        // Total weight
+        html += `
+            <div class="weight-item" style="border-top: 2px solid #1e3c72; padding-top: 15px; margin-top: 15px; font-weight: bold; font-size: 1.1em;">
+                <strong>Total Calculated Weight:</strong> 
+                <span style="color: #1e3c72;">${weights.total || 0}</span>
+            </div>
+        `;
+        
+        // Weight calculation explanation
+        html += `
+            <div class="weight-calculation">
+                <h4 style="margin-top: 0; color: #856404;">How Your Weight is Calculated:</h4>
+                <div class="calculation-step">✓ Essential Subjects: Grade Points × 3</div>
+                <div class="calculation-step">✓ Other Principal Subjects: Grade Points × 2</div>
+                <div class="calculation-step">✓ Subsidiary Subjects: Pass = 1 point</div>
+                <div class="calculation-step">✓ General Paper: Always 1 point</div>
+                <div class="calculation-step">✓ O-Level Weight: Added directly (0-3)</div>
+                <div class="calculation-step">✓ Female Bonus: +1.5 points</div>
+            </div>
+        `;
+        
+        weightContainer.innerHTML = html;
+    } else {
+        weightContainer.innerHTML = `
+            <div style="text-align: center; color: #6c757d; padding: 20px;">
+                <p>Weight calculation data not available.</p>
+            </div>
+        `;
+    }
+}
+
+// Get match score class for styling
+function getMatchScoreClass(score) {
+    if (score >= 80) return 'high';
+    if (score >= 60) return 'medium';
+    return 'low';
+}
+
+// Display course recommendations
+function displayRecommendations() {
+    if (!recommendations || recommendations.length === 0) {
+        resultsContainer.innerHTML = `
+            <div class="no-results">
+                <h3>No Course Recommendations Found</h3>
+                <p>We couldn't find any courses that match your current qualifications and subject combination.</p>
+                <p>This could be because:</p>
+                <ul style="text-align: left; display: inline-block; margin: 15px 0;">
+                    <li>Your subject combination doesn't meet the requirements for available courses</li>
+                    <li>Your calculated weight is below the cut-off points for eligible courses</li>
+                    <li>There might be an issue with your input data</li>
+                </ul>
+                <p>Please try adjusting your subject combination or check your input data.</p>
+                <div style="margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="window.location.href='course-input.html'">
+                        Try Different Subjects
+                    </button>
+                </div>
+            </div>
+        `;
+        return;
+    }
+    
+    // Update results info
+    resultsInfo.innerHTML = `
+        <p>Found <strong>${totalCourses}</strong> eligible courses. Showing top <strong>${Math.min(recommendations.length, 10)}</strong> recommendations based on your weight score.</p>
+    `;
+    
+    let html = '';
+    
+    recommendations.forEach((course, index) => {
+        const isEligible = course.yourWeight >= course.cutOff;
+        const matchScoreClass = getMatchScoreClass(course.matchScore);
+        const statusColor = isEligible ? 'green' : 'red';
+        const statusText = isEligible ? 'ELIGIBLE' : 'BELOW CUT-OFF';
+        
+        html += `
+            <div class="result-card">
+                <span class="match-score ${matchScoreClass}">${course.matchScore}% Match</span>
+                <h3>${course.name}</h3>
+                
+                <div class="course-details">
+                    <p><strong>Program Code:</strong> ${course.code}</p>
+                    <p><strong>Faculty:</strong> ${course.faculty}</p>
+                    <p><strong>Duration:</strong> ${course.duration}</p>
+                    <p><strong>Program Type:</strong> ${course.programType}</p>
+                    <p><strong>University:</strong> ${course.university}</p>
+                    
+                    <div style="display: flex; justify-content: space-between; margin: 15px 0; padding: 15px; background: #f8f9fa; border-radius: 6px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 12px; color: #6c757d;">CUT-OFF POINTS</div>
+                            <div style="font-size: 24px; font-weight: bold; color: #1e3c72;">${course.cutOff}</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 12px; color: #6c757d;">YOUR WEIGHT</div>
+                            <div style="font-size: 24px; font-weight: bold; color: ${isEligible ? '#28a745' : '#dc3545'};">${course.yourWeight}</div>
+                        </div>
+                    </div>
+                    
+                    <p><strong>Status:</strong> 
+                        <span class="eligibility-badge ${isEligible ? 'eligible' : 'not-eligible'}">
+                            ${statusText}
+                        </span>
+                    </p>
+                    
+                    ${isEligible ? 
+                        '<p style="color: #28a745; font-weight: bold; margin-top: 10px;">✓ You meet the requirements for this course!</p>' : 
+                        '<p style="color: #dc3545; margin-top: 10px;">✗ Your weight is below the required cut-off point</p>'
+                    }
+                </div>
+                
+                ${course.essentialSubjects && course.essentialSubjects.length > 0 ? `
+                    <div class="course-details">
+                        <p><strong>Essential Subjects (×3 multiplier):</strong></p>
+                        <div class="subject-list">
+                            ${course.essentialSubjects.map(subject => 
+                                `<span class="subject-tag essential">${subject}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+                
+                ${course.requiredSubjects && course.requiredSubjects.length > 0 ? `
+                    <div class="course-details">
+                        <p><strong>Required Subject Areas:</strong></p>
+                        <div class="subject-list">
+                            ${course.requiredSubjects.map(subject => 
+                                `<span class="subject-tag">${subject}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+                
+                ${index < 3 && isEligible ? `
+                    <div style="background: #d4edda; padding: 15px; border-radius: 6px; margin-top: 15px; border-left: 4px solid #28a745;">
+                        <strong>💡 Top Recommendation:</strong> This course strongly matches your subject combination and academic performance.
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    });
+    
+    // Add explanation of the ranking
+    html += `
+        <div style="background: #e8f4fd; padding: 20px; border-radius: 10px; margin-top: 30px; text-align: center;">
+            <h4 style="color: #1e3c72; margin-top: 0;">How Courses Are Ranked</h4>
+            <p style="margin-bottom: 10px;">Courses are sorted by your calculated weight score, with higher scores indicating better matches.</p>
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 15px;">
+                <div style="text-align: center;">
+                    <div style="width: 20px; height: 20px; background: #28a745; border-radius: 50%; margin: 0 auto 5px;"></div>
+                    <small>High Match (80-100%)</small>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 20px; height: 20px; background: #ffc107; border-radius: 50%; margin: 0 auto 5px;"></div>
+                    <small>Medium Match (60-79%)</small>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 20px; height: 20px; background: #dc3545; border-radius: 50%; margin: 0 auto 5px;"></div>
+                    <small>Low Match (Below 60%)</small>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    resultsContainer.innerHTML = html;
+}
+
+// Display student information
+function displayStudentInfo() {
+    if (submissionData && Object.keys(submissionData).length > 0) {
+        const infoDiv = document.createElement('div');
+        infoDiv.style.background = '#f8f9fa';
+        infoDiv.style.padding = '15px';
+        infoDiv.style.borderRadius = '8px';
+        infoDiv.style.marginBottom = '20px';
+        infoDiv.style.fontSize = '14px';
+        
+        let infoHtml = `<strong>Student Information:</strong> `;
+        infoHtml += `Gender: ${submissionData.gender === 'female' ? 'Female (+1.5 bonus)' : 'Male'}`;
+        infoHtml += ` | Level: ${submissionData.level}`;
+        
+        if (principalSubjects.length > 0) {
+            infoHtml += ` | Principal Subjects: ${principalSubjects.join(', ')}`;
+        }
+        
+        infoDiv.innerHTML = infoHtml;
+        weightContainer.parentNode.insertBefore(infoDiv, weightContainer);
+    }
+}
+
+// Initialize the page
+function initializePage() {
+    displayStudentInfo();
+    displayWeightSummary();
+    displayRecommendations();
+}
+
+// Clear session storage when leaving the page (optional)
+window.addEventListener('beforeunload', () => {
+    // You can choose to keep the data or clear it
+    // sessionStorage.removeItem('courseRecommendations');
+    // sessionStorage.removeItem('weights');
+    // sessionStorage.removeItem('submissionData');
+});
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', initializePage);
+</script>
+</body>
+</html>
