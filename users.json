@@ -1,0 +1,28 @@
+[
+  {
+    "id": "user_1772822696000vav63lqr",
+    "firstName": "JESCA MARY",
+    "lastName": "KHAITSA",
+    "gender": "female",
+    "dob": "2005-09-28",
+    "email": "jescamarykhaitsa@gmail.com",
+    "phone": "+256 791 031 912",
+    "password": "$2b$12$6Gj6yMxSOVN/18G0Vj.YEewjGzz96F0KDJB5V3EfWWSr3kqs392si",
+    "createdAt": "2026-03-06T18:44:56.000Z",
+    "lastLogin": "2026-03-06T18:45:07.764Z",
+    "isActive": true
+  },
+  {
+    "id": "user_17728252385382izme5on",
+    "firstName": "Andrew",
+    "lastName": "Muyanja",
+    "gender": "male",
+    "dob": "2005-01-01",
+    "email": "aandrewmuyanja@gmail.com",
+    "phone": "0708765729",
+    "password": "$2b$12$QPcnJJokptCv2QN6chaVfezpB/3r2tbNkI6YgKnLQ7cLQfcmv0Y6u",
+    "createdAt": "2026-03-06T19:27:18.538Z",
+    "lastLogin": "2026-03-07T15:01:17.395Z",
+    "isActive": true
+  }
+]

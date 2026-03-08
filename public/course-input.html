@@ -90,9 +90,9 @@
   }
   label {
     display: block;
-   margin-top: 15px; 
-   font-weight: 600; 
-   color: #333;
+    margin-top: 15px; 
+    font-weight: 600; 
+    color: #333;
   }
   input, select, button { 
     width: 100%; 
@@ -105,118 +105,63 @@
   }
   input:focus, select:focus { 
     outline: none; 
-    border-color: #1e3c72;
-    box-shadow: 0 0 5px rgba(30, 60, 114, 0.3);
+    border-color: #1e3c72; 
+    box-shadow: 0 0 5px rgba(30, 60, 114, 0.3); 
   }
   button { 
     background: linear-gradient(90deg, #fe4f04, #ff7a2d); 
     color: white; 
+    border: none; 
     font-weight: bold; 
-    border: none; 
     cursor: pointer; 
-    margin-top: 25px;
-    transition: 0.3s; 
-    font-size: 16px;
+    margin-top: 30px; 
+    transition: all 0.3s; 
   }
-  button:hover { 
-    background: linear-gradient(90deg, #0033cc, #001a80); 
-    transform: translateY(-2px);
+  button:hover:not(:disabled) { 
+    background: linear-gradient(90deg, #e03e00, #e06600); 
+    transform: translateY(-2px); 
   }
-  button:disabled {
-    background: #cccccc;
-    cursor: not-allowed;
-    transform: none;
+  button:disabled { 
+    background: #ccc; 
+    cursor: not-allowed; 
   }
-  .subject-group { 
-    display: flex; 
-    gap: 10px; 
-    flex-wrap: wrap; 
-    margin-bottom: 15px;
-  }
-  .subject-group input, 
-  .subject-group select { 
-    flex: 1; 
-    min-width: 120px;
-  }
-  #subsidiary-container { 
-    margin-top: 20px; 
-    padding: 15px;
+  .form-section {
     background: #f8f9fa;
-    border-radius: 8px;
-    border-left: 4px solid #1e3c72;
-  }
-  #add-subject-btn { 
-    margin-top: 10px; 
-    background: #28a745; 
-    color: white; 
-    border: none; 
-    cursor: pointer; 
-    padding: 10px 15px; 
-    border-radius: 6px; 
-    font-size: 14px;
-    width: auto;
-  }
-  #add-subject-btn:hover { 
-    background: #1e7e34; 
-  }
-  #add-subject-btn:disabled {
-    background: #6c757d;
-    cursor: not-allowed;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    border-left: 5px solid #1e3c72;
   }
   .info-text {
-    font-size: 14px;
+    font-size: 0.9em;
     color: #666;
-    margin-top: 5px;
-    font-style: italic;
+    margin-top: 8px;
+    line-height: 1.4;
   }
-  .loading {
-    display: none;
+  .error-message, .success-message {
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 6px;
     text-align: center;
-    padding: 20px;
-  }
-  .loading-spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #1e3c72;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 10px;
-  }
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    display: none;
   }
   .error-message {
-    color: #dc3545;
     background: #f8d7da;
-    padding: 10px;
-    border-radius: 4px;
-    margin: 10px 0;
-    display: none;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
   }
   .success-message {
-    color: #155724;
     background: #d4edda;
-    padding: 10px;
-    border-radius: 4px;
-    margin: 10px 0;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+  .loading {
+    text-align: center;
+    margin: 20px 0;
+    color: #1e3c72;
+    font-weight: bold;
     display: none;
   }
-  footer { 
-    background: #1e3c72; 
-    color: white; 
-    padding: 20px; 
-    text-align: center; 
-    margin-top: auto;
-  }
-  footer a {
-     color: #ffd966; 
-     text-decoration: none; 
-    }
-  footer a:hover { 
-    text-decoration: underline; 
-    }
 </style>
 </head>
 <body>
@@ -234,391 +179,286 @@
 </header>
 
 <main>
-  <h2>Enter Your Academic Data</h2>
-  
+  <h2>Enter Your Academic Details</h2>
+
   <div class="error-message" id="error-msg"></div>
   <div class="success-message" id="success-msg"></div>
-  
+
   <form id="courseForm">
-    <label for="gender">Gender</label>
-    <select id="gender" name="gender" required>
-      <option value="" disabled selected>Select Gender</option>
-      <option value="male">Male</option>
-      <option value="female">Female</option>
-    </select>
-
-    <label for="level">Select Education Level</label>
-    <select id="level" name="level" required>
-      <option value="" disabled selected>Select Level</option>
-      <option value="O-Level">O-Level</option>
-      <option value="A-Level">A-Level</option>
-    </select>
-
-    <div id="olevel-weight-container" style="display: none;">
-      <label for="oLevelWeight">O-Level Weight (0-3)</label>
-      <input type="number" id="oLevelWeight" name="oLevelWeight" min="0" max="3" step="0.1" placeholder="Enter your O-Level weight">
-      <div class="info-text">Enter your O-Level aggregate weight (maximum 3 points)</div>
+    <div class="input-group">
+      <label for="gender">Gender *</label>
+      <select id="gender" name="gender" required>
+        <option value="" disabled selected>Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
     </div>
 
-    <div id="subjects-container"></div>
-
-    <div id="subsidiary-container" style="display:none;">
-      <label for="subsidiary">Choose Subsidiary Subject</label>
-      <select id="subsidiary" name="subsidiary">
-        <option value="" disabled selected>Choose Subject</option>
-        <option value="ICT">Information Communication & Technology</option>
-        <option value="Subsidiary Mathematics">Subsidiary Mathematics</option>
+    <div class="input-group">
+      <label for="level">Education Level *</label>
+      <select id="level" name="level" required>
+        <option value="" disabled selected>Select Level</option>
+        <option value="O-Level">O-Level</option>
+        <option value="A-Level">A-Level</option>
       </select>
-
-      <label for="subsidiary-grade">Subsidiary Grade</label>
-      <select id="subsidiary-grade" name="subsidiaryGrade">
-        <option value="" disabled selected>Choose Grade</option>
-        <option value="1">Pass (A-E)</option>
-        <option value="0">Fail (F-O)</option>
-      </select>
-      <div class="info-text">Subsidiary subjects contribute 1 point if passed and an assumed +1 for G.P</div>
     </div>
 
-    <label for="university">Preferred University</label>
-    <select id="university" name="university" required>
-      <option value="" disabled selected>Choose University</option>
-      <option value="Kyambogo University">Kyambogo University</option>
-      <option value="Makerere University">Makerere University</option>
-      <option value="Soroti University">Soroti University</option>
-      <option value="Kabaale University">Kabaale University</option>
-      <option value="Lira University">Lira University</option>
-      <option value="Busitema University">Busitema University</option>
-      <option value="Mbarara University">Mbarara University</option>
-      <option value="Gulu University">Gulu University</option>
-      <option value="Muni University">Muni University</option>
-      <option value="Mountains Of The Moon University">Mountains Of The Moon University</option>
-    </select>
+    <div id="oLevelSection" class="form-section" style="display:none;">
+      <label for="oLevelWeight">O-Level Weight (0–3 points) *</label>
+      <input type="number" id="oLevelWeight" name="oLevelWeight" min="0" max="3" step="0.1" placeholder="e.g. 2.8" required>
+      <div class="info-text">
+        Calculated from your best 8 subjects:<br>
+        • D1 or D2 = 0.3 points each<br>
+        • C3 to C6 = 0.2 points each<br>
+        • P7 or P8 = 0.1 points each<br>
+        Maximum possible = 3.0
+      </div>
+    </div>
 
-    <div class="loading" id="loading-indicator">
+    <div id="aLevelSection" style="display:none;">
+      <div class="form-section">
+        <h3>Principal Subjects (A-Level)</h3>
+        <div id="principalSubjectsContainer"></div>
+      </div>
+
+      <div class="form-section">
+        <h3>Subsidiary Subject & General Paper</h3>
+        
+        <label for="subsidiarySubject">Subsidiary Subject Taken</label>
+        <select id="subsidiarySubject" name="subsidiarySubject">
+          <option value="">None / Not applicable</option>
+          <option value="Mathematics">Subsidiary Mathematics</option>
+          <option value="ICT">Subsidiary ICT</option>
+        </select>
+
+        <label for="subsidiaryResult" style="margin-top: 15px;">Result in Subsidiary Subject</label>
+        <select id="subsidiaryResult" name="subsidiaryResult">
+          <option value="0">Failed / Not taken</option>
+          <option value="1">Passed</option>
+        </select>
+
+        <div class="info-text" style="margin-top: 12px;">
+          • General Paper is automatically awarded +1 point for every A-Level student<br>
+          • Passing Subsidiary Mathematics or ICT adds another +1 point to your total weight
+        </div>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="university">Preferred University</label>
+      <select id="university" name="university">
+        <option value="">Any University (all available)</option>
+        <option value="Makerere University">Makerere University</option>
+        <option value="Kyambogo University">Kyambogo University</option>
+        <option value="Busitema University">Busitema University</option>
+        <option value="Gulu University">Gulu University</option>
+        <option value="Mbarara University of Science and Technology">Mbarara University of Science and Technology</option>
+        <!-- Add more as needed -->
+      </select>
+      <div class="info-text">Choose a specific university to see only its courses, or leave as "Any University"</div>
+    </div>
+
+    <div class="loading" id="loading">
       <div class="loading-spinner"></div>
-      <p>Calculating your course recommendations...</p>
+      <p>Calculating best matching courses...</p>
     </div>
 
-    <button type="submit" id="submit-btn">Get Course Recommendation</button>
+    <button type="submit" id="submitBtn">Get Recommendations</button>
   </form>
 </main>
 
 <footer>
-  &copy; 2025 BLEEMIST COMPANIES. All rights fully reserved under <strong>MUYANJA ANDREW</strong>. 
-  | Contact: <a href="mailto:bleemistorg@gmail.com">NUVA Org | Email and Consultation Center</a>
+  © 2025 BLEEMIST COMPANIES. All rights reserved under <strong>MUYANJA ANDREW</strong>.<br>
+  Contact: <a href="mailto:bleemistorg@gmail.com">NUVA Org | Email and Consultation Center</a>
 </footer>
 
+<datalist id="commonSubjects">
+  <option value="Mathematics">
+  <option value="Physics">
+  <option value="Chemistry">
+  <option value="Biology">
+  <option value="Economics">
+  <option value="Geography">
+  <option value="History">
+  <option value="Literature in English">
+  <option value="Fine Art">
+  <option value="Technical Drawing">
+  <option value="Entrepreneurship">
+  <option value="Computer Studies">
+  <option value="Agriculture">
+</datalist>
+
 <script>
-// DOM Elements
-const levelSelect = document.getElementById('level');
-const subjectsContainer = document.getElementById('subjects-container');
-const subsidiaryContainer = document.getElementById('subsidiary-container');
-const oLevelWeightContainer = document.getElementById('olevel-weight-container');
-const form = document.getElementById('courseForm');
-const submitBtn = document.getElementById('submit-btn');
-const loadingIndicator = document.getElementById('loading-indicator');
-const errorMsg = document.getElementById('error-msg');
-const successMsg = document.getElementById('success-msg');
+// DOM References
+const form          = document.getElementById('courseForm');
+const levelSelect   = document.getElementById('level');
+const oLevelSection = document.getElementById('oLevelSection');
+const aLevelSection = document.getElementById('aLevelSection');
+const principalContainer = document.getElementById('principalSubjectsContainer');
+const submitBtn     = document.getElementById('submitBtn');
+const loading       = document.getElementById('loading');
+const errorMsg      = document.getElementById('error-msg');
+const successMsg    = document.getElementById('success-msg');
 
-// Common A-Level subjects for suggestions
-const commonSubjects = [
-  'Physics', 'Mathematics', 'Chemistry', 'Biology', 'Economics', 
-  'Geography', 'History', 'English Literature', 'Fine Art', 
-  'Technical Drawing', 'Entrepreneurship', 'Agriculture',
-  'Computer Studies', 'French', 'German', 'Luganda',
-  'Religious Education', 'Music', 'Physical Education'
-];
+// Initialize form on load
+document.addEventListener('DOMContentLoaded', () => {
+  levelSelect.addEventListener('change', updateFormForLevel);
+  form.addEventListener('submit', handleSubmit);
 
-// Initialize the form
-function initializeForm() {
-  // Clear any existing messages
-  hideMessages();
-  
-  // Add event listeners
-  levelSelect.addEventListener('change', handleLevelChange);
-  form.addEventListener('submit', handleFormSubmit);
-  
-  // Test server connection
-  testServerConnection();
-}
+  updateFormForLevel();
+});
 
-// Handle education level change
-function handleLevelChange() {
-  const level = this.value;
-  subjectsContainer.innerHTML = '';
-  subsidiaryContainer.style.display = 'none';
-  oLevelWeightContainer.style.display = 'none';
-  hideMessages();
-  
-  if (level === 'O-Level') {
-    oLevelWeightContainer.style.display = 'block';
-    createOLevelSubjects();
-  } else if (level === 'A-Level') {
-    oLevelWeightContainer.style.display = 'block';
-    subsidiaryContainer.style.display = 'block';
-    createALevelSubjects();
+// Show/hide sections based on level
+function updateFormForLevel() {
+  const level = levelSelect.value;
+
+  oLevelSection.style.display = level ? 'block' : 'none';
+  aLevelSection.style.display = (level === 'A-Level') ? 'block' : 'none';
+
+  if (level === 'A-Level' && principalContainer.children.length === 0) {
+    addPrincipalSubjectFields();
   }
 }
 
-// Create O-Level subject inputs
-function createOLevelSubjects() {
-  for (let i = 1; i <= 8; i++) {
-    addOLevelSubject(i);
-  }
-  
-  const addBtn = document.createElement('button');
-  addBtn.type = 'button';
-  addBtn.id = 'add-subject-btn';
-  addBtn.textContent = '+ Add Another Subject';
-  subjectsContainer.appendChild(addBtn);
-  
-  let subjectCount = 8;
-  addBtn.addEventListener('click', () => {
-    if (subjectCount < 15) {
-      subjectCount++;
-      addOLevelSubject(subjectCount);
-      if (subjectCount === 15) addBtn.disabled = true;
-    }
-  });
-}
+// Create 3 principal subject + grade fields
+function addPrincipalSubjectFields() {
+  principalContainer.innerHTML = '';
 
-// Add single O-Level subject input
-function addOLevelSubject(index) {
-  const div = document.createElement('div');
-  div.className = 'subject-group';
-  div.innerHTML = `
-    <input type="text" name="subject${index}" placeholder="Subject ${index}" list="commonSubjects">
-    <select name="grade${index}" required>
-      <option value="" disabled selected>Select Grade</option>
-      <option value="A">A</option>
-      <option value="B">B</option>
-      <option value="C">C</option>
-      <option value="D">D</option>
-      <option value="E">E</option>
-    </select>
-  `;
-  subjectsContainer.appendChild(div);
-}
-
-// Create A-Level subject inputs
-function createALevelSubjects() {
   for (let i = 1; i <= 3; i++) {
-    addALevelSubject(i);
+    const group = document.createElement('div');
+    group.className = 'subject-group input-group';
+    group.innerHTML = `
+      <label for="principal${i}">Principal Subject ${i} ${i===1?'<span style="color:#dc3545;">*</span>':''}</label>
+      <input type="text" id="principal${i}" name="principal${i}" list="commonSubjects" placeholder="e.g. Physics" ${i===1?'required':''}>
+      
+      <label for="principalGrade${i}">Grade ${i===1?'<span style="color:#dc3545;">*</span>':''}</label>
+      <select id="principalGrade${i}" name="principalGrade${i}" ${i===1?'required':''}>
+        <option value="">Select Grade</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+        <option value="O">O</option>
+      </select>
+    `;
+    principalContainer.appendChild(group);
   }
 }
 
-// Add single A-Level subject input
-function addALevelSubject(index) {
-  const div = document.createElement('div');
-  div.className = 'subject-group';
-  div.innerHTML = `
-    <input type="text" name="principal${index}" placeholder="Principal Subject ${index}" list="commonSubjects" required>
-    <select name="principalGrade${index}" required>
-      <option value="" disabled selected>Select Grade</option>
-      <option value="A">A</option>
-      <option value="B">B</option>
-      <option value="C">C</option>
-      <option value="D">D</option>
-      <option value="E">E</option>
-      <option value="F">F</option>
-      <option value="O">O</option>
-    </select>
-  `;
-  subjectsContainer.appendChild(div);
-}
-
-// Add datalist for common subjects
-function addSubjectDatalist() {
-  const datalist = document.createElement('datalist');
-  datalist.id = 'commonSubjects';
-  
-  commonSubjects.forEach(subject => {
-    const option = document.createElement('option');
-    option.value = subject;
-    datalist.appendChild(option);
-  });
-  
-  document.body.appendChild(datalist);
-}
-
-// Handle form submission
-async function handleFormSubmit(e) {
+// Form submission handler
+async function handleSubmit(e) {
   e.preventDefault();
-  
-  const formData = new FormData(form);
-  const data = Object.fromEntries(formData.entries());
-  
-  // Validate form
-  if (!validateForm(data)) {
+
+  hideMessages();
+  setLoading(true);
+
+  // Collect form data
+  const formDataObj = {};
+  new FormData(form).forEach((value, key) => {
+    formDataObj[key] = value.trim();
+  });
+
+  // Normalize data
+  formDataObj.gender = formDataObj.gender?.toLowerCase() || '';
+  if (formDataObj.oLevelWeight) {
+    formDataObj.oLevelWeight = parseFloat(formDataObj.oLevelWeight) || 0;
+  }
+
+  // Calculate subsidiary points (only Math or ICT + passed)
+  const subSubject = formDataObj.subsidiarySubject || '';
+  const subResult = formDataObj.subsidiaryResult || '0';
+  formDataObj.subsidiaryPoints = 
+    (subResult === '1' && (subSubject === 'Mathematics' || subSubject === 'ICT')) ? 1 : 0;
+
+  // Validation
+  if (!formDataObj.gender || !formDataObj.level) {
+    showError("Please fill all required fields (Gender, Level).");
+    setLoading(false);
     return;
   }
-  
-  // Show loading state
-  setLoadingState(true);
-  hideMessages();
-  
-  try {
-    const response = await fetch('/api/submit-subjects', {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data)
-    });
-    
-    const result = await response.json();
-    
-    if (result.success) {
-      showSuccess('Course recommendations calculated successfully!');
-      
-      // Store data for results page
-      sessionStorage.setItem('courseRecommendations', JSON.stringify(result.recommendations));
-      sessionStorage.setItem('weights', JSON.stringify(result.calculatedWeights));
-      sessionStorage.setItem('submissionData', JSON.stringify(result.studentData));
-      sessionStorage.setItem('totalCourses', result.totalCourses);
-      sessionStorage.setItem('principalSubjects', JSON.stringify(result.principalSubjects || []));
-      sessionStorage.setItem('principalGrades', JSON.stringify(result.principalGrades || []));
-      
-      // Redirect to results page after a short delay
-      setTimeout(() => {
-        window.location.href = 'results.html';
-      }, 1500);
-      
-    } else {
-      showError(result.message || 'Submission failed. Please try again.');
-    }
-    
-  } catch (err) {
-    console.error('Submission error:', err);
-    showError('Error connecting to server. Please check your internet connection and try again.');
-  } finally {
-    setLoadingState(false);
-  }
-}
 
-// Validate form data
-function validateForm(data) {
-  // Clear previous errors
-  hideMessages();
-  
-  // Check required fields
-  if (!data.gender || !data.level || !data.university) {
-    showError('Please fill all required fields.');
-    return false;
-  }
-  
-  if (data.level === 'A-Level') {
-    // Validate O-Level weight for A-Level students
-    if (!data.oLevelWeight || data.oLevelWeight === '') {
-      showError('Please enter your O-Level weight for A-Level students.');
-      return false;
-    }
-    
-    const oLevelWeight = parseFloat(data.oLevelWeight);
-    if (isNaN(oLevelWeight) || oLevelWeight < 0 || oLevelWeight > 3) {
-      showError('O-Level weight must be a number between 0 and 3.');
-      return false;
-    }
-    
-    // Validate principal subjects
-    let hasValidPrincipals = false;
+  if (formDataObj.level === 'A-Level') {
+    let validPrincipals = 0;
     for (let i = 1; i <= 3; i++) {
-      if (data[`principal${i}`] && data[`principal${i}`].trim() && 
-          data[`principalGrade${i}`] && data[`principalGrade${i}`].trim()) {
-        hasValidPrincipals = true;
-        break;
+      if (formDataObj[`principal${i}`] && formDataObj[`principalGrade${i}`]) {
+        validPrincipals++;
       }
     }
-    
-    if (!hasValidPrincipals) {
-      showError('Please enter at least one principal subject and grade.');
-      return false;
+    if (validPrincipals === 0) {
+      showError("At least one principal subject + grade is required for A-Level.");
+      setLoading(false);
+      return;
     }
   }
-  
-  return true;
-}
 
-// Set loading state
-function setLoadingState(isLoading) {
-  if (isLoading) {
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Processing...';
-    loadingIndicator.style.display = 'block';
-  } else {
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Get Course Recommendation';
-    loadingIndicator.style.display = 'none';
+  // If subsidiary subject selected, ensure result is selected
+  if (subSubject !== '' && subResult === '') {
+    showError("Please select whether you passed or failed the subsidiary subject.");
+    setLoading(false);
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/submit-subjects', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formDataObj)
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+      // Store everything results.html needs
+      sessionStorage.setItem('courseRecommendations', JSON.stringify(result.recommendations || []));
+      sessionStorage.setItem('totalCourses', result.totalCourses || '0');
+      sessionStorage.setItem('weights', JSON.stringify(result.calculatedWeights || {}));
+      sessionStorage.setItem('principalSubjectsUsed', JSON.stringify(result.principalSubjectsUsed || []));
+      sessionStorage.setItem('principalGradesUsed', JSON.stringify(result.principalGradesUsed || []));
+      sessionStorage.setItem('submissionData', JSON.stringify({
+        ...formDataObj,
+        selectedUniversity: formDataObj.university === 'Any University' ? '' : formDataObj.university
+      }));
+
+      showSuccess("Recommendations ready! Redirecting...");
+      setTimeout(() => {
+        window.location.href = 'results.html';
+      }, 1200);
+    } else {
+      showError(result.message || "Server returned an error. Please check your input.");
+    }
+  } catch (err) {
+    console.error(err);
+    showError("Could not connect to the server. Is the backend running?");
+  } finally {
+    setLoading(false);
   }
 }
 
-// Show error message
-function showError(message) {
-  errorMsg.textContent = message;
+// UI Helpers
+function setLoading(isLoading) {
+  submitBtn.disabled = isLoading;
+  submitBtn.textContent = isLoading ? 'Processing...' : 'Get Recommendations';
+  loading.style.display = isLoading ? 'block' : 'none';
+}
+
+function showError(msg) {
+  errorMsg.textContent = msg;
   errorMsg.style.display = 'block';
   successMsg.style.display = 'none';
 }
 
-// Show success message
-function showSuccess(message) {
-  successMsg.textContent = message;
+function showSuccess(msg) {
+  successMsg.textContent = msg;
   successMsg.style.display = 'block';
   errorMsg.style.display = 'none';
 }
 
-// Hide all messages
 function hideMessages() {
   errorMsg.style.display = 'none';
   successMsg.style.display = 'none';
 }
-
-// Test server connection
-async function testServerConnection() {
-  try {
-    const response = await fetch('/api/health');
-    const result = await response.json();
-    console.log('✅ Server connection established:', result.status);
-  } catch (error) {
-    console.warn('⚠️ Server connection failed. Make sure the backend is running.');
-  }
-}
-
-// Real-time validation for O-Level weight
-document.addEventListener('input', function(e) {
-  if (e.target.name === 'oLevelWeight') {
-    const value = parseFloat(e.target.value);
-    if (!isNaN(value) && (value < 0 || value > 3)) {
-      e.target.style.borderColor = '#dc3545';
-    } else {
-      e.target.style.borderColor = '';
-    }
-  }
-});
-
-// Auto-capitalize subject names
-document.addEventListener('input', function(e) {
-  if (e.target.name.includes('subject') || e.target.name.includes('principal')) {
-    const words = e.target.value.split(' ');
-    const capitalized = words.map(word => 
-      word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-    ).join(' ');
-    
-    if (capitalized !== e.target.value) {
-      e.target.value = capitalized;
-    }
-  }
-});
-
-// Initialize the form when page loads
-document.addEventListener('DOMContentLoaded', function() {
-  initializeForm();
-  addSubjectDatalist();
-  
-  // Add sample data for testing (remove in production)
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    console.log('🔧 Development mode: Sample data available');
-  }
-});
 </script>
 </body>
 </html>
