@@ -211,8 +211,7 @@ const subjectMapping = {
     english: ['english', 'literature', 'lit'],
     fineart: ['fine art', 'art'],
     technicaldrawing: ['technical drawing', 'td'],
-    computer: ['computer', 'ict', 'computer studies'],
-    agriculture: ['agriculture', 'agric']
+    computer: ['computer', 'ict', 'computer studies']
 };
 
 /* ============================   HELPER FUNCTIONS  ============================ */
@@ -241,28 +240,50 @@ function calculateCourseWeight(studentData, principalSubjects, principalGrades, 
         total += 1.5;
     }
 
-    let essentialWeight = 0;
-    let otherWeight = 0;
-
-    principalSubjects.forEach((subject, index) => {
-        const grade = principalGrades[index]?.toUpperCase();
-        const points = gradePoints[grade] || 0;
-
-        const isEssential = (courseReq.essentialSubjects || [])
-            .some(req => matchSubject(subject, req));
-
-        if (isEssential) {
-            essentialWeight += points * 3;
-        } else {
-            otherWeight += points * 2;
-        }
-    });
-
-    total += essentialWeight + otherWeight;
-
-    if (studentData.subsidiaryPoints === 1) {
+    // Subsidiary points: 1 point for any subsidiary pass
+    if (studentData.subsidiaryResult === '1') {
         total += 1;
     }
+
+    // Prepare subject details, limit to top 3 principals by points
+    let subjectDetails = principalSubjects.map((subject, index) => {
+        const grade = principalGrades[index]?.toUpperCase();
+        const points = gradePoints[grade] || 0;
+        return { subject, points, grade };
+    });
+
+    // Sort by points descending and take top 3
+    subjectDetails.sort((a, b) => b.points - a.points);
+    subjectDetails = subjectDetails.slice(0, 3);
+
+    let essentialCount = 0;
+    let essentialWeight = 0;
+    let relevantWeight = 0;
+    let desirableWeight = 0;
+
+    subjectDetails.forEach(item => {
+        const isEssential = (courseReq.essentialSubjects || []).some(req => matchSubject(item.subject, req));
+        const isRequired = (courseReq.requiredSubjects || []).some(req => matchSubject(item.subject, req));
+
+        let multiplier = 1; // Default desirable
+
+        if (isEssential && essentialCount < 2) {
+            multiplier = 3;
+            essentialCount++;
+        } else if (isEssential) {
+            multiplier = 2; // Demote extra essential to relevant
+        } else if (isRequired) {
+            multiplier = 2;
+        }
+
+        const weighted = item.points * multiplier;
+
+        if (multiplier === 3) essentialWeight += weighted;
+        else if (multiplier === 2) relevantWeight += weighted;
+        else desirableWeight += weighted;
+    });
+
+    total += essentialWeight + relevantWeight + desirableWeight;
 
     return Number(total.toFixed(1));
 }
@@ -271,7 +292,7 @@ function meetsSubjectRequirements(courseReq, principalSubjects) {
     if (!courseReq?.requiredSubjects) return true;
     if (courseReq.requiredSubjects.includes("any") || courseReq.requiredSubjects.includes("Any")) return true;
 
-    return courseReq.requiredSubjects.some(required =>
+    return courseReq.requiredSubjects.every(required =>
         principalSubjects.some(studentSubj => matchSubject(studentSubj, required))
     );
 }
@@ -295,10 +316,9 @@ function getEligibleCourses(studentData, principalSubjects, principalGrades) {
                 requirements
             );
 
-            // Safe matchScore - prevent division by zero
             const matchScore = cutOff > 0 ? Math.min(100, Math.round((weight / cutOff) * 100)) : 100;
 
-            if (weight >= cutOff || cutOff === 0) {
+            if (weight >= cutOff) {
                 eligibleCourses.push({
                     code,
                     name: courseNames[code] || code,
@@ -319,56 +339,62 @@ function getEligibleCourses(studentData, principalSubjects, principalGrades) {
     return eligibleCourses.sort((a, b) => b.yourWeight - a.yourWeight);
 }
 
-// Helper function to build intelligent weight breakdown (forces min 2 essentials)
+// Helper function to build intelligent weight breakdown
 function buildWeightBreakdown(data, principalSubjects, principalGrades, recommendations) {
     const weights = {
         oLevel: data.oLevelWeight || 0,
         genderBonus: data.gender === 'female' ? 1.5 : 0,
-        subsidiaryPoints: data.subsidiaryPoints || 0,
-        generalPaper: 1,                    // Fixed +1 for every A-Level student
+        subsidiaryPoints: data.subsidiaryResult === '1' ? 1 : 0,
         principalSubjects: [],
         essentialTotal: 0,
-        otherTotal: 0,
+        relevantTotal: 0,
+        desirableTotal: 0,
         total: 0
     };
 
     let essentialTotal = 0;
-    let otherTotal = 0;
+    let relevantTotal = 0;
+    let desirableTotal = 0;
 
     if (principalSubjects.length === 0) {
         weights.total = Number(
-            (weights.oLevel + weights.genderBonus + weights.subsidiaryPoints + weights.generalPaper).toFixed(1)
+            (weights.oLevel + weights.genderBonus + weights.subsidiaryPoints).toFixed(1)
         );
         return weights;
     }
 
-    // Reference essentials from top course (or fallback)
+    // Reference essentials and required from top matching course (or fallback)
     let referenceEssentials = [];
+    let referenceRequired = [];
     if (recommendations.length > 0) {
         referenceEssentials = recommendations[0].essentialSubjects || [];
+        referenceRequired = recommendations[0].requiredSubjects || [];
     } else {
         const allEss = new Set();
+        const allReq = new Set();
         Object.values(universitiesData).forEach(uni => {
             Object.values(uni.courseRequirements || {}).forEach(req => {
                 (req.essentialSubjects || []).forEach(es => allEss.add(es.toLowerCase().trim()));
+                (req.requiredSubjects || []).forEach(rs => allReq.add(rs.toLowerCase().trim()));
             });
         });
         referenceEssentials = Array.from(allEss);
+        referenceRequired = Array.from(allReq);
     }
 
-    // Prepare subjects with points for prioritization
+    // Prepare subjects with points for prioritization, limit to top 3
     let subjectDetails = principalSubjects.map((subject, i) => {
         const grade = principalGrades[i];
         const points = gradePoints[grade] || 0;
         return { subject, grade, points };
     });
 
-    // Sort by points descending (best grades first)
+    // Sort by points descending and take top 3
     subjectDetails.sort((a, b) => b.points - a.points);
+    subjectDetails = subjectDetails.slice(0, 3);
 
-    // Force at least 2 essentials
+    // Assign multipliers: max 2 essentials
     let essentialCount = 0;
-    const minEssential = 2;
 
     subjectDetails.forEach((item) => {
         const subject = item.subject;
@@ -376,22 +402,25 @@ function buildWeightBreakdown(data, principalSubjects, principalGrades, recommen
         const points = item.points;
 
         const isTrueEssential = referenceEssentials.some(es => matchSubject(subject, es));
+        const isRequired = referenceRequired.some(rs => matchSubject(subject, rs));
 
-        let multiplier = 2;
-        let category = 'Relevant';
-        let note = 'General/Relevant subject';
+        let multiplier = 1; // Default desirable
+        let category = 'Desirable';
+        let note = 'Desirable subject';
 
-        if (isTrueEssential && essentialCount < 3) {
+        if (isTrueEssential && essentialCount < 2) {
             multiplier = 3;
             category = 'Essential';
             note = 'Essential for top matching courses';
             essentialCount++;
-        }
-        else if (essentialCount < minEssential) {
-            multiplier = 3;
-            category = 'Essential (minimum 2 forced)';
-            note = 'Forced essential to meet minimum requirement of 2';
-            essentialCount++;
+        } else if (isTrueEssential) {
+            multiplier = 2; // Demote extra essential to relevant
+            category = 'Relevant';
+            note = 'Demoted essential (max 2 allowed)';
+        } else if (isRequired) {
+            multiplier = 2;
+            category = 'Relevant';
+            note = 'Relevant subject';
         }
 
         const weighted = points * multiplier;
@@ -407,15 +436,16 @@ function buildWeightBreakdown(data, principalSubjects, principalGrades, recommen
         });
 
         if (multiplier === 3) essentialTotal += weighted;
-        else otherTotal += weighted;
+        else if (multiplier === 2) relevantTotal += weighted;
+        else desirableTotal += weighted;
     });
 
     weights.essentialTotal = essentialTotal;
-    weights.otherTotal = otherTotal;
+    weights.relevantTotal = relevantTotal;
+    weights.desirableTotal = desirableTotal;
 
     weights.total = Number(
-        (weights.oLevel + weights.genderBonus + weights.subsidiaryPoints +
-         weights.generalPaper + essentialTotal + otherTotal).toFixed(1)
+        (weights.oLevel + weights.genderBonus + weights.subsidiaryPoints + essentialTotal + relevantTotal + desirableTotal).toFixed(1)
     );
 
     return weights;
@@ -427,6 +457,7 @@ app.post('/api/submit-subjects', (req, res) => {
     try {
         const rawData = req.body;
 
+        // Required fields
         if (!rawData.gender || !rawData.level) {
             return res.status(400).json({
                 success: false,
@@ -434,15 +465,16 @@ app.post('/api/submit-subjects', (req, res) => {
             });
         }
 
+        // Normalize input
         const data = {
             gender: (rawData.gender || '').toLowerCase().trim(),
             level: (rawData.level || '').trim(),
             oLevelWeight: parseFloat(rawData.oLevelWeight) || 0,
-            subsidiaryPoints: (rawData.subsidiaryResult === '1' && 
-                (rawData.subsidiarySubject === 'Mathematics' || rawData.subsidiarySubject === 'ICT')) ? 1 : 0,
+            subsidiaryResult: rawData.subsidiaryResult,
             university: (rawData.university || '').trim()
         };
 
+        // Validate O-Level weight
         if (isNaN(data.oLevelWeight) || data.oLevelWeight < 0 || data.oLevelWeight > 3) {
             return res.status(400).json({
                 success: false,
@@ -450,6 +482,7 @@ app.post('/api/submit-subjects', (req, res) => {
             });
         }
 
+        // Collect principal subjects & grades
         const principalSubjects = [];
         const principalGrades = [];
 
@@ -470,8 +503,10 @@ app.post('/api/submit-subjects', (req, res) => {
             });
         }
 
+        // Get all eligible courses
         let recommendations = getEligibleCourses(data, principalSubjects, principalGrades);
 
+        // University filter
         let filterMessage = null;
         if (data.university && data.university !== 'Any University' && data.university.trim() !== '') {
             const lowerUni = data.university.toLowerCase();
@@ -486,8 +521,10 @@ app.post('/api/submit-subjects', (req, res) => {
             }
         }
 
+        // Build weight breakdown
         const weights = buildWeightBreakdown(data, principalSubjects, principalGrades, recommendations);
 
+        // Final response
         res.json({
             success: true,
             totalCourses: recommendations.length,
@@ -499,7 +536,7 @@ app.post('/api/submit-subjects', (req, res) => {
                 gender: data.gender,
                 level: data.level,
                 oLevelWeight: data.oLevelWeight,
-                subsidiaryPoints: data.subsidiaryPoints,
+                subsidiaryPoints: weights.subsidiaryPoints,
                 subsidiarySubject: rawData.subsidiarySubject || 'None',
                 selectedUniversity: data.university || null
             },
