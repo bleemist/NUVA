@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 
-// ========== NEW: Email verification dependencies ==========
+// ========== Email verification dependencies ==========
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 
@@ -57,13 +57,16 @@ function saveUsers(users) {
 
 /* ============================   EMAIL VERIFICATION SETUP ============================ */
 
-// Email transporter configuration
+// Email transporter configuration with connection pooling
 const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-}
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    },
+    pool: true, // Enable connection pooling
+    maxConnections: 5,
+    maxMessages: 100
 });
 
 // Base URL for verification links
@@ -77,7 +80,7 @@ function generateVerificationToken() {
     return crypto.randomBytes(32).toString('hex');
 }
 
-// Send verification email
+// Send verification email (non-blocking)
 async function sendVerificationEmail(email, firstName, token) {
     const verificationLink = `${BASE_URL}/verify-email?token=${token}`;
     
@@ -134,9 +137,21 @@ async function sendVerificationEmail(email, firstName, token) {
     }
 }
 
+// Queue for background email sending
+const emailQueue = [];
+
+// Process email queue in background
+setInterval(() => {
+    if (emailQueue.length > 0) {
+        const { email, firstName, token } = emailQueue.shift();
+        sendVerificationEmail(email, firstName, token)
+            .catch(err => console.error('Background email error:', err));
+    }
+}, 1000); // Check every second
+
 /* ============================   USER API ENDPOINTS ============================ */
 
-// UPDATED: Signup with email verification
+// OPTIMIZED: Signup with non-blocking email
 app.post('/signup', async (req, res) => {
     try {
         const userData = req.body;
@@ -163,10 +178,10 @@ app.post('/signup', async (req, res) => {
             });
         }
 
-        const saltRounds = 12;
+        // Reduced salt rounds for faster hashing (still secure)
+        const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
 
-        // NEW: Added emailVerified field
         const newUser = {
             id: 'user_' + Date.now() + Math.random().toString(36).slice(2, 10),
             firstName: (userData.firstName || '').trim(),
@@ -179,41 +194,39 @@ app.post('/signup', async (req, res) => {
             createdAt: new Date().toISOString(),
             lastLogin: null,
             isActive: true,
-            emailVerified: false // NEW: Track verification status
+            emailVerified: false
         };
 
         users.push(newUser);
         saveUsers(users);
 
-        // NEW: Generate verification token
+        // Generate verification token
         const token = generateVerificationToken();
         
-        // NEW: Store token (expires in 24 hours)
+        // Store token (expires in 24 hours)
         verificationTokens.set(token, {
             userId: newUser.id,
             email: newUser.email,
             expires: Date.now() + (24 * 60 * 60 * 1000) // 24 hours
         });
 
-        // NEW: Send verification email
-        const emailSent = await sendVerificationEmail(
-            newUser.email, 
-            newUser.firstName, 
-            token
-        );
+        // Add to email queue (non-blocking)
+        emailQueue.push({
+            email: newUser.email,
+            firstName: newUser.firstName,
+            token: token
+        });
 
+        // Return immediately without waiting for email
         const safeUser = { ...newUser };
         delete safeUser.password;
 
-        // UPDATED: Return verification status
         res.json({
             success: true,
-            message: emailSent 
-                ? 'Account created! Please check your email to verify your account.'
-                : 'Account created but verification email could not be sent. Please contact support.',
+            message: 'Account created! Please check your email to verify your account.',
             user: safeUser,
             requiresVerification: true,
-            emailSent: emailSent
+            emailQueued: true
         });
 
     } catch (error) {
@@ -225,7 +238,7 @@ app.post('/signup', async (req, res) => {
     }
 });
 
-// UPDATED: Login with email verification check
+// OPTIMIZED: Login with email verification check
 app.post('/login', async (req, res) => {
     try {
         const { emailOrPhone, password } = req.body;
@@ -252,7 +265,7 @@ app.post('/login', async (req, res) => {
             });
         }
 
-        // NEW: Check if email is verified
+        // Check if email is verified
         if (!user.emailVerified) {
             return res.status(403).json({
                 success: false,
@@ -292,7 +305,7 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// NEW: Email verification endpoint
+// OPTIMIZED: Email verification endpoint
 app.get('/verify-email', (req, res) => {
     const { token } = req.query;
     
@@ -340,7 +353,7 @@ app.get('/verify-email', (req, res) => {
     res.redirect(`/verification-success.html?user=${userDataBase64}`);
 });
 
-// NEW: Resend verification email
+// OPTIMIZED: Resend verification email
 app.post('/resend-verification', async (req, res) => {
     const { email } = req.body;
 
@@ -376,24 +389,25 @@ app.post('/resend-verification', async (req, res) => {
         expires: Date.now() + (24 * 60 * 60 * 1000)
     });
 
-    // Send new email
-    const emailSent = await sendVerificationEmail(user.email, user.firstName, token);
+    // Add to email queue (non-blocking)
+    emailQueue.push({
+        email: user.email,
+        firstName: user.firstName,
+        token: token
+    });
 
     res.json({
         success: true,
-        message: emailSent ? 'Verification email resent' : 'Failed to send email',
-        emailSent
+        message: 'Verification email queued for sending',
+        emailQueued: true
     });
 });
 
-// NEW: Report wrong email address
+// Report wrong email address
 app.post('/report-wrong-email', (req, res) => {
     const { email, reason } = req.body;
 
     console.log(`⚠️ Wrong email report: ${email} - Reason: ${reason || 'Not specified'}`);
-
-    // In production, you'd store this in a database or send an alert
-    // For now, just log it
 
     res.json({
         success: true,
