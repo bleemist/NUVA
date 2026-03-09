@@ -57,16 +57,27 @@ function saveUsers(users) {
 
 /* ============================   EMAIL VERIFICATION SETUP ============================ */
 
-// Email transporter configuration with connection pooling
+// Email transporter configuration - FIXED for Render (IPv4 forced)
 const transporter = nodemailer.createTransport({
-    service: 'Gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    requireTLS: true,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
     },
-    pool: true, // Enable connection pooling
+    pool: true,
     maxConnections: 5,
-    maxMessages: 100
+    maxMessages: 100,
+    family: 4, // CRITICAL: Force IPv4 only (fixes Render IPv6 issue)
+    connectionTimeout: 30000,
+    greetingTimeout: 30000,
+    socketTimeout: 30000,
+    tls: {
+        rejectUnauthorized: false // Helps with some network issues
+    },
+    debug: true // Enable debug logs (remove in production)
 });
 
 // Base URL for verification links
@@ -83,6 +94,8 @@ function generateVerificationToken() {
 // Send verification email (non-blocking)
 async function sendVerificationEmail(email, firstName, token) {
     const verificationLink = `${BASE_URL}/verify-email?token=${token}`;
+    
+    console.log(`📧 Attempting to send verification email to ${email}`);
     
     const mailOptions = {
         from: '"NUVA" <noreply@nuva.com>',
@@ -128,11 +141,15 @@ async function sendVerificationEmail(email, firstName, token) {
     };
 
     try {
-        await transporter.sendMail(mailOptions);
-        console.log(`✅ Verification email sent to ${email}`);
+        const info = await transporter.sendMail(mailOptions);
+        console.log(`✅ Verification email sent to ${email} - Message ID: ${info.messageId}`);
         return true;
     } catch (error) {
-        console.error('❌ Email sending failed:', error);
+        console.error('❌ Email sending failed with details:');
+        console.error('- Error code:', error.code);
+        console.error('- Response:', error.response);
+        console.error('- Response code:', error.responseCode);
+        console.error('- Command:', error.command);
         return false;
     }
 }
@@ -412,6 +429,15 @@ app.post('/report-wrong-email', (req, res) => {
     res.json({
         success: true,
         message: 'Thank you for reporting. Our support team will assist you shortly.'
+    });
+});
+
+// Debug endpoint to verify environment variables (REMOVE IN PRODUCTION)
+app.get('/debug-env', (req, res) => {
+    res.json({
+        emailUser: process.env.EMAIL_USER ? '✅ Set to: ' + process.env.EMAIL_USER.substring(0,3) + '...' : '❌ Missing',
+        emailPass: process.env.EMAIL_PASS ? '✅ Set (length: ' + process.env.EMAIL_PASS.length + ')' : '❌ Missing',
+        baseUrl: process.env.BASE_URL || '❌ Missing'
     });
 });
 
