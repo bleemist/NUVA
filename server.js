@@ -60,7 +60,7 @@ function saveUsers(users) {
 // Email transporter configuration - FIXED for Render (IPv4 forced)
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 587,
+    port: 25,
     secure: false,
     requireTLS: true,
     auth: {
