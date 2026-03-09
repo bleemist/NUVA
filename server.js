@@ -1,8 +1,13 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
+
+// ========== NEW: Email verification dependencies ==========
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 
 // Load universities data (must export as object with university keys)
 const universitiesData = require('./data/universities');
@@ -50,8 +55,88 @@ function saveUsers(users) {
     }
 }
 
+/* ============================   EMAIL VERIFICATION SETUP ============================ */
+
+// Email transporter configuration
+const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+}
+});
+
+// Base URL for verification links
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+
+// Store verification tokens (in production, use a database)
+const verificationTokens = new Map(); // { token: { userId, email, expires } }
+
+// Generate a secure verification token
+function generateVerificationToken() {
+    return crypto.randomBytes(32).toString('hex');
+}
+
+// Send verification email
+async function sendVerificationEmail(email, firstName, token) {
+    const verificationLink = `${BASE_URL}/verify-email?token=${token}`;
+    
+    const mailOptions = {
+        from: '"NUVA" <noreply@nuva.com>',
+        to: email,
+        subject: 'Verify Your NUVA Account',
+        html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h1 style="color: #fe4f04;">NUVA</h1>
+                    <h2 style="color: #333;">Welcome, ${firstName || 'Student'}!</h2>
+                </div>
+                
+                <p style="font-size: 16px; line-height: 1.5; color: #555;">
+                    Thank you for creating an account with NUVA. Please verify your email address to complete your registration and access all features.
+                </p>
+                
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="${verificationLink}" 
+                       style="background: linear-gradient(90deg, #fe4f04, #ff7a2d); 
+                              color: white; 
+                              padding: 12px 30px; 
+                              text-decoration: none; 
+                              border-radius: 5px; 
+                              font-weight: bold;
+                              display: inline-block;">
+                        Verify My Account
+                    </a>
+                </div>
+                
+                <p style="font-size: 14px; color: #999; text-align: center;">
+                    This link will expire in 24 hours. If you didn't create an account with NUVA, you can safely ignore this email.
+                </p>
+                
+                <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 20px 0;">
+                
+                <p style="font-size: 12px; color: #999; text-align: center;">
+                    If the button above doesn't work, copy and paste this link into your browser:<br>
+                    <span style="color: #fe4f04;">${verificationLink}</span>
+                </p>
+            </div>
+        `,
+        text: `Welcome to NUVA! Please verify your account by clicking this link: ${verificationLink} This link will expire in 24 hours.`
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log(`✅ Verification email sent to ${email}`);
+        return true;
+    } catch (error) {
+        console.error('❌ Email sending failed:', error);
+        return false;
+    }
+}
+
 /* ============================   USER API ENDPOINTS ============================ */
 
+// UPDATED: Signup with email verification
 app.post('/signup', async (req, res) => {
     try {
         const userData = req.body;
@@ -81,6 +166,7 @@ app.post('/signup', async (req, res) => {
         const saltRounds = 12;
         const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
 
+        // NEW: Added emailVerified field
         const newUser = {
             id: 'user_' + Date.now() + Math.random().toString(36).slice(2, 10),
             firstName: (userData.firstName || '').trim(),
@@ -92,19 +178,42 @@ app.post('/signup', async (req, res) => {
             password: hashedPassword,
             createdAt: new Date().toISOString(),
             lastLogin: null,
-            isActive: true
+            isActive: true,
+            emailVerified: false // NEW: Track verification status
         };
 
         users.push(newUser);
         saveUsers(users);
 
+        // NEW: Generate verification token
+        const token = generateVerificationToken();
+        
+        // NEW: Store token (expires in 24 hours)
+        verificationTokens.set(token, {
+            userId: newUser.id,
+            email: newUser.email,
+            expires: Date.now() + (24 * 60 * 60 * 1000) // 24 hours
+        });
+
+        // NEW: Send verification email
+        const emailSent = await sendVerificationEmail(
+            newUser.email, 
+            newUser.firstName, 
+            token
+        );
+
         const safeUser = { ...newUser };
         delete safeUser.password;
 
+        // UPDATED: Return verification status
         res.json({
             success: true,
-            message: 'Account created successfully!',
-            user: safeUser
+            message: emailSent 
+                ? 'Account created! Please check your email to verify your account.'
+                : 'Account created but verification email could not be sent. Please contact support.',
+            user: safeUser,
+            requiresVerification: true,
+            emailSent: emailSent
         });
 
     } catch (error) {
@@ -116,6 +225,7 @@ app.post('/signup', async (req, res) => {
     }
 });
 
+// UPDATED: Login with email verification check
 app.post('/login', async (req, res) => {
     try {
         const { emailOrPhone, password } = req.body;
@@ -139,6 +249,16 @@ app.post('/login', async (req, res) => {
             return res.status(401).json({
                 success: false,
                 error: 'Invalid email/phone or password.'
+            });
+        }
+
+        // NEW: Check if email is verified
+        if (!user.emailVerified) {
+            return res.status(403).json({
+                success: false,
+                error: 'Please verify your email before logging in.',
+                needsVerification: true,
+                email: user.email
             });
         }
 
@@ -170,6 +290,115 @@ app.post('/login', async (req, res) => {
             error: 'Server error during login. Please try again later.'
         });
     }
+});
+
+// NEW: Email verification endpoint
+app.get('/verify-email', (req, res) => {
+    const { token } = req.query;
+    
+    if (!token) {
+        return res.redirect('/verification-failed.html?reason=missing-token');
+    }
+
+    // Check if token exists and is valid
+    const tokenData = verificationTokens.get(token);
+    
+    if (!tokenData) {
+        return res.redirect('/verification-failed.html?reason=invalid-token');
+    }
+
+    // Check if token expired
+    if (Date.now() > tokenData.expires) {
+        verificationTokens.delete(token);
+        return res.redirect('/verification-failed.html?reason=expired');
+    }
+
+    // Load users and update verification status
+    ensureUsersFileExists();
+    const users = loadUsers();
+    
+    const userIndex = users.findIndex(u => u.id === tokenData.userId);
+    
+    if (userIndex === -1) {
+        return res.redirect('/verification-failed.html?reason=user-not-found');
+    }
+
+    // Mark as verified
+    users[userIndex].emailVerified = true;
+    users[userIndex].emailVerifiedAt = new Date().toISOString();
+    saveUsers(users);
+
+    // Clean up used token
+    verificationTokens.delete(token);
+
+    // Store user in session for auto-login
+    const safeUser = { ...users[userIndex] };
+    delete safeUser.password;
+
+    // Redirect to success page with user data encoded
+    const userDataBase64 = Buffer.from(JSON.stringify(safeUser)).toString('base64');
+    res.redirect(`/verification-success.html?user=${userDataBase64}`);
+});
+
+// NEW: Resend verification email
+app.post('/resend-verification', async (req, res) => {
+    const { email } = req.body;
+
+    if (!email) {
+        return res.status(400).json({ success: false, error: 'Email required' });
+    }
+
+    ensureUsersFileExists();
+    const users = loadUsers();
+    
+    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase().trim());
+
+    if (!user) {
+        return res.status(404).json({ success: false, error: 'User not found' });
+    }
+
+    if (user.emailVerified) {
+        return res.status(400).json({ success: false, error: 'Email already verified' });
+    }
+
+    // Clean up any existing tokens for this user
+    for (const [token, data] of verificationTokens.entries()) {
+        if (data.userId === user.id) {
+            verificationTokens.delete(token);
+        }
+    }
+
+    // Generate new token
+    const token = generateVerificationToken();
+    verificationTokens.set(token, {
+        userId: user.id,
+        email: user.email,
+        expires: Date.now() + (24 * 60 * 60 * 1000)
+    });
+
+    // Send new email
+    const emailSent = await sendVerificationEmail(user.email, user.firstName, token);
+
+    res.json({
+        success: true,
+        message: emailSent ? 'Verification email resent' : 'Failed to send email',
+        emailSent
+    });
+});
+
+// NEW: Report wrong email address
+app.post('/report-wrong-email', (req, res) => {
+    const { email, reason } = req.body;
+
+    console.log(`⚠️ Wrong email report: ${email} - Reason: ${reason || 'Not specified'}`);
+
+    // In production, you'd store this in a database or send an alert
+    // For now, just log it
+
+    res.json({
+        success: true,
+        message: 'Thank you for reporting. Our support team will assist you shortly.'
+    });
 });
 
 app.get('/check-user', (req, res) => {

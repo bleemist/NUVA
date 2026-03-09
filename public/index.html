@@ -21,6 +21,7 @@
       --text-muted: #94a3b8;
       --error: #f87171;
       --success: #34d399;
+      --warning: #fbbf24;
       --input-bg: rgba(30, 41, 59, 0.5);
     }
 
@@ -89,6 +90,8 @@
       color: white;
       box-shadow: 0 10px 30px rgba(254, 79, 4, 0.45);
       animation: pulseGlow 4s infinite ease-in-out;
+      position: relative;
+      overflow: hidden;
     }
 
     @keyframes pulseGlow {
@@ -102,6 +105,30 @@
       inset: 0;
       background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.35) 50%, transparent 60%);
       animation: shine 6s infinite;
+    }
+
+    .grid {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      justify-items: center;
+      align-items: center;
+      opacity: 0.25;
+      padding: 12px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #fff, #cfe8ff);
+    }
+
+    .dot.center {
+      transform: scale(1.5);
+      background: linear-gradient(180deg, #fe4f04, #ff7a2d);
     }
 
     @keyframes shine {
@@ -154,12 +181,14 @@
       color: var(--text-muted);
       pointer-events: none;
       transition: all 0.25s ease;
+      background: transparent;
+      padding: 0 4px;
     }
 
     input:focus + label,
     input:not(:placeholder-shown) + label,
     select:focus + label,
-    select:not([value=""]) + label {
+    select:has(option:checked:not([value=""])) + label {
       top: -10px;
       left: 12px;
       font-size: 0.75rem;
@@ -177,15 +206,15 @@
       color: white;
       font-size: 1rem;
       transition: all 0.25s ease;
-      appearance: none; /* remove default arrow */
+      appearance: none;
     }
 
     select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23fe4f04' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23fe4f04' d='M7 10L2 5h10z'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 16px center;
-      background-size: 12px;
-      padding-right: 36px;
+      background-size: 14px;
+      padding-right: 40px;
     }
 
     input:focus, select:focus {
@@ -197,6 +226,30 @@
     input.error, select.error {
       border-color: var(--error);
       box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.15);
+    }
+
+    .password-strength {
+      margin-top: 0.5rem;
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .strength-bar {
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .strength-bar.weak { background: var(--error); width: 33%; }
+    .strength-bar.medium { background: var(--warning); width: 66%; }
+    .strength-bar.strong { background: var(--success); width: 100%; }
+
+    .strength-text {
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+      color: var(--text-muted);
     }
 
     button {
@@ -224,7 +277,7 @@
       cursor: not-allowed;
     }
 
-    .error-message, .success-message {
+    .error-message, .success-message, .info-message {
       padding: 14px;
       margin: 1rem 0;
       border-radius: 12px;
@@ -243,6 +296,12 @@
       background: rgba(52, 211, 153, 0.15);
       color: #34d399;
       border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .info-message {
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--warning);
+      border: 1px solid rgba(251, 191, 36, 0.3);
     }
 
     .footer-text {
@@ -293,6 +352,7 @@
   <div class="card">
     <div class="error-message" id="error-msg"></div>
     <div class="success-message" id="success-msg"></div>
+    <div class="info-message" id="info-msg"></div>
 
     <form id="signupForm">
       <div class="form-group">
@@ -320,7 +380,6 @@
         <label for="dob">Date of Birth</label>
       </div>
 
-      <!-- Fixed Gender Dropdown -->
       <div class="form-group">
         <select id="gender" name="gender" required>
           <option value="" disabled selected hidden></option>
@@ -333,6 +392,10 @@
       <div class="form-group">
         <input type="password" id="password" name="password" placeholder=" " required>
         <label for="password">Password</label>
+        <div class="password-strength">
+          <div class="strength-bar" id="strengthBar"></div>
+        </div>
+        <div class="strength-text" id="strengthText"></div>
       </div>
 
       <button type="submit" id="submitBtn">Create Account</button>
@@ -345,13 +408,45 @@
 </div>
 
 <script>
-// Your original logic (unchanged)
+// DOM Elements
 const form = document.getElementById('signupForm');
 const submitBtn = document.getElementById('submitBtn');
 const errorMsg = document.getElementById('error-msg');
 const successMsg = document.getElementById('success-msg');
+const infoMsg = document.getElementById('info-msg');
 
-// Phone formatting (unchanged)
+// Password strength checker
+document.getElementById('password').addEventListener('input', function(e) {
+  const password = e.target.value;
+  const strengthBar = document.getElementById('strengthBar');
+  const strengthText = document.getElementById('strengthText');
+  
+  let strength = 0;
+  
+  if (password.length >= 8) strength++;
+  if (password.match(/[a-z]+/)) strength++;
+  if (password.match(/[A-Z]+/)) strength++;
+  if (password.match(/[0-9]+/)) strength++;
+  if (password.match(/[$@#&!]+/)) strength++;
+  
+  strengthBar.className = 'strength-bar';
+  
+  if (password.length === 0) {
+    strengthBar.style.width = '0%';
+    strengthText.textContent = '';
+  } else if (strength < 2) {
+    strengthBar.classList.add('weak');
+    strengthText.textContent = 'Weak password';
+  } else if (strength < 4) {
+    strengthBar.classList.add('medium');
+    strengthText.textContent = 'Medium password';
+  } else {
+    strengthBar.classList.add('strong');
+    strengthText.textContent = 'Strong password';
+  }
+});
+
+// Phone formatting
 document.getElementById('phone').addEventListener('input', function(e) {
   let value = e.target.value.replace(/\D/g, '');
   if (value.length > 12) value = value.slice(0,12);
@@ -365,7 +460,7 @@ document.getElementById('phone').addEventListener('input', function(e) {
   e.target.value = value;
 });
 
-// DOB constraints (unchanged)
+// DOB constraints
 document.addEventListener('DOMContentLoaded', function() {
   const today = new Date();
   const maxDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate());
@@ -375,7 +470,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('dob').min = minDate.toISOString().split('T')[0];
 });
 
-// Email check (unchanged)
+// Email availability check
 document.getElementById('email').addEventListener('blur', async function() {
   const email = this.value.trim();
   if (email) {
@@ -387,6 +482,7 @@ document.getElementById('email').addEventListener('blur', async function() {
         this.classList.add('error');
       } else {
         this.classList.remove('error');
+        hideMessages();
       }
     } catch (error) {
       console.error('Check user error:', error);
@@ -394,7 +490,7 @@ document.getElementById('email').addEventListener('blur', async function() {
   }
 });
 
-// Phone check (unchanged)
+// Phone availability check
 document.getElementById('phone').addEventListener('blur', async function() {
   const phone = this.value.trim();
   if (phone) {
@@ -406,6 +502,7 @@ document.getElementById('phone').addEventListener('blur', async function() {
         this.classList.add('error');
       } else {
         this.classList.remove('error');
+        hideMessages();
       }
     } catch (error) {
       console.error('Check user error:', error);
@@ -413,7 +510,7 @@ document.getElementById('phone').addEventListener('blur', async function() {
   }
 });
 
-// Form submission (unchanged)
+// Form submission with verification
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
 
@@ -437,10 +534,25 @@ form.addEventListener('submit', async function(e) {
     const result = await response.json();
 
     if (result.success) {
-      showSuccess('Account created successfully! Redirecting...');
+      // Show verification message
+      showSuccess(`
+        <strong>Account created successfully!</strong><br><br>
+        We've sent a verification email to <strong>${data.email}</strong>.<br><br>
+        Please check your inbox and click the verification link to activate your account.<br><br>
+        <span style="font-size: 0.9rem;">Didn't receive the email? Check your spam folder or 
+        <a href="#" onclick="resendVerification('${data.email}'); return false;" style="color: var(--primary-light);">click here to resend</a>.</span>
+      `);
+      
+      // Clear form
+      form.reset();
+      
+      // Store email for potential resend
+      sessionStorage.setItem('pendingVerification', data.email);
+      
+      // Redirect after 5 seconds
       setTimeout(() => {
-        window.location.href = '/login';
-      }, 1500);
+        window.location.href = '/verification-pending.html?email=' + encodeURIComponent(data.email);
+      }, 5000);
     } else {
       showError(result.error || 'Something went wrong. Please try again.');
     }
@@ -453,24 +565,74 @@ form.addEventListener('submit', async function(e) {
   }
 });
 
+// Resend verification function
+async function resendVerification(email) {
+  try {
+    const response = await fetch('/resend-verification', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      showInfo('Verification email resent! Please check your inbox.');
+    } else {
+      showError(result.error || 'Failed to resend verification email.');
+    }
+  } catch (err) {
+    showError('Could not connect to the server.');
+  }
+}
+
+// Report wrong email function
+function reportWrongEmail(email) {
+  if (confirm('Report this email as incorrect? Our support team will assist you.')) {
+    fetch('/report-wrong-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, reason: 'User reported wrong email during signup' })
+    })
+    .then(response => response.json())
+    .then(data => {
+      showInfo('Thank you for reporting. Our support team will contact you shortly.');
+    })
+    .catch(err => {
+      showError('Failed to report. Please contact support directly.');
+    });
+  }
+}
+
+// UI Helpers
 function showError(msg) {
-  errorMsg.textContent = msg;
+  errorMsg.innerHTML = msg;
   errorMsg.style.display = 'block';
   successMsg.style.display = 'none';
+  infoMsg.style.display = 'none';
 }
 
 function showSuccess(msg) {
-  successMsg.textContent = msg;
+  successMsg.innerHTML = msg;
   successMsg.style.display = 'block';
   errorMsg.style.display = 'none';
+  infoMsg.style.display = 'none';
+}
+
+function showInfo(msg) {
+  infoMsg.innerHTML = msg;
+  infoMsg.style.display = 'block';
+  errorMsg.style.display = 'none';
+  successMsg.style.display = 'none';
 }
 
 function hideMessages() {
   errorMsg.style.display = 'none';
   successMsg.style.display = 'none';
+  infoMsg.style.display = 'none';
 }
 
-// Background particles (unchanged)
+// Background particles
 function createParticle() {
   const particle = document.createElement('div');
   particle.className = 'particle';
