@@ -3,13 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
-const bcrypt = require('bcrypt');
 
-// ========== Email verification dependencies ==========
-const crypto = require('crypto');
-const nodemailer = require('nodemailer');
-
-// Load universities data (must export as object with university keys)
+// Load universities data
 const universitiesData = require('./data/universities');
 
 const app = express();
@@ -20,455 +15,98 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-/* ============================   USER STORAGE ============================ */
+/* ============================   ADMIN ANALYTICS ============================ */
 
-const USERS_FILE = path.join(__dirname, 'users.json');
+// Store analytics data
+const analytics = {
+    searches: [],
+    visitors: new Set(),
+    subjectFrequency: {},
+    courseViews: {},
+    errors: []
+};
 
-function ensureUsersFileExists() {
-    if (!fs.existsSync(USERS_FILE)) {
-        try {
-            fs.writeFileSync(USERS_FILE, JSON.stringify([], null, 2), 'utf8');
-            console.log(`Created empty users file: ${USERS_FILE}`);
-        } catch (err) {
-            console.error('Failed to create users.json file:', err);
-        }
+// Track visitors
+app.use((req, res, next) => {
+    if (req.path.startsWith('/api/')) {
+        const clientIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+        analytics.visitors.add(clientIp);
     }
-}
-
-ensureUsersFileExists();
-
-function loadUsers() {
-    try {
-        const data = fs.readFileSync(USERS_FILE, 'utf8');
-        return JSON.parse(data);
-    } catch (err) {
-        console.error('Error loading users:', err);
-        return [];
-    }
-}
-
-function saveUsers(users) {
-    try {
-        fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), 'utf8');
-    } catch (err) {
-        console.error('Error saving users:', err);
-    }
-}
-
-/* ============================   EMAIL VERIFICATION SETUP ============================ */
-
-// Email transporter configuration - FIXED for Render (IPv4 forced)
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 25,
-    secure: false,
-    requireTLS: true,
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    },
-    pool: true,
-    maxConnections: 5,
-    maxMessages: 100,
-    family: 4, // CRITICAL: Force IPv4 only (fixes Render IPv6 issue)
-    connectionTimeout: 30000,
-    greetingTimeout: 30000,
-    socketTimeout: 30000,
-    tls: {
-        rejectUnauthorized: false // Helps with some network issues
-    },
-    debug: true // Enable debug logs (remove in production)
+    next();
 });
 
-// Base URL for verification links
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
-
-// Store verification tokens (in production, use a database)
-const verificationTokens = new Map(); // { token: { userId, email, expires } }
-
-// Generate a secure verification token
-function generateVerificationToken() {
-    return crypto.randomBytes(32).toString('hex');
+// Admin authentication
+function requireAdmin(req, res, next) {
+    const adminKey = req.headers['x-admin-key'];
+    if (adminKey === 'Muyanja@6872@') {
+        next();
+    } else {
+        res.status(401).json({ error: 'Unauthorized' });
+    }
 }
 
-// Send verification email (non-blocking)
-async function sendVerificationEmail(email, firstName, token) {
-    const verificationLink = `${BASE_URL}/verify-email?token=${token}`;
-    
-    console.log(`📧 Attempting to send verification email to ${email}`);
-    
-    const mailOptions = {
-        from: '"NUVA" <noreply@nuva.com>',
-        to: email,
-        subject: 'Verify Your NUVA Account',
-        html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px;">
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <h1 style="color: #fe4f04;">NUVA</h1>
-                    <h2 style="color: #333;">Welcome, ${firstName || 'Student'}!</h2>
-                </div>
-                
-                <p style="font-size: 16px; line-height: 1.5; color: #555;">
-                    Thank you for creating an account with NUVA. Please verify your email address to complete your registration and access all features.
-                </p>
-                
-                <div style="text-align: center; margin: 30px 0;">
-                    <a href="${verificationLink}" 
-                       style="background: linear-gradient(90deg, #fe4f04, #ff7a2d); 
-                              color: white; 
-                              padding: 12px 30px; 
-                              text-decoration: none; 
-                              border-radius: 5px; 
-                              font-weight: bold;
-                              display: inline-block;">
-                        Verify My Account
-                    </a>
-                </div>
-                
-                <p style="font-size: 14px; color: #999; text-align: center;">
-                    This link will expire in 24 hours. If you didn't create an account with NUVA, you can safely ignore this email.
-                </p>
-                
-                <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 20px 0;">
-                
-                <p style="font-size: 12px; color: #999; text-align: center;">
-                    If the button above doesn't work, copy and paste this link into your browser:<br>
-                    <span style="color: #fe4f04;">${verificationLink}</span>
-                </p>
-            </div>
-        `,
-        text: `Welcome to NUVA! Please verify your account by clicking this link: ${verificationLink} This link will expire in 24 hours.`
+// Track search
+function trackSearch(data, results) {
+    const searchRecord = {
+        timestamp: new Date().toISOString(),
+        gender: data.gender,
+        level: data.level,
+        oLevelWeight: data.oLevelWeight,
+        subjects: data.principalSubjects || [],
+        totalWeight: results.calculatedWeights?.total || 0,
+        matchesFound: results.totalCourses || 0,
+        university: data.university || 'Any'
     };
+    
+    analytics.searches.unshift(searchRecord);
+    if (analytics.searches.length > 100) analytics.searches.pop();
+    
+    (data.principalSubjects || []).forEach(subject => {
+        analytics.subjectFrequency[subject] = (analytics.subjectFrequency[subject] || 0) + 1;
+    });
+    
+    (results.recommendations || []).forEach(course => {
+        analytics.courseViews[course.code] = (analytics.courseViews[course.code] || 0) + 1;
+    });
+}
 
+/* ============================   UNIVERSITIES FILE MANAGEMENT ============================ */
+
+const UNIVERSITIES_FILE = path.join(__dirname, 'data', 'universities.js');
+
+async function readUniversitiesFile() {
     try {
-        const info = await transporter.sendMail(mailOptions);
-        console.log(`✅ Verification email sent to ${email} - Message ID: ${info.messageId}`);
+        const data = await fs.promises.readFile(UNIVERSITIES_FILE, 'utf8');
+        const match = data.match(/module\.exports\s*=\s*({[\s\S]+});/);
+        if (match) {
+            return new Function('return ' + match[1])();
+        }
+        throw new Error('Invalid universities file format');
+    } catch (error) {
+        console.error('Error reading universities file:', error);
+        throw error;
+    }
+}
+
+async function writeUniversitiesFile(universities) {
+    try {
+        const fileContent = `module.exports = ${JSON.stringify(universities, null, 2)};`;
+        await fs.promises.writeFile(UNIVERSITIES_FILE, fileContent, 'utf8');
         return true;
     } catch (error) {
-        console.error('❌ Email sending failed with details:');
-        console.error('- Error code:', error.code);
-        console.error('- Response:', error.response);
-        console.error('- Response code:', error.responseCode);
-        console.error('- Command:', error.command);
-        return false;
+        console.error('Error writing universities file:', error);
+        throw error;
     }
 }
 
-// Queue for background email sending
-const emailQueue = [];
-
-// Process email queue in background
-setInterval(() => {
-    if (emailQueue.length > 0) {
-        const { email, firstName, token } = emailQueue.shift();
-        sendVerificationEmail(email, firstName, token)
-            .catch(err => console.error('Background email error:', err));
-    }
-}, 1000); // Check every second
-
-/* ============================   USER API ENDPOINTS ============================ */
-
-// OPTIMIZED: Signup with non-blocking email
-app.post('/signup', async (req, res) => {
-    try {
-        const userData = req.body;
-
-        if (!userData.email || !userData.phone || !userData.password) {
-            return res.status(400).json({
-                success: false,
-                error: 'Email, phone number, and password are required'
-            });
-        }
-
-        ensureUsersFileExists();
-        const users = loadUsers();
-
-        const exists = users.some(u =>
-            u.email.toLowerCase() === userData.email.toLowerCase().trim() ||
-            u.phone === userData.phone.trim()
-        );
-
-        if (exists) {
-            return res.status(409).json({
-                success: false,
-                error: 'An account with this email or phone number already exists.'
-            });
-        }
-
-        // Reduced salt rounds for faster hashing (still secure)
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
-
-        const newUser = {
-            id: 'user_' + Date.now() + Math.random().toString(36).slice(2, 10),
-            firstName: (userData.firstName || '').trim(),
-            lastName: (userData.lastName || '').trim(),
-            gender: userData.gender || '',
-            dob: userData.dob || '',
-            email: userData.email.trim().toLowerCase(),
-            phone: userData.phone.trim(),
-            password: hashedPassword,
-            createdAt: new Date().toISOString(),
-            lastLogin: null,
-            isActive: true,
-            emailVerified: false
-        };
-
-        users.push(newUser);
-        saveUsers(users);
-
-        // Generate verification token
-        const token = generateVerificationToken();
-        
-        // Store token (expires in 24 hours)
-        verificationTokens.set(token, {
-            userId: newUser.id,
-            email: newUser.email,
-            expires: Date.now() + (24 * 60 * 60 * 1000) // 24 hours
-        });
-
-        // Add to email queue (non-blocking)
-        emailQueue.push({
-            email: newUser.email,
-            firstName: newUser.firstName,
-            token: token
-        });
-
-        // Return immediately without waiting for email
-        const safeUser = { ...newUser };
-        delete safeUser.password;
-
-        res.json({
-            success: true,
-            message: 'Account created! Please check your email to verify your account.',
-            user: safeUser,
-            requiresVerification: true,
-            emailQueued: true
-        });
-
-    } catch (error) {
-        console.error('Signup error:', error);
-        res.status(500).json({
-            success: false,
-            error: 'Server error during registration. Please try again later.'
-        });
-    }
-});
-
-// OPTIMIZED: Login with email verification check
-app.post('/login', async (req, res) => {
-    try {
-        const { emailOrPhone, password } = req.body;
-
-        if (!emailOrPhone || !password) {
-            return res.status(400).json({
-                success: false,
-                error: 'Email/phone and password are required'
-            });
-        }
-
-        ensureUsersFileExists();
-        const users = loadUsers();
-
-        const user = users.find(u =>
-            (u.email === emailOrPhone.trim().toLowerCase() ||
-             u.phone === emailOrPhone.trim())
-        );
-
-        if (!user) {
-            return res.status(401).json({
-                success: false,
-                error: 'Invalid email/phone or password.'
-            });
-        }
-
-        // Check if email is verified
-        if (!user.emailVerified) {
-            return res.status(403).json({
-                success: false,
-                error: 'Please verify your email before logging in.',
-                needsVerification: true,
-                email: user.email
-            });
-        }
-
-        const passwordMatch = await bcrypt.compare(password, user.password);
-
-        if (!passwordMatch) {
-            return res.status(401).json({
-                success: false,
-                error: 'Invalid email/phone or password.'
-            });
-        }
-
-        user.lastLogin = new Date().toISOString();
-        saveUsers(users);
-
-        const safeUser = { ...user };
-        delete safeUser.password;
-
-        res.json({
-            success: true,
-            message: 'Login successful!',
-            user: safeUser
-        });
-
-    } catch (error) {
-        console.error('Login error:', error);
-        res.status(500).json({
-            success: false,
-            error: 'Server error during login. Please try again later.'
-        });
-    }
-});
-
-// OPTIMIZED: Email verification endpoint
-app.get('/verify-email', (req, res) => {
-    const { token } = req.query;
-    
-    if (!token) {
-        return res.redirect('/verification-failed.html?reason=missing-token');
-    }
-
-    // Check if token exists and is valid
-    const tokenData = verificationTokens.get(token);
-    
-    if (!tokenData) {
-        return res.redirect('/verification-failed.html?reason=invalid-token');
-    }
-
-    // Check if token expired
-    if (Date.now() > tokenData.expires) {
-        verificationTokens.delete(token);
-        return res.redirect('/verification-failed.html?reason=expired');
-    }
-
-    // Load users and update verification status
-    ensureUsersFileExists();
-    const users = loadUsers();
-    
-    const userIndex = users.findIndex(u => u.id === tokenData.userId);
-    
-    if (userIndex === -1) {
-        return res.redirect('/verification-failed.html?reason=user-not-found');
-    }
-
-    // Mark as verified
-    users[userIndex].emailVerified = true;
-    users[userIndex].emailVerifiedAt = new Date().toISOString();
-    saveUsers(users);
-
-    // Clean up used token
-    verificationTokens.delete(token);
-
-    // Store user in session for auto-login
-    const safeUser = { ...users[userIndex] };
-    delete safeUser.password;
-
-    // Redirect to success page with user data encoded
-    const userDataBase64 = Buffer.from(JSON.stringify(safeUser)).toString('base64');
-    res.redirect(`/verification-success.html?user=${userDataBase64}`);
-});
-
-// OPTIMIZED: Resend verification email
-app.post('/resend-verification', async (req, res) => {
-    const { email } = req.body;
-
-    if (!email) {
-        return res.status(400).json({ success: false, error: 'Email required' });
-    }
-
-    ensureUsersFileExists();
-    const users = loadUsers();
-    
-    const user = users.find(u => u.email.toLowerCase() === email.toLowerCase().trim());
-
-    if (!user) {
-        return res.status(404).json({ success: false, error: 'User not found' });
-    }
-
-    if (user.emailVerified) {
-        return res.status(400).json({ success: false, error: 'Email already verified' });
-    }
-
-    // Clean up any existing tokens for this user
-    for (const [token, data] of verificationTokens.entries()) {
-        if (data.userId === user.id) {
-            verificationTokens.delete(token);
-        }
-    }
-
-    // Generate new token
-    const token = generateVerificationToken();
-    verificationTokens.set(token, {
-        userId: user.id,
-        email: user.email,
-        expires: Date.now() + (24 * 60 * 60 * 1000)
-    });
-
-    // Add to email queue (non-blocking)
-    emailQueue.push({
-        email: user.email,
-        firstName: user.firstName,
-        token: token
-    });
-
-    res.json({
-        success: true,
-        message: 'Verification email queued for sending',
-        emailQueued: true
-    });
-});
-
-// Report wrong email address
-app.post('/report-wrong-email', (req, res) => {
-    const { email, reason } = req.body;
-
-    console.log(`⚠️ Wrong email report: ${email} - Reason: ${reason || 'Not specified'}`);
-
-    res.json({
-        success: true,
-        message: 'Thank you for reporting. Our support team will assist you shortly.'
-    });
-});
-
-// Debug endpoint to verify environment variables (REMOVE IN PRODUCTION)
-app.get('/debug-env', (req, res) => {
-    res.json({
-        emailUser: process.env.EMAIL_USER ? '✅ Set to: ' + process.env.EMAIL_USER.substring(0,3) + '...' : '❌ Missing',
-        emailPass: process.env.EMAIL_PASS ? '✅ Set (length: ' + process.env.EMAIL_PASS.length + ')' : '❌ Missing',
-        baseUrl: process.env.BASE_URL || '❌ Missing'
-    });
-});
-
-app.get('/check-user', (req, res) => {
-    const { email, phone } = req.query;
-
-    if (!email && !phone) {
-        return res.status(400).json({ exists: false, error: 'Provide email or phone' });
-    }
-
-    ensureUsersFileExists();
-    const users = loadUsers();
-    let exists = false;
-
-    if (email) {
-        exists = users.some(u => u.email === email.trim().toLowerCase());
-    }
-    if (phone && !exists) {
-        exists = users.some(u => u.phone === phone.trim());
-    }
-
-    res.json({ exists });
-});
-
-/* ============================   CONFIGURATION  ============================ */
+/* ============================   CONFIGURATION & HELPERS ============================ */
 
 const gradePoints = {
     A: 6, B: 5, C: 4,
     D: 3, E: 2, O: 1, F: 0
 };
 
+// Subject mapping
 const subjectMapping = {
     math: ['mathematics', 'math', 'maths'],
     physics: ['physics'],
@@ -477,13 +115,21 @@ const subjectMapping = {
     economics: ['economics'],
     geography: ['geography'],
     history: ['history'],
-    english: ['english', 'literature', 'lit'],
-    fineart: ['fine art', 'art'],
-    technicaldrawing: ['technical drawing', 'td'],
-    computer: ['computer', 'ict', 'computer studies']
+    english: ['english', 'literature', 'lit', 'english language'],
+    fineart: ['fine art', 'art', 'drawing'],
+    technicaldrawing: ['technical drawing', 'td', 'geometry'],
+    computer: ['computer', 'ict', 'computer studies', 'computing'],
+    agriculture: ['agriculture', 'agri'],
+    entrepreneurship: ['entrepreneurship', 'entrep', 'business'],
+    foodnutrition: ['food & nutrition', 'foods', 'nutrition'],
+    religious: ['religious education', 'cre', 'ire', 'divinity'],
+    kiswahili: ['kiswahili'],
+    french: ['french'],
+    german: ['german'],
+    luganda: ['luganda'],
+    music: ['music'],
+    physical: ['physical education', 'pe', 'sports']
 };
-
-/* ============================   HELPER FUNCTIONS  ============================ */
 
 function matchSubject(studentSubject = "", requiredSubject = "") {
     const student = studentSubject.toLowerCase().trim();
@@ -500,6 +146,72 @@ function matchSubject(studentSubject = "", requiredSubject = "") {
     return student.includes(required) || required.includes(student);
 }
 
+/* ============================   WEIGHT CALCULATION ============================ */
+
+// Analyze university data to find most common essential subjects
+function analyzeUniversityEssentialSubjects(university) {
+    const essentialCounts = {};
+    
+    if (!university || !university.courseRequirements) return essentialCounts;
+    
+    Object.values(university.courseRequirements).forEach(course => {
+        if (course.essentialSubjects && Array.isArray(course.essentialSubjects)) {
+            course.essentialSubjects.forEach(subject => {
+                const normalizedSubject = subject.toLowerCase().trim();
+                essentialCounts[normalizedSubject] = (essentialCounts[normalizedSubject] || 0) + 1;
+            });
+        }
+    });
+    
+    return essentialCounts;
+}
+
+// Get the selected university object
+function getSelectedUniversity(universityName) {
+    if (!universityName || universityName === 'Any University') return null;
+    
+    // Try to find by name property first
+    let found = Object.values(universitiesData).find(uni => 
+        uni.name && uni.name.toLowerCase().includes(universityName.toLowerCase())
+    );
+    
+    if (found) return found;
+    
+    // If not found by name, try by key
+    const uniKey = Object.keys(universitiesData).find(key => 
+        key.toLowerCase().includes(universityName.toLowerCase().replace(/\s+/g, ''))
+    );
+    
+    return uniKey ? universitiesData[uniKey] : null;
+}
+
+// Determine which subjects are most likely essential
+function determineEssentialSubjects(userSubjects, university) {
+    if (!university) return [];
+    
+    const essentialCounts = analyzeUniversityEssentialSubjects(university);
+    
+    if (Object.keys(essentialCounts).length === 0) return [];
+    
+    const subjectScores = userSubjects.map(subject => {
+        let score = 0;
+        Object.entries(essentialCounts).forEach(([essSubject, count]) => {
+            if (matchSubject(subject, essSubject)) {
+                score += count;
+            }
+        });
+        return { subject, score };
+    });
+    
+    subjectScores.sort((a, b) => b.score - a.score);
+    
+    return subjectScores
+        .filter(item => item.score > 0)
+        .slice(0, 2)
+        .map(item => item.subject);
+}
+
+// Calculate weight for a specific course
 function calculateCourseWeight(studentData, principalSubjects, principalGrades, courseReq) {
     if (!courseReq) return 0;
 
@@ -509,12 +221,12 @@ function calculateCourseWeight(studentData, principalSubjects, principalGrades, 
         total += 1.5;
     }
 
-    // Subsidiary points: 1 point for any subsidiary pass
-    if (studentData.subsidiaryResult === '1') {
+    // Subsidiary points
+    if (studentData.subsidiaryPoints === 1) {
         total += 1;
     }
 
-    // Prepare subject details, limit to top 3 principals by points
+    // Prepare subject details
     let subjectDetails = principalSubjects.map((subject, index) => {
         const grade = principalGrades[index]?.toUpperCase();
         const points = gradePoints[grade] || 0;
@@ -528,35 +240,24 @@ function calculateCourseWeight(studentData, principalSubjects, principalGrades, 
     let essentialCount = 0;
     let essentialWeight = 0;
     let relevantWeight = 0;
-    let desirableWeight = 0;
 
     subjectDetails.forEach(item => {
         const isEssential = (courseReq.essentialSubjects || []).some(req => matchSubject(item.subject, req));
-        const isRequired = (courseReq.requiredSubjects || []).some(req => matchSubject(item.subject, req));
-
-        let multiplier = 1; // Default desirable
 
         if (isEssential && essentialCount < 2) {
-            multiplier = 3;
+            essentialWeight += item.points * 3;
             essentialCount++;
-        } else if (isEssential) {
-            multiplier = 2; // Demote extra essential to relevant
-        } else if (isRequired) {
-            multiplier = 2;
+        } else {
+            relevantWeight += item.points * 2;
         }
-
-        const weighted = item.points * multiplier;
-
-        if (multiplier === 3) essentialWeight += weighted;
-        else if (multiplier === 2) relevantWeight += weighted;
-        else desirableWeight += weighted;
     });
 
-    total += essentialWeight + relevantWeight + desirableWeight;
+    total += essentialWeight + relevantWeight;
 
     return Number(total.toFixed(1));
 }
 
+// Check subject requirements
 function meetsSubjectRequirements(courseReq, principalSubjects) {
     if (!courseReq?.requiredSubjects) return true;
     if (courseReq.requiredSubjects.includes("any") || courseReq.requiredSubjects.includes("Any")) return true;
@@ -566,6 +267,7 @@ function meetsSubjectRequirements(courseReq, principalSubjects) {
     );
 }
 
+// Get eligible courses - FIXED to match working version's structure
 function getEligibleCourses(studentData, principalSubjects, principalGrades) {
     const eligibleCourses = [];
 
@@ -608,120 +310,92 @@ function getEligibleCourses(studentData, principalSubjects, principalGrades) {
     return eligibleCourses.sort((a, b) => b.yourWeight - a.yourWeight);
 }
 
-// Helper function to build intelligent weight breakdown
+// Build weight breakdown - FIXED to match working version's structure
 function buildWeightBreakdown(data, principalSubjects, principalGrades, recommendations) {
     const weights = {
         oLevel: data.oLevelWeight || 0,
         genderBonus: data.gender === 'female' ? 1.5 : 0,
-        subsidiaryPoints: data.subsidiaryResult === '1' ? 1 : 0,
+        subsidiary: data.subsidiaryPoints || 0,
         principalSubjects: [],
         essentialTotal: 0,
-        relevantTotal: 0,
-        desirableTotal: 0,
+        otherTotal: 0,
         total: 0
     };
 
     let essentialTotal = 0;
-    let relevantTotal = 0;
-    let desirableTotal = 0;
+    let otherTotal = 0;
 
     if (principalSubjects.length === 0) {
         weights.total = Number(
-            (weights.oLevel + weights.genderBonus + weights.subsidiaryPoints).toFixed(1)
+            (weights.oLevel + weights.genderBonus + weights.subsidiary).toFixed(1)
         );
         return weights;
     }
 
-    // Reference essentials and required from top matching course (or fallback)
+    // Get reference essentials from first recommendation (like working version)
     let referenceEssentials = [];
-    let referenceRequired = [];
     if (recommendations.length > 0) {
         referenceEssentials = recommendations[0].essentialSubjects || [];
-        referenceRequired = recommendations[0].requiredSubjects || [];
     } else {
-        const allEss = new Set();
-        const allReq = new Set();
-        Object.values(universitiesData).forEach(uni => {
-            Object.values(uni.courseRequirements || {}).forEach(req => {
-                (req.essentialSubjects || []).forEach(es => allEss.add(es.toLowerCase().trim()));
-                (req.requiredSubjects || []).forEach(rs => allReq.add(rs.toLowerCase().trim()));
-            });
-        });
-        referenceEssentials = Array.from(allEss);
-        referenceRequired = Array.from(allReq);
+        // Fallback to university analysis if no recommendations
+        const selectedUni = getSelectedUniversity(data.university);
+        if (selectedUni) {
+            referenceEssentials = determineEssentialSubjects(principalSubjects, selectedUni);
+        }
     }
 
-    // Prepare subjects with points for prioritization, limit to top 3
+    // Prepare subjects with points
     let subjectDetails = principalSubjects.map((subject, i) => {
         const grade = principalGrades[i];
         const points = gradePoints[grade] || 0;
         return { subject, grade, points };
     });
 
-    // Sort by points descending and take top 3
+    // Sort by points
     subjectDetails.sort((a, b) => b.points - a.points);
     subjectDetails = subjectDetails.slice(0, 3);
 
-    // Assign multipliers: max 2 essentials
     let essentialCount = 0;
 
-    subjectDetails.forEach((item) => {
-        const subject = item.subject;
-        const grade = item.grade;
-        const points = item.points;
+    subjectDetails.forEach(item => {
+        const isEssential = referenceEssentials.some(es => matchSubject(item.subject, es));
 
-        const isTrueEssential = referenceEssentials.some(es => matchSubject(subject, es));
-        const isRequired = referenceRequired.some(rs => matchSubject(subject, rs));
+        let multiplier = 2;
+        let category = 'Relevant';
 
-        let multiplier = 1; // Default desirable
-        let category = 'Desirable';
-        let note = 'Desirable subject';
-
-        if (isTrueEssential && essentialCount < 2) {
+        if (isEssential && essentialCount < 2) {
             multiplier = 3;
             category = 'Essential';
-            note = 'Essential for top matching courses';
             essentialCount++;
-        } else if (isTrueEssential) {
-            multiplier = 2; // Demote extra essential to relevant
-            category = 'Relevant';
-            note = 'Demoted essential (max 2 allowed)';
-        } else if (isRequired) {
-            multiplier = 2;
-            category = 'Relevant';
-            note = 'Relevant subject';
         }
 
-        const weighted = points * multiplier;
+        const weighted = item.points * multiplier;
 
         weights.principalSubjects.push({
-            subject,
-            grade,
-            points,
+            subject: item.subject,
+            grade: item.grade,
+            points: item.points,
             multiplier,
             weightedPoints: weighted,
-            category,
-            note
+            category
         });
 
         if (multiplier === 3) essentialTotal += weighted;
-        else if (multiplier === 2) relevantTotal += weighted;
-        else desirableTotal += weighted;
+        else otherTotal += weighted;
     });
 
     weights.essentialTotal = essentialTotal;
-    weights.relevantTotal = relevantTotal;
-    weights.desirableTotal = desirableTotal;
-
+    weights.otherTotal = otherTotal;
     weights.total = Number(
-        (weights.oLevel + weights.genderBonus + weights.subsidiaryPoints + essentialTotal + relevantTotal + desirableTotal).toFixed(1)
+        (weights.oLevel + weights.genderBonus + weights.subsidiary + essentialTotal + otherTotal).toFixed(1)
     );
 
     return weights;
 }
 
-/* ============================   API ENDPOINT - submit-subjects ============================ */
+/* ============================   API ENDPOINTS ============================ */
 
+// ===== Course Recommendation Endpoint =====
 app.post('/api/submit-subjects', (req, res) => {
     try {
         const rawData = req.body;
@@ -734,12 +408,18 @@ app.post('/api/submit-subjects', (req, res) => {
             });
         }
 
-        // Normalize input
+        // Calculate subsidiary points
+        let subsidiaryPoints = 0;
+        if (rawData.gpResult === '1' || rawData.subsidiaryResult === '1') {
+            subsidiaryPoints = 1;
+        }
+
+        // Normalize input - USING SAME STRUCTURE AS WORKING VERSION
         const data = {
             gender: (rawData.gender || '').toLowerCase().trim(),
             level: (rawData.level || '').trim(),
             oLevelWeight: parseFloat(rawData.oLevelWeight) || 0,
-            subsidiaryResult: rawData.subsidiaryResult,
+            subsidiaryPoints: subsidiaryPoints,
             university: (rawData.university || '').trim()
         };
 
@@ -747,7 +427,7 @@ app.post('/api/submit-subjects', (req, res) => {
         if (isNaN(data.oLevelWeight) || data.oLevelWeight < 0 || data.oLevelWeight > 3) {
             return res.status(400).json({
                 success: false,
-                message: "O-Level weight must be a number between 0 and 3 (calculated from best 8 subjects: D1/D2=0.3, C3–C6=0.2, P7/P8=0.1)"
+                message: "O-Level weight must be a number between 0 and 3"
             });
         }
 
@@ -772,7 +452,7 @@ app.post('/api/submit-subjects', (req, res) => {
             });
         }
 
-        // Get all eligible courses
+        // Get eligible courses
         let recommendations = getEligibleCourses(data, principalSubjects, principalGrades);
 
         // University filter
@@ -793,7 +473,17 @@ app.post('/api/submit-subjects', (req, res) => {
         // Build weight breakdown
         const weights = buildWeightBreakdown(data, principalSubjects, principalGrades, recommendations);
 
-        // Final response
+        // Track search
+        trackSearch({
+            ...data,
+            principalSubjects
+        }, {
+            calculatedWeights: weights,
+            totalCourses: recommendations.length,
+            recommendations
+        });
+
+        // Final response - USING SAME STRUCTURE AS WORKING VERSION
         res.json({
             success: true,
             totalCourses: recommendations.length,
@@ -805,14 +495,19 @@ app.post('/api/submit-subjects', (req, res) => {
                 gender: data.gender,
                 level: data.level,
                 oLevelWeight: data.oLevelWeight,
-                subsidiaryPoints: weights.subsidiaryPoints,
-                subsidiarySubject: rawData.subsidiarySubject || 'None',
+                subsidiaryPoints: data.subsidiaryPoints,
                 selectedUniversity: data.university || null
             },
             filterMessage: filterMessage || null
         });
 
     } catch (error) {
+        analytics.errors.push({
+            timestamp: new Date().toISOString(),
+            type: 'error',
+            message: error.message
+        });
+        
         console.error("API Error:", error);
         res.status(500).json({
             success: false,
@@ -821,7 +516,186 @@ app.post('/api/submit-subjects', (req, res) => {
     }
 });
 
-/* ============================ HEALTH CHECK ============================ */
+// Debug endpoint
+app.get('/api/debug/universities', (req, res) => {
+    const summary = {};
+    
+    Object.entries(universitiesData).forEach(([key, uni]) => {
+        summary[key] = {
+            name: uni.name || key,
+            courseCount: Object.keys(uni.courseRequirements || {}).length,
+            cutoffCount: Object.keys(uni.cutOffPoints || {}).length
+        };
+    });
+    
+    res.json({
+        totalUniversities: Object.keys(universitiesData).length,
+        summary
+    });
+});
+
+/* ============================   ADMIN API ENDPOINTS ============================ */
+
+app.get('/api/admin/stats', requireAdmin, (req, res) => {
+    let popularCourse = 'None';
+    let maxViews = 0;
+    Object.entries(analytics.courseViews).forEach(([code, views]) => {
+        if (views > maxViews) {
+            maxViews = views;
+            popularCourse = code;
+        }
+    });
+
+    const avgWeight = analytics.searches.length > 0
+        ? analytics.searches.reduce((sum, s) => sum + s.totalWeight, 0) / analytics.searches.length
+        : 0;
+
+    const subjectEntries = Object.entries(analytics.subjectFrequency)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10);
+
+    const totalCourses = Object.values(universitiesData)
+        .reduce((sum, uni) => sum + Object.keys(uni.courseRequirements || {}).length, 0);
+
+    res.json({
+        totalSearches: analytics.searches.length,
+        totalUniversities: Object.keys(universitiesData).length,
+        totalCourses,
+        uniqueVisitors: analytics.visitors.size,
+        averageWeight: avgWeight,
+        popularCourse: popularCourse,
+        recentSearches: analytics.searches.slice(0, 20),
+        recentErrors: analytics.errors.slice(0, 20),
+        subjectFrequency: {
+            labels: subjectEntries.map(e => e[0]),
+            values: subjectEntries.map(e => e[1])
+        }
+    });
+});
+
+app.get('/api/admin/universities', requireAdmin, async (req, res) => {
+    try {
+        const universities = await readUniversitiesFile();
+        res.json(universities);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to load universities' });
+    }
+});
+
+app.get('/api/admin/courses/:university/:code', requireAdmin, async (req, res) => {
+    try {
+        const { university, code } = req.params;
+        const universities = await readUniversitiesFile();
+        
+        const uni = universities[university];
+        if (!uni) return res.status(404).json({ error: 'University not found' });
+        
+        const course = uni.courseRequirements?.[code];
+        if (!course) return res.status(404).json({ error: 'Course not found' });
+        
+        res.json({
+            name: uni.courseNames?.[code] || code,
+            faculty: course.faculty || '',
+            duration: course.duration || '',
+            cutOff: uni.cutOffPoints?.[code] || 0,
+            programType: course.programType || 'Day',
+            essentialSubjects: course.essentialSubjects || [],
+            requiredSubjects: course.requiredSubjects || []
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to load course' });
+    }
+});
+
+app.post('/api/admin/courses', requireAdmin, async (req, res) => {
+    try {
+        const { university, code, name, faculty, duration, cutOff, programType, essentialSubjects, requiredSubjects } = req.body;
+        
+        const universities = await readUniversitiesFile();
+        
+        if (!universities[university]) {
+            universities[university] = {
+                name: university.replace(/([A-Z])/g, ' $1').trim(),
+                courseRequirements: {},
+                cutOffPoints: {},
+                courseNames: {}
+            };
+        }
+        
+        universities[university].courseRequirements[code] = {
+            faculty,
+            duration,
+            programType,
+            essentialSubjects: essentialSubjects || [],
+            requiredSubjects: requiredSubjects || []
+        };
+        
+        universities[university].cutOffPoints[code] = cutOff;
+        universities[university].courseNames[code] = name;
+        
+        await writeUniversitiesFile(universities);
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to save course' });
+    }
+});
+
+app.put('/api/admin/courses', requireAdmin, async (req, res) => {
+    try {
+        const { university, originalCode, code, name, faculty, duration, cutOff, programType, essentialSubjects, requiredSubjects } = req.body;
+        
+        const universities = await readUniversitiesFile();
+        
+        if (originalCode && originalCode !== code) {
+            delete universities[university].courseRequirements[originalCode];
+            delete universities[university].cutOffPoints[originalCode];
+            delete universities[university].courseNames[originalCode];
+        }
+        
+        universities[university].courseRequirements[code] = {
+            faculty,
+            duration,
+            programType,
+            essentialSubjects: essentialSubjects || [],
+            requiredSubjects: requiredSubjects || []
+        };
+        
+        universities[university].cutOffPoints[code] = cutOff;
+        universities[university].courseNames[code] = name;
+        
+        await writeUniversitiesFile(universities);
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to update course' });
+    }
+});
+
+app.delete('/api/admin/courses', requireAdmin, async (req, res) => {
+    try {
+        const { university, code } = req.body;
+        
+        const universities = await readUniversitiesFile();
+        
+        if (universities[university]) {
+            delete universities[university].courseRequirements[code];
+            delete universities[university].cutOffPoints[code];
+            delete universities[university].courseNames[code];
+        }
+        
+        await writeUniversitiesFile(universities);
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to delete course' });
+    }
+});
+
+app.post('/api/admin/clear-logs', requireAdmin, (req, res) => {
+    analytics.searches = [];
+    analytics.errors = [];
+    res.json({ success: true });
+});
+
+/* ============================   HEALTH CHECK ============================ */
 
 app.get('/api/health', (req, res) => {
     const totalCourses = Object.values(universitiesData)
@@ -835,10 +709,20 @@ app.get('/api/health', (req, res) => {
     });
 });
 
-/* ============================  STATIC ROUTES ============================ */
+/* ============================   STATIC ROUTES ============================ */
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.use(express.static('public'));
+
+app.use((req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 /* ============================  START SERVER  ============================ */
@@ -846,4 +730,8 @@ app.get('*', (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`NUVA server running on http://localhost:${PORT}`);
+    console.log(`✅ User accounts and email verification disabled`);
+    console.log(`✅ Admin panel available at /admin.html`);
+    console.log(`✅ Analytics tracking enabled`);
+    console.log(`✅ Debug endpoint: /api/debug/universities`);
 });
