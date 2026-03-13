@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NUVA - Find Courses</title>
+  <title>NUVA - Course Guidance Expert System</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,6 @@
       --card-border: rgba(254, 79, 4, 0.18);
       --text: #f8fafc;
       --text-muted: #94a3b8;
-      --sidebar-bg: rgba(15, 23, 42, 0.85);
       --input-bg: rgba(30, 41, 59, 0.5);
       --error: #f87171;
       --success: #34d399;
@@ -63,39 +62,38 @@
       100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
     }
 
-    /* Sticky Header */
-    .header {
-      position: sticky;
-      top: 0;
-      background: var(--sidebar-bg);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--card-border);
-      padding: 1rem 2rem;
+    header {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 1.2rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
       z-index: 100;
     }
 
-    .header-logo {
+    .header-left {
       display: flex;
       align-items: center;
       gap: 1rem;
     }
 
     .nuva-logo {
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       background: conic-gradient(from 200deg, #fe4f04, #ff7a2d 90deg, #9b6aff);
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: 'Poppins', sans-serif;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       font-weight: 700;
       color: white;
-      box-shadow: 0 4px 15px rgba(254, 79, 4, 0.25);
+      box-shadow: 0 4px 20px rgba(254, 79, 4, 0.3);
       position: relative;
       overflow: hidden;
       animation: pulseGlow 4s infinite ease-in-out;
@@ -110,8 +108,8 @@
     }
 
     @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 4px 15px rgba(254, 79, 4, 0.25); }
-      50%      { box-shadow: 0 8px 25px rgba(254, 79, 4, 0.45); }
+      0%, 100% { box-shadow: 0 4px 20px rgba(254, 79, 4, 0.3); }
+      50%      { box-shadow: 0 8px 30px rgba(254, 79, 4, 0.5); }
     }
 
     @keyframes shine {
@@ -143,45 +141,33 @@
       background: linear-gradient(180deg, #fe4f04, #ff7a2d);
     }
 
-    .header-logo h1 {
+    .header-left h1 {
       font-family: 'Poppins', sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       background: linear-gradient(to right, var(--primary), var(--primary-light));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin: 0;
     }
 
     .nav-links {
       display: flex;
-      gap: 0.5rem;
+      gap: 1.5rem;
     }
 
-    .nav-link {
-      display: flex;
-      align-items: center;
-      padding: 0.6rem 1.2rem;
+    .nav-links a {
       color: var(--text-muted);
       text-decoration: none;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      transition: all 0.25s ease;
-      white-space: nowrap;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      padding: 0.5rem 0;
+      border-bottom: 2px solid transparent;
     }
 
-    .nav-link:hover, .nav-link.active {
-      background: rgba(254, 79, 4, 0.12);
-      color: white;
+    .nav-links a:hover {
+      color: var(--primary-light);
+      border-bottom-color: var(--primary);
     }
 
-    .nav-link svg {
-      width: 18px;
-      height: 18px;
-      margin-right: 6px;
-      fill: currentColor;
-    }
-
-    /* Main Container */
     .container {
       flex: 1;
       display: flex;
@@ -204,7 +190,7 @@
     }
 
     .card-header {
-      padding: 2rem 2rem 1rem;
+      padding: 1.8rem 2rem;
       border-bottom: 1px solid var(--card-border);
     }
 
@@ -219,7 +205,7 @@
 
     .card-header p {
       color: var(--text-muted);
-      font-size: 0.95rem;
+      font-size: 1rem;
     }
 
     .card-body {
@@ -228,7 +214,7 @@
 
     /* Form Styles */
     .form-section {
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
       background: rgba(255, 255, 255, 0.02);
       border-radius: 16px;
       padding: 1.5rem;
@@ -236,8 +222,8 @@
 
     .form-section h3 {
       font-family: 'Poppins', sans-serif;
-      font-size: 1.1rem;
-      margin-bottom: 1.2rem;
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
       color: var(--primary-light);
       display: flex;
       align-items: center;
@@ -253,11 +239,12 @@
     .form-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.2rem;
+      gap: 1.5rem;
     }
 
     .form-group {
       position: relative;
+      margin-bottom: 0.5rem;
     }
 
     .form-group.full-width {
@@ -336,6 +323,135 @@
       fill: var(--text-muted);
     }
 
+    /* O-Level Grade Count Styles */
+    .grade-count-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .grade-count-item {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .grade-count-item label {
+      position: relative;
+      top: 0;
+      left: 0;
+      color: var(--primary-light);
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .grade-count-item input {
+      text-align: center;
+      font-size: 1.2rem;
+      padding: 0.8rem;
+    }
+
+    .grade-badge {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+
+    .grade-badge.distinction {
+      background: rgba(52, 211, 153, 0.2);
+      color: #34d399;
+    }
+
+    .grade-badge.credit {
+      background: rgba(251, 191, 36, 0.2);
+      color: #fbbf24;
+    }
+
+    .grade-badge.pass {
+      background: rgba(96, 165, 250, 0.2);
+      color: #60a5fa;
+    }
+
+    .grade-badge.fail {
+      background: rgba(248, 113, 113, 0.2);
+      color: #f87171;
+    }
+
+    .weight-preview {
+      background: rgba(254, 79, 4, 0.1);
+      border-radius: 12px;
+      padding: 1rem;
+      margin: 1rem 0;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    .weight-preview span {
+      color: var(--primary-light);
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .o-level-toggle {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding: 0.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+    }
+
+    .toggle-option {
+      flex: 1;
+      text-align: center;
+      padding: 0.8rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .toggle-option.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Subsidiary Grid Styles */
+    .subsidiary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .subsidiary-group {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      padding: 1.2rem;
+      border: 1px solid var(--card-border);
+    }
+
+    .subsidiary-group h4 {
+      color: var(--primary-light);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .subsidiary-group h4 svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--primary);
+    }
+
     .add-btn {
       background: rgba(254, 79, 4, 0.1);
       border: 1px dashed var(--card-border);
@@ -372,7 +488,7 @@
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 8px 25px rgba(254, 79, 4, 0.4);
-      margin-top: 1.5rem;
+      margin-top: 1rem;
     }
 
     .submit-btn:hover:not(:disabled) {
@@ -390,17 +506,17 @@
     .loading-overlay {
       display: none;
       text-align: center;
-      padding: 1.5rem;
+      padding: 2rem;
     }
 
     .loading-spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid rgba(254, 79, 4, 0.2);
-      border-top: 3px solid var(--primary);
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(254, 79, 4, 0.2);
+      border-top: 4px solid var(--primary);
       border-radius: 50%;
       animation: spin 1s linear infinite;
-      margin: 0 auto 0.5rem;
+      margin: 1rem auto;
     }
 
     @keyframes spin {
@@ -411,9 +527,8 @@
     .message {
       padding: 1rem;
       border-radius: 10px;
-      margin-bottom: 1rem;
+      margin: 1rem 0;
       display: none;
-      font-size: 0.95rem;
     }
 
     .error-msg {
@@ -428,44 +543,13 @@
       border: 1px solid rgba(52, 211, 153, 0.3);
     }
 
-    /* Subsidiary Section Grid */
-    .subsidiary-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .subsidiary-group {
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 12px;
-      padding: 1.2rem;
-      border: 1px solid var(--card-border);
-    }
-
-    .subsidiary-group h4 {
-      color: var(--primary-light);
-      margin-bottom: 1rem;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .subsidiary-group h4 svg {
-      width: 16px;
-      height: 16px;
-      fill: var(--primary);
-    }
-
-    /* Admin Link */
-    .admin-link {
+    .help-tip {
       position: fixed;
       bottom: 2rem;
       right: 2rem;
       background: var(--card-bg);
       backdrop-filter: blur(10px);
-      padding: 0.8rem 1.2rem;
+      padding: 1rem;
       border-radius: 50px;
       border: 1px solid var(--card-border);
       display: flex;
@@ -474,19 +558,9 @@
       color: var(--text-muted);
       font-size: 0.9rem;
       z-index: 100;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      opacity: 0.7;
     }
 
-    .admin-link:hover {
-      opacity: 1;
-      transform: translateY(-3px);
-      border-color: var(--primary);
-      color: var(--primary-light);
-    }
-
-    .admin-link svg {
+    .help-tip svg {
       width: 20px;
       height: 20px;
       fill: var(--primary);
@@ -514,19 +588,19 @@
     }
 
     @media (max-width: 768px) {
-      .header {
+      header {
         flex-direction: column;
         gap: 1rem;
         padding: 1rem;
       }
       
       .nav-links {
-        width: 100%;
+        flex-wrap: wrap;
         justify-content: center;
       }
       
       .card-header {
-        padding: 1.5rem 1.5rem 0.5rem;
+        padding: 1.5rem;
       }
       
       .card-body {
@@ -535,7 +609,10 @@
       
       .subject-row {
         grid-template-columns: 1fr;
-        gap: 0.5rem;
+      }
+      
+      .grade-count-grid {
+        grid-template-columns: 1fr;
       }
       
       .subsidiary-grid {
@@ -543,10 +620,9 @@
         gap: 1rem;
       }
       
-      .admin-link {
+      .help-tip {
         bottom: 1rem;
         right: 1rem;
-        padding: 0.6rem 1rem;
       }
     }
   </style>
@@ -556,9 +632,8 @@
 <!-- Background Particles -->
 <div class="particles" id="particles"></div>
 
-<!-- Header -->
-<header class="header">
-  <div class="header-logo">
+<header>
+  <div class="header-left">
     <div class="nuva-logo">
       NUVA
       <div class="grid">
@@ -567,22 +642,12 @@
         <div class="dot"></div><div class="dot"></div><div class="dot"></div>
       </div>
     </div>
-    <h1>Find Courses</h1>
+    <h1>Course Guidance</h1>
   </div>
-  
   <div class="nav-links">
-    <a href="index.html" class="nav-link">
-      <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
-      Dashboard
-    </a>
-    <a href="course-input.html" class="nav-link active">
-      <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg>
-      Find Courses
-    </a>
-    <a href="results.html" class="nav-link">
-      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
-      Results
-    </a>
+    <a href="index.html">Dashboard</a>
+    <a href="course-input.html" style="color: var(--primary-light); border-bottom-color: var(--primary);">Find Courses</a>
+    <a href="results.html">Results</a>
   </div>
 </header>
 
@@ -590,7 +655,7 @@
   <div class="main-card">
     <div class="card-header">
       <h2>Enter Your Academic Details</h2>
-      <p>Get personalized course recommendations based on the official Ugandan education system</p>
+      <p>Fill in your information below to get personalized course recommendations based on the official Ugandan education system.</p>
     </div>
 
     <div class="card-body">
@@ -599,7 +664,7 @@
       <div class="message success-msg" id="successMsg"></div>
 
       <form id="courseForm">
-        <!-- Personal Information -->
+        <!-- Basic Information Section -->
         <div class="form-section">
           <h3>
             <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
@@ -610,7 +675,7 @@
               <select id="gender" name="gender" required>
                 <option value="" disabled selected hidden></option>
                 <option value="male">Male</option>
-                <option value="female">Female (+1.5 bonus)</option>
+                <option value="female">Female</option>
               </select>
               <label for="gender">Gender *</label>
             </div>
@@ -626,38 +691,86 @@
           </div>
         </div>
 
-        <!-- O-Level Section (hidden initially) -->
+        <!-- O-Level Section -->
         <div class="form-section" id="oLevelSection" style="display: none;">
           <h3>
             <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
             O-Level Information
           </h3>
-          <div class="form-group full-width">
-            <input type="number" id="oLevelWeight" name="oLevelWeight" step="0.1" min="0" max="3" placeholder=" ">
-            <label for="oLevelWeight">O-Level Aggregate Weight (0.0 - 3.0)</label>
-            <div class="info-text">
+          
+          <!-- Toggle between manual weight and grade counting -->
+          <div class="o-level-toggle" id="oLevelToggle">
+            <div class="toggle-option active" onclick="setOLevelInputMode('count')">Count Grades</div>
+            <div class="toggle-option" onclick="setOLevelInputMode('manual')">Enter Weight Manually</div>
+          </div>
+
+          <!-- Grade Counting Mode (Default) -->
+          <div id="gradeCountMode">
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">
+              Enter the number of subjects you passed in each grade category. 
+              Total subjects should be between 8 and 10.
+            </p>
+            
+            <div class="grade-count-grid">
+              <div class="grade-count-item">
+                <label>D1/D2 <span class="grade-badge distinction">Distinction</span></label>
+                <input type="number" id="distinctionCount" min="0" max="10" value="0" step="1">
+              </div>
+              <div class="grade-count-item">
+                <label>C3-C6 <span class="grade-badge credit">Credit</span></label>
+                <input type="number" id="creditCount" min="0" max="10" value="0" step="1">
+              </div>
+              <div class="grade-count-item">
+                <label>P7/P8 <span class="grade-badge pass">Pass</span></label>
+                <input type="number" id="passCount" min="0" max="10" value="0" step="1">
+              </div>
+              <div class="grade-count-item">
+                <label>F9 <span class="grade-badge fail">Fail</span></label>
+                <input type="number" id="failCount" min="0" max="10" value="0" step="1">
+              </div>
+            </div>
+
+            <div class="weight-preview" id="weightPreview">
+              Calculated O-Level Weight: <span id="calculatedWeight">0.0</span>
+            </div>
+            
+            <div class="info-text" id="subjectCountMessage">
               <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-              Your best 8 subjects aggregate points (D1/D2=0.3, C3-C6=0.2, P7/P8=0.1)
+              Total subjects: <span id="totalSubjects">0</span> (need 8-10)
             </div>
           </div>
-          <div id="oLevelSubjects"></div>
-          <button type="button" class="add-btn" id="addOLevelSubject" style="display: none;">+ Add Another Subject</button>
+
+          <!-- Manual Weight Mode (Hidden by Default) -->
+          <div id="manualWeightMode" style="display: none;">
+            <div class="form-group full-width">
+              <input type="number" id="oLevelWeight" name="oLevelWeight" step="0.1" min="0" max="3" placeholder=" ">
+              <label for="oLevelWeight">O-Level Aggregate Weight (0.0 - 3.0)</label>
+              <div class="info-text">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                Enter your pre-calculated O-Level weight (max 3.0)
+              </div>
+            </div>
+          </div>
+
+          <!-- Hidden input to store the final O-Level weight -->
+          <input type="hidden" id="finalOLevelWeight" name="oLevelWeight" value="0">
         </div>
 
-        <!-- A-Level Section (hidden initially) -->
+        <!-- A-Level Section -->
         <div class="form-section" id="aLevelSection" style="display: none;">
           <h3>
             <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/></svg>
             Principal Subjects (A-Level)
           </h3>
           <div id="principalSubjects"></div>
+          <div id="subjectError" style="color: var(--error); font-size: 0.9rem; margin-top: 0.5rem; display: none;"></div>
 
-          <!-- UPDATED: Separate Subsidiary Sections -->
-          <h3 style="margin-top: 1.5rem;">
+          <h3 style="margin-top: 2rem;">
             <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
             Subsidiary Information
           </h3>
           
+          <!-- SEPARATE SUBSIDIARY SECTIONS -->
           <div class="subsidiary-grid">
             <!-- General Paper Section -->
             <div class="subsidiary-group">
@@ -725,8 +838,8 @@
               <option value="Kyambogo University">Kyambogo University</option>
               <option value="Makerere University">Makerere University</option>
               <option value="Mbarara University of Science & Technology">Mbarara University of Science & Technology</option>
-              <option value="Gulu University">Gulu University</option>
               <option value="Busitema University">Busitema University</option>
+              <option value="Gulu University">Gulu University</option>
               <option value="Kabale University">Kabale University</option>
               <option value="Lira University">Lira University</option>
               <option value="Soroti University">Soroti University</option>
@@ -737,7 +850,7 @@
           </div>
           <div class="info-text">
             <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-            Select a specific university or choose "Any University" for all options
+            Select a specific university to see only its courses, or choose "Any University" for all options
           </div>
         </div>
 
@@ -754,14 +867,14 @@
   </div>
 </div>
 
-<!-- Admin Quick Link -->
-<a href="admin.html" class="admin-link" title="Admin Panel">
-  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
-  Admin
-</a>
+<!-- Help Tip -->
+<div class="help-tip">
+  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm0-4h-2V7h2v8z"/></svg>
+  Need help? Check the User Agreement
+</div>
 
 <footer>
-  © 2026 BLEEM Labs Co. All rights reserved. Owned by <strong>MUYANJA ANDREW</strong>.<br>
+ © 2026 BLEEM Labs Co. All rights reserved. Owned by <strong>MUYANJA ANDREW</strong>.<br>
   Contact: <a href="mailto:bleemistorg@gmail.com">NUVA Org | Email and Consultation Center</a>
 </footer>
 
@@ -788,6 +901,9 @@
   <option value="Music">
   <option value="Physical Education">
   <option value="Food & Nutrition">
+  <option value="General Paper">
+  <option value="Subsidiary Mathematics">
+  <option value="ICT">
 </datalist>
 
 <script>
@@ -796,275 +912,381 @@ const levelSelect = document.getElementById('level');
 const oLevelSection = document.getElementById('oLevelSection');
 const aLevelSection = document.getElementById('aLevelSection');
 const principalContainer = document.getElementById('principalSubjects');
-const oLevelContainer = document.getElementById('oLevelSubjects');
-const addOLevelBtn = document.getElementById('addOLevelSubject');
 const form = document.getElementById('courseForm');
 const submitBtn = document.getElementById('submitBtn');
 const loading = document.getElementById('loading');
 const errorMsg = document.getElementById('errorMsg');
 const successMsg = document.getElementById('successMsg');
 
-let oLevelSubjectCount = 8;
+// O-Level grade count elements
+const distinctionInput = document.getElementById('distinctionCount');
+const creditInput = document.getElementById('creditCount');
+const passInput = document.getElementById('passCount');
+const failInput = document.getElementById('failCount');
+const calculatedWeightSpan = document.getElementById('calculatedWeight');
+const totalSubjectsSpan = document.getElementById('totalSubjects');
+const subjectCountMessage = document.getElementById('subjectCountMessage');
+const gradeCountMode = document.getElementById('gradeCountMode');
+const manualWeightMode = document.getElementById('manualWeightMode');
+const manualWeightInput = document.getElementById('oLevelWeight');
+const finalOLevelWeight = document.getElementById('finalOLevelWeight');
+const toggleOptions = document.querySelectorAll('.toggle-option');
+const subjectError = document.getElementById('subjectError');
+
+// Subsidiary elements
+const gpResult = document.getElementById('gpResult');
+const subsidiarySubject = document.getElementById('subsidiarySubject');
+const subsidiaryResult = document.getElementById('subsidiaryResult');
+
+// Track entered subjects for duplicate prevention
+const enteredSubjects = new Set();
+
+// O-Level grade weights
+const GRADE_WEIGHTS = {
+    distinction: 0.3,
+    credit: 0.2,
+    pass: 0.1,
+    fail: 0
+};
 
 // Initialize particles
 function createParticle() {
-  const particles = document.getElementById('particles');
-  const particle = document.createElement('div');
-  particle.className = 'particle';
-  
-  const size = Math.random() * 8 + 4;
-  particle.style.width = `${size}px`;
-  particle.style.height = `${size}px`;
-  particle.style.left = Math.random() * 100 + 'vw';
-  particle.style.animationDuration = Math.random() * 10 + 15 + 's';
-  particle.style.animationDelay = Math.random() * 5 + 's';
-  
-  particles.appendChild(particle);
-  setTimeout(() => particle.remove(), 20000);
+    const particles = document.getElementById('particles');
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    
+    const size = Math.random() * 8 + 4;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.left = Math.random() * 100 + 'vw';
+    particle.style.animationDuration = Math.random() * 10 + 15 + 's';
+    particle.style.animationDelay = Math.random() * 5 + 's';
+    
+    particles.appendChild(particle);
+    setTimeout(() => particle.remove(), 20000);
 }
 
 // Initialize particles
 for (let i = 0; i < 20; i++) createParticle();
 setInterval(createParticle, 1000);
 
+// Set O-Level input mode
+function setOLevelInputMode(mode) {
+    toggleOptions.forEach(opt => opt.classList.remove('active'));
+    if (mode === 'count') {
+        toggleOptions[0].classList.add('active');
+        gradeCountMode.style.display = 'block';
+        manualWeightMode.style.display = 'none';
+        calculateOLevelWeight();
+    } else {
+        toggleOptions[1].classList.add('active');
+        gradeCountMode.style.display = 'none';
+        manualWeightMode.style.display = 'block';
+        updateFinalWeight();
+    }
+}
+
+// Calculate O-Level weight from grade counts
+function calculateOLevelWeight() {
+    const distinctions = parseInt(distinctionInput.value) || 0;
+    const credits = parseInt(creditInput.value) || 0;
+    const passes = parseInt(passInput.value) || 0;
+    const fails = parseInt(failInput.value) || 0;
+    
+    const total = distinctions + credits + passes + fails;
+    totalSubjectsSpan.textContent = total;
+    
+    // Validate subject count
+    if (total < 8) {
+        subjectCountMessage.style.color = 'var(--error)';
+        subjectCountMessage.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> Total subjects: ${total} (minimum 8 required)`;
+    } else if (total > 10) {
+        subjectCountMessage.style.color = 'var(--error)';
+        subjectCountMessage.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> Total subjects: ${total} (maximum 10 allowed)`;
+    } else {
+        subjectCountMessage.style.color = 'var(--text-muted)';
+        subjectCountMessage.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> Total subjects: ${total} (valid)`;
+    }
+    
+    // Calculate weight
+    const weight = (distinctions * GRADE_WEIGHTS.distinction) +
+                   (credits * GRADE_WEIGHTS.credit) +
+                   (passes * GRADE_WEIGHTS.pass) +
+                   (fails * GRADE_WEIGHTS.fail);
+    
+    const roundedWeight = Math.min(weight, 3.0).toFixed(1);
+    calculatedWeightSpan.textContent = roundedWeight;
+    
+    // Update hidden input
+    if (total >= 8 && total <= 10) {
+        finalOLevelWeight.value = roundedWeight;
+    } else {
+        finalOLevelWeight.value = '0';
+    }
+}
+
+// Update final weight from manual input
+function updateFinalWeight() {
+    const manualWeight = parseFloat(manualWeightInput.value) || 0;
+    if (manualWeight >= 0 && manualWeight <= 3) {
+        finalOLevelWeight.value = manualWeight.toFixed(1);
+    } else {
+        finalOLevelWeight.value = '0';
+    }
+}
+
+// Add event listeners for grade count inputs
+[distinctionInput, creditInput, passInput, failInput].forEach(input => {
+    input.addEventListener('input', calculateOLevelWeight);
+});
+
+manualWeightInput.addEventListener('input', updateFinalWeight);
+
 // Handle level change
 levelSelect.addEventListener('change', function() {
-  const level = this.value;
-  
-  oLevelSection.style.display = level ? 'block' : 'none';
-  aLevelSection.style.display = level === 'A-Level' ? 'block' : 'none';
-  
-  if (level === 'A-Level') {
-    createPrincipalSubjects();
-    oLevelContainer.innerHTML = '';
-    addOLevelBtn.style.display = 'none';
-  } else if (level === 'O-Level') {
-    principalContainer.innerHTML = '';
-    createOLevelSubjects();
-    addOLevelBtn.style.display = 'block';
-  }
-  
-  hideMessages();
+    const level = this.value;
+    
+    oLevelSection.style.display = level ? 'block' : 'none';
+    aLevelSection.style.display = level === 'A-Level' ? 'block' : 'none';
+    
+    if (level === 'A-Level') {
+        createPrincipalSubjects();
+    }
+    
+    hideMessages();
 });
 
-// Create A-Level principal subject fields
+// Create A-Level principal subject fields with duplicate prevention
 function createPrincipalSubjects() {
-  principalContainer.innerHTML = '';
-  
-  for (let i = 1; i <= 3; i++) {
-    const div = document.createElement('div');
-    div.className = 'subject-row';
-    div.innerHTML = `
-      <div class="form-group">
-        <input type="text" id="principal${i}" name="principal${i}" list="commonSubjects" placeholder=" " ${i === 1 ? 'required' : ''}>
-        <label for="principal${i}">Subject ${i} ${i === 1 ? '*' : ''}</label>
-      </div>
-      <div class="form-group">
-        <select id="principalGrade${i}" name="principalGrade${i}" ${i === 1 ? 'required' : ''}>
-          <option value="" disabled selected hidden></option>
-          <option value="A">A (6 pts)</option>
-          <option value="B">B (5 pts)</option>
-          <option value="C">C (4 pts)</option>
-          <option value="D">D (3 pts)</option>
-          <option value="E">E (2 pts)</option>
-          <option value="O">O (1 pt)</option>
-          <option value="F">F (0 pts)</option>
-        </select>
-        <label for="principalGrade${i}">Grade ${i === 1 ? '*' : ''}</label>
-      </div>
-    `;
-    principalContainer.appendChild(div);
-  }
-}
-
-// Create O-Level subject fields
-function createOLevelSubjects() {
-  oLevelContainer.innerHTML = '';
-  oLevelSubjectCount = 8;
-  
-  for (let i = 1; i <= 8; i++) {
-    addOLevelSubject(i);
-  }
-}
-
-// Add single O-Level subject
-function addOLevelSubject(index) {
-  const div = document.createElement('div');
-  div.className = 'subject-row';
-  div.innerHTML = `
-    <div class="form-group">
-      <input type="text" name="subject${index}" list="commonSubjects" placeholder=" " required>
-      <label for="subject${index}">Subject ${index}</label>
-    </div>
-    <div class="form-group">
-      <select name="grade${index}" required>
-        <option value="" disabled selected hidden></option>
-        <option value="D1">D1 (0.3)</option>
-        <option value="D2">D2 (0.3)</option>
-        <option value="C3">C3 (0.2)</option>
-        <option value="C4">C4 (0.2)</option>
-        <option value="C5">C5 (0.2)</option>
-        <option value="C6">C6 (0.2)</option>
-        <option value="P7">P7 (0.1)</option>
-        <option value="P8">P8 (0.1)</option>
-        <option value="9">9 (0.0)</option>
-      </select>
-      <label for="grade${index}">Grade</label>
-    </div>
-  `;
-  oLevelContainer.appendChild(div);
-}
-
-// Add more O-Level subjects
-addOLevelBtn.addEventListener('click', function() {
-  if (oLevelSubjectCount < 15) {
-    oLevelSubjectCount++;
-    addOLevelSubject(oLevelSubjectCount);
+    principalContainer.innerHTML = '';
+    enteredSubjects.clear();
     
-    if (oLevelSubjectCount === 15) {
-      this.disabled = true;
-      this.textContent = 'Maximum 15 subjects reached';
-    }
-  }
-});
-
-// Form submission - UPDATED to handle separate subsidiary fields
-form.addEventListener('submit', async function(e) {
-  e.preventDefault();
-
-  const formData = new FormData(this);
-  
-  // Add subsidiary fields manually
-  const gpResult = document.getElementById('gpResult').value;
-  const subsidiarySubject = document.getElementById('subsidiarySubject').value;
-  const subsidiaryResult = document.getElementById('subsidiaryResult').value;
-  
-  // Combine subsidiary data
-  let subsidiaryGrade = '0';
-  if (gpResult === '1' || subsidiaryResult === '1') {
-    subsidiaryGrade = '1'; // If either is passed
-  }
-  
-  // Add to form data
-  formData.set('subsidiaryGrade', subsidiaryGrade);
-  formData.set('subsidiarySubject', subsidiarySubject || 'General Paper');
-  
-  const data = Object.fromEntries(formData.entries());
-
-  // Validation
-  if (!data.gender || !data.level || !data.university) {
-    showError('Please fill all required fields.');
-    return;
-  }
-
-  if (data.level === 'A-Level') {
-    if (!data.oLevelWeight) {
-      showError('Please enter your O-Level weight.');
-      return;
-    }
-    
-    const oLevelWeight = parseFloat(data.oLevelWeight);
-    if (isNaN(oLevelWeight) || oLevelWeight < 0 || oLevelWeight > 3) {
-      showError('O-Level weight must be between 0 and 3.');
-      return;
-    }
-    
-    let hasPrincipal = false;
     for (let i = 1; i <= 3; i++) {
-      if (data[`principal${i}`] && data[`principal${i}`].trim() && 
-          data[`principalGrade${i}`]) {
-        hasPrincipal = true;
-        break;
-      }
+        const div = document.createElement('div');
+        div.className = 'subject-row';
+        div.innerHTML = `
+            <div class="form-group">
+                <input type="text" id="principal${i}" name="principal${i}" list="commonSubjects" placeholder=" " ${i === 1 ? 'required' : ''}>
+                <label for="principal${i}">Subject ${i} ${i === 1 ? '*' : ''}</label>
+            </div>
+            <div class="form-group">
+                <select id="principalGrade${i}" name="principalGrade${i}" ${i === 1 ? 'required' : ''}>
+                    <option value="" disabled selected hidden></option>
+                    <option value="A">A (6 pts)</option>
+                    <option value="B">B (5 pts)</option>
+                    <option value="C">C (4 pts)</option>
+                    <option value="D">D (3 pts)</option>
+                    <option value="E">E (2 pts)</option>
+                    <option value="O">O (1 pt)</option>
+                    <option value="F">F (0 pts)</option>
+                </select>
+                <label for="principalGrade${i}">Grade ${i === 1 ? '*' : ''}</label>
+            </div>
+        `;
+        principalContainer.appendChild(div);
+        
+        // Add duplicate prevention to subject input
+        const subjectInput = document.getElementById(`principal${i}`);
+        subjectInput.addEventListener('blur', function() {
+            checkDuplicateSubjects();
+        });
+        subjectInput.addEventListener('input', function() {
+            // Clear error when typing
+            subjectError.style.display = 'none';
+        });
+    }
+}
+
+// Check for duplicate subjects
+function checkDuplicateSubjects() {
+    const subjects = [];
+    let hasDuplicate = false;
+    let duplicateSubject = '';
+    
+    for (let i = 1; i <= 3; i++) {
+        const input = document.getElementById(`principal${i}`);
+        if (input && input.value.trim()) {
+            const subject = input.value.trim().toLowerCase();
+            if (subjects.includes(subject)) {
+                hasDuplicate = true;
+                duplicateSubject = input.value.trim();
+                break;
+            }
+            subjects.push(subject);
+        }
     }
     
-    if (!hasPrincipal) {
-      showError('Please enter at least one principal subject and grade.');
-      return;
-    }
-  }
-
-  setLoading(true);
-  hideMessages();
-
-  try {
-    const response = await fetch('/api/submit-subjects', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-
-    const result = await response.json();
-
-    if (result.success) {
-      // Store all data for results page
-      sessionStorage.setItem('courseRecommendations', JSON.stringify(result.recommendations || []));
-      sessionStorage.setItem('totalCourses', result.totalCourses || '0');
-      sessionStorage.setItem('weights', JSON.stringify(result.calculatedWeights || {}));
-      sessionStorage.setItem('principalSubjectsUsed', JSON.stringify(result.principalSubjectsUsed || []));
-      sessionStorage.setItem('principalGradesUsed', JSON.stringify(result.principalGradesUsed || []));
-      sessionStorage.setItem('submissionData', JSON.stringify({
-        ...data,
-        selectedUniversity: data.university === 'Any University' ? '' : data.university
-      }));
-
-      showSuccess('Recommendations ready! Redirecting...');
-      setTimeout(() => {
-        window.location.href = 'results.html';
-      }, 1200);
+    if (hasDuplicate) {
+        subjectError.textContent = `Duplicate subject detected: "${duplicateSubject}". Please enter unique subjects.`;
+        subjectError.style.display = 'block';
+        return false;
     } else {
-      showError(result.message || 'Server returned an error. Please check your input.');
+        subjectError.style.display = 'none';
+        return true;
     }
-  } catch (err) {
-    console.error(err);
-    showError('Could not connect to the server. Is the backend running?');
-  } finally {
-    setLoading(false);
-  }
+}
+
+// Form submission
+form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Check for duplicate subjects first
+    if (!checkDuplicateSubjects()) {
+        showError('Please fix duplicate subjects before submitting.');
+        return;
+    }
+
+    const formData = new FormData(this);
+    
+    // Add subsidiary points - combine GP and other subsidiary
+    const gpPassed = gpResult?.value === '1';
+    const subsidiaryPassed = subsidiaryResult?.value === '1';
+    
+    // Create combined subsidiary grade (1 if either is passed)
+    const combinedSubsidiaryGrade = (gpPassed || subsidiaryPassed) ? '1' : '0';
+    formData.set('subsidiaryGrade', combinedSubsidiaryGrade);
+    
+    const data = Object.fromEntries(formData.entries());
+
+    // Validation
+    if (!data.gender || !data.level || !data.university) {
+        showError('Please fill all required fields.');
+        return;
+    }
+
+    if (data.level === 'A-Level') {
+        // Validate O-Level weight
+        const oLevelWeight = parseFloat(data.oLevelWeight);
+        if (isNaN(oLevelWeight) || oLevelWeight < 0 || oLevelWeight > 3) {
+            showError('O-Level weight must be between 0 and 3.');
+            return;
+        }
+        
+        // Check principal subjects
+        let hasPrincipal = false;
+        for (let i = 1; i <= 3; i++) {
+            if (data[`principal${i}`] && data[`principal${i}`].trim() && 
+                data[`principalGrade${i}`]) {
+                hasPrincipal = true;
+                break;
+            }
+        }
+        
+        if (!hasPrincipal) {
+            showError('Please enter at least one principal subject and grade.');
+            return;
+        }
+        
+        // Check grade count mode validation
+        const activeMode = toggleOptions[0].classList.contains('active') ? 'count' : 'manual';
+        if (activeMode === 'count') {
+            const distinctions = parseInt(distinctionInput.value) || 0;
+            const credits = parseInt(creditInput.value) || 0;
+            const passes = parseInt(passInput.value) || 0;
+            const fails = parseInt(failInput.value) || 0;
+            const total = distinctions + credits + passes + fails;
+            
+            if (total < 8 || total > 10) {
+                showError('O-Level subjects must be between 8 and 10.');
+                return;
+            }
+        }
+    }
+
+    setLoading(true);
+    hideMessages();
+
+    try {
+        const response = await fetch('/api/submit-subjects', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            sessionStorage.setItem('courseRecommendations', JSON.stringify(result.recommendations || []));
+            sessionStorage.setItem('totalCourses', result.totalCourses || '0');
+            sessionStorage.setItem('weights', JSON.stringify(result.calculatedWeights || {}));
+            sessionStorage.setItem('principalSubjectsUsed', JSON.stringify(result.principalSubjectsUsed || []));
+            sessionStorage.setItem('principalGradesUsed', JSON.stringify(result.principalGradesUsed || []));
+            sessionStorage.setItem('submissionData', JSON.stringify({
+                ...data,
+                selectedUniversity: data.university === 'Any University' ? '' : data.university
+            }));
+
+            showSuccess('Recommendations ready! Redirecting...');
+            setTimeout(() => {
+                window.location.href = 'results.html';
+            }, 1200);
+        } else {
+            showError(result.message || 'Server returned an error. Please check your input.');
+        }
+    } catch (err) {
+        console.error(err);
+        showError('Could not connect to the server. Is the backend running?');
+    } finally {
+        setLoading(false);
+    }
 });
 
 // UI Helpers
 function setLoading(isLoading) {
-  submitBtn.disabled = isLoading;
-  submitBtn.textContent = isLoading ? 'Processing...' : 'Get Course Recommendations';
-  loading.style.display = isLoading ? 'block' : 'none';
+    submitBtn.disabled = isLoading;
+    submitBtn.textContent = isLoading ? 'Processing...' : 'Get Course Recommendations';
+    loading.style.display = isLoading ? 'block' : 'none';
 }
 
 function showError(msg) {
-  errorMsg.textContent = msg;
-  errorMsg.style.display = 'block';
-  successMsg.style.display = 'none';
+    errorMsg.textContent = msg;
+    errorMsg.style.display = 'block';
+    successMsg.style.display = 'none';
 }
 
 function showSuccess(msg) {
-  successMsg.textContent = msg;
-  successMsg.style.display = 'block';
-  errorMsg.style.display = 'none';
+    successMsg.textContent = msg;
+    successMsg.style.display = 'block';
+    errorMsg.style.display = 'none';
 }
 
 function hideMessages() {
-  errorMsg.style.display = 'none';
-  successMsg.style.display = 'none';
+    errorMsg.style.display = 'none';
+    successMsg.style.display = 'none';
 }
 
 // Auto-capitalize subjects
 document.addEventListener('input', function(e) {
-  if (e.target.name && (e.target.name.includes('subject') || e.target.name.includes('principal'))) {
-    const words = e.target.value.split(' ');
-    const capitalized = words.map(word => 
-      word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-    ).join(' ');
-    if (capitalized !== e.target.value) {
-      e.target.value = capitalized;
+    if (e.target.name && (e.target.name.includes('principal'))) {
+        const words = e.target.value.split(' ');
+        const capitalized = words.map(word => 
+            word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        ).join(' ');
+        if (capitalized !== e.target.value) {
+            e.target.value = capitalized;
+        }
     }
-  }
 });
+
+// Test server connection
+async function testConnection() {
+    try {
+        const response = await fetch('/api/health');
+        const result = await response.json();
+        console.log('✅ Server connected:', result.status);
+    } catch (error) {
+        console.warn('⚠️ Server not connected. Make sure backend is running.');
+    }
+}
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
-  // Test server connection (optional)
-  fetch('/api/health').catch(() => {});
+    testConnection();
+    calculateOLevelWeight(); // Initialize weight calculation
 });
+
+// Make functions available globally
+window.setOLevelInputMode = setOLevelInputMode;
 </script>
 
 </body>

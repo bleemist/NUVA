@@ -148,10 +148,8 @@ function matchSubject(studentSubject = "", requiredSubject = "") {
 
 /* ============================   WEIGHT CALCULATION ============================ */
 
-// Analyze university data to find most common essential subjects
 function analyzeUniversityEssentialSubjects(university) {
     const essentialCounts = {};
-    
     if (!university || !university.courseRequirements) return essentialCounts;
     
     Object.values(university.courseRequirements).forEach(course => {
@@ -162,56 +160,43 @@ function analyzeUniversityEssentialSubjects(university) {
             });
         }
     });
-    
     return essentialCounts;
 }
 
-// Get the selected university object
 function getSelectedUniversity(universityName) {
     if (!universityName || universityName === 'Any University') return null;
     
-    // Try to find by name property first
     let found = Object.values(universitiesData).find(uni => 
         uni.name && uni.name.toLowerCase().includes(universityName.toLowerCase())
     );
-    
     if (found) return found;
     
-    // If not found by name, try by key
     const uniKey = Object.keys(universitiesData).find(key => 
         key.toLowerCase().includes(universityName.toLowerCase().replace(/\s+/g, ''))
     );
-    
     return uniKey ? universitiesData[uniKey] : null;
 }
 
-// Determine which subjects are most likely essential
 function determineEssentialSubjects(userSubjects, university) {
     if (!university) return [];
-    
     const essentialCounts = analyzeUniversityEssentialSubjects(university);
-    
     if (Object.keys(essentialCounts).length === 0) return [];
     
     const subjectScores = userSubjects.map(subject => {
         let score = 0;
         Object.entries(essentialCounts).forEach(([essSubject, count]) => {
-            if (matchSubject(subject, essSubject)) {
-                score += count;
-            }
+            if (matchSubject(subject, essSubject)) score += count;
         });
         return { subject, score };
     });
     
     subjectScores.sort((a, b) => b.score - a.score);
-    
     return subjectScores
         .filter(item => item.score > 0)
         .slice(0, 2)
         .map(item => item.subject);
 }
 
-// Calculate weight for a specific course
 function calculateCourseWeight(studentData, principalSubjects, principalGrades, courseReq) {
     if (!courseReq) return 0;
 
@@ -221,19 +206,17 @@ function calculateCourseWeight(studentData, principalSubjects, principalGrades, 
         total += 1.5;
     }
 
-    // Subsidiary points
+    // UPDATED: Use subsidiaryPoints that combines GP and other subsidiary
     if (studentData.subsidiaryPoints === 1) {
         total += 1;
     }
 
-    // Prepare subject details
     let subjectDetails = principalSubjects.map((subject, index) => {
         const grade = principalGrades[index]?.toUpperCase();
         const points = gradePoints[grade] || 0;
         return { subject, points, grade };
     });
 
-    // Sort by points descending and take top 3
     subjectDetails.sort((a, b) => b.points - a.points);
     subjectDetails = subjectDetails.slice(0, 3);
 
@@ -253,11 +236,9 @@ function calculateCourseWeight(studentData, principalSubjects, principalGrades, 
     });
 
     total += essentialWeight + relevantWeight;
-
     return Number(total.toFixed(1));
 }
 
-// Check subject requirements
 function meetsSubjectRequirements(courseReq, principalSubjects) {
     if (!courseReq?.requiredSubjects) return true;
     if (courseReq.requiredSubjects.includes("any") || courseReq.requiredSubjects.includes("Any")) return true;
@@ -267,7 +248,6 @@ function meetsSubjectRequirements(courseReq, principalSubjects) {
     );
 }
 
-// Get eligible courses - FIXED to match working version's structure
 function getEligibleCourses(studentData, principalSubjects, principalGrades) {
     const eligibleCourses = [];
 
@@ -310,7 +290,6 @@ function getEligibleCourses(studentData, principalSubjects, principalGrades) {
     return eligibleCourses.sort((a, b) => b.yourWeight - a.yourWeight);
 }
 
-// Build weight breakdown - FIXED to match working version's structure
 function buildWeightBreakdown(data, principalSubjects, principalGrades, recommendations) {
     const weights = {
         oLevel: data.oLevelWeight || 0,
@@ -326,32 +305,26 @@ function buildWeightBreakdown(data, principalSubjects, principalGrades, recommen
     let otherTotal = 0;
 
     if (principalSubjects.length === 0) {
-        weights.total = Number(
-            (weights.oLevel + weights.genderBonus + weights.subsidiary).toFixed(1)
-        );
+        weights.total = Number((weights.oLevel + weights.genderBonus + weights.subsidiary).toFixed(1));
         return weights;
     }
 
-    // Get reference essentials from first recommendation (like working version)
     let referenceEssentials = [];
     if (recommendations.length > 0) {
         referenceEssentials = recommendations[0].essentialSubjects || [];
     } else {
-        // Fallback to university analysis if no recommendations
         const selectedUni = getSelectedUniversity(data.university);
         if (selectedUni) {
             referenceEssentials = determineEssentialSubjects(principalSubjects, selectedUni);
         }
     }
 
-    // Prepare subjects with points
     let subjectDetails = principalSubjects.map((subject, i) => {
         const grade = principalGrades[i];
         const points = gradePoints[grade] || 0;
         return { subject, grade, points };
     });
 
-    // Sort by points
     subjectDetails.sort((a, b) => b.points - a.points);
     subjectDetails = subjectDetails.slice(0, 3);
 
@@ -386,9 +359,7 @@ function buildWeightBreakdown(data, principalSubjects, principalGrades, recommen
 
     weights.essentialTotal = essentialTotal;
     weights.otherTotal = otherTotal;
-    weights.total = Number(
-        (weights.oLevel + weights.genderBonus + weights.subsidiary + essentialTotal + otherTotal).toFixed(1)
-    );
+    weights.total = Number((weights.oLevel + weights.genderBonus + weights.subsidiary + essentialTotal + otherTotal).toFixed(1));
 
     return weights;
 }
@@ -400,7 +371,6 @@ app.post('/api/submit-subjects', (req, res) => {
     try {
         const rawData = req.body;
 
-        // Required fields
         if (!rawData.gender || !rawData.level) {
             return res.status(400).json({
                 success: false,
@@ -408,22 +378,32 @@ app.post('/api/submit-subjects', (req, res) => {
             });
         }
 
-        // Calculate subsidiary points
+        // UPDATED: Handle separate subsidiary fields
         let subsidiaryPoints = 0;
-        if (rawData.gpResult === '1' || rawData.subsidiaryResult === '1') {
+        
+        // Check General Paper result
+        if (rawData.gpResult === '1') {
+            subsidiaryPoints = 1;
+        }
+        
+        // Check other subsidiary result (only counts if GP not passed)
+        if (subsidiaryPoints === 0 && rawData.subsidiaryResult === '1') {
             subsidiaryPoints = 1;
         }
 
-        // Normalize input - USING SAME STRUCTURE AS WORKING VERSION
+        // Store both subsidiary values for analytics/debugging
+        const subsidiarySubject = rawData.subsidiarySubject || 'None';
+
         const data = {
             gender: (rawData.gender || '').toLowerCase().trim(),
             level: (rawData.level || '').trim(),
             oLevelWeight: parseFloat(rawData.oLevelWeight) || 0,
             subsidiaryPoints: subsidiaryPoints,
+            subsidiarySubject: subsidiarySubject,
+            gpResult: rawData.gpResult || '0',
             university: (rawData.university || '').trim()
         };
 
-        // Validate O-Level weight
         if (isNaN(data.oLevelWeight) || data.oLevelWeight < 0 || data.oLevelWeight > 3) {
             return res.status(400).json({
                 success: false,
@@ -431,7 +411,6 @@ app.post('/api/submit-subjects', (req, res) => {
             });
         }
 
-        // Collect principal subjects & grades
         const principalSubjects = [];
         const principalGrades = [];
 
@@ -445,17 +424,15 @@ app.post('/api/submit-subjects', (req, res) => {
             }
         }
 
-        if (principalSubjects.length === 0) {
+        if (principalSubjects.length === 0 && data.level === 'A-Level') {
             return res.status(400).json({
                 success: false,
                 message: "At least one principal subject with valid grade (A-O) is required for A-Level"
             });
         }
 
-        // Get eligible courses
         let recommendations = getEligibleCourses(data, principalSubjects, principalGrades);
 
-        // University filter
         let filterMessage = null;
         if (data.university && data.university !== 'Any University' && data.university.trim() !== '') {
             const lowerUni = data.university.toLowerCase();
@@ -470,10 +447,8 @@ app.post('/api/submit-subjects', (req, res) => {
             }
         }
 
-        // Build weight breakdown
         const weights = buildWeightBreakdown(data, principalSubjects, principalGrades, recommendations);
 
-        // Track search
         trackSearch({
             ...data,
             principalSubjects
@@ -483,7 +458,6 @@ app.post('/api/submit-subjects', (req, res) => {
             recommendations
         });
 
-        // Final response - USING SAME STRUCTURE AS WORKING VERSION
         res.json({
             success: true,
             totalCourses: recommendations.length,
@@ -496,7 +470,10 @@ app.post('/api/submit-subjects', (req, res) => {
                 level: data.level,
                 oLevelWeight: data.oLevelWeight,
                 subsidiaryPoints: data.subsidiaryPoints,
-                selectedUniversity: data.university || null
+                selectedUniversity: data.university || null,
+                // Include subsidiary details for debugging/analytics
+                gpResult: data.gpResult,
+                subsidiarySubject: data.subsidiarySubject
             },
             filterMessage: filterMessage || null
         });
@@ -519,7 +496,6 @@ app.post('/api/submit-subjects', (req, res) => {
 // Debug endpoint
 app.get('/api/debug/universities', (req, res) => {
     const summary = {};
-    
     Object.entries(universitiesData).forEach(([key, uni]) => {
         summary[key] = {
             name: uni.name || key,
@@ -527,7 +503,6 @@ app.get('/api/debug/universities', (req, res) => {
             cutoffCount: Object.keys(uni.cutOffPoints || {}).length
         };
     });
-    
     res.json({
         totalUniversities: Object.keys(universitiesData).length,
         summary
@@ -730,7 +705,8 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`NUVA server running on http://localhost:${PORT}`);
-    console.log(`✅ User accounts and email verification disabled`);
+    console.log(`✅ Fully compatible with new O-Level grade-count input (D1/D2, C3-C6, etc.)`);
+    console.log(`✅ Separate General Paper and Other Subsidiary fields supported`);
     console.log(`✅ Admin panel available at /admin.html`);
     console.log(`✅ Analytics tracking enabled`);
     console.log(`✅ Debug endpoint: /api/debug/universities`);

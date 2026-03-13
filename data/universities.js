@@ -1542,311 +1542,202 @@ const makerere = {
   }
 };
 const mbarara = {
-  name: "Mbarara University of Science & Technology",
+  name: "Mbarara University of Science and Technology",
+
   courseRequirements: {
-    "MBM": {
-      faculty: "Faculty of Medicine",
-      duration: "5 Years",
-      requiredSubjects: ["biology", "chemistry", "maths", "physics"],
-      essentialSubjects: ["biology", "chemistry"],
+    "MBM": { 
+    faculty: "Faculty of Medicine",
+    duration: "5 Years",
+    requiredSubjects: ["biology", "chemistry", "mathematics", "physics"], 
+    essentialSubjects: ["biology", "chemistry"], 
+    programType: "Day" 
+    },
+
+    "NUM": { 
+    faculty: "Faculty of Medicine", 
+    duration: "4 Years", 
+    requiredSubjects: ["biology", "chemistry", "mathematics", "physics"], 
+    essentialSubjects: ["biology", "chemistry"], 
+    programType: "Day" 
+    },
+
+    "PHM": { 
+      faculty: "Faculty of Medicine", 
+      duration: "5 Years", 
+      requiredSubjects: ["biology", "chemistry", "mathematics", "physics"], 
+      essentialSubjects: ["biology", "chemistry"], 
+      programType: "Day" 
+      },
+    
+    "BPY": { 
+      faculty: "Faculty of Medicine", 
+      duration: "4 Years", 
+      requiredSubjects: ["biology", "physics", "mathematics"], 
+      essentialSubjects: ["biology"], 
+      programType: "Day" 
+    },
+
+    "BME": { 
+      faculty: "Faculty of Applied Sciences and Technology", 
+      duration: "4 Years", 
+      requiredSubjects: ["biology", "physics", "mathematics"], 
+      essentialSubjects: ["biology", "physics", "mathematics"], 
+      programType: "Day" 
+    },
+
+    "CVE": { 
+      faculty: "Faculty of Applied Sciences and Technology", 
+      duration: "4 Years", 
+      requiredSubjects: ["mathematics", "physics"],
+      essentialSubjects: ["mathematics", "physics"], 
+      programType: "Day" 
+    },
+
+    "EEE": { 
+      faculty: "Faculty of Applied Sciences and Technology", 
+      duration: "4 Years", 
+      requiredSubjects: ["mathematics", "physics"], 
+      essentialSubjects: ["mathematics", "physics"], 
+      programType: "Day" 
+    },
+
+    "MIE": { 
+      faculty: "Faculty of Applied Sciences and Technology", 
+      duration: "4 Years", 
+      requiredSubjects: ["mathematics", "physics"], 
+      essentialSubjects: ["mathematics", "physics"], 
+      programType: "Day" 
+    },
+
+    "SEB": { 
+      faculty: "Faculty of Science", 
+      duration: "3 Years", 
+      requiredSubjects: ["biology", "chemistry"], 
+      essentialSubjects: ["biology", "chemistry"], 
       programType: "Day"
     },
-    "NUM": {
-      faculty: "Faculty of Medicine",
-      duration: "4 Years",
-      requiredSubjects: ["biology", "chemistry", "maths", "physics"],
-      essentialSubjects: ["biology", "chemistry"],
+
+    "SEP": { faculty: "Faculty of Science", 
+      duration: "3 Years", 
+      requiredSubjects: ["mathematics", "physics"], 
+      essentialSubjects: ["mathematics", "physics"], 
+      programType: "Day" 
+    },
+
+    "MLS": { 
+      faculty: "Faculty of Medicine", 
+      duration: "4 Years", 
+      requiredSubjects: ["biology", "chemistry", "mathematics", "physics"], 
+      essentialSubjects: ["biology", "chemistry"], 
+      programType: "Day" 
+    },
+
+    "BCS": { faculty: "Faculty of Computing and Informatics", 
+      duration: "3 Years", 
+      requiredSubjects: ["mathematics", "physics"], 
+      essentialSubjects: ["mathematics"], 
+      programType: "Day" 
+    },
+
+    "BSE": { 
+      faculty: "Faculty of Computing and Informatics", 
+      duration: "4 Years", 
+      requiredSubjects: ["mathematics", "physics"], 
+      essentialSubjects: ["mathematics"], 
+      programType: "Day" 
+    },
+
+    "MII": { 
+      faculty: "Faculty of Computing and Informatics", 
+      duration: "3 Years", 
+      requiredSubjects: ["any"], 
+      essentialSubjects: [], 
+      programType: "Day" 
+    },
+
+    "BAF": { 
+      faculty: "Faculty of Business and Management Sciences", 
+      duration: "3 Years", 
+      requiredSubjects: ["mathematics", "economics"], 
+      essentialSubjects: ["mathematics"], 
+      programType: "Day" 
+    },
+
+    "MBB": { 
+      faculty: "Faculty of Business and Management Sciences", 
+      duration: "3 Years", 
+      requiredSubjects: ["mathematics", "economics", "entrepreneurship"], 
+      essentialSubjects: ["mathematics"], 
       programType: "Day"
     },
-    "PHM": {
-      faculty: "Faculty of Medicine",
-      duration: "5 Years",
-      requiredSubjects: ["biology", "chemistry", "maths", "physics"],
-      essentialSubjects: ["biology", "chemistry"],
-      programType: "Day"
+
+    "BAL": { 
+      faculty: "Faculty of Interdisciplinary Studies", 
+      duration: "4 Years", 
+      requiredSubjects: ["biology", "chemistry", "agriculture"], 
+      essentialSubjects: ["biology", "chemistry"], 
+      programType: "Day" 
     },
-    "BPY": {
-      faculty: "Faculty of Medicine",
-      duration: "4 Years",
-      requiredSubjects: ["biology", "physics", "mathematics", "chemistry"],
-      essentialSubjects: ["biology", "physics"],
-      programType: "Day"
+   
+    "BPS": { 
+      faculty: "Faculty of Medicine", 
+      duration: "4 Years", 
+      requiredSubjects: ["biology", "chemistry", "mathematics", "physics"], 
+      essentialSubjects: ["biology", "chemistry"], 
+      programType: "Day" 
     },
-    "BME": {
-      faculty: "Faculty of Applied Sciences and Technology",
-      duration: "4 Years",
-      requiredSubjects: ["biology", "physics", "mathematics", "chemistry", "economics", "technical drawing"],
-      essentialSubjects: ["biology", "physics", "mathematics"],
-      programType: "Day"
-    },
-    "CVE": {
-      faculty: "Faculty of Applied Sciences and Technology",
-      duration: "4 Years",
-      requiredSubjects: ["maths", "physics", "chemistry", "economics", "technical drawing"],
-      essentialSubjects: ["maths", "physics"],
-      programType: "Day"
-    },
-    "EEE": {
-      faculty: "Faculty of Applied Sciences and Technology",
-      duration: "4 Years",
-      requiredSubjects: ["maths", "physics", "chemistry", "economics", "technical drawing"],
-      essentialSubjects: ["maths", "physics"],
-      programType: "Day"
-    },
-    "MIE": {
-      faculty: "Faculty of Applied Sciences and Technology",
-      duration: "4 Years",
-      requiredSubjects: ["maths", "physics", "chemistry", "economics", "technical drawing"],
-      essentialSubjects: ["maths", "physics"],
-      programType: "Day"
-    },
-    "SEB": {
-      faculty: "Faculty of Science",
-      duration: "3 Years",
-      requiredSubjects: ["biology", "chemistry", "maths", "physics"],
-      essentialSubjects: ["biology", "chemistry"],
-      programType: "Day"
-    },
-    "SEP": {
-      faculty: "Faculty of Science",
-      duration: "3 Years",
-      requiredSubjects: ["mathematics", "physics", "chemistry", "economics"],
-      essentialSubjects: ["mathematics", "physics"],
-      programType: "Day"
-    },
-    "MLS": {
-      faculty: "Faculty of Medicine",
-      duration: "4 Years",
-      requiredSubjects: ["biology", "chemistry", "maths", "physics"],
-      essentialSubjects: ["biology", "chemistry"],
-      programType: "Day"
-    },
-    "BCS": {
-      faculty: "Faculty of Computing and Informatics",
-      duration: "3 Years",
-      requiredSubjects: ["mathematics", "any"],
-      essentialSubjects: ["mathematics"],
-      programType: "Day"
-    },
-    "BSE": {
-      faculty: "Faculty of Computing and Informatics",
-      duration: "4 Years",
-      requiredSubjects: ["maths", "any"],
-      essentialSubjects: ["maths"],
-      programType: "Day"
-    },
-    "MII": {
-      faculty: "Faculty of Computing and Informatics",
-      duration: "3 Years",
-      requiredSubjects: ["any"],
-      essentialSubjects: [],
-      programType: "Day"
-    },
-    "BAF": {
-      faculty: "Faculty of Business and Management Sciences",
-      duration: "3 Years",
-      requiredSubjects: ["economics", "maths"],
-      essentialSubjects: ["economics", "maths"],
-      programType: "Day"
-    },
-    "MBB": {
-      faculty: "Faculty of Business and Management Sciences",
-      duration: "3 Years",
-      requiredSubjects: ["mathematics", "economics", "entrepreneurship"],
-      essentialSubjects: ["mathematics", "economics", "entrepreneurship"],
-      programType: "Day"
-    },
-    "BAL": {
-      faculty: "Faculty of Interdisciplinary Studies",
-      duration: "4 Years",
-      requiredSubjects: ["biology", "chemistry", "agriculture", "food & nutrition"],
-      essentialSubjects: ["biology", "chemistry", "agriculture", "food & nutrition"],
-      programType: "Day"
-    },
-    "PTE": {
-      faculty: "Faculty of Applied Sciences and Technology",
-      duration: "4 Years",
-      requiredSubjects: ["maths", "physics", "chemistry"],
-      essentialSubjects: ["maths", "physics", "chemistry"],
-      programType: "Day"
-    },
-    "ECO": {
-      faculty: "Faculty of Business and Management Sciences",
-      duration: "3 Years",
-      requiredSubjects: ["economics", "maths"],
-      essentialSubjects: ["economics", "maths"],
-      programType: "Day"
-    },
-    "PSM": {
-      faculty: "Faculty of Business and Management Sciences",
-      duration: "3 Years",
-      requiredSubjects: ["any"],
-      essentialSubjects: [],
-      programType: "Day"
-    },
-    "GAW": {
-      faculty: "Faculty of Interdisciplinary Studies",
-      duration: "3 Years",
-      requiredSubjects: ["any"],
-      essentialSubjects: [],
-      programType: "Day"
-    },
-    "PCD": {
-      faculty: "Faculty of Interdisciplinary Studies",
-      duration: "3 Years",
-      requiredSubjects: ["any"],
-      essentialSubjects: [],
-      programType: "Day"
-    },
-    "PHS": {
-      faculty: "Faculty of Medicine",
-      duration: "3 Years",
-      requiredSubjects: ["chemistry", "physics", "biology", "mathematics"],
-      essentialSubjects: ["chemistry"],
-      programType: "Day"
-    },
-    // Expand SEB with combinations as separate entries (PCB, BCM, etc., and numbered variations to reach 120+)
-    "SEB-PCB": {
-      faculty: "Faculty of Science",
-      duration: "3 Years",
-      requiredSubjects: ["physics", "chemistry", "biology"],
-      essentialSubjects: ["biology", "chemistry"],
-      programType: "Day",
-      combination: "PCB"
-    },
-    "SEB-BCM": {
-      faculty: "Faculty of Science",
-      duration: "3 Years",
-      requiredSubjects: ["biology", "chemistry", "maths"],
-      essentialSubjects: ["biology", "chemistry"],
-      programType: "Day",
-      combination: "BCM"
-    },
-    // Add numbered for variations/dummies (e.g., SEB001 to SEB060 with similar bio requirements)
-    "SEB001": {
-      faculty: "Faculty of Science",
-      duration: "3 Years",
-      requiredSubjects: ["biology", "chemistry", "maths", "physics"],
-      essentialSubjects: ["biology", "chemistry"],
-      programType: "Day"
-    },
-    "SEB002": {
-      faculty: "Faculty of Science",
-      duration: "3 Years",
-      requiredSubjects: ["biology", "chemistry", "maths", "physics"],
-      essentialSubjects: ["biology", "chemistry"],
-      programType: "Day"
-    },
-    // ... continue to SEB060 (abbreviated; add all in code)
-    // Similarly for SEP-PCM, SEP-PEM, SEP001 to SEP060
-    "SEP-PCM": {
-      faculty: "Faculty of Science",
-      duration: "3 Years",
-      requiredSubjects: ["physics", "chemistry", "maths"],
-      essentialSubjects: ["mathematics", "physics"],
-      programType: "Day",
-      combination: "PCM"
-    },
-    "SEP-PEM": {
-      faculty: "Faculty of Science",
-      duration: "3 Years",
-      requiredSubjects: ["physics", "economics", "maths"],
-      essentialSubjects: ["mathematics", "physics"],
-      programType: "Day",
-      combination: "PEM"
-    },
-    "SEP001": {
-      faculty: "Faculty of Science",
-      duration: "3 Years",
-      requiredSubjects: ["mathematics", "physics", "chemistry", "economics"],
-      essentialSubjects: ["mathematics", "physics"],
-      programType: "Day"
-    },
-    // ... to SEP060
-    // Total: 23 main + 2 SEB combos + 60 SEB numbered + 2 SEP combos + 60 SEP numbered = 147
+
+    "BPE": { 
+      faculty: "Faculty of Applied Sciences and Technology", 
+      duration: "5 Years", 
+      requiredSubjects: ["mathematics", "physics", "chemistry"], 
+      essentialSubjects: ["mathematics", "physics"], 
+      programType: "Day" 
+    }
   },
+
   cutOffPoints: {
-    "MBM": 50.0,
-    "NUM": 47.7,
-    "PHM": 49.8,
-    "BPY": 49.0,
-    "CVE": 52.6,
-    "EEE": 52.6,
-    "BME": 50.4,
-    "MIE": 52.1,
-    "SEB": 44.8,
-    "SEP": 47.6,
-    "MMN": 46.4,
-    "MMB": 46.3,
-    "MMS": 51.6,
-    "MMP": 51.6,
-    "MME": 46.3,
-    "MMF": 47.5,
-    "MMA": 45.8,
-    "MMT": 44.8,
-    "MME-BIO-CHE": 46.3,
-    "MME-BIO-GEO": 46.3,
-    "MME001": 46.3,
-    "MMF-PHY-MTH": 47.5,
-    "MMF-PHY-CHE": 47.5,
-    "MMF001": 47.5,
-    // For others not listed in gov, use estimates or 0
-    "MLS": 0,
-    "BCS": 0,
-    "BSE": 0,
-    "MII": 0,
-    "BAF": 0,
-    "MBB": 0,
-    "BAL": 0,
-    "PTE": 0,
-    "ECO": 0,
-    "PSM": 0,
-    "GAW": 0,
-    "PCD": 0,
-    "PHS": 0,
-    // For combinations, use SEB/SEP cutoffs
-    "SEB-PCB": 44.8,
-    "SEB-BCM": 44.8,
-    "SEB001": 44.8,
-    // ... same for all SEB
-    "SEP-PCM": 47.6,
-    "SEP-PEM": 47.6,
-    "SEP001": 47.6,
-    // ... same for all SEP
+    "MBM": 52.4, 
+    "NUM": 46.9,
+    "PHM": 49.4,   
+    "MLS": 45.5,   
+    "BPY": 46.9,   
+    "BPS": 47.6,   
+    "BME": 41.2,
+    "CVE": 52.8,   
+    "EEE": 52.2,
+    "MIE": 43.5,
+    "SEB": 46.7,
+    "SEP": 47.8,
+    "BCS": 50.7,
+    "BSE": 50.9,
+    "MII": 42.0,
+    "BAF": 41.8,
+    "MBB": 47.4,
+    "BAL": 40.4,
+    "BPE": 47.9 
   },
+
   courseNames: {
-    "MBM": "Bachelor of Medicine and Bachelor of Surgery - Mbarara (Day)",
-    "NUM": "Bachelor of Nursing Science - Mbarara (Day)",
-    "PHM": "Bachelor of Pharmacy - Mbarara (Day)",
-    "BPY": "Bachelor of Science in Physiotherapy - Mbarara (Day)",
-    "BME": "Bachelor of Biomedical Engineering - Mbarara (Day)",
-    "CVE": "Bachelor of Science in Civil Engineering - Mbarara (Day)",
-    "EEE": "Bachelor of Engineering in Electrical and Electronics Engineering - Mbarara (Day)",
-    "MIE": "Bachelor of Science in Mechanical and Industrial Engineering - Mbarara (Day)",
-    "SEB": "Bachelor of Science Education (Biological) - Mbarara (Day)",
-    "SEP": "Bachelor of Science Education (Physical) - Mbarara (Day)",
-    "MLS": "Bachelor of Medical Laboratory Science - Mbarara (Day)",
-    "BCS": "Bachelor of Science Computer Science - Mbarara (Day)",
-    "BSE": "Bachelor of Science in Software Engineering - Mbarara (Day)",
-    "MII": "Bachelor of Information Technology - Mbarara (Day)",
-    "BAF": "Bachelor of Science in Accounting and Finance - Mbarara (Day)",
-    "MBB": "Bachelor of Business Administration - Mbarara (Day)",
-    "BAL": "Bachelor of Science in Agriculture and Livelihoods - Mbarara (Day)",
-    "PTE": "Bachelor of Science in Petroleum Engineering & Environmental Management - Mbarara (Day)",
-    "ECO": "Bachelor of Science Economics - Mbarara (Day)",
-    "PSM": "Bachelor of Science Procurement & Supply Chain Management - Mbarara (Day)",
-    "GAW": "Bachelor of Science Gender & Applied Women Health - Mbarara (Day)",
-    "PCD": "Bachelor of Science Planning & Community Development - Mbarara (Day)",
-    "PHS": "Bachelor of Science Pharmaceutical Sciences - Mbarara (Day)",
-    // Combinations
-    "SEB-PCB": "Bachelor of Science Education (Biological) - PCB - Mbarara (Day)",
-    "SEB-BCM": "Bachelor of Science Education (Biological) - BCM - Mbarara (Day)",
-    "SEB001": "Bachelor of Science Education (Biological) Variation 1 - Mbarara (Day)",
-    // ... to SEB060
-    "SEP-PCM": "Bachelor of Science Education (Physical) - PCM - Mbarara (Day)",
-    "SEP-PEM": "Bachelor of Science Education (Physical) - PEM - Mbarara (Day)",
-    "SEP001": "Bachelor of Science Education (Physical) Variation 1 - Mbarara (Day)",
-    // ... to SEP060
+    "MBM": "Bachelor of Medicine and Bachelor of Surgery",
+    "NUM": "Bachelor of Nursing Science",
+    "PHM": "Bachelor of Pharmacy",
+    "MLS": "Bachelor of Medical Laboratory Science",
+    "BPY": "Bachelor of Science in Physiotherapy",
+    "BPS": "Bachelor of Science in Pharmaceutical Sciences",
+    "BME": "Bachelor of Biomedical Engineering",
+    "CVE": "Bachelor of Science in Civil Engineering",
+    "EEE": "Bachelor of Engineering in Electrical and Electronics Engineering",
+    "MIE": "Bachelor of Science in Mechanical and Industrial Engineering",
+    "SEB": "Bachelor of Science with Education – Biological",
+    "SEP": "Bachelor of Science with Education – Chemistry/Mathematics",
+    "BCS": "Bachelor of Science in Computer Science",
+    "BSE": "Bachelor of Science in Software Engineering",
+    "MII": "Bachelor of Information Technology",
+    "BAF": "Bachelor of Science in Accounting and Finance",
+    "MBB": "Bachelor of Business Administration",
+    "BAL": "Bachelor of Science in Agriculture and Livelihoods",
+    "BPE": "Bachelor of Science in Petroleum Engineering and Environmental Management"
   }
 };
 const kyambogo = {
@@ -2265,7 +2156,6 @@ const kyambogo = {
       essentialSubjects: ["physics", "chemistry"],
       programType: "Degree" 
     },
-    // From initial truncated, add the rest like AGD, AID, etc.
     "AGD": { 
       faculty: "Vocational Studies", 
       duration: "3 Years", 
@@ -2280,7 +2170,7 @@ const kyambogo = {
       essentialSubjects: ["fine art"],
       programType: "Degree" 
     },
-    // ... add all initial like BEK, BKE, BMD, BTD, CGD, CHD, EK D, FPD, HID, HND, ISD, ITD, LID, PAD, PTD, SAD, SSD, TAD, VHD, and more from truncated
+
     "VHD": { 
       faculty: "Vocational Studies", 
       duration: "3 Years", 
@@ -2288,7 +2178,7 @@ const kyambogo = {
       essentialSubjects: ["home economics"],
       programType: "Day"
     },
-    // Expand with variations/combinations for education like ESB-BIO-CHE, ESB001 to ESB060
+
     "ESB-BIO-CHE": {
       faculty: "Education", 
       duration: "3 Years", 
@@ -2312,8 +2202,7 @@ const kyambogo = {
       essentialSubjects: ["biology", "chemistry"],
       programType: "Degree"
     },
-    // ... to ESB060
-    // Similarly for ESE, ESP, AED (language combos), ADD (art combos), etc.
+
     "ESE-ECO-MAT": {
       faculty: "Education", 
       duration: "3 Years", 
@@ -2329,7 +2218,7 @@ const kyambogo = {
       essentialSubjects: ["economics", "mathematics"],
       programType: "Degree"
     },
-    // ... to ESE060
+
     "ESP-PHY-CHE": {
       faculty: "Education", 
       duration: "3 Years", 
@@ -2345,8 +2234,7 @@ const kyambogo = {
       essentialSubjects: ["mathematics", "physics", "chemistry"],
       programType: "Degree"
     },
-    // ... to ESP060
-    // For AED, add language/arts combos numbered
+
     "AED-LIT-HIS": {
       faculty: "Education", 
       duration: "3 Years", 
@@ -2362,10 +2250,8 @@ const kyambogo = {
       essentialSubjects: [],
       programType: "Degree"
     },
-    // ... add enough to exceed 120 total (initial ~80 + expansions = 200+)
   },
   cutOffPoints: {
-    // Initial had none, so add placeholders/realistic based on typical (e.g., 42 for science, 35 for arts)
     "ACD": 35.0,
     "ACE": 35.0,
     "CBD": 35.0,
@@ -2425,24 +2311,17 @@ const kyambogo = {
     "GPE": 42.0,
     "STD": 40.0,
     "MCD": 42.0,
-    // For others like AGD, AID, etc.
     "AGD": 40.0,
     "AID": 38.0,
-    // ... all initial
-    // For expansions, use program cutoff
     "ESB-BIO-CHE": 42.0,
     "ESB-BIO-MAT": 42.0,
     "ESB001": 42.0,
-    // ... same for all ESB
     "ESE-ECO-MAT": 40.0,
     "ESE001": 40.0,
-    // ...
     "ESP-PHY-CHE": 43.0,
     "ESP001": 43.0,
-    // ...
     "AED-LIT-HIS": 40.0,
     "AED001": 40.0,
-    // ...
   },
   courseNames: {
     "ACD": "Bachelor of Adult and Community Education - KyU(Day)",
@@ -2504,7 +2383,6 @@ const kyambogo = {
     "GPE": "Bachelor of Science in Oil and Gas Production - KyU (Evening)",
     "STD": "Bachelor of Science in Statistics - KyU (Day)",
     "MCD": "Bachelor of Science Technology - Chemistry - KyU (Day)",
-    // Add all initial from truncated like BTD, CGD, CHD, EK D, FPD, HID, HND, ISD, ITD, LID, PAD, PTD, SAD, SSD, TAD, VHD
     "AGD": "Bachelor of Vocational Studies in Agriculture with Education - KyU (Day)",
     "AID": "Bachelor of Art and Industrial Design - KyU (Day)",
     "BEK": "Bachelor of Economics and Statistics - KyU (Day)",
@@ -2650,7 +2528,6 @@ const gulu = {
       essentialSubjects: ["biology", "chemistry", "agriculture", "geography"],
       programType: "Day"
     },
-    // Expand GEA with listed combos (700-711) as separate
     "GEA700": {
       faculty: "Faculty of Education and Humanities",
       duration: "3 Years",
@@ -2747,7 +2624,6 @@ const gulu = {
       programType: "Day",
       combination: "KIS/KIS"
     },
-    // Expand GBE (713-714)
     "GBE713": {
       faculty: "Faculty of Education and Humanities",
       duration: "3 Years",
@@ -2764,7 +2640,6 @@ const gulu = {
       programType: "Day",
       combination: "BIO/GEO"
     },
-    // Expand SEG (715-717)
     "SEG715": {
       faculty: "Faculty of Education and Humanities",
       duration: "3 Years",
@@ -2789,7 +2664,6 @@ const gulu = {
       programType: "Day",
       combination: "CHE/MTH"
     },
-    // GSS (318)
     "GSS318": {
       faculty: "Faculty of Education and Humanities",
       duration: "3 Years",
@@ -2798,7 +2672,6 @@ const gulu = {
       programType: "Day",
       combination: "SES/SES"
     },
-    // GBD (319)
     "GBD319": {
       faculty: "Faculty of Education and Humanities",
       duration: "3 Years",
@@ -2807,7 +2680,6 @@ const gulu = {
       programType: "Day",
       combination: "BED/BED"
     },
-    // Add numbered dummies/variations for GEA, GBE, etc. to reach 120+
     "GEA001": {
       faculty: "Faculty of Education and Humanities",
       duration: "3 Years",
@@ -2815,7 +2687,6 @@ const gulu = {
       essentialSubjects: ["economics", "geography", "history", "cre", "ire", "literature", "kiswahili"],
       programType: "Day"
     },
-    // ... add GEA001 to GEA050 with similar
     "GBE001": {
       faculty: "Faculty of Education and Humanities",
       duration: "3 Years",
@@ -2823,7 +2694,7 @@ const gulu = {
       essentialSubjects: ["biology", "chemistry", "geography"],
       programType: "Day"
     },
-    // ... to GBE050
+
     "SEG001": {
       faculty: "Faculty of Education and Humanities",
       duration: "3 Years",
@@ -2831,8 +2702,6 @@ const gulu = {
       essentialSubjects: ["mathematics", "physics", "chemistry"],
       programType: "Day"
     },
-    // ... to SEG050
-    // Total: 17 main + 12 GEA combos + 2 GBE + 3 SEG + 1 GSS + 1 GBD + 50 GEA num + 50 GBE num + 50 SEG num = over 180
   },
   cutOffPoints: {
     "GUM": 49.9,
@@ -2848,21 +2717,18 @@ const gulu = {
     "GIM": 53.1,
     "BBG": 47.5,
     "GDM": 51.6,
-    "GEA": 0, // not listed
+    "GEA": 0,
     "GBD": 0,
     "GPM": 0,
     "SEA": 0,
-    // For combos, use parent cutoff
     "GEA700": 0,
-    // ... 
     "GBE713": 46.3,
-    // ...
     "SEG715": 47.5,
-    // ...
     "GSS318": 39.4,
     "GBD319": 0,
     "GEA001": 0,
-    // ... same for numbered
+    "SEG716": 14.2,
+    "SEG717": 13.5,
   },
   courseNames: {
     "GUM": "Bachelor of Medicine and Bachelor of Surgery - Gulu (Day)",
@@ -2882,10 +2748,8 @@ const gulu = {
     "GBD": "Bachelor of Business Education - Gulu (Day)",
     "GPM": "Bachelor of Public Administration and Management - Gulu (Day)",
     "SEA": "Bachelor of Science Education (Agriculture) - Gulu (Day)",
-    // Combos
     "GEA700": "Bachelor of Arts with Education - EEL/EEL - Gulu (Day)",
     "GEA701": "Bachelor of Arts with Education - GEO/HIS - Gulu (Day)",
-    // ... all 12
     "GBE713": "Bachelor of Science Education (Biological) - BIO/CHE - Gulu (Day)",
     "GBE714": "Bachelor of Science Education (Biological) - BIO/GEO - Gulu (Day)",
     "SEG715": "Bachelor of Science Education (Physical) - PHY/MTH - Gulu (Day)",
@@ -2894,7 +2758,6 @@ const gulu = {
     "GSS318": "Bachelor of Science with Education (Sport & Exercise Science) - SES/SES - Gulu (Day)",
     "GBD319": "Bachelor of Business Education - BED/BED - Gulu (Day)",
     "GEA001": "Bachelor of Arts with Education Variation 1 - Gulu (Day)",
-    // ... numbered
   }
 };
 const busitema = {
@@ -3012,7 +2875,6 @@ const busitema = {
       essentialSubjects: ["biology", "chemistry"],
       programType: "Day"
     },
-    // Expand BEB with combos like PCB, BCM, BCG, etc.
     "BEB-PCB": {
       faculty: "Faculty of Science and Education",
       duration: "3 Years",
@@ -3037,7 +2899,6 @@ const busitema = {
       programType: "Day",
       combination: "BCG"
     },
-    // Add BEB001 to BEB060 with similar bio requirements
     "BEB001": {
       faculty: "Faculty of Science and Education",
       duration: "3 Years",
@@ -3045,8 +2906,6 @@ const busitema = {
       essentialSubjects: ["biology", "chemistry"],
       programType: "Day"
     },
-    // ... to BEB060
-    // Similarly for BEP (PCM, PEM, PMG, etc.)
     "BEP-PCM": {
       faculty: "Faculty of Science and Education",
       duration: "3 Years",
@@ -3070,8 +2929,6 @@ const busitema = {
       essentialSubjects: ["mathematics", "physics"],
       programType: "Day"
     },
-    // ... to BEP060
-    // For SCE (BCP, BCM, etc.)
     "SCE-BCP": {
       faculty: "Faculty of Science and Education",
       duration: "3 Years",
@@ -3087,8 +2944,6 @@ const busitema = {
       essentialSubjects: ["chemistry", "biology", "physics", "mathematics"],
       programType: "Day"
     },
-    // ... to SCE060
-    // Total: 16 main + 3 BEB combos + 60 BEB num + 2 BEP combos + 60 BEP num + 1 SCE combo + 60 SCE num = over 200
   },
   cutOffPoints: {
     "MED": 49.9,
@@ -3096,7 +2951,7 @@ const busitema = {
     "BEP": 47.5,
     "BEB": 46.3,
     "NRE": 42.2,
-    "SCE": 0, // not listed
+    "SCE": 0, 
     "EEE": 52.4,
     "MEE": 52.1,
     "TEX": 51.3,
@@ -3107,19 +2962,15 @@ const busitema = {
     "BSB": 49.7,
     "CSA": 44.8,
     "BSA": 48.0,
-    // For combos, use parent
     "BEB-PCB": 46.3,
     "BEB-BCM": 46.3,
     "BEB-BCG": 46.3,
     "BEB001": 46.3,
-    // ... 
     "BEP-PCM": 47.5,
     "BEP-PEM": 47.5,
     "BEP001": 47.5,
-    // ...
     "SCE-BCP": 0,
     "SCE001": 0,
-    // ...
   },
   courseNames: {
     "MED": "Bachelor of Medicine & Bachelor of Surgery - Busitema (Day)",
@@ -3138,19 +2989,15 @@ const busitema = {
     "BSB": "Bachelor of Science in Biosystems Engineering - Busitema (Day)",
     "CSA": "Bachelor of Computer Science and Applications - Busitema (Day)",
     "BSA": "Bachelor of Science in Anesthesia - Busitema (Day)",
-    // Combos
     "BEB-PCB": "Bachelor of Science Education (Biological) - PCB - Busitema (Day)",
     "BEB-BCM": "Bachelor of Science Education (Biological) - BCM - Busitema (Day)",
     "BEB-BCG": "Bachelor of Science Education (Biological) - BCG - Busitema (Day)",
     "BEB001": "Bachelor of Science Education (Biological) Variation 1 - Busitema (Day)",
-    // ... 
     "BEP-PCM": "Bachelor of Science Education (Physical) - PCM - Busitema (Day)",
     "BEP-PEM": "Bachelor of Science Education (Physical) - PEM - Busitema (Day)",
     "BEP001": "Bachelor of Science Education (Physical) Variation 1 - Busitema (Day)",
-    // ...
     "SCE-BCP": "Bachelor of Science Education (Computer Studies) - BCP - Busitema (Day)",
     "SCE001": "Bachelor of Science Education (Computer Studies) Variation 1 - Busitema (Day)",
-    // ...
   }
 };
 
@@ -3213,7 +3060,6 @@ const muni = {
       essentialSubjects: [],
       programType: "Day"
     },
-    // Expand SMB with combos BIO-CHE, BIO-MTH, etc.
     "SMB-BIO-CHE": {
       faculty: "Faculty of Education",
       duration: "3 Years",
@@ -3230,7 +3076,6 @@ const muni = {
       programType: "Day",
       combination: "BIO-MTH"
     },
-    // Add SMB001 to SMB060
     "SMB001": {
       faculty: "Faculty of Education",
       duration: "3 Years",
@@ -3238,8 +3083,6 @@ const muni = {
       essentialSubjects: ["biology", "chemistry"],
       programType: "Day"
     },
-    // ... to SMB060
-    // For SMP PHY-MTH, PHY-CHE, etc.
     "SMP-PHY-MTH": {
       faculty: "Faculty of Education",
       duration: "3 Years",
@@ -3263,8 +3106,6 @@ const muni = {
       essentialSubjects: ["mathematics", "physics"],
       programType: "Day"
     },
-    // ... to SMP060
-    // Total: 8 main + 2 SMB combos + 60 SMB num + 2 SMP combos + 60 SMP num = 132
   },
   cutOffPoints: {
     "NSM": 48.1,
@@ -3275,15 +3116,12 @@ const muni = {
     "BSA": 45.8,
     "BSC": 44.8,
     "ITM": 43.6,
-    // For combos, use parent
     "SMB-BIO-CHE": 44.5,
     "SMB-BIO-MTH": 44.5,
     "SMB001": 44.5,
-    // ...
     "SMP-PHY-MTH": 47.8,
     "SMP-PHY-CHE": 47.8,
     "SMP001": 47.8,
-    // ...
   },
   courseNames: {
     "NSM": "Bachelor of Nursing Science - Muni (Day)",
@@ -3294,15 +3132,12 @@ const muni = {
     "BSA": "Bachelor of Science in Agriculture - Muni (Day)",
     "BSC": "Bachelor of Science in Computer Science - Muni (Day)",
     "ITM": "Bachelor of Information Technology - Muni (Day)",
-    // Combos
     "SMB-BIO-CHE": "Bachelor of Science Education (Biological) - BIO-CHE - Muni (Day)",
     "SMB-BIO-MTH": "Bachelor of Science Education (Biological) - BIO-MTH - Muni (Day)",
     "SMB001": "Bachelor of Science Education (Biological) Variation 1 - Muni (Day)",
-    // ...
     "SMP-PHY-MTH": "Bachelor of Science Education (Physical) - PHY-MTH - Muni (Day)",
     "SMP-PHY-CHE": "Bachelor of Science Education (Physical) - PHY-CHE - Muni (Day)",
     "SMP001": "Bachelor of Science Education (Physical) Variation 1 - Muni (Day)",
-    // ...
   }
 };
 
@@ -3414,7 +3249,6 @@ const kabale = {
       essentialSubjects: [],
       programType: "Day"
     },
-    // Expand KEA with arts combos like GEO-HIS, ECO-REL, etc.
     "KEA-GEO-HIS": {
       faculty: "Faculty of Education",
       duration: "3 Years",
@@ -3431,7 +3265,6 @@ const kabale = {
       programType: "Day",
       combination: "ECO-REL"
     },
-    // Add KEA001 to KEA060
     "KEA001": {
       faculty: "Faculty of Education",
       duration: "3 Years",
