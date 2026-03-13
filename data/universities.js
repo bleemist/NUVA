@@ -5,63 +5,63 @@ const makerere = {
     "MAM": {
       faculty: "College of Health Sciences",
       duration: "5 Years",
-      requiredSubjects: ["biology", "chemistry"],
+      requiredSubjects: ["biology", "chemistry","mathematics","physics"],
       essentialSubjects: ["biology", "chemistry"],
       programType: "Day"
     },
     "BDS": {
       faculty: "College of Health Sciences",
       duration: "5 Years",
-      requiredSubjects: ["biology", "chemistry"],
+      requiredSubjects: ["biology", "chemistry","mathematics"],
       essentialSubjects: ["biology", "chemistry"],
       programType: "Day"
     },
     "PHA": {
       faculty: "College of Health Sciences",
       duration: "5 Years",
-      requiredSubjects: ["biology", "chemistry"],
+      requiredSubjects: ["biology", "chemistry","mathematics"],
       essentialSubjects: ["biology", "chemistry"],
       programType: "Day"
     },
     "NUR": {
       faculty: "College of Health Sciences",
       duration: "4 Years",
-      requiredSubjects: ["biology", "chemistry"],
+      requiredSubjects: ["biology", "chemistry","mathematics","agriculture","foods & nutrition","economics"],
       essentialSubjects: ["biology", "chemistry"],
       programType: "Day"
     },
     "BMR": {
       faculty: "College of Health Sciences",
       duration: "4 Years",
-      requiredSubjects: ["biology", "physics"],
+      requiredSubjects: ["biology", "physics","chemistry","mathematics","agriculture","foods & nutrition","economics"],
       essentialSubjects: ["biology", "physics"],
       programType: "Day"
     },
     "BEH": {
       faculty: "College of Health Sciences",
       duration: "3 Years",
-      requiredSubjects: ["biology", "chemistry"],
+      requiredSubjects: ["biology", "chemistry","chemistry","mathematics","agriculture","foods & nutrition","economics"],
       essentialSubjects: ["biology", "chemistry"],
       programType: "Day"
     },
     "VET": {
       faculty: "College of Veterinary Medicine, Animal Resources and Bio-security",
       duration: "5 Years",
-      requiredSubjects: ["biology", "chemistry"],
+      requiredSubjects: ["biology", "chemistry","chemistry","mathematics","agriculture","foods & nutrition","economics"],
       essentialSubjects: ["biology", "chemistry"],
       programType: "Day"
     },
     "MLT": {
       faculty: "College of Health Sciences",
       duration: "3 Years",
-      requiredSubjects: ["biology", "chemistry"],
+      requiredSubjects: ["biology", "chemistry","chemistry","mathematics","agriculture","foods & nutrition","economics"],
       essentialSubjects: ["biology", "chemistry"],
       programType: "Day"
     },
     "BAP": {
       faculty: "College of Agricultural and Environmental Sciences",
       duration: "3 Years",
-      requiredSubjects: ["biology", "chemistry"],
+      requiredSubjects: ["biology", "chemistry","chemistry","mathematics","agriculture","foods & nutrition","economics"],
       essentialSubjects: ["biology", "chemistry"],
       programType: "Day"
     },
@@ -75,14 +75,14 @@ const makerere = {
     "FST": {
       faculty: "College of Agricultural and Environmental Sciences",
       duration: "4 Years",
-      requiredSubjects: ["biology", "chemistry"],
+      requiredSubjects: ["biology", "chemistry","chemistry","mathematics","agriculture","foods & nutrition","economics"],
       essentialSubjects: ["biology", "chemistry"],
       programType: "Day"
     },
     "AGE": {
       faculty: "College of Agricultural and Environmental Sciences",
       duration: "4 Years",
-      requiredSubjects: ["mathematics", "physics"],
+      requiredSubjects: ["mathematics", "physics","chemistry","mathematics","agriculture","foods & nutrition","economics","biology"],
       essentialSubjects: ["mathematics", "physics"],
       programType: "Day"
     },
@@ -90,7 +90,7 @@ const makerere = {
       faculty: "College of Agricultural and Environmental Sciences",
       duration: "4 Years",
       requiredSubjects: ["biology", "chemistry", "physics", "agriculture", "mathematics", "economics", "geography"],
-      essentialSubjects: ["biology", "chemistry", "physics", "agriculture", "mathematics", "economics", "geography"],
+      essentialSubjects: ["biology", "chemistry", "agriculture", "geography"],
       programType: "Day"
     },
     "ARC": {
@@ -2525,96 +2525,9 @@ const kyambogo = {
     "SSD": "Bachelor of Arts in Social Sciences - KyU (Day)",
     "TAD": "Bachelor of Textile and Apparel Design - KyU (Day)",
     "VHD": "Bachelor of Vocational Studies in Home Economics with Education - KyU (Day)",
-    // Expand with variations for ESB, ESE, ESP, SSD, etc.
-    "ESB-BIO-CHE": {
-      faculty: "Education", 
-      duration: "3 Years", 
-      requiredSubjects: ["biology", "chemistry"], 
-      essentialSubjects: ["biology", "chemistry"],
-      programType: "Degree",
-      combination: "BIO-CHE"
-    },
-    "ESB001": {
-      faculty: "Education", 
-      duration: "3 Years", 
-      requiredSubjects: ["chemistry", "biology"], 
-      essentialSubjects: ["chemistry", "biology"],
-      programType: "Degree" 
-    },
-    // ... to ESB060
-    "ESE-ECO-MAT": {
-      faculty: "Education", 
-      duration: "3 Years", 
-      requiredSubjects: ["economics", "mathematics"], 
-      essentialSubjects: ["economics", "mathematics"],
-      programType: "Degree",
-      combination: "ECO-MAT"
-    },
-    "ESE001": {
-      faculty: "Education", 
-      duration: "3 Years", 
-      requiredSubjects: ["mathematics", "economics"], 
-      essentialSubjects: ["mathematics", "economics"],
-      programType: "Degree" 
-    },
-    // ... to ESE060
-    "ESP-PHY-CHE": {
-      faculty: "Education", 
-      duration: "3 Years", 
-      requiredSubjects: ["physics", "chemistry"], 
-      essentialSubjects: ["physics", "chemistry"],
-      programType: "Degree",
-      combination: "PHY-CHE"
-    },
-    "ESP001": {
-      faculty: "Education", 
-      duration: "3 Years", 
-      requiredSubjects: ["mathematics", "physics", "chemistry"], 
-      essentialSubjects: ["mathematics", "physics", "chemistry"],
-      programType: "Degree" 
-    },
-    // ... to ESP060
-    "SSD-SO-EC-PY": {
-      faculty: "Social Sciences", 
-      duration: "3 Years", 
-      requiredSubjects: ["economics", "psychology"], 
-      essentialSubjects: ["economics"],
-      programType: "Degree",
-      combination: "SO-EC-PY"
-    },
-    "SSD001": {
-      faculty: "Social Sciences", 
-      duration: "3 Years", 
-      requiredSubjects: ["economics"], 
-      essentialSubjects: ["economics"],
-      programType: "Degree" 
-    },
-    // ... to SSD060 (initial had many, expansions push to 200+)
-  },
-  cutOffPoints: {
-    // Placeholders as initial had none
-    "ACD": 35.0,
-    "ACE": 35.0,
-    // ... all similar
-    "ESB": 42.0,
-    "ESB-BIO-CHE": 42.0,
-    "ESB001": 42.0,
-    // ...
-    "SSD-SO-EC-PY": 40.0,
-    "SSD001": 40.0,
-    // ...
-  },
-  courseNames: {
-    "ACD": "Bachelor of Adult and Community Education - KyU(Day)",
-    // ... all initial
-    "ESB-BIO-CHE": "Bachelor of Science with Education (Biological Sciences) - BIO-CHE - KyU (Day)",
-    "ESB001": "Bachelor of Science with Education (Biological Sciences) Variation 1 - KyU (Day)",
-    // ...
-    "SSD-SO-EC-PY": "Bachelor of Arts in Social Sciences - SO EC PY - KyU (Day)",
-    "SSD001": "Bachelor of Arts in Social Sciences Variation 1 - KyU (Day)",
-    // ...
   }
 };
+
 const gulu = {
   name: "Gulu University",
   courseRequirements: {
