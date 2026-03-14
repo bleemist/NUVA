@@ -1176,14 +1176,9 @@ const makerere = {
       requiredSubjects: ["economics", "geography", "entrepreneurship"], 
       essentialSubjects: ["economics", "geography", "entrepreneurship"],
       programType: "Day"
-    },
-    // Add all from 543 to 576, then 700 to 731
-    // For example, "EDA544": ["luganda", "geography"]
-    // To reach 120+, this will be sufficient with ASS + EDA + others
-    // Add BSC combinations as "SCP500": ["biochemistry", "botany"]
-    // ... 
-    // Similarly for others
+    },    
   },
+
   cutOffPoints: {
     "PHA": 49.8,
     "MAM": 52.0,
@@ -1217,7 +1212,7 @@ const makerere = {
     "BFA": 42.8,
     "BID": 43.7,
     "BVC": 42.8,
-    "EDA": 50.0, // average for languages
+    "EDA": 50.0,
     "SQS": 50.0,
     "ECO": 43.3,
     "COE": 46.2,
@@ -1234,7 +1229,7 @@ const makerere = {
     "BSL": 44.3,
     "BPT": 50.8,
     "BOF": 46.2,
-    "IST": 0, // not listed
+    "IST": 0, 
     "BTH": 49.1,
     "BBP": 50.5,
     "BWE": 50.6,
@@ -1883,7 +1878,7 @@ const kyambogo = {
     "BSD": { 
         faculty: "Management & Entrepreneurship", 
         duration: "3 Years", 
-        requiredSubjects: ["mathematics", "economics", "entrepreneurship"], 
+        requiredSubjects: ["mathematics", "economics", "entrepreneurship", "physics", "chemistry"], 
         essentialSubjects: ["mathematics", "economics"],
         programType: "Degree" 
     },
@@ -1925,7 +1920,7 @@ const kyambogo = {
     "ASD": { 
         faculty: "Management & Entrepreneurship", 
         duration: "3 Years", 
-        requiredSubjects: ["economics"], 
+        requiredSubjects: ["mathematics", "economics", "entrepreneurship", "physics", "chemistry","greography"], 
         essentialSubjects: ["economics"],
         programType: "Degree" 
     },
