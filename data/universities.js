@@ -1746,7 +1746,7 @@ const kyambogo = {
     "ACD": { 
       faculty: "Special Needs & Rehabilitation", 
       duration: "3 Years", 
-      requiredSubjects: ["arts", "science"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"],
       essentialSubjects: [],
       programType: "Degree" 
     },
@@ -1844,21 +1844,21 @@ const kyambogo = {
     "ESB": { 
       faculty: "Education", 
       duration: "3 Years", 
-      requiredSubjects: ["chemistry", "biology"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["chemistry", "biology"],
       programType: "Degree" 
     },
     "ESE": { 
       faculty: "Education", 
       duration: "3 Years", 
-      requiredSubjects: ["mathematics", "economics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "economics"],
       programType: "Degree" 
     },
     "ESP": { 
       faculty: "Education", 
       duration: "3 Years", 
-      requiredSubjects: ["mathematics", "physics", "chemistry"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "physics", "chemistry"],
       programType: "Degree" 
     },
@@ -1879,84 +1879,84 @@ const kyambogo = {
     "BSD": { 
       faculty: "Management & Entrepreneurship", 
       duration: "3 Years", 
-      requiredSubjects: ["mathematics", "economics", "entrepreneurship"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "economics"],
       programType: "Degree" 
     },
     "BSE": { 
       faculty: "Management & Entrepreneurship", 
       duration: "3 Years", 
-      requiredSubjects: ["mathematics", "economics", "entrepreneurship"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "economics"],
       programType: "Degree" 
     },
     "BBK": { 
       faculty: "Management & Entrepreneurship", 
       duration: "3 Years", 
-      requiredSubjects: ["mathematics", "economics", "entrepreneurship"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "economics"],
       programType: "Degree" 
     },
     "BKE": { 
       faculty: "Management & Entrepreneurship", 
       duration: "3 Years", 
-      requiredSubjects: ["mathematics", "economics", "entrepreneurship"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "economics"],
       programType: "Degree" 
     },
     "AFD": { 
       faculty: "Management & Entrepreneurship", 
       duration: "3 Years", 
-      requiredSubjects: ["mathematics", "economics", "entrepreneurship"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "economics"],
       programType: "Degree" 
     },
     "AFE": { 
       faculty: "Management & Entrepreneurship", 
       duration: "3 Years", 
-      requiredSubjects: ["mathematics", "economics", "entrepreneurship"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "economics"],
       programType: "Degree" 
     },
     "ASD": { 
       faculty: "Management & Entrepreneurship", 
       duration: "3 Years", 
-      requiredSubjects: ["economics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["economics"],
       programType: "Degree" 
     },
     "ASE": { 
       faculty: "Management & Entrepreneurship", 
       duration: "3 Years", 
-      requiredSubjects: ["economics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["economics"],
       programType: "Degree" 
     },
     "PLD": { 
       faculty: "Management & Entrepreneurship", 
       duration: "3 Years", 
-      requiredSubjects: ["mathematics", "entrepreneurship", "economics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "economics"],
       programType: "Degree" 
     },
     "PLE": { 
       faculty: "Management & Entrepreneurship", 
       duration: "3 Years", 
-      requiredSubjects: ["mathematics", "entrepreneurship", "economics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "economics"],
       programType: "Degree" 
     },
     "MSD": { 
       faculty: "Management & Entrepreneurship", 
       duration: "3 Years", 
-      requiredSubjects: ["mathematics", "economics", "entrepreneurship"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "economics"],
       programType: "Degree" 
     },
     "MSE": { 
       faculty: "Management & Entrepreneurship", 
       duration: "3 Years", 
-      requiredSubjects: ["mathematics", "economics", "entrepreneurship"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "economics"],
       programType: "Degree" 
     },
@@ -1970,112 +1970,112 @@ const kyambogo = {
     "ECD": { 
       faculty: "Engineering", 
       duration: "4 Years", 
-      requiredSubjects: ["mathematics", "physics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "physics"],
       programType: "Degree" 
     },
     "ECE": { 
       faculty: "Engineering", 
       duration: "4 Years", 
-      requiredSubjects: ["mathematics", "physics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "physics"],
       programType: "Degree" 
     },
     "EMD": { 
       faculty: "Engineering", 
       duration: "4 Years", 
-      requiredSubjects: ["mathematics", "physics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "physics"],
       programType: "Degree" 
     },
     "EME": { 
       faculty: "Engineering", 
       duration: "4 Years", 
-      requiredSubjects: ["mathematics", "physics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "physics"],
       programType: "Degree" 
     },
     "ETD": { 
       faculty: "Engineering", 
       duration: "4 Years", 
-      requiredSubjects: ["mathematics", "physics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "physics"],
       programType: "Degree" 
     },
     "ETE": { 
       faculty: "Engineering", 
       duration: "4 Years", 
-      requiredSubjects: ["mathematics", "physics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "physics"],
       programType: "Degree" 
     },
     "BEL": { 
       faculty: "Engineering", 
       duration: "4 Years", 
-      requiredSubjects: ["physics", "mathematics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["physics", "mathematics"],
       programType: "Degree" 
     },
     "BET": { 
       faculty: "Engineering", 
       duration: "4 Years", 
-      requiredSubjects: ["physics", "mathematics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["physics", "mathematics"],
       programType: "Degree" 
     },
     "BIO": { 
       faculty: "Engineering", 
       duration: "4 Years", 
-      requiredSubjects: ["physics", "mathematics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["physics", "mathematics"],
       programType: "Degree" 
     },
     "BIE": { 
       faculty: "Engineering", 
       duration: "4 Years", 
-      requiredSubjects: ["physics", "mathematics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["physics", "mathematics"],
       programType: "Degree" 
     },
     "EBD": { 
       faculty: "Engineering", 
       duration: "4 Years", 
-      requiredSubjects: ["mathematics", "physics", "economics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "physics"],
       programType: "Degree" 
     },
     "EBE": { 
       faculty: "Engineering", 
       duration: "4 Years", 
-      requiredSubjects: ["mathematics", "physics", "economics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "physics"],
       programType: "Degree" 
     },
     "EED": { 
       faculty: "Engineering", 
       duration: "4 Years", 
-      requiredSubjects: ["mathematics", "physics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"], 
       essentialSubjects: ["mathematics", "physics"],
       programType: "Degree" 
     },
     "EEE": { 
       faculty: "Engineering", 
       duration: "4 Years", 
-      requiredSubjects: ["mathematics", "physics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"],
       essentialSubjects: ["mathematics", "physics"],
       programType: "Degree" 
     },
     "APD": { 
       faculty: "Engineering", 
       duration: "4 Years", 
-      requiredSubjects: ["mathematics", "physics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"],
       essentialSubjects: ["mathematics", "physics"],
       programType: "Degree" 
     },
     "APE": { 
       faculty: "Engineering", 
       duration: "4 Years", 
-      requiredSubjects: ["mathematics", "physics"], 
+      requiredSubjects: ["physics", "geography", "economics", "mathematics", "chemistry", "agriculture", "biology", "entrepreneurship","technical drawing"],
       essentialSubjects: ["mathematics", "physics"],
       programType: "Degree" 
     },
