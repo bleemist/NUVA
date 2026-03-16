@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NUVA - Course Guidance Expert System</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #fe4f04;
+      --primary-dark: #e03e00;
+      --primary-light: #ff7a2d;
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --card-bg: rgba(15, 23, 42, 0.72);
+      --card-border: rgba(254, 79, 4, 0.18);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --sidebar-bg: rgba(15, 23, 42, 0.85);
+      --success: #34d399;
+      --warning: #fbbf24;
+      --error: #f87171;
+      --info-bg: rgba(30, 60, 114, 0.3);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--text);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(254, 79, 4, 0.3);
+      border-radius: 50%;
+      animation: float linear infinite;
+      box-shadow: 0 0 12px rgba(254, 79, 4, 0.5);
+    }
+
+    @keyframes float {
+      0%   { transform: translateY(100vh) scale(0.5); opacity: 0; }
+      10%  { opacity: 0.7; }
+      90%  { opacity: 0.7; }
+      100% { transform: translateY(-20vh) scale(1.1); opacity: 0; }
+    }
+
+    /* Sticky Header with Tabs */
+    .header {
+      position: sticky;
+      top: 0;
+      background: var(--sidebar-bg);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .nuva-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: conic-gradient(from 200deg, #fe4f04, #ff7a2d 90deg, #9b6aff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 4px 15px rgba(254, 79, 4, 0.25);
+      position: relative;
+      overflow: hidden;
+      animation: pulseGlow 4s infinite ease-in-out;
+    }
+
+    .nuva-logo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+      animation: shine 6s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 4px 15px rgba(254, 79, 4, 0.25); }
+      50%      { box-shadow: 0 8px 25px rgba(254, 79, 4, 0.45); }
+    }
+
+    @keyframes shine {
+      0%   { transform: translateX(-120%); }
+      100% { transform: translateX(120%); }
+    }
+
+    .grid {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      justify-items: center;
+      align-items: center;
+      opacity: 0.25;
+      padding: 10px;
+    }
+
+    .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #fff, #cfe8ff);
+    }
+
+    .dot.center {
+      transform: scale(1.4);
+      background: linear-gradient(180deg, #fe4f04, #ff7a2d);
+    }
+
+    .header-logo h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.4rem;
+      background: linear-gradient(to right, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-list {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .nav-item {
+      flex-shrink: 0;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.7rem 1.2rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      background: rgba(254, 79, 4, 0.12);
+      color: white;
+    }
+
+    .nav-link svg {
+      width: 18px;
+      height: 18px;
+      margin-right: 8px;
+      opacity: 0.7;
+      fill: currentColor;
+    }
+
+    .nav-link:hover svg, .nav-link.active svg {
+      opacity: 1;
+      fill: var(--primary);
+    }
+
+    /* Main content */
+    .main-content {
+      flex: 1;
+      padding: 2rem;
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
+    }
+
+    /* Dashboard Header */
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .dashboard-header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2rem;
+      background: linear-gradient(to right, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+
+    /* REMOVED user-profile section completely */
+
+    /* Content Sections */
+    .content-section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Stats grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      padding: 1.8rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(254, 79, 4, 0.2);
+    }
+
+    .stat-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(254, 79, 4, 0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .stat-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--primary);
+    }
+
+    .stat-value {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-label {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Status message */
+    .status-message {
+      background: var(--info-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      color: var(--text);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+    }
+
+    .status-online {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--success);
+    }
+
+    .status-offline {
+      background: rgba(248, 113, 113, 0.15);
+      color: var(--error);
+    }
+
+    .status-online::before,
+    .status-offline::before {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .status-online::before {
+      background: var(--success);
+      box-shadow: 0 0 8px var(--success);
+    }
+
+    .status-offline::before {
+      background: var(--error);
+      box-shadow: 0 0 8px var(--error);
+    }
+
+    /* Quick actions */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .action-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .action-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(254, 79, 4, 0.2);
+    }
+
+    .action-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      color: white;
+    }
+
+    .action-desc {
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .action-btn {
+      background: rgba(254, 79, 4, 0.15);
+      color: var(--primary-light);
+      border: none;
+      padding: 0.8rem 1.4rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.25s ease;
+      font-size: 1rem;
+    }
+
+    .action-btn:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      padding: 1.8rem;
+      border-left: 4px solid var(--primary);
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .feature-card h3 {
+      color: white;
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .feature-card h4 {
+      color: var(--primary-light);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .feature-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-card li {
+      margin: 0.8rem 0;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .feature-card li::before {
+      content: "•";
+      color: var(--primary);
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    /* System Info */
+    .system-info {
+      background: var(--card-bg);
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .info-item {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 1.5rem;
+      border-radius: 12px;
+    }
+
+    .info-item h4 {
+      color: var(--primary-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .recent-activity {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .activity-item {
+      padding: 1rem;
+      border-left: 3px solid var(--primary);
+      margin: 1rem 0;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .activity-item strong {
+      color: var(--primary-light);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .activity-item p {
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Weight Calculation */
+    .weight-formula {
+      background: rgba(254, 79, 4, 0.08);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      text-align: center;
+    }
+
+    .weight-formula p {
+      font-size: 1.2rem;
+      color: white;
+    }
+
+    .weight-formula strong {
+      color: var(--primary-light);
+    }
+
+    /* Example Calculation */
+    .example-box {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border: 1px dashed var(--card-border);
+    }
+
+    .example-box h4 {
+      color: var(--primary-light);
+      margin-bottom: 1rem;
+    }
+
+    .calc-step {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.5rem 0;
+      color: var(--text-muted);
+    }
+
+    .calc-step::before {
+      content: "✓";
+      color: var(--success);
+      font-weight: bold;
+    }
+
+    .calc-result {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--card-border);
+      font-size: 1.2rem;
+      color: white;
+    }
+
+    .calc-result strong {
+      color: var(--primary-light);
+    }
+
+    /* University List Section */
+    .university-list {
+      background: var(--card-bg);
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .university-list h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: white;
+      text-align: center;
+    }
+
+    .university-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .university-item {
+      padding: 1.2rem;
+      border-radius: 12px;
+      background: rgba(30, 41, 59, 0.5);
+      border: 1px solid var(--card-border);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      transition: all 0.3s ease;
+    }
+
+    .university-item:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+    }
+
+    .university-item strong {
+      color: var(--primary-light);
+      font-size: 1rem;
+    }
+
+    /* Authors Section */
+    .author-card {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      border-left: 4px solid var(--primary);
+    }
+
+    .author-card p {
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin: 0.8rem 0;
+    }
+
+    .author-card a {
+      color: var(--primary-light);
+      text-decoration: none;
+    }
+
+    .author-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* Agreement Section */
+    .agreement-section {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .agreement-section h3 {
+      color: var(--primary-light);
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .agreement-section p {
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin: 1rem 0;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 3rem;
+      padding: 2rem 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--card-border);
+    }
+
+    footer a {
+      color: var(--primary-light);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .nav-list {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+      }
+      
+      .nav-link {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+      }
+      
+      .nav-link svg {
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+      }
+      
+      .main-content {
+        padding: 1rem;
+      }
+      
+      .dashboard-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .quick-actions {
+        grid-template-columns: 1fr;
+      }
+      
+      .university-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Background particles -->
+<div class="particles" id="particles"></div>
+
+<div class="dashboard">
+  <!-- Sticky Header with Tabs -->
+  <header class="header">
+    <div class="header-logo">
+      <div class="nuva-logo">
+        NUVA
+        <div class="grid">
+          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot center"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+      </div>
+      <h2>NUVA</h2>
+    </div>
+
+    <ul class="nav-list">
+      <li class="nav-item">
+        <button class="nav-link active" onclick="showSection('dashboard')">
+          <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+          Dashboard
+        </button>
+      </li>
+      <li class="nav-item">
+        <a href="course-input.html" class="nav-link">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg>
+          Find Courses
+        </a>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" onclick="showSection('features')">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+          Features
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" onclick="showSection('how-it-works')">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+          How It Works
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" onclick="showSection('weight-calculation')">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/></svg>
+          Weight System
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" onclick="showSection('universities')">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM5 12h2v4H5v-4zm4 0h2v8H9v-8zm4 0h2v6h-2v-6zm4 0h2v10h-2V12z"/></svg>
+          Universities
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" onclick="showSection('authors')">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          Authors
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" onclick="showSection('agreement')">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+          User Agreement
+        </button>
+      </li>
+    </ul>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Dashboard Section -->
+    <div id="section-dashboard" class="content-section active">
+      <div class="dashboard-header">
+        <h1>NUVA Guidance System</h1>
+        <!-- REMOVED user profile section -->
+      </div>
+
+      <!-- System Status -->
+      <div class="status-message" id="statusMessage">
+        <span class="status-indicator status-online" id="systemStatus">ONLINE</span>
+        <span id="statusText">NUVA guidance system is running smoothly. All features available.<br> Click here for any more guidance about University<br><a href="https://chat.whatsapp.com/GLLeaXw02EXBAHYO1bO6w2">All Freshers ChatRoom</a></span>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+          </div>
+          <div class="stat-value" id="coursesCount">166+</div>
+          <div class="stat-label">Available Courses</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          </div>
+          <div class="stat-value" id="universitiesCount">10+</div>
+          <div class="stat-label">Public Universities</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <div class="stat-value" id="activeUsers">1K+</div>
+          <div class="stat-label">Active Users</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+          </div>
+          <div class="stat-value">100%</div>
+          <div class="stat-label">UG System Compliant</div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <div class="action-card">
+          <h3 class="action-title">Find Your Course</h3>
+          <p class="action-desc">Answer a few questions about your grades and interests to get personalized course recommendations.</p>
+          <button class="action-btn" onclick="window.location.href='course-input.html'">Start Now</button>
+        </div>
+
+        <div class="action-card">
+          <h3 class="action-title">View Recommendations</h3>
+          <p class="action-desc">See your latest personalized course matches and save your favorites.</p>
+          <button class="action-btn" onclick="window.location.href='results.html'">View Matches</button>
+        </div>
+
+        <div class="action-card">
+          <h3 class="action-title">Learn More</h3>
+          <p class="action-desc">Explore how NUVA calculates your course eligibility using the official Ugandan system.</p>
+          <button class="action-btn" onclick="showSection('how-it-works')">How It Works</button>
+        </div>
+      </div>
+
+      <!-- Recent Activity / System Capabilities -->
+      <div class="recent-activity">
+        <h3 style="color: white; margin-bottom: 1.5rem;">📊 Current System Capabilities</h3>
+        
+        <div class="activity-item">
+          <strong>Comprehensive Database</strong>
+          <p>Complete database of 166+ undergraduate programs across all 10 public universities with official cut-off points and requirements</p>
+        </div>
+        
+        <div class="activity-item">
+          <strong>Ugandan System Compliance</strong>
+          <p>Full implementation of the official weight calculation system with proper multipliers (Essential ×3, Relevant ×2)</p>
+        </div>
+        
+        <div class="activity-item">
+          <strong>Real-time Processing</strong>
+          <p>Instant course recommendations based on your specific academic profile and subject combinations</p>
+        </div>
+        
+        <div class="activity-item">
+          <strong>Mobile Responsive</strong>
+          <p>Works perfectly on all devices - desktop, tablet, and mobile phones</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div id="section-features" class="content-section">
+      <h1 style="font-family: 'Poppins', sans-serif; font-size: 2rem; margin-bottom: 2rem; background: linear-gradient(to right, var(--primary), var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Key Features</h1>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>🎯 Personalized Guidance</h3>
+          <ul>
+            <li>A-Level subjects and grades</li>
+            <li>O-Level aggregate weight</li>
+            <li>Gender (with female bonus +1.5)</li>
+            <li>Subject combinations</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card">
+          <h3>⚡ Fast & Accurate</h3>
+          <ul>
+            <li>Essential subjects × 3 multiplier</li>
+            <li>Other principals × 2 multiplier</li>
+            <li>Subsidiary × 1 multiplier</li>
+            <li>Official cut-off points</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card">
+          <h3>🏫 All 10 Universities</h3>
+          <ul>
+            <li>Makerere, Kyambogo, Mbarara</li>
+            <li>Gulu, Busitema, Kabale</li>
+            <li>Lira, Soroti, Muni, Mountains of the Moon</li>
+            <li>Complete course requirements</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card">
+          <h3>🔒 No Account Needed</h3>
+          <ul>
+            <li>Instant access - no signup required</li>
+            <li>No personal data stored</li>
+            <li>Privacy-focused design</li>
+            <li>Use anonymously</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <div id="section-how-it-works" class="content-section">
+      <h1 style="font-family: 'Poppins', sans-serif; font-size: 2rem; margin-bottom: 2rem; background: linear-gradient(to right, var(--primary), var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">How NUVA Works</h1>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>1. Input Your Data</h3>
+          <ul>
+            <li>Gender (for female bonus +1.5)</li>
+            <li>Education level (A-Level)</li>
+            <li>Principal subjects and grades</li>
+            <li>O-Level aggregate weight (0-3)</li>
+            <li>Subsidiary subject status</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card">
+          <h3>2. Weight Calculation</h3>
+          <ul>
+            <li>Essential subjects: Grade × 3</li>
+            <li>Other principals: Grade × 2</li>
+            <li>Subsidiary: Pass = 1 point</li>
+            <li>O-Level: Your aggregate (0-3)</li>
+            <li>Female bonus: +1.5 points</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card">
+          <h3>3. Course Matching</h3>
+          <ul>
+            <li>Subject requirements check</li>
+            <li>Compare with official cut-off points</li>
+            <li>Faculty preferences</li>
+            <li>Your calculated weight</li>
+            <li>Program availability</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card">
+          <h3>4. Get Recommendations</h3>
+          <ul>
+            <li>Top 15 matching courses</li>
+            <li>Detailed eligibility status</li>
+            <li>Faculty and duration info</li>
+            <li>Match percentage scores</li>
+            <li>Clear cut-off comparisons</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div style="text-align: center; margin: 2rem 0;">
+        <button class="action-btn" onclick="window.location.href='course-input.html'" style="padding: 1rem 2rem; font-size: 1.1rem;">Start Your Guidance Now</button>
+      </div>
+    </div>
+
+    <!-- Weight Calculation Section -->
+    <div id="section-weight-calculation" class="content-section">
+      <h1 style="font-family: 'Poppins', sans-serif; font-size: 2rem; margin-bottom: 2rem; background: linear-gradient(to right, var(--primary), var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Understanding Weight Calculation</h1>
+      
+      <div class="weight-formula">
+        <h3 style="color: white; margin-bottom: 1rem;">Ugandan Education System Weight Formula</h3>
+        <p><strong>Total Weight = (Essential Subjects × 3) + (Other Principals × 2) + Subsidiary + O-Level Weight + Gender Bonus</strong></p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <h4>Grade Points</h4>
+          <ul>
+            <li>A = 6 points</li>
+            <li>B = 5 points</li>
+            <li>C = 4 points</li>
+            <li>D = 3 points</li>
+            <li>E = 2 points</li>
+            <li>O = 1 point (Subsidiary)</li>
+            <li>F = 0 points (Fail)</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card">
+          <h4>Multipliers</h4>
+          <ul>
+            <li>Essential Subjects × 3</li>
+            <li>Other Principals × 2</li>
+            <li>Subsidiary × 1</li>
+          </ul>
+        </div>
+        
+        <div class="feature-card">
+          <h4>Bonus Points</h4>
+          <ul>
+            <li>O-Level Weight: 0-3 points</li>
+            <li>Female Bonus: +1.5 points</li>
+            <li>Subsidiary Pass: +1 point</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="example-box">
+        <h4>Example Calculation</h4>
+        <p style="color: white; margin-bottom: 1rem;">Physics (A), Mathematics (B), Technical Drawing (A):</p>
+        <div class="calc-step">Physics (A): 6 × 3 (Essential) = 18</div>
+        <div class="calc-step">Mathematics (B): 5 × 3 (Essential) = 15</div>
+        <div class="calc-step">Technical Drawing (A): 6 × 2 (Relevant) = 12</div>
+        <div class="calc-result">Subtotal: 18 + 15 + 12 = <strong>45 points</strong></div>
+        <div class="calc-result">Add O-Level weight (e.g., 2.3) = <strong>47.3 total</strong></div>
+      </div>
+    </div>
+
+    <!-- Universities Section -->
+    <div id="section-universities" class="content-section">
+      <h1 style="font-family: 'Poppins', sans-serif; font-size: 2rem; margin-bottom: 2rem; background: linear-gradient(to right, var(--primary), var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Public Universities in Uganda</h1>
+      
+      <div class="university-list">
+        <div class="university-grid">
+          <div class="university-item">
+            <strong>i. Makerere University</strong><br>
+            Website: www.mak.ac.ug<br>
+            Fax: +256-41-541068<br>
+            Tel: +256-41-531202/540436<br>
+            Email: ar@mak.ac.ug
+          </div>
+          <div class="university-item">
+            <strong>ii. Mbarara University of Science & Technology</strong><br>
+            Website: www.must.ac.ug<br>
+            Fax: +256-485-20782/20388<br>
+            Tel: +256-485-660584<br>
+            Email: ar@must.ac.ug
+          </div>
+          <div class="university-item">
+            <strong>iii. Kyambogo University</strong><br>
+            Website: www.kyu.ac.ug<br>
+            Fax: +256-41-220464<br>
+            Tel: +256-41-286237/287343<br>
+            Email: arkyu@kyu.ac.ug
+          </div>
+          <div class="university-item">
+            <strong>iv. Gulu University</strong><br>
+            Website: www.gu.ac.ug<br>
+            Fax: +256-471-432094<br>
+            Tel: +256-471-432921<br>
+            Email: ar@gu.ac.ug
+          </div>
+          <div class="university-item">
+            <strong>v. Busitema University</strong><br>
+            Website: www.busitema.ac.ug<br>
+            Fax: +256-45-4455858<br>
+            Tel: +256-45-4455858<br>
+            Email: ar@acadreg.busitema.ac.ug
+          </div>
+          <div class="university-item">
+            <strong>vi. Muni University</strong><br>
+            Website: www.muni.ac.ug<br>
+            Tel: +256-476-420312/3/4<br>
+            Email: ar@muni.ac.ug
+          </div>
+          <div class="university-item">
+            <strong>vii. Kabale University</strong><br>
+            Website: www.kab.ac.ug<br>
+            Tel: +256-4864-26463/782-860259<br>
+            Email: registrar@kab.ac.ug
+          </div>
+          <div class="university-item">
+            <strong>viii. Lira University</strong><br>
+            Website: www.lirauni.ac.ug<br>
+            Tel: +256-471-660709<br>
+            Email: academicregistrar@lirauni.ac.ug
+          </div>
+          <div class="university-item">
+            <strong>ix. Soroti University</strong><br>
+            Website: www.sun.ac.ug<br>
+            Tel: +2560454961605<br>
+            Email: ar@sun.ac.ug
+          </div>
+          <div class="university-item">
+            <strong>x. Mountains of the Moon University</strong><br>
+            Website: www.mmu.ac.ug<br>
+            Tel: +256-483-660390<br>
+            Email: registrar@mmu.ac.ug
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Authors Section -->
+    <div id="section-authors" class="content-section">
+      <h1 style="font-family: 'Poppins', sans-serif; font-size: 2rem; margin-bottom: 2rem; background: linear-gradient(to right, var(--primary), var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">About the Authors</h1>
+      
+      <!-- MUYANJA ANDREW DETAILS -->
+      <div class="author-card">
+        <p><strong style="color: white; font-size: 1.2rem;">Founder & Lead Developer</strong></p>
+        <p><strong style="color: var(--primary-light);">MUYANJA ANDREW</strong></p>
+        <p>Owner of BLEEMIST COMPANIES</p>
+        <p>Contact: <a href="mailto:aandrewmuyanja@gmail.com">Muyanja Andrew | Founder & Lead Developer</a></p>
+        <p>Phone: +256 708 765 729</p>
+        <p>Address: Kyambogo University, Kampala, Uganda</p>
+      </div>
+
+      <!-- AGATESI MAZIMA VANESSA DETAILS -->
+      <div class="author-card">
+        <p><strong style="color: white; font-size: 1.2rem;">Co-Founder NUVA System</strong></p>
+        <p><strong style="color: var(--primary-light);">AGATESI MAZIMA VANESSA</strong></p>
+        <p>Concept creator of NUVA and contributor to the project vision</p>
+        <p>Contact: <a href="agatesivanessa05@gmail.com">Agatesi Mazima Vanessa | Project initiator</a></p>
+        <p>Phone: +256 783 572 721</p>
+        <p>Address: Kyambogo University, Kampala, Uganda</p>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <h4>Organization</h4>
+          <p style="color: var(--text-muted);">NUVA Org</p>
+        </div>
+        <div class="info-item">
+          <h4>Email</h4>
+          <p style="color: var(--text-muted);"><a href="mailto:bleemistorg@gmail.com">NUVA Org | Email and Consultation Center</a></p>
+        </div>
+        <div class="info-item">
+          <h4>Phone</h4>
+          <p style="color: var(--text-muted);">+256 708 765 729</p>
+        </div>
+        <div class="info-item">
+          <h4>Address</h4>
+          <p style="color: var(--text-muted);">Kyambogo University, Kampala</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Agreement Section -->
+    <div id="section-agreement" class="content-section">
+      <h1 style="font-family: 'Poppins', sans-serif; font-size: 2rem; margin-bottom: 2rem; background: linear-gradient(to right, var(--primary), var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">User Agreement & Terms of Service</h1>
+
+      <div class="agreement-section">
+        <h3>1. Acceptance of Terms</h3>
+        <p>By accessing and using the NUVA Course Guidance System, you explicitly agree to comply with all terms and conditions outlined herein. Any use of the system constitutes your legal acknowledgment and agreement to follow these rules and responsibilities.</p>
+        <p>Failure to comply may result in restricted access. Users should regularly review this agreement to ensure continued compliance.</p>
+        <p>Continued use of NUVA indicates acceptance of any updates or modifications made to the terms and conditions by BLEEMIST COMPANIES.</p>
+      </div>
+
+      <div class="agreement-section">
+        <h3>2. System Purpose and Maintenance</h3>
+        <p>NUVA provides advisory guidance on university course selection based on academic performance and user inputs. While every effort is made to ensure accuracy, the system is continuously maintained and updated to enhance functionality and reliability.</p>
+        <p>The recommendations generated are advisory only, and users should not consider them as official admission guarantees. Temporary downtimes or minor system errors may occur during maintenance or updates.</p>
+        <p>Users are responsible for entering accurate information to ensure the validity of the guidance provided.</p>
+      </div>
+
+      <div class="agreement-section">
+        <h3>3. User Responsibilities</h3>
+        <p>All users must provide accurate and complete information including grades, subjects, and other required data. Misrepresentation or incomplete information can lead to inaccurate recommendations.</p>
+        <p>Users are expected to follow instructions and guidelines, and use the system in a responsible and ethical manner.</p>
+      </div>
+
+      <div class="agreement-section">
+        <h3>4. Intellectual Property & Ownership</h3>
+        <p>All intellectual property, software, algorithms, and content of NUVA belong exclusively to BLEEMIST COMPANIES, fully owned by Muyanja Andrew. Unauthorized copying, redistribution, or commercialization of the system or its content is strictly prohibited.</p>
+        <p>All rights, including trademarks, patents, and proprietary content, remain the sole property of BLEEMIST COMPANIES.</p>
+      </div>
+
+      <div class="agreement-section">
+        <h3>5. Limitations & Disclaimers</h3>
+        <p>NUVA provides guidance based on user input and academic data, but it does not guarantee university admission, scholarships, or specific academic outcomes. Users should independently verify results and recommendations.</p>
+        <p>BLEEMIST COMPANIES is not liable for any actions, decisions, or consequences that may result from using the system.</p>
+      </div>
+
+      <div class="agreement-section">
+        <h3>6. Privacy and Data Use</h3>
+        <p>All personal and academic data entered into NUVA is treated confidentially. The information is used solely to generate course guidance recommendations.</p>
+        <p>Data is never sold, leased, or shared with third parties without explicit user consent. No account creation means no personal data is permanently stored.</p>
+      </div>
+
+      <div class="agreement-section">
+        <h3>7. Governing Law</h3>
+        <p>This User Agreement is governed by the laws of Uganda. Any disputes arising from the use of NUVA will be handled under Ugandan jurisdiction.</p>
+      </div>
+
+      <div class="agreement-section">
+        <h3>8. Acknowledgment</h3>
+        <p>By accessing or using NUVA, you acknowledge that you have read, understood, and accepted all terms, conditions, and limitations outlined in this agreement.</p>
+        <p>Full ownership and all rights of NUVA are held by BLEEMIST COMPANIES, under Muyanja Andrew.</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      © 2026 BLEEM Labs Co. All rights reserved. Owned by <strong>MUYANJA ANDREW</strong>.
+      Contact: <a href="mailto:bleemistorg@gmail.com">NUVA Org | Email and Consultation Center</a><br>
+      <a href="#" onclick="showSection('agreement'); return false;">User Agreement</a> | 
+      <a href="#">Privacy Policy</a> | 
+      <a href="#">Terms of Service</a>
+    </footer>
+  </main>
+</div>
+
+<script>
+// Section switching function
+function showSection(sectionId) {
+  // Hide all sections
+  document.querySelectorAll('.content-section').forEach(section => {
+    section.classList.remove('active');
+  });
+  
+  // Show selected section
+  const selectedSection = document.getElementById(`section-${sectionId}`);
+  if (selectedSection) {
+    selectedSection.classList.add('active');
+  }
+  
+  // Update active nav link
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.remove('active');
+  });
+  
+  // Find and highlight the clicked nav link
+  const activeLink = Array.from(document.querySelectorAll('.nav-link')).find(
+    link => link.textContent.toLowerCase().includes(sectionId) || 
+           (sectionId === 'dashboard' && link.textContent.includes('Dashboard'))
+  );
+  if (activeLink) {
+    activeLink.classList.add('active');
+  }
+}
+
+// System status check
+async function checkSystemStatus() {
+  const systemStatus = document.getElementById('systemStatus');
+  const statusText = document.getElementById('statusText');
+  const statusMessage = document.getElementById('statusMessage');
+  
+  try {
+    const response = await fetch('/api/health');
+    const result = await response.json();
+    
+    if (result.status === 'OK') {
+      systemStatus.className = 'status-indicator status-online';
+      systemStatus.textContent = 'ONLINE';
+      statusText.textContent = 'NUVA guidance system is running smoothly. All features available.';
+      statusMessage.style.borderLeftColor = 'var(--success)';
+      
+      if (result.totalCourses) {
+        document.getElementById('coursesCount').textContent = result.totalCourses;
+      }
+    } else {
+      throw new Error('System offline');
+    }
+  } catch (error) {
+    systemStatus.className = 'status-indicator status-offline';
+    systemStatus.textContent = 'OFFLINE';
+    statusText.textContent = 'Unable to connect to guidance system. Some features may be limited.';
+    statusMessage.style.borderLeftColor = 'var(--error)';
+  }
+}
+
+// REMOVED checkUserStatus function (no longer needed)
+
+// Background particles
+function createParticle() {
+  const particle = document.createElement('div');
+  particle.className = 'particle';
+  
+  const size = Math.random() * 6 + 4;
+  particle.style.width = `${size}px`;
+  particle.style.height = `${size}px`;
+  
+  particle.style.left = Math.random() * 100 + 'vw';
+  particle.style.animationDuration = Math.random() * 10 + 15 + 's';
+  particle.style.animationDelay = Math.random() * 5 + 's';
+  
+  document.getElementById('particles').appendChild(particle);
+  
+  setTimeout(() => particle.remove(), 20000);
+}
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+  checkSystemStatus();
+  // REMOVED checkUserStatus() call
+  
+  // Initialize particles
+  for (let i = 0; i < 25; i++) {
+    createParticle();
+  }
+  setInterval(createParticle, 1200);
+  
+  // Update stats
+  document.getElementById('universitiesCount').textContent = '10+';
+  document.getElementById('activeUsers').textContent = Math.floor(Math.random() * 500) + 800 + '+';
+});
+</script>
+
+</body>
+</html>
