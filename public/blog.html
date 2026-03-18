@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>NUVA • Journal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --accent: #d1d5db;
+            --nuva-orange: #fe4f04;
+            --nuva-orange-light: #ff7a2d;
+            --nuva-purple: #9b6aff;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: #0a0a0a;
+            color: #f3f4f6;
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
+        }
+        
+        .heading-font {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Custom NUVA Logo */
+        .nuva-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: conic-gradient(from 200deg, #fe4f04, #ff7a2d 90deg, #9b6aff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 4px 15px rgba(254, 79, 4, 0.25);
+            position: relative;
+            overflow: hidden;
+            animation: pulseGlow 4s infinite ease-in-out;
+            flex-shrink: 0;
+        }
+        
+        .nuva-logo .grid {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 3px;
+            justify-items: center;
+            align-items: center;
+            opacity: 0.25;
+            padding: 6px;
+            pointer-events: none;
+        }
+        
+        .nuva-logo .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: linear-gradient(180deg, #fff, #cfe8ff);
+        }
+        
+        .nuva-logo .dot.center {
+            transform: scale(1.4);
+            background: linear-gradient(180deg, #fe4f04, #ff7a2d);
+        }
+        
+        .nuva-logo::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+            animation: shine 6s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes pulseGlow { 
+            0%,100% { box-shadow:0 4px 15px rgba(254,79,4,0.25); } 
+            50% { box-shadow:0 8px 25px rgba(254,79,4,0.45); } 
+        }
+        
+        @keyframes shine { 
+            0% { transform:translateX(-120%); } 
+            100% { transform:translateX(120%); } 
+        }
+
+        /* Blog specific styles */
+        .tail-container {
+            background: #0a0a0a;
+            color: #f3f4f6;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .post-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .post-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+        }
+
+        .modal {
+            animation: modalPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        @keyframes modalPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .nav-link {
+            position: relative;
+            font-size: 0.9rem;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: #fe4f04;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .rich-text {
+            line-height: 1.8;
+        }
+
+        .rich-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .rich-text blockquote {
+            border-left: 4px solid #fe4f04;
+            padding-left: 2rem;
+            font-style: italic;
+            font-size: 1.5rem;
+            margin: 2rem 0;
+            color: #d1d5db;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .nav-link {
+                font-size: 0.8rem;
+            }
+            
+            .modal-content {
+                padding: 0 1rem;
+            }
+            
+            .post-card .h-64 {
+                height: 200px;
+            }
+            
+            .nuva-logo {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .nuva-logo .grid {
+                padding: 4px;
+                gap: 2px;
+            }
+            
+            .nuva-logo .dot {
+                width: 4px;
+                height: 4px;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #fe4f04;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff7a2d;
+        }
+
+        /* Line clamp utility */
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="tail-container min-h-screen">
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-lg border-b border-gray-800">
+        <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Custom NUVA Logo -->
+                <div class="nuva-logo">
+                    <span class="relative z-10">NUVA</span>
+                    <div class="grid">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot center"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span class="heading-font text-2xl sm:text-3xl tracking-tighter font-semibold leading-tight">NUVA</span>
+                    <span class="text-[0.6rem] sm:text-xs tracking-[2px] text-gray-400 font-medium">JOURNAL</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4 sm:gap-8 text-xs sm:text-sm font-medium">
+                <a href="#" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="nav-link text-gray-300 hover:text-white transition">JOURNAL</a>
+                <a href="#" onclick="showAbout()" class="nav-link text-gray-300 hover:text-white transition">ABOUT</a>
+            </div>
+            
+            <div class="flex items-center">
+                <button onclick="toggleDarkMode()" class="p-2 sm:p-3 hover:bg-gray-900 rounded-2xl transition">
+                    <i class="fa-solid fa-moon text-lg sm:text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-16 sm:pt-20">
+
+        <!-- BLOG CONTENT -->
+        <div id="blog-view">
+            <!-- HERO SECTION -->
+            <div class="relative min-h-screen flex items-center justify-center overflow-hidden bg-[radial-gradient(#1f2937_1px,transparent_1px)] bg-[length:30px_30px] sm:bg-[length:50px_50px]">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/70 to-black"></div>
+                <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 relative z-10">
+                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 sm:px-6 py-2 rounded-3xl text-[0.6rem] sm:text-xs tracking-widest mb-6 sm:mb-8">
+                        <div class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#fe4f04] rounded-full animate-pulse"></div>
+                        EST. 2025 • KAMPALA
+                    </div>
+                    <h1 class="heading-font text-5xl sm:text-7xl md:text-8xl font-medium tracking-tighter leading-none mb-4 sm:mb-6">
+                        THOUGHTS.<br>UNFILTERED.
+                    </h1>
+                    <p class="text-base sm:text-xl text-gray-400 max-w-md mx-auto mb-8 sm:mb-10 px-4">
+                        A minimalist journal of ideas, crafted in pure black & white.
+                    </p>
+                    <button onclick="document.getElementById('posts-section').scrollIntoView({ behavior: 'smooth' })" 
+                            class="px-6 sm:px-10 py-4 sm:py-5 bg-white text-black font-semibold rounded-2xl hover:bg-gray-200 transition flex items-center gap-2 sm:gap-3 mx-auto group text-sm sm:text-base">
+                        BEGIN READING
+                        <i class="fa-solid fa-arrow-down group-hover:rotate-45 transition-transform"></i>
+                    </button>
+                </div>
+                
+                <!-- Scroll indicator -->
+                <div class="absolute bottom-6 sm:bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1 text-[0.6rem] sm:text-xs tracking-widest">
+                    <span class="text-gray-500">SCROLL</span>
+                    <i class="fa-solid fa-chevron-down animate-bounce text-[#fe4f04]"></i>
+                </div>
+            </div>
+
+            <!-- POSTS SECTION -->
+            <div id="posts-section" class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 sm:mb-12 gap-4">
+                    <div>
+                        <span class="text-[0.6rem] sm:text-xs uppercase tracking-[2px] text-gray-400">Latest Entries</span>
+                        <h2 class="heading-font text-3xl sm:text-5xl tracking-tighter">The Journal</h2>
+                    </div>
+                </div>
+
+                <!-- POSTS GRID -->
+                <div id="posts-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="bg-black border-t border-gray-900 py-12 sm:py-16">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center">
+                    <div class="flex justify-center gap-6 sm:gap-8 text-xl sm:text-2xl mb-6 sm:mb-8">
+                        <i class="fa-brands fa-x-twitter hover:text-[#fe4f04] cursor-pointer transition"></i>
+                        <i class="fa-brands fa-linkedin hover:text-[#fe4f04] cursor-pointer transition"></i>
+                        <i class="fa-brands fa-instagram hover:text-[#fe4f04] cursor-pointer transition"></i>
+                    </div>
+                    <p class="text-[0.6rem] sm:text-xs text-gray-500 tracking-widest">© 2026 NUVA JOURNAL • ALL RIGHTS RESERVED & OWNED BY MUYANJA ANDREW</p>
+                </div>
+            </footer>
+        </div>
+
+    </div>
+
+    <!-- POST MODAL -->
+    <div id="post-modal" onclick="if(event.target.id==='post-modal') closeModal()" 
+         class="hidden fixed inset-0 bg-black/95 flex items-center justify-center z-[9999] p-4">
+        <div onclick="event.stopPropagation()" 
+             class="modal bg-zinc-950 w-full max-w-4xl max-h-[90vh] overflow-auto rounded-2xl sm:rounded-3xl shadow-2xl">
+            
+            <!-- Modal header image -->
+            <div id="modal-image" class="h-48 sm:h-80 bg-cover bg-center relative">
+                <button onclick="closeModal()" 
+                        class="absolute top-3 right-3 sm:top-6 sm:right-6 bg-black/60 hover:bg-black text-white w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-xl sm:rounded-2xl transition">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="px-4 sm:px-12 pb-8 sm:pb-12">
+                <div id="modal-date" class="text-[0.6rem] sm:text-xs text-gray-400 mt-6 sm:mt-10 mb-2 sm:mb-3"></div>
+                <h1 id="modal-title" class="heading-font text-2xl sm:text-5xl leading-tight sm:leading-none tracking-tighter"></h1>
+                
+                <div id="modal-content" class="rich-text prose prose-invert max-w-none mt-8 sm:mt-12 text-base sm:text-lg leading-relaxed">
+                </div>
+                
+                <!-- COMMENTS SECTION -->
+                <div class="mt-12 sm:mt-20 border-t border-gray-800 pt-8 sm:pt-12">
+                    <h3 class="text-lg sm:text-xl font-medium mb-6 sm:mb-8 flex items-center gap-2 sm:gap-3">
+                        <i class="fa-solid fa-comment text-[#fe4f04]"></i>
+                        CONVERSATIONS
+                    </h3>
+                    
+                    <div id="comments-list" class="space-y-6 sm:space-y-8 mb-8 sm:mb-12">
+                        <!-- JS populated -->
+                    </div>
+                    
+                    <!-- ADD COMMENT FORM -->
+                    <div class="bg-zinc-900 rounded-2xl sm:rounded-3xl p-4 sm:p-8">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                            <input id="comment-name" type="text" placeholder="Your name" 
+                                   class="bg-transparent border border-gray-700 rounded-xl sm:rounded-2xl px-4 sm:px-6 py-4 sm:py-5 outline-none focus:border-[#fe4f04] text-sm sm:text-base">
+                            <input id="comment-email" type="text" placeholder="Email (optional)" 
+                                   class="bg-transparent border border-gray-700 rounded-xl sm:rounded-2xl px-4 sm:px-6 py-4 sm:py-5 outline-none focus:border-[#fe4f04] text-sm sm:text-base">
+                        </div>
+                        <textarea id="comment-text" rows="4" placeholder="Share your thoughts..." 
+                                  class="mt-4 sm:mt-6 w-full bg-transparent border border-gray-700 rounded-xl sm:rounded-3xl px-4 sm:px-6 py-4 sm:py-6 outline-none focus:border-[#fe4f04] text-sm sm:text-base"></textarea>
+                        <button onclick="submitComment()" 
+                                class="mt-4 sm:mt-6 px-6 sm:px-10 py-3 sm:py-4 bg-[#fe4f04] text-white rounded-xl sm:rounded-2xl hover:bg-[#ff7a2d] transition font-medium text-sm sm:text-base">
+                            POST COMMENT
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data storage
+        let posts = [];
+        
+        function loadPosts() {
+            const saved = localStorage.getItem('nuvaPosts');
+            if (saved) {
+                posts = JSON.parse(saved);
+            } else {
+                // Seed with sample posts
+                posts = [
+                    {
+                        id: 1,
+                        title: "The Architecture of Silence",
+                        excerpt: "In an age of constant noise, the most radical act is stillness.",
+                        content: `<p class="mb-6">We live in a world engineered for distraction. Notifications, algorithms, endless scrolls — all designed to keep us from the one thing that truly matters: presence.</p>
+                                  <p class="mb-6">The greatest thinkers of our time — from Seneca to Simone Weil — understood that clarity emerges only in silence. Yet we fear it. We fill every quiet moment with sound.</p>
+                                  <blockquote class="border-l-4 border-[#fe4f04] pl-8 italic text-xl sm:text-2xl my-8 sm:my-12">"Silence is the language of God; all else is poor translation."</blockquote>
+                                  <p>Perhaps the most beautiful spaces we can create are the ones that invite nothing but thought.</p>`,
+                        image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&auto=format",
+                        date: "March 12, 2026",
+                        comments: []
+                    },
+                    {
+                        id: 2,
+                        title: "Craft Over Scale",
+                        excerpt: "Why quality will always outlive quantity.",
+                        content: `<p>The internet told us bigger is better. More followers, more likes, more reach. Yet the work that truly moves people has always been the work done with obsessive care for the few.</p>
+                                  <p>Handwritten letters still carry more weight than mass emails. A single perfectly cut garment outlives a thousand fast-fashion pieces. The same principle applies to ideas.</p>`,
+                        image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=1200&auto=format",
+                        date: "March 10, 2026",
+                        comments: [
+                            { name: "Elena Voss", text: "This is exactly what I needed to hear today. Thank you.", date: "2h ago" }
+                        ]
+                    },
+                    {
+                        id: 3,
+                        title: "The Art of Patience",
+                        excerpt: "Good things take time. Great things take even longer.",
+                        content: `<p>In a world of instant gratification, patience has become a forgotten virtue. We want results now, answers now, success now. But the most meaningful creations in history weren't built in a day.</p>
+                                  <p>Michelangelo spent four years painting the Sistine Chapel. Darwin took two decades to develop his theory of evolution. True mastery requires time — and our willingness to wait for it.</p>`,
+                        image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&auto=format",
+                        date: "March 8, 2026",
+                        comments: []
+                    },
+                    {
+                        id: 4,
+                        title: "Digital Minimalism",
+                        excerpt: "Finding focus in a distracted world.",
+                        content: `<p>The average person touches their phone over 2,600 times a day. We've built a world that demands our constant attention, yet we wonder why we feel exhausted.</p>
+                                  <p>Digital minimalism isn't about rejecting technology — it's about using it with intention. It's about asking: Does this serve my values, or just someone else's metrics?</p>`,
+                        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&auto=format",
+                        date: "March 5, 2026",
+                        comments: []
+                    }
+                ];
+                savePosts();
+            }
+        }
+        
+        function savePosts() {
+            localStorage.setItem('nuvaPosts', JSON.stringify(posts));
+        }
+        
+        // Render posts grid
+        function renderPosts() {
+            const container = document.getElementById('posts-grid');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            posts.slice(0, 6).forEach(post => {
+                const card = document.createElement('div');
+                card.className = 'post-card bg-zinc-900 rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group';
+                card.innerHTML = `
+                    <div class="h-48 sm:h-64 bg-cover bg-center" style="background-image: url('${post.image}')"></div>
+                    <div class="p-4 sm:p-8">
+                        <div class="text-[0.6rem] sm:text-xs text-gray-400 mb-2 sm:mb-3">${post.date}</div>
+                        <h3 class="heading-font text-xl sm:text-3xl tracking-tighter leading-tight sm:leading-none mb-2 sm:mb-4 group-hover:text-[#fe4f04] transition">${post.title}</h3>
+                        <p class="text-sm sm:text-base text-gray-400 line-clamp-3">${post.excerpt}</p>
+                    </div>
+                `;
+                card.onclick = () => openPostModal(post.id);
+                container.appendChild(card);
+            });
+        }
+        
+        // Open full post modal
+        let currentPostId = null;
+        
+        function openPostModal(id) {
+            const post = posts.find(p => p.id === id);
+            if (!post) return;
+            
+            currentPostId = id;
+            
+            document.getElementById('modal-image').style.backgroundImage = `url('${post.image}')`;
+            document.getElementById('modal-date').textContent = post.date;
+            document.getElementById('modal-title').textContent = post.title;
+            document.getElementById('modal-content').innerHTML = post.content;
+            
+            renderComments();
+            
+            document.getElementById('post-modal').classList.remove('hidden');
+            document.getElementById('post-modal').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('post-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Render comments
+        function renderComments() {
+            const container = document.getElementById('comments-list');
+            container.innerHTML = '';
+            
+            const post = posts.find(p => p.id === currentPostId);
+            if (!post || !post.comments || post.comments.length === 0) {
+                const empty = document.createElement('div');
+                empty.className = 'text-center py-8 sm:py-12 text-gray-400 text-sm sm:text-base';
+                empty.innerHTML = 'No comments yet. Be the first to share your thoughts.';
+                container.appendChild(empty);
+                return;
+            }
+            
+            post.comments.forEach(comment => {
+                const div = document.createElement('div');
+                div.className = 'flex gap-4 sm:gap-6';
+                div.innerHTML = `
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 sm:w-10 sm:h-10 bg-[#fe4f04] rounded-xl sm:rounded-2xl flex items-center justify-center text-xs sm:text-sm font-mono text-white">${comment.name.substring(0,2).toUpperCase()}</div>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-0">
+                            <span class="font-medium text-sm sm:text-base">${comment.name}</span>
+                            <span class="text-[0.6rem] sm:text-xs text-gray-400">${comment.date}</span>
+                        </div>
+                        <p class="text-sm sm:text-base text-gray-300 mt-2">${comment.text}</p>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+        
+        // Submit comment
+        function submitComment() {
+            const name = document.getElementById('comment-name').value.trim();
+            const text = document.getElementById('comment-text').value.trim();
+            
+            if (!name || !text) {
+                alert("Please add your name and a comment.");
+                return;
+            }
+            
+            const post = posts.find(p => p.id === currentPostId);
+            if (!post) return;
+            
+            if (!post.comments) post.comments = [];
+            
+            post.comments.unshift({
+                name: name,
+                text: text,
+                date: "just now"
+            });
+            
+            savePosts();
+            renderComments();
+            
+            // Clear form
+            document.getElementById('comment-name').value = '';
+            document.getElementById('comment-email').value = '';
+            document.getElementById('comment-text').value = '';
+        }
+        
+        function showAbout() {
+            alert("NUVA Journal — A minimalist black & white publication dedicated to timeless ideas.\n\nFounded in 2025, we believe in the power of slow, thoughtful writing in an age of noise.");
+        }
+        
+        function toggleDarkMode() {
+            alert("This journal is permanently rendered in elegant monochrome with orange accents.");
+        }
+        
+        // Keyboard escape support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape") {
+                const postModal = document.getElementById('post-modal');
+                if (!postModal.classList.contains('hidden')) closeModal();
+            }
+        });
+        
+        // Handle touch events for mobile
+        document.addEventListener('touchstart', function(e) {
+            // Prevent pull-to-refresh on modals
+            const modal = document.getElementById('post-modal');
+            if (!modal.classList.contains('hidden')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        // Initialize everything
+        window.onload = function() {
+            loadPosts();
+            renderPosts();
+            
+            // Show blog by default
+            document.getElementById('blog-view').classList.remove('hidden');
+            
+            // Log for debugging
+            console.log('NUVA Blog loaded with custom logo');
+        };
+
+        // Handle resize events
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                // Re-render if needed
+                renderPosts();
+            }, 250);
+        });
+    </script>
+</body>
+</html>
