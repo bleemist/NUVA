@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NUVA - Report a Problem</title>
+<style>
+  html, body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  header {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+  }
+  header h1 { margin: 0; font-size: 28px; }
+  .nuva-logo {
+    position: relative; width: 60px; height: 60px; border-radius: 50%;
+    background: conic-gradient(from 200deg,#6ad7ff,#5b9cff 90deg,#9b6aff);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; color: white; font-size: 18px;
+  }
+  main {
+    flex: 1; max-width: 700px; margin: 40px auto; padding: 40px;
+    background: white; border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1); width: 90%;
+    box-sizing: border-box;
+  }
+  h2 { text-align: center; color: #1e3c72; margin-bottom: 20px; }
+  form { display: flex; flex-direction: column; gap: 15px; }
+  input, textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #2575fc;
+    font-size: 15px;
+    box-sizing: border-box;
+  }
+  textarea { height: 120px; resize: none; }
+  button {
+    width: 30%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #fe4f04, #ff7a2d);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    align-self: center;
+    transition: 0.3s;
+  }
+  button:hover { background: linear-gradient(90deg, #0033cc, #001a80); }
+  footer { background: #1e3c72; color: white; padding: 20px; text-align: center; }
+  footer a { color: #ffd966; text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nuva-logo">NUVA</div>
+  <h1>NUVA - Report a Problem</h1>
+</header>
+
+<main>
+  <h2>Report a Problem</h2>
+  <p>We are ready to attend to any issues you encountered while using this tool. Please describe the problem below:</p>
+
+  <form id="reportForm">
+    <textarea name="problem" placeholder="Enter your problem here..." required></textarea>
+    <button type="submit">Submit</button>
+  </form>
+  <p id="status" style="color:green; text-align:center; display:none;">Thank you! Your report has been submitted.</p>
+</main>
+
+<footer>
+  &copy; © 2026 BLEEM Labs Co. All rights reserved. Owned by <strong>MUYANJA ANDREW</strong>. 
+  | Contact: <a href="mailto:bleemistorg@gmail.com">NUVA Org | Email and Consultation Center</a>
+</footer>
+
+<script>
+const form = document.getElementById('reportForm');
+const status = document.getElementById('status');
+
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  const formData = { problem: form.problem.value };
+
+  fetch('/api/report-problem', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData)
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.success){
+      status.style.display = 'block';
+      form.reset();
+    } else {
+      alert('Error submitting report. Try again.');
+    }
+  })
+  .catch(() => alert('Error submitting report. Try again.'));
+});
+</script>
+
+</body>
+</html>
