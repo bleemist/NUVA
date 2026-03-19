@@ -282,6 +282,31 @@
       color: var(--primary-light);
     }
 
+    .subsidiary-breakdown {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(254, 79, 4, 0.1);
+      border-radius: 12px;
+      border-left: 4px solid var(--primary);
+    }
+
+    .subsidiary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+    }
+
+    .subsidiary-total {
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 2px solid var(--primary);
+      font-weight: 700;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+    }
+
     .weight-breakdown {
       margin-top: 1.5rem;
     }
@@ -949,6 +974,12 @@ let principalGradesUsed = JSON.parse(sessionStorage.getItem('principalGradesUsed
 let submissionData = JSON.parse(sessionStorage.getItem('submissionData') || '{}');
 let totalCourses = sessionStorage.getItem('totalCourses') || '0';
 
+// Debug: Log what's in sessionStorage
+console.log('Session Storage Contents:');
+console.log('submissionData:', submissionData);
+console.log('recommendations:', recommendations);
+console.log('calculatedWeights:', calculatedWeights);
+
 // DOM Elements
 const filterNotice = document.getElementById('filterNotice');
 const filterNoticeText = document.getElementById('filterNoticeText');
@@ -996,6 +1027,9 @@ function displayStudentInfo() {
     return;
   }
 
+  // Debug: Log the submission data to see what's actually stored
+  console.log('Submission Data:', submissionData);
+
   let html = `
     <h3>Personal Information</h3>
     <div class="info-grid">
@@ -1011,9 +1045,40 @@ function displayStudentInfo() {
         <span class="info-label">O-Level Weight</span>
         <span class="info-value">${submissionData.oLevelWeight || 0}</span>
       </div>
-      <div class="info-item">
-        <span class="info-label">Subsidiary</span>
-        <span class="info-value">${submissionData.subsidiaryGrade === '1' ? 'Passed (+1 pt)' : 'None'}</span>
+    </div>
+  `;
+
+  // ===== FIXED: Properly read subsidiary data with fallbacks =====
+  // Try multiple possible field names for robustness
+  const gpResult = submissionData.gpResult || submissionData.gp_result || '0';
+  const otherResult = submissionData.otherSubsidiaryResult || submissionData.subsidiaryResult || submissionData.other_subsidiary || '0';
+  const subsidiarySubject = submissionData.subsidiarySubject || submissionData.subsidiary_subject || 'None';
+  
+  const gpPassed = gpResult === '1' || gpResult === 1 || gpResult === true;
+  const otherPassed = otherResult === '1' || otherResult === 1 || otherResult === true;
+  
+  const gpPoints = gpPassed ? 1 : 0;
+  const otherPoints = otherPassed ? 1 : 0;
+  const totalSubsidiary = gpPoints + otherPoints;
+
+  html += `
+    <h3 style="margin-top: 1.5rem;">Subsidiary Information</h3>
+    <div class="subsidiary-breakdown">
+      <div class="subsidiary-row">
+        <span>General Paper:</span>
+        <span style="color: ${gpPassed ? 'var(--success)' : 'var(--error)'}; font-weight: 600;">
+          ${gpPassed ? 'Passed (+1)' : 'Not passed'}
+        </span>
+      </div>
+      <div class="subsidiary-row">
+        <span>Other Subsidiary (${subsidiarySubject}):</span>
+        <span style="color: ${otherPassed ? 'var(--success)' : 'var(--error)'}; font-weight: 600;">
+          ${otherPassed ? 'Passed (+1)' : 'Not passed'}
+        </span>
+      </div>
+      <div class="subsidiary-total">
+        <span>Total Subsidiary Points:</span>
+        <span style="color: var(--primary-light); font-size: 1.2rem;">+${totalSubsidiary}</span>
       </div>
     </div>
   `;
@@ -1067,13 +1132,14 @@ function displayWeightSummary() {
     `;
   }
 
+  // ===== UPDATED: Show subsidiary total clearly =====
   html += `
     <div class="weight-item">
       <span class="weight-label">
         <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
-        Subsidiary/General Paper
+        Subsidiary Total (GP + Other)
       </span>
-      <span class="weight-value">${calculatedWeights.subsidiary || 0}</span>
+      <span class="weight-value">+${calculatedWeights.subsidiary || 0}</span>
     </div>
   `;
 
@@ -1118,15 +1184,19 @@ function displayWeightSummary() {
     </div>
   `;
 
-  // Calculation explanation
+  // ===== UPDATED: Calculation explanation with independent subsidiary =====
   html += `
     <div class="calculation-explanation">
       <h4>How Your Weight is Calculated:</h4>
       <div class="calc-step">Essential Subjects: Grade Points × 3</div>
       <div class="calc-step">Other Principal Subjects: Grade Points × 2</div>
-      <div class="calc-step">Subsidiary Subjects: Pass = 1 point</div>
+      <div class="calc-step">General Paper: Pass = +1 point (independent)</div>
+      <div class="calc-step">Other Subsidiary: Pass = +1 point (independent)</div>
       <div class="calc-step">O-Level Weight: Added directly (0-3)</div>
       <div class="calc-step">Female Bonus: +1.5 points</div>
+      <div class="calc-step" style="color: var(--success); margin-top: 0.5rem;">
+        <strong>Note:</strong> If you passed both GP and another subsidiary, you get +2 total!
+      </div>
     </div>
   `;
 

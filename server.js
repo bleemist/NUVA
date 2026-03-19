@@ -206,9 +206,9 @@ function calculateCourseWeight(studentData, principalSubjects, principalGrades, 
         total += 1.5;
     }
 
-    // UPDATED: Use subsidiaryPoints that combines GP and other subsidiary
-    if (studentData.subsidiaryPoints === 1) {
-        total += 1;
+    // UPDATED: subsidiaryPoints now correctly adds BOTH GP and other subsidiary (0, 1, or 2)
+    if (studentData.subsidiaryPoints) {
+        total += studentData.subsidiaryPoints;
     }
 
     let subjectDetails = principalSubjects.map((subject, index) => {
@@ -378,29 +378,35 @@ app.post('/api/submit-subjects', (req, res) => {
             });
         }
 
-        // UPDATED: Handle separate subsidiary fields
+        // ===== UPDATED: Independent subsidiary calculation =====
+        // General Paper and Other Subsidiary are now INDEPENDENT (each adds +1)
         let subsidiaryPoints = 0;
-        
-        // Check General Paper result
-        if (rawData.gpResult === '1') {
-            subsidiaryPoints = 1;
+
+        // General Paper pass = +1 (always independent)
+        const gp = rawData.gpResult || rawData.generalPaper;
+        if (gp === '1' || gp === 1 || gp === true || String(gp).toLowerCase() === 'passed' || String(gp).toLowerCase() === 'pass') {
+            subsidiaryPoints += 1;
         }
-        
-        // Check other subsidiary result (only counts if GP not passed)
-        if (subsidiaryPoints === 0 && rawData.subsidiaryResult === '1') {
-            subsidiaryPoints = 1;
+
+        // Other subsidiary subject pass = +1 (completely independent from GP)
+        const otherSub = rawData.subsidiaryResult || rawData.otherSubsidiary;
+        if (otherSub === '1' || otherSub === 1 || otherSub === true || String(otherSub).toLowerCase() === 'passed' || String(otherSub).toLowerCase() === 'pass') {
+            subsidiaryPoints += 1;
         }
 
         // Store both subsidiary values for analytics/debugging
         const subsidiarySubject = rawData.subsidiarySubject || 'None';
+        const gpPassed = (gp === '1' || gp === 1 || gp === true || String(gp).toLowerCase() === 'passed') ? 1 : 0;
+        const otherSubsidiaryPassed = (otherSub === '1' || otherSub === 1 || otherSub === true || String(otherSub).toLowerCase() === 'passed') ? 1 : 0;
 
         const data = {
             gender: (rawData.gender || '').toLowerCase().trim(),
             level: (rawData.level || '').trim(),
             oLevelWeight: parseFloat(rawData.oLevelWeight) || 0,
-            subsidiaryPoints: subsidiaryPoints,
+            subsidiaryPoints: subsidiaryPoints, // Now correctly adds 0, 1, or 2
             subsidiarySubject: subsidiarySubject,
-            gpResult: rawData.gpResult || '0',
+            gpResult: gpPassed,
+            otherSubsidiaryResult: otherSubsidiaryPassed,
             university: (rawData.university || '').trim()
         };
 
@@ -473,6 +479,7 @@ app.post('/api/submit-subjects', (req, res) => {
                 selectedUniversity: data.university || null,
                 // Include subsidiary details for debugging/analytics
                 gpResult: data.gpResult,
+                otherSubsidiaryResult: data.otherSubsidiaryResult,
                 subsidiarySubject: data.subsidiarySubject
             },
             filterMessage: filterMessage || null
@@ -706,7 +713,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`NUVA server running on http://localhost:${PORT}`);
     console.log(`✅ Fully compatible with new O-Level grade-count input (D1/D2, C3-C6, etc.)`);
-    console.log(`✅ Separate General Paper and Other Subsidiary fields supported`);
+    console.log(`✅ UPDATED: General Paper and Other Subsidiary are now INDEPENDENT (up to +2 total)`);
     console.log(`✅ Admin panel available at /admin.html`);
     console.log(`✅ Analytics tracking enabled`);
     console.log(`✅ Debug endpoint: /api/debug/universities`);
