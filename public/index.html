@@ -266,6 +266,32 @@
       margin: 0 auto;
       padding: 2rem;
     }
+        /* Responsive video container - just 3 lines! */
+    .video-container {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; /* 16:9 landscape */
+        height: 0;
+        margin: 1.5rem 0;
+        background: #000;
+        border-radius: 1rem;
+        overflow: hidden;
+    }
+
+    .video-container iframe,
+    .video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+    /* Mobile adjustment */
+    @media (max-width: 640px) {
+        .video-container { border-radius: 0.75rem; margin: 1rem 0; }
+    }
 
     /* sections */
     .content-section { display: none; animation: fadeIn 0.3s; }
@@ -394,11 +420,11 @@
 
     <div class="status-message" id="statusMessage">
       <span class="status-online" id="systemStatus">ONLINE</span>
-      <span id="statusText">NUVA guidance system is running smoothly. All features available.<br> Click here for any more guidance about University<br><a href="https://chat.whatsapp.com/GLLeaXw02EXBAHYO1bO6w2" style="color:#fe4f04;">All Freshers ChatRoom</a></span>
+      <span id="statusText">Click here for any more guidance about University<br><a href="https://chat.whatsapp.com/GLLeaXw02EXBAHYO1bO6w2" style="color:#fe4f04;">All Freshers ChatRoom</a></span>
     </div>
 
     <div class="stats-grid">
-      <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div><div class="stat-value" id="coursesCount">449+</div><div class="stat-label">Available Courses</div></div>
+      <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div><div class="stat-value" id="coursesCount">449+</div><div class="stat-label">Available Courses<br><br>Click button below to get started <br><br><button class="action-btn" onclick="window.location.href='course-input.html'">Start Now</button></div></div>
       <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div><div class="stat-value" id="universitiesCount">10+</div><div class="stat-label">Public Universities</div></div>
       <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div><div class="stat-value" id="activeUsers">1k</div><div class="stat-label">Active Users</div></div>
       <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div><div class="stat-value">100%</div><div class="stat-label">UG System Compliant</div></div>
@@ -432,7 +458,9 @@
 
   <!-- HOW IT WORKS (original) -->
   <section id="section-how-it-works" class="content-section">
-    <h1 style="font-family:'Poppins'; font-size:2rem; background:linear-gradient(to right,#fe4f04,#ff7a2d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:2rem;">How NUVA Works</h1>
+    <div class="video-container">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/3xCbuzpFSWw?si=Ij2-KtVJLi_O6mOF&amp;start=221" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
     <div class="features-grid">
       <div class="feature-card"><h3>1. Input Your Data</h3><ul><li>Gender (for female bonus +1.5)</li><li>Education level (A-Level)</li><li>Principal subjects and grades</li><li>O-Level aggregate weight (0-3)</li><li>Subsidiary subject status</li></ul></div>
       <div class="feature-card"><h3>2. Weight Calculation</h3><ul><li>Essential subjects: Grade × 3</li><li>Other principals: Grade × 2</li><li>Subsidiary: Pass = 1 point</li><li>O-Level: Your aggregate (0-3)</li><li>Female bonus: +1.5 points</li></ul></div>
@@ -473,10 +501,12 @@
 
   <!-- AUTHORS (full original, with emails and Bleem Labs Co.) -->
   <section id="section-authors" class="content-section">
-    <h1 style="font-family:'Poppins'; font-size:2rem; background:linear-gradient(to right,#fe4f04,#ff7a2d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:2rem;">About the Authors</h1>
-    <div class="author-card"><p><strong style="color:white;font-size:1.2rem;">Founder & Lead Developer</strong></p><p><strong style="color:var(--primary-light);">MUYANJA ANDREW</strong></p><p>Owner of BLEEM LABS CO.</p><p>Contact: <a href="mailto:aandrewmuyanja@gmail.com">Muyanja Andrew | Founder & Lead Developer</a></p><p>Phone: +256 708 765 729</p><p>Address: Kyambogo University, Kampala, Uganda</p></div>
-    <div class="author-card"><p><strong style="color:white;font-size:1.2rem;">Co-Founder NUVA System</strong></p><p><strong style="color:var(--primary-light);">AGATESI MAZIMA VANESSA</strong></p><p>Concept creator of NUVA and contributor to the project vision</p><p>Contact: <a href="mailto:agatesivanessa05@gmail.com">Agatesi Mazima Vanessa | Project initiator</a></p><p>Phone: +256 783 572 721</p><p>Address: Kyambogo University, Kampala, Uganda</p></div>
-    <div class="info-grid"><div class="info-item"><h4>Organization</h4><p style="color:var(--text-muted);">NUVA Org</p></div><div class="info-item"><h4>Email</h4><p style="color:var(--text-muted);"><a href="mailto:bleemistorg@gmail.com">NUVA Org | Email and Consultation Center</a></p></div><div class="info-item"><h4>Phone</h4><p style="color:var(--text-muted);">+256 708 765 729</p></div><div class="info-item"><h4>Address</h4><p style="color:var(--text-muted);">Kyambogo University, Kampala</p></div></div>
+    <h1 style="font-family:'Poppins'; font-size:2rem; background:linear-gradient(to right,#ffffff,#ffffff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:2rem;">Author</h1>
+    <div class="author-card"><p><strong style="color:rgb(255, 0, 0);font-size:1.7rem;">Founder & Lead Developer</strong></p><p><strong style="color:rgb(255, 255, 255);">MUYANJA ANDREW</strong></p><p>Owner of BLEEM LABS CO.</p><p>Contact: <a href="mailto:aandrewmuyanja@gmail.com">Muyanja Andrew | Founder & Lead Developer</a></p><p>Phone: +256 708 765 729</p><p>Address: Kyambogo University, Kampala, Uganda</p></div>
+    <strong style="color:white;font-size:2.2rem;">Staff</strong>
+    <div class="author-card"><p><strong style="color:rgb(255, 0, 0);font-size:1.5rem;">1. Blog Admin</strong></p><p><strong style="color:rgb(255, 255, 255);">AGATESI MAZIMA VANESSA</strong></p><p>Meet the brain behind the NUVA blogs, the updates and the Guidance </p><p>Contact: <a href="mailto:agatesivanessa05@gmail.com">Tessi@nuva.me| Project initiator</a></p><p>Phone: +256 783 572 721</p><p>Address: Kyambogo University, Kampala, Uganda</p><br><br><strong style="color:rgb(255, 0, 0);font-size:1.5rem;">2. Android Lead</strong></p>
+    <p><strong style="color:rgb(255, 255, 255);">KALINDA EMMANUEL</strong></p><p>Contributed to development of the Android and IOS Version of the NUVA System</p><p>Contact: <a href="mailto:kalindaemma92@gmail.com">Kalinda Emmanuel | Mobile App Developer</a></p><p>Phone: +256 709 606 391</p><p>Address: Kyambogo University, Kampala, Uganda</p></div>
+    <div class="author-card"><div class="info-item"><h4>Organization</h4><p style="color:var(--text-muted);">NUVA Org</p></div><div class="info-item"><h4>Email: </h4><a href="mailto:bleemistorg@gmail.com">NUVA Org | Email and Consultation Center</a></div><div class="info-item"><h4>Phone: </h4>+256 708 765 729</div><div class="info-item"><h4><p>Address: </h4>Kyambogo University, Kampala</p></div></div>
   </section>
 
   <!-- AGREEMENT (original full text) -->
@@ -511,6 +541,21 @@
   // particles
   function createParticle() { let p=document.createElement('div'); p.className='particle'; let s=Math.random()*6+4; p.style.width=s+'px'; p.style.height=s+'px'; p.style.left=Math.random()*100+'%'; p.style.animationDuration=(Math.random()*10+15)+'s'; p.style.animationDelay=Math.random()*5+'s'; document.getElementById('particles').appendChild(p); setTimeout(()=>p.remove(),20000); }
   for(let i=0;i<30;i++) createParticle(); setInterval(createParticle,1500);
+  
+  // Lazy load videos for faster page speed
+document.addEventListener('DOMContentLoaded', () => {
+    const videos = document.querySelectorAll('.video-container iframe');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const iframe = entry.target;
+                iframe.src = iframe.dataset.src || iframe.src;
+                observer.unobserve(iframe);
+            }
+        });
+    });
+    videos.forEach(v => observer.observe(v));
+});
 </script>
 </body>
 </html>
