@@ -1359,6 +1359,13 @@ function initializePage() {
 // Run when page loads
 document.addEventListener('DOMContentLoaded', initializePage);
 </script>
+<script src="https://nuva.me/js/sitemap-loader.js"></script>
+<script>
+  // Use sitemap data
+  NUVASitemap.load().then(sitemap => {
+    console.log('NUVA has', sitemap.pages.length, 'pages');
+  });
+</script>
 
 </body>
 </html>

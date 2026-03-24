@@ -3,6 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta Tags for Search Engines (Admin Panel - NO INDEX) -->
+  <meta name="description" content="NUVA Admin Dashboard - Manage course data, cut-off points, university requirements, and view analytics for the course guidance system.">
+  <meta name="keywords" content="NUVA admin, course management, university admin, analytics dashboard">
+  <meta name="author" content="MUYANJA ANDREW">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Open Graph Tags (for social sharing - prevents sharing) -->
+  <meta property="og:title" content="NUVA Admin Dashboard">
+  <meta property="og:description" content="Administrative dashboard for NUVA course guidance system">
+  <meta property="og:image" content="https://nuva.me/nuva-og-image.png">
+  <meta property="og:url" content="https://nuva.me/admin.html">
+  <meta property="og:type" content="website">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://nuva.me/admin.html">
   <title>NUVA Admin Panel</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -975,6 +990,30 @@
   }
 
   setInterval(createParticle, 1200);
+    // Load sitemap data dynamically
+  async function loadSitemap() {
+    try {
+      const response = await fetch('/sitemap.json');
+      const sitemap = await response.json();
+      console.log('NUVA Sitemap Loaded:', sitemap.domain);
+      console.log('Total Pages:', sitemap.pages.length);
+      
+      // Optional: Use sitemap data for SEO or navigation
+      return sitemap;
+    } catch (error) {
+      console.error('Error loading sitemap:', error);
+    }
+  }
+
+  // Load on page load
+  loadSitemap();
+</script>
+<script src="https://nuva.me/js/sitemap-loader.js"></script>
+<script>
+  // Use sitemap data
+  NUVASitemap.load().then(sitemap => {
+    console.log('NUVA has', sitemap.pages.length, 'pages');
+  });
 </script>
 </body>
 </html>

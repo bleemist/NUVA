@@ -3,6 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Meta Tags for Search Engines -->
+  <meta name="description" content="Report a problem with NUVA course guidance system. Help us improve by reporting issues, bugs, or suggesting improvements to our course recommendation engine.">
+  <meta name="keywords" content="report problem, NUVA support, course guidance feedback, report bug, Uganda education support">
+  <meta name="author" content="MUYANJA ANDREW">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph Tags (for social sharing) -->
+  <meta property="og:title" content="NUVA - Report a Problem | Help Us Improve">
+  <meta property="og:description" content="Found an issue with NUVA course guidance? Report it here and help us make the system better for all Ugandan students.">
+  <meta property="og:image" content="https://nuva.me/nuva-og-image.png">
+  <meta property="og:url" content="https://nuva.me/report.html">
+  <meta property="og:type" content="website">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://nuva.me/report.html">
+
+  <!-- Geo Tags (for Uganda targeting) -->
+  <meta name="geo.region" content="UG">
+  <meta name="geo.placename" content="Kampala, Uganda">
 <title>NUVA - Report a Problem</title>
 <style>
   html, body {
@@ -111,6 +130,23 @@ form.addEventListener('submit', function(e){
   })
   .catch(() => alert('Error submitting report. Try again.'));
 });
+  // Load sitemap data dynamically
+  async function loadSitemap() {
+    try {
+      const response = await fetch('/sitemap.json');
+      const sitemap = await response.json();
+      console.log('NUVA Sitemap Loaded:', sitemap.domain);
+      console.log('Total Pages:', sitemap.pages.length);
+      
+      // Optional: Use sitemap data for SEO or navigation
+      return sitemap;
+    } catch (error) {
+      console.error('Error loading sitemap:', error);
+    }
+  }
+
+  // Load on page load
+  loadSitemap();
 </script>
 
 </body>

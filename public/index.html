@@ -3,6 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!-- Meta Tags for Search Engines -->
+  <meta name="description" content="NUVA - Uganda's #1 Course Guidance Expert System. Get personalized university course recommendations based on your A-Level grades.">
+  <meta name="keywords" content="NUVA,UACE, weight calculation, course guidance, university courses Uganda, A-Level guidance, Makerere courses, Kyambogo courses, course recommendation Uganda">
+  <meta name="author" content="MUYANJA ANDREW">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph Tags (for social sharing) -->
+  <meta property="og:title" content="NUVA - Course Guidance Expert System">
+  <meta property="og:description" content="Find the perfect university course based on your grades. Trusted by thousands of Ugandan students.">
+  <meta property="og:image" content="https://nuva.me/nuva5.jpg">
+  <meta property="og:url" content="https://nuva.me">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://nuva.me">
+
+  <!-- Geo Tags (for Uganda targeting) -->
+  <meta name="geo.region" content="UG">
+  <meta name="geo.placename" content="Kampala, Uganda">
   <title>NUVA · course guidance system</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -556,6 +574,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     videos.forEach(v => observer.observe(v));
 });
+  // Load sitemap data dynamically
+  async function loadSitemap() {
+    try {
+      const response = await fetch('/sitemap.json');
+      const sitemap = await response.json();
+      console.log('NUVA Sitemap Loaded:', sitemap.domain);
+      console.log('Total Pages:', sitemap.pages.length);
+      
+      // Optional: Use sitemap data for SEO or navigation
+      return sitemap;
+    } catch (error) {
+      console.error('Error loading sitemap:', error);
+    }
+  }
+
+  // Load on page load
+  loadSitemap();
+</script>
+<script src="https://nuva.me/js/sitemap-loader.js"></script>
+<script>
+  // Use sitemap data
+  NUVASitemap.load().then(sitemap => {
+    console.log('NUVA has', sitemap.pages.length, 'pages');
+  });
 </script>
 </body>
 </html>

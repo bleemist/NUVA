@@ -1,0 +1,46 @@
+{
+  "domain": "https://nuva.me",
+  "lastUpdated": "2026-03-23",
+  "pages": [
+    {
+      "path": "/",
+      "title": "NUVA Course Guidance Dashboard",
+      "description": "Uganda's #1 course guidance system for university admissions",
+      "lastmod": "2026-03-23",
+      "changefreq": "weekly",
+      "priority": 1.0
+    },
+    {
+      "path": "/index.html",
+      "title": "NUVA - Course Guidance Expert System",
+      "description": "Find your perfect university course at Makerere, Kyambogo, Mbarara, and all Ugandan universities",
+      "lastmod": "2026-03-23",
+      "changefreq": "weekly",
+      "priority": 0.9
+    },
+    {
+      "path": "/course-input.html",
+      "title": "NUVA Course Finder - Enter Your A-Level Grades",
+      "description": "Enter your A-Level subjects, grades, and O-Level results to get instant personalized course recommendations",
+      "lastmod": "2026-03-23",
+      "changefreq": "monthly",
+      "priority": 0.9
+    },
+    {
+      "path": "/results.html",
+      "title": "Your NUVA Course Recommendations",
+      "description": "View your personalized university course matches based on your academic profile",
+      "lastmod": "2026-03-23",
+      "changefreq": "monthly",
+      "priority": 0.8
+    },
+    {
+      "path": "/admin.html",
+      "title": "NUVA Admin Dashboard",
+      "description": "Administrative dashboard for managing course data and analytics",
+      "lastmod": "2026-03-23",
+      "changefreq": "monthly",
+      "priority": 0.5
+    }
+  ]
+}

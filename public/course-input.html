@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NUVA - Course Guidance Expert System</title>
+  <meta name="description" content="Enter your A-Level subjects, grades, and O-Level results to get instant personalized university course recommendations at Makerere, Kyambogo, Mbarara, and all Ugandan universities.">
+  <meta name="keywords" content="NUVA, course finder, A-Level grades, university guidance, Makerere courses, Kyambogo courses, Uganda education, weight calculator">
+  <meta name="author" content="MUYANJA ANDREW">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://nuva.me/course-input.html">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1187,9 +1192,50 @@ form.addEventListener('submit', async function(e) {
     
     const data = Object.fromEntries(formData.entries());
 
-    // Validation (rest of the function remains the same)
-    // ...
-    
+    // ===== COMPLETE VALIDATION =====
+    if (!data.gender || !data.level || !data.university) {
+        showError('Please fill all required fields.');
+        return;
+    }
+
+    if (data.level === 'A-Level') {
+        // Validate O-Level weight
+        const oLevelWeight = parseFloat(data.oLevelWeight);
+        if (isNaN(oLevelWeight) || oLevelWeight < 0 || oLevelWeight > 3) {
+            showError('O-Level weight must be between 0 and 3.');
+            return;
+        }
+        
+        // Check principal subjects - at least one must be filled
+        let hasPrincipal = false;
+        for (let i = 1; i <= 3; i++) {
+            if (data[`principal${i}`] && data[`principal${i}`].trim() && 
+                data[`principalGrade${i}`]) {
+                hasPrincipal = true;
+                break;
+            }
+        }
+        
+        if (!hasPrincipal) {
+            showError('Please enter at least one principal subject and grade.');
+            return;
+        }
+        
+        // Check grade count mode validation
+        const activeMode = toggleOptions[0].classList.contains('active') ? 'count' : 'manual';
+        if (activeMode === 'count') {
+            const distinctions = parseInt(distinctionInput.value) || 0;
+            const credits = parseInt(creditInput.value) || 0;
+            const passes = parseInt(passInput.value) || 0;
+            const fails = parseInt(failInput.value) || 0;
+            const total = distinctions + credits + passes + fails;
+            
+            if (total < 8 || total > 10) {
+                showError('O-Level subjects must be between 8 and 10.');
+                return;
+            }
+        }
+    }
     try {
         const response = await fetch('/api/submit-subjects', {
             method: 'POST',
