@@ -718,3 +718,28 @@ app.listen(PORT, () => {
     console.log(`✅ Analytics tracking enabled`);
     console.log(`✅ Debug endpoint: /api/debug/universities`);
 });
+
+// Serve JSON sitemap
+app.get('/sitemap.json', (req, res) => {
+  res.json(sitemapData);
+});
+
+// Serve XML sitemap (auto-generated from JSON)
+app.get('/sitemap.xml', (req, res) => {
+  const sitemapData = require('./public/sitemap.json');
+  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+  
+  sitemapData.pages.forEach(page => {
+    xml += '  <url>\n';
+    xml += `    <loc>${sitemapData.domain}${page.path}</loc>\n`;
+    xml += `    <lastmod>${page.lastmod}</lastmod>\n`;
+    xml += `    <changefreq>${page.changefreq}</changefreq>\n`;
+    xml += `    <priority>${page.priority}</priority>\n`;
+    xml += '  </url>\n';
+  });
+  
+  xml += '</urlset>';
+  res.header('Content-Type', 'application/xml');
+  res.send(xml);
+});
