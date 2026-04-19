@@ -18,20 +18,51 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #fe4f04;
+      --primary-dark: #e03e00;
+      --primary-light: #ff7a2d;
+      --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --text: #000080;
+      --text-muted: #475569;
+      --sidebar-bg: #ffffff;
+      --success: #ffffff;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --info-bg: rgba(0, 0, 128, 0.05);
+      --new-blue: #000080;
+    }
+
     body {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      color: #f8fafc;
+      min-height: 100vh;
+      background: var(--bg-gradient);
       font-family: 'Inter', sans-serif;
-      padding: 2rem;
-      line-height: 1.6;
+      color: #000080;
+      overflow-x: hidden;
+      position: relative;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: white; 
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.7; 
+      z-index: 0;
+      pointer-events: none;
     }
     .container {
       max-width: 900px;
       margin: 0 auto;
-      background: rgba(15, 23, 42, 0.72);
+      background: #ffffff;
       backdrop-filter: blur(16px);
       border-radius: 24px;
-      border: 1px solid rgba(254, 79, 4, 0.18);
+      border: 1px solid #e2e8f0;
       padding: 2.5rem;
     }
     .nuva-logo {
@@ -46,7 +77,7 @@
       font-size: 1.8rem;
       font-weight: 700;
       margin: 0 auto 1.5rem;
-      box-shadow: 0 4px 20px rgba(254, 79, 4, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 128, 0.1);
     }
     h1 { 
       color: #fe4f04; 
@@ -56,7 +87,7 @@
       text-align: center;
     }
     h2 { 
-      color: #ff7a2d; 
+      color: #000080; 
       margin: 2rem 0 1rem; 
       font-size: 1.5rem;
       font-family: 'Poppins', sans-serif;
@@ -64,17 +95,17 @@
       padding-left: 1rem;
     }
     h3 {
-      color: white;
+      color: #000080;
       margin: 1.5rem 0 0.8rem;
       font-size: 1.2rem;
     }
     p { 
-      color: #94a3b8; 
+      color: #000000; 
       margin-bottom: 1rem; 
       line-height: 1.7;
     }
     .highlight {
-      color: #fe4f04;
+      color: #000080;
       font-weight: 600;
     }
     .stats-grid {
@@ -93,7 +124,7 @@
     .stat-number {
       font-size: 2rem;
       font-weight: 700;
-      color: #fe4f04;
+      color: #000080;
     }
     .stat-label {
       font-size: 0.8rem;
@@ -106,7 +137,7 @@
       margin: 2rem 0;
     }
     .team-card {
-      background: rgba(255, 255, 255, 0.03);
+      background: #f8fafc;
       border-radius: 16px;
       padding: 1.5rem;
       border-left: 3px solid #fe4f04;
@@ -114,7 +145,7 @@
     .team-name {
       font-size: 1.2rem;
       font-weight: 600;
-      color: white;
+      color: #000080;
       margin-bottom: 0.3rem;
     }
     .team-role {
@@ -133,14 +164,14 @@
       position: relative;
     }
     .timeline-year {
-      color: #fe4f04;
+      color: #000080;
       font-weight: 700;
       margin-bottom: 0.3rem;
     }
     .button {
       display: inline-block;
-      background: linear-gradient(90deg, #fe4f04, #ff7a2d);
-      color: white;
+      background: #ffffff;
+      color: #000080;
       padding: 0.8rem 1.5rem;
       border-radius: 8px;
       text-decoration: none;
@@ -150,14 +181,6 @@
     }
     .button:hover {
       transform: translateY(-2px);
-    }
-    .footer {
-      margin-top: 2rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(254, 79, 4, 0.18);
-      text-align: center;
-      font-size: 0.8rem;
-      color: #94a3b8;
     }
     .nav-links {
       text-align: center;
@@ -178,9 +201,384 @@
       h1 { font-size: 1.8rem; }
       h2 { font-size: 1.3rem; }
     }
-  </style>
+  
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 128, 0.134);
+      padding: 0.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 10px 30px rgba(0, 0, 128, 0.05);
+      transition: all 0.3s ease;
+    }
+    .footer {
+      position: bottom;
+      top: 0;
+      z-index: 200;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 0.001rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* NUVA logo with inner grid (original) */
+    .nuva-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: conic-gradient(from 200deg, #fe4f04, #ff7a2d 90deg, #9b6aff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 4px 15px rgba(254, 79, 4, 0.25);
+      position: relative;
+      overflow: hidden;
+      animation: pulseGlow 4s infinite ease-in-out;
+      flex-shrink: 0;
+    }
+    .nuva-logo .grid {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 3px;
+      justify-items: center;
+      align-items: center;
+      opacity: 0.25;
+      padding: 6px;
+    }
+    .nuva-logo .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #fff, #cfe8ff);
+    }
+    .nuva-logo .dot.center {
+      transform: scale(1.4);
+      background: linear-gradient(180deg, #fe4f04, #ff7a2d);
+    }
+    .nuva-logo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+      animation: shine 6s infinite;
+    }
+    @keyframes pulseGlow { 0%,100% { box-shadow:0 4px 15px rgba(254,79,4,0.25); } 50% { box-shadow:0 8px 25px rgba(254,79,4,0.45); } }
+    @keyframes shine { 0% { transform:translateX(-120%); } 100% { transform:translateX(120%); } }
+
+    .brand-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      background: linear-gradient(to right, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* navigation tabs – pill style (all words included) */
+    .nav-tabs {
+      display: flex;
+      gap: 0.2rem;
+      background: rgba(255, 255, 255, 0.564);
+      padding: 0.25rem;
+      border-radius: 48px;
+      border: 1px solid #1010eba7;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+    .nav-tab svg { width: 18px; height: 18px; fill: currentColor; opacity: 0.8; }
+    .nav-tab:hover { color: #000080; background: #00008038; }
+    .nav-tab.active { background: #000080; color: white; box-shadow: 0 4px 12px #00008020; }
+    .nav-tab.active svg { fill: white; opacity: 1; }
+    /* hamburger (mobile) */
+    .hamburger {
+      display: none;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0, 0, 128, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 128, 0.05);
+      border: 1px solid var(--card-border);
+      padding: 10px 18px;
+      border-radius: 40px;
+      align-items: center;
+      gap: 8px;
+      color: #000080;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      border: 1px solid #000080;
+    }
+
+    /* Dropdown Menu Styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(16px);
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  min-width: 200px;
+  z-index: 1000;
+  box-shadow: 0 5px 15px rgba(0, 0, 128, 0.05);
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background: rgba(254, 79, 4, 0.15);
+  color: #000080;
+}
+
+.dropdown-item svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.dropdown hr {
+  margin: 8px 0;
+  border: none;
+  border-top: 1px solid rgba(254, 79, 4, 0.3);
+}
+
+/* Mobile: hide dropdown and show hamburger */
+@media (max-width: 950px) {
+  .dropdown {
+    display: none;
+  }
+}
+    .hamburger svg { width: 22px; height: 22px; fill: white; }
+    .hamburger:hover { background: var(--primary); }
+
+    /* sidebar (mobile) */
+    .sidebar {
+      width: 280px;
+      background: var(--sidebar-bg);
+      backdrop-filter: blur(16px);
+      border-right: 1px solid var(--card-border);
+      height: 100vh;
+      position: fixed;
+      left: -280px;
+      top: 0;
+      padding: 2rem 1rem;
+      transition: left 0.3s ease;
+      z-index: 300;
+      overflow-y: auto;
+    }
+    .sidebar.open { left: 0; }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 128, 0.05);
+      display: none;
+      z-index: 250;
+    }
+    .overlay.show { display: block; }
+
+    .menu-list { list-style: none; margin-top: 1.5rem; }
+    .menu-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 20px;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: 0.3s;
+      width: 100%;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+    }
+    .menu-link:hover, .menu-link.active { background: rgba(254,79,4,0.15); color: #000080; }
+    .menu-link svg { width: 22px; height: 22px; fill: currentColor; }
+
+  footer { margin-top:3rem; padding:2rem 0; text-align:center; color:var(--text-muted); border-top:1px solid var(--card-border); }
+    .action-cards { background:var(--card-bg); border-radius:10px; border:1px solid var(--card-border); padding:1rem;}
+  
+    button:disabled, input:disabled {
+    opacity: 0.6 !important;
+    transform: none !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+}
+
+/* Mobile adjustment */
+    @media (max-width: 640px) {
+        .video-container { border-radius: 0.75rem; margin: 1rem 0; }
+    }
+
+</style>
+<script>
+  if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    var adScript = document.createElement('script');
+    adScript.async = true;
+    adScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3620070651069378";
+    adScript.crossOrigin = "anonymous";
+    document.head.appendChild(adScript);
+  }
+</script>
+
+<style>
+/* Collapse unfilled ads */
+ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; margin: 0 !important; padding: 0 !important; height: 0 !important; }
+</style>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      document.querySelectorAll('.adsbygoogle, .ads-container, [id^="ad-"]').forEach(ad => {
+        ad.style.display = 'none';
+      });
+    }
+  });
+</script>
 </head>
 <body>
+<header class="sticky-header">
+  <div class="header-left">
+    <div class="nuva-logo">
+      NUVA
+      <div class="grid">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot center"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+    </div>
+    <span class="brand-text">NUVA</span>
+  </div>
+
+ <!-- desktop navigation tabs with More dropdown -->
+<div class="nav-tabs">
+  <a href="./index.html#section-dashboard"><button class="nav-tab" data-section="dashboard">
+    <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+    Dashboard
+  </button></a>
+  <a href="course-input.html" class="nav-tab" style="text-decoration: none;">
+    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg>
+    Find Courses
+  </a>
+  <a href="./index.html#section-authors"><button class="nav-tab" data-section="authors">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    Authors
+  </button></a>
+  <a href="about.html" class="nav-tab active" style="text-decoration: none;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+    About
+  </button>
+  <a href="privacy.html" class="nav-tab" style="text-decoration: none;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+    Privacy
+  </a>
+  
+<!-- More Dropdown -->
+<div class="dropdown" style="position: relative; display: inline-block;">
+  <button class="dropdown-btn" id="moreDropdownBtn" type="button" style="display: flex; align-items: center; gap: 6px; padding: 0.6rem 1.2rem; border-radius: 40px; font-size: 0.9rem; font-weight: 500; color: #ffffff; background: transparent; border: none; cursor: pointer;">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+    More ▼
+  </button>
+  <div class="dropdown-content" id="moreDropdown">
+    <!-- These stay on dashboard page -->
+    <button class="dropdown-item" data-section="features">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+      Features
+    </button>
+    <button class="dropdown-item" data-section="weight-calculation">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+      Weight System
+    </button>
+    <button class="dropdown-item" data-section="universities">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM5 12h2v4H5v-4z"/></svg>
+      Universities
+    </button>
+    <button class="dropdown-item" data-section="agreement">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6z"/></svg>
+      User Agreement
+    </button>
+    <button class="dropdown-item" data-section="results" onclick="showResultsPage()">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+      Results
+    </button>
+    <hr style="margin: 8px 0;">
+    <button class="dropdown-item" onclick="window.open('https://nuva-blog-1n.onrender.com', '_blank')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM8 12H6V8h2v4zm10 0h-2V8h2v4z"/></svg>
+      Blog
+    </button>
+  </div>
+</div>
+</div>
+
+  <!-- hamburger for mobile -->
+  <button class="hamburger" onclick="toggleMenu()">
+    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg> Menu
+  </button>
+</header>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3620070651069378"
      crossorigin="anonymous"></script>
 <!-- ad 1 -->
@@ -193,6 +591,8 @@
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
+
+<br><br>
   <div class="container">
     <div class="nav-links">
       <a href="index.html">← Back to Dashboard</a>
@@ -316,11 +716,9 @@
     <p>📧 <strong class="highlight">Email:</strong> <a href="mailto:bleemistorg@gmail.com" style="color: #fe4f04;">bleemistorg@gmail.com</a><br>
     📞 <strong class="highlight">Phone:</strong> +256 708 765 729<br>
     📍 <strong class="highlight">Address:</strong> Kyambogo University, Kampala, Uganda</p>
-    
-    <div class="footer">
-      <p>© 2026 BLEEM Labs Co. All rights reserved. Owned by <strong>MUYANJA ANDREW</strong>.</p>
-      <p style="margin-top: 0.5rem;">NUVA - Your Star Guide to University Courses in Uganda</p>
-    </div>
-  </div>
-</body>
+<main class="main-content">
+  </div><br><br>
+    <div class="action-cards"><footer>© 2026 BLEEM Labs Co. All rights reserved. Owned by <strong>MUYANJA ANDREW</strong>. Contact: <a href="mailto:bleemistorg@gmail.com">NUVA Org | Email and Consultation Center</a><br><a href="#" onclick="showSection('agreement'); return false;">User Agreement</a> | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></footer></div>
+</main>
+  </body>
 </html>

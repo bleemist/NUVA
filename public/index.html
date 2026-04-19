@@ -32,7 +32,7 @@
   <link rel="apple-touch-icon" href="icon.png" type="image/png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family='Inter', sans-serif:wght@500;600;700&display=swap" rel="stylesheet">
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -41,23 +41,24 @@
       --primary: #fe4f04;
       --primary-dark: #e03e00;
       --primary-light: #ff7a2d;
-      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      --card-bg: rgba(15, 23, 42, 0.72);
-      --card-border: rgba(254, 79, 4, 0.18);
-      --text: #f8fafc;
-      --text-muted: #ffffff;
-      --sidebar-bg: rgba(15, 23, 42, 0.85);
-      --success: #34d399;
-      --warning: #fbbf24;
-      --error: #f87171;
-      --info-bg: rgba(30, 60, 114, 0.3);
+      --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --text: #000080;
+      --text-muted: #475569;
+      --sidebar-bg: #ffffff;
+      --success: #ffffff;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --info-bg: rgba(0, 0, 128, 0.05);
+      --new-blue: #000080;
     }
 
     body {
       min-height: 100vh;
       background: var(--bg-gradient);
       font-family: 'Inter', sans-serif;
-      color: var(--text);
+      color: #000080;
       overflow-x: hidden;
       position: relative;
     }
@@ -65,13 +66,34 @@
       content: "";
       position: fixed;
       inset: 0;
-      background-image: url('./nuva5.jpg'); 
+      background-image: white; 
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       opacity: 0.7; 
       z-index: 0;
       pointer-events: none;
+    }
+
+    .action-btn,
+    button:not(.nav-tab):not(.dropdown-btn):not(.hamburger):not(.dropdown-item):not(.menu-link) {
+      background: #000080 !important;
+      color: #ffffff !important;
+      border: none;
+      padding: 1rem 1.8rem;
+      border-radius: 12px !important;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.05rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      box-shadow: 0 6px 20px rgba(0, 0, 128, 0.2) !important;
+    }
+
+    .action-btn:hover,
+    button:not(.nav-tab):not(.dropdown-btn):not(.hamburger):not(.dropdown-item):not(.menu-link):hover {
+      background: #000066 !important;
+      transform: translateY(-3px) scale(1.02) !important;
+      box-shadow: 0 10px 25px rgba(0, 0, 128, 0.35) !important;
     }
 
     /* particles */
@@ -84,31 +106,46 @@
     }
     .particle {
       position: absolute;
-      background: rgba(254, 79, 4, 0.3);
+      background: #00008029;
       border-radius: 50%;
       animation: float linear infinite;
-      box-shadow: 0 0 12px rgba(254,79,4,0.5);
-    }
-    @keyframes float {
-      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-      10% { opacity: 0.7; }
-      90% { opacity: 0.7; }
-      100% { transform: translateY(-20vh) scale(1.1); opacity: 0; }
+      box-shadow: 0 0 12px #00008029;
     }
 
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 0.6;
+      }
+
+      90% {
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: translateY(-20vh) scale(1.1);
+        opacity: 0;
+      }
+    }
     /* ---------- STICKY HEADER (exactly as original style) ---------- */
     .sticky-header {
       position: sticky;
       top: 0;
       z-index: 200;
-      background: rgba(15, 23, 42, 0.9);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--card-border);
-      padding: 0.7rem 2rem;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 128, 0.134);
+      padding: 0.8rem 2rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      justify-content: space-between !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 128, 0.05);
+      transition: all 0.3s ease;
     }
     .footer {
       position: bottom;
@@ -128,6 +165,7 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
+      flex-shrink: 0;
     }
 
     /* NUVA logo with inner grid (original) */
@@ -181,10 +219,10 @@
     @keyframes shine { 0% { transform:translateX(-120%); } 100% { transform:translateX(120%); } }
 
     .brand-text {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 1.6rem;
       font-weight: 600;
-      background: linear-gradient(to right, var(--primary), var(--primary-light));
+      background: #000080;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -193,10 +231,10 @@
     .nav-tabs {
       display: flex;
       gap: 0.2rem;
-      background: rgba(0,0,0,0.25);
+      background: rgba(255, 255, 255, 0.564);
       padding: 0.25rem;
       border-radius: 48px;
-      border: 1px solid rgba(254,79,4,0.2);
+      border: 1px solid #1010eba7;
       flex-wrap: wrap;
       justify-content: flex-end;
     }
@@ -216,14 +254,14 @@
       white-space: nowrap;
     }
     .nav-tab svg { width: 18px; height: 18px; fill: currentColor; opacity: 0.8; }
-    .nav-tab:hover { color: white; background: rgba(254,79,4,0.15); }
-    .nav-tab.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(254,79,4,0.4); }
+    .nav-tab:hover { color: #000080; background: #00008038; }
+    .nav-tab.active { background: #000080; color: white; box-shadow: 0 4px 12px #00008020; }
     .nav-tab.active svg { fill: white; opacity: 1; }
 
     /* hamburger (mobile) */
     .hamburger {
       display: none;
-      background: rgba(15,23,42,0.9);
+      background: #000080;
       border: 1px solid var(--card-border);
       padding: 10px 18px;
       border-radius: 40px;
@@ -234,6 +272,8 @@
       cursor: pointer;
       transition: 0.2s;
       border: none;
+      margin-left: auto;       
+      flex-shrink: 0;
     }
 
     /* Dropdown Menu Styles */
@@ -253,7 +293,7 @@
   border: 1px solid var(--card-border);
   min-width: 200px;
   z-index: 1000;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 20px #00008029;
   overflow: hidden;
   margin-top: 8px;
 }
@@ -280,7 +320,7 @@
 }
 
 .dropdown-item:hover {
-  background: rgba(254, 79, 4, 0.15);
+  background: #00008030;
   color: white;
 }
 
@@ -293,7 +333,7 @@
 .dropdown hr {
   margin: 8px 0;
   border: none;
-  border-top: 1px solid rgba(254, 79, 4, 0.3);
+  border-top: 1px solid #00008030;
 }
 
 /* Mobile: hide dropdown and show hamburger */
@@ -324,7 +364,7 @@
     .overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 128, 0.2);
       display: none;
       z-index: 250;
     }
@@ -347,7 +387,7 @@
       cursor: pointer;
       text-align: left;
     }
-    .menu-link:hover, .menu-link.active { background: rgba(254,79,4,0.15); color: white; }
+    .menu-link:hover, .menu-link.active { background: #00008033; color: #000080; }
     .menu-link svg { width: 22px; height: 22px; fill: currentColor; }
 
     /* main content */
@@ -385,6 +425,49 @@
         .video-container { border-radius: 0.75rem; margin: 1rem 0; }
     }
 
+    .profile-placeholder {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 6px solid #0ea5e9;                    /* Bright blue border */
+      box-shadow: 
+        0 0 0 8px rgba(14, 165, 233, 0.25),        /* Glow effect */
+        0 10px 20px rgba(0, 0, 0, 0.15);
+      background: #1e40af;                          /* Fallback color if image fails */
+      transition: all 0.3s ease;
+    }
+
+    .profile-placeholder:hover {
+      transform: scale(1.06);
+      box-shadow: 
+        0 0 0 10px rgba(14, 165, 233, 0.35),
+        0 15px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .profile-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .profile-team {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 6px solid #000080;
+      background: #000080;
+    }
+
+    .profile-team img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
     /* sections */
     .content-section { display: none; animation: fadeIn 0.3s; }
     .content-section.active { display: block; }
@@ -392,15 +475,15 @@
 
     /* all original card styles preserved */
     .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; margin:2rem 0; }
-    .stat-card { background:var(--card-bg); backdrop-filter:blur(16px); border-radius:16px; border:1px solid var(--card-border); padding:1.8rem; transition:0.3s; box-shadow:0 10px 30px rgba(0,0,0,0.3); }
-    .stat-card:hover { transform:translateY(-6px); box-shadow:0 20px 50px rgba(254,79,4,0.2); }
-    .stat-icon { width:52px; height:52px; background:rgba(254,79,4,0.15); border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:1rem; }
+    .stat-card { background:var(--card-bg); backdrop-filter:blur(16px); border-radius:16px; border:1px solid var(--card-border); padding:1.8rem; transition:0.3s; box-shadow:0 10px 30px #00008020; }
+    .stat-card:hover { transform:translateY(-6px); box-shadow:0 20px 50px #00008020; }
+    .stat-icon { width:32px; height:32px; background:#ff200337; border-radius:32px; display:flex; align-items:center; justify-content:center; margin-bottom:1rem; }
     .stat-icon svg { width:28px; height:28px; fill:var(--primary); }
     .stat-value { font-size:2.2rem; font-weight:700; margin-bottom:0.3rem; }
     .stat-label { color:var(--text-muted); font-size:0.95rem; }
 
     .status-message { background:var(--info-bg); border:1px solid var(--card-border); border-radius:12px; padding:1.5rem; margin-bottom:2rem; display:flex; align-items:center; gap:1rem; }
-    .status-online { background:rgba(31, 168, 28, 0.968); color:var(--success); display:inline-flex; align-items:center; gap:0.2rem; padding:0.1rem 1rem; border-radius:10px;}
+    .status-online { background:rgba(255, 81, 0, 0.748); color:var(--success); display:inline-flex; align-items:center; gap:0.2rem; padding:0.1rem 1rem; border-radius:10px;}
     .status-online::before { content:''; width:10px; height:10px; border-radius:50%; background:var(--success); box-shadow:0 0 8px var(--success); display:inline-block; }
 
     .quick-actions { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; margin:2rem 0; }
@@ -431,10 +514,110 @@
     .calc-step::before { content:"✓"; color:var(--success); font-weight:bold; margin-right:0.5rem; }
     footer { margin-top:3rem; padding:2rem 0; text-align:center; color:var(--text-muted); border-top:1px solid var(--card-border); }
 
+    /* ==================== HORIZONTAL GALLERY ==================== */
+    .gallery-section {
+      max-width: auto;
+      max-height: auto;
+    }
+
+    .gallery-title {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: #1e40af;
+      font-weight: 600;
+    }
+
+    .gallery-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .gallery-container {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      gap: 42px;
+      padding: 15px;
+      scrollbar-width: none; /* Hide scrollbar */
+    }
+
+    .gallery-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .gallery-item {
+      flex: 0 0 auto;
+      width: auto;
+      height: 380px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Navigation Buttons */
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(14, 165, 233, 0.9);
+      color: white;
+      border: none;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .nav-button:hover {
+      background: #0ea5e9;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .nav-button.left  { left: 15px; }
+    .nav-button.right { right: 15px; }
+
     /* responsive */
-    @media (max-width: 950px) { .nav-tabs { display: none; } .hamburger { display: flex; } }
+    @media (max-width: 950px) { .nav-tabs { display: none !important; } .hamburger { display: flex; } }
     @media (min-width: 951px) { .hamburger, .overlay, .sidebar { display: none; } }
     @media (max-width: 600px) { .main-content { padding:1rem; } }
+
+    @media (max-width: 950px) {
+  .nav-tabs {
+    display: none !important;
+  }
+
+  .hamburger {
+    display: flex !important;
+    margin-left: auto !important;     
+    flex-shrink: 0;
+  }
+
+  .header-left {
+    flex-shrink: 0; 
+  }
+}
   </style>
 </head>
 <body>
@@ -451,7 +634,7 @@
         <div class="dot"></div><div class="dot"></div><div class="dot"></div>
       </div>
     </div>
-    <span class="brand-text">NUVA</span>
+    <span class="brand-text" style="color: #000080;">NUVA</span>
   </div>
 
  <!-- desktop navigation tabs with More dropdown -->
@@ -514,9 +697,10 @@
 </div>
 </div>
 
-  <!-- hamburger for mobile -->
-  <button class="hamburger" onclick="toggleMenu()">
-    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg> Menu
+  <!-- hamburger for mobile  -->
+<button class="hamburger" onclick="toggleMenu()">
+    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg> 
+    Menu
   </button>
 </header>
 
@@ -525,7 +709,7 @@
 <aside class="sidebar" id="sidebar">
   <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:2rem;">
     <div class="nuva-logo" style="width:42px; height:42px; font-size:1rem;">NUVA</div>
-    <span style="font-family:'Poppins'; font-size:1.4rem; background:linear-gradient(to right, #fe4f04, #ff7a2d); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">NUVA</span>
+    <span style="font-family:'Inter', sans-serif; font-size:1.4rem; background:linear-gradient(to right, #fe4f04, #ff7a2d); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">NUVA</span>
   </div>
   <ul class="menu-list">
     <li><button onclick="showSection('dashboard');toggleMenu()" class="menu-link active"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg> Dashboard</button></li>
@@ -555,7 +739,7 @@
   <!-- DASHBOARD (original full text) -->
   <section id="section-dashboard" class="content-section active"><div class="agreement-section">
     <div class="dashboard-header" style="margin-bottom:2rem;">
-      <h1 style="font-family:'Poppins'; font-size:2rem; background:linear-gradient(to right,#ededed,#ffffff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">NUVA Your Course Guidance System</h1>
+      <h1 style="font-family:'Inter', sans-serif; font-size:2rem; background:linear-gradient(to right,#000080,#000080); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">NUVA Your Course Guidance System</h1>
     </div></div>
 
     <div class="status-message" id="statusMessage">
@@ -564,11 +748,43 @@
     </div>
 
     <div class="stats-grid">
-      <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div><div class="stat-value" id="coursesCount">449+</div><div class="stat-label">Available Courses<br><br>Click button below to get started <br><br><button class="action-btn" onclick="window.location.href='course-input.html'">Start Now</button></div></div>
-      <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div><div class="stat-value" id="universitiesCount">10+</div><div class="stat-label">Public Universities</div></div>
-      <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div><div class="stat-value" id="activeUsers">1k</div><div class="stat-label">Active Users</div></div>
-      <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div><div class="stat-value">100%</div><div class="stat-label">UG System Compliant</div></div>
+      <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div><div class="stat-value" id="coursesCount">449+</div><div class="stat-label">Available Courses<br><br>In all the education fields offered in Uganda including both Sciences and Art Courses<br><br>Click button below to get started <br><br><button class="action-btn" onclick="window.location.href='course-input.html'">Start Now</button></div></div>
+      <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div><div class="stat-value" id="universitiesCount">10+</div><div class="stat-label">Including all the Public Universities in Uganda<br><br>Kyambogo University,<br>Makerere University,<br>Mbarara University of Science and Technology,<br>Gulu University,<br>Kabaale University,<br>Muni University,<br>Lira University etc...</div></div>
+      <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div><div class="stat-value" id="activeUsers">1k</div><div class="stat-label">Active Users <br><br>We received over 20k Users on the first day of launching NUVA and over time we have solved Course Guidance solutions to over 100k students.<br>We also created a WhatsApp Group and now it has over 500+ students who joined from this Platform</div></div>
+      <div class="stat-card"><div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg></div><div class="stat-value">100%</div><div class="stat-label">UG System Compliant<br><br>NUVA uses the Uganda Weight Calculation System authorised by UNEB and Courses Recommended in the system are Courses from authorised University Sources</div></div>
     </div>
+
+    <!-- Horizontal Gallery -->
+  <div class="gallery-section">
+    <div class="gallery-title">Professional Gallery</div>
+    
+    <div class="gallery-wrapper">
+      <button class="nav-button left" onclick="scrollGallery(-1)">‹</button>
+      
+      <div class="gallery-container" id="gallery">
+        <div class="gallery-item">
+          <img src="./images/banner_1_1776314175332.png" alt="Image 1">
+        </div>
+        <div class="gallery-item">
+          <img src="./images/banner_2_1776314326692.png" alt="Image 2">
+        </div>
+        <div class="gallery-item">
+          <img src="./images/banner_3_1776314340812.png" alt="Image 3">
+        </div>
+        <div class="gallery-item">
+          <img src="./images/banner_4_1776314401568.png" alt="Image 4">
+        </div>
+        <div class="gallery-item">
+          <img src="./images/banner_5_1776314505864.png" alt="Image 5">
+        </div>
+        <div class="gallery-item">
+          <img src="images/banner_1_1776314175332.png" alt="Image 6">
+        </div>
+      </div>
+
+      <button class="nav-button right" onclick="scrollGallery(1)">›</button>
+    </div>
+  </div>
 
     <div class="quick-actions">
       <div class="action-card"><h3 class="action-title">Find Your Course</h3><p class="action-desc">Answer a few questions about your grades and interests to get personalized course recommendations.</p><button class="action-btn" onclick="window.location.href='course-input.html'">Start Now</button></div>
@@ -577,17 +793,17 @@
     </div>
 
     <div class="recent-activity">
-      <h3 style="color:white; margin-bottom:1.5rem;">📊 Current System Capabilities</h3>
-      <div class="agreement-section"><strong>Comprehensive Database</strong><p><br>Complete database of 449+ undergraduate programs across all 10 public universities with official cut-off points and requirements</p></div>
-      <div class="agreement-section"><strong>Ugandan System Compliance</strong><p><br>Full implementation of the official weight calculation system with proper multipliers (Essential ×3, Relevant ×2)</p></div>
-      <div class="agreement-section"><strong>Real-time Processing</strong><p><br>Instant course recommendations based on your specific academic profile and subject combinations</p></div>
-      <div class="agreement-section"><strong>Mobile Responsive</strong><p><br>Works perfectly on all devices - desktop, tablet, and mobile phones</p></div>
+      <h3 style="color:#ff0101; margin-bottom:1.5rem;">📊 Current System Capabilities</h3>
+      <div class="feature-card"><strong>Comprehensive Database</strong><p><br>Complete database of 449+ undergraduate programs across all 10 public universities with official cut-off points and requirements</p></div>
+      <br><div class="feature-card"><strong>Ugandan System Compliance</strong><p><br>Full implementation of the official weight calculation system with proper multipliers (Essential ×3, Relevant ×2)</p></div>
+      <br><div class="feature-card"><strong>Real-time Processing</strong><p><br>Instant course recommendations based on your specific academic profile and subject combinations</p></div>
+     <br><div class="feature-card"><strong>Mobile Responsive</strong><p><br>Works perfectly on all devices - desktop, tablet, and mobile phones</p></div>
     </div>
   </section>
 
   <!-- FEATURES (full original text) -->
   <section id="section-features" class="content-section">
-    <h1 style="font-family:'Poppins'; font-size:2rem; background:linear-gradient(to right,#fe4f04,#ff7a2d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:2rem;">Key Features</h1>
+    <h1 style="font-family:'Inter', sans-serif; font-size:2rem; background:linear-gradient(to right,#fe4f04,#ff7a2d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:2rem;">Key Features</h1>
     <div class="features-grid">
       <div class="feature-card"><h3>🎯 Personalized Guidance</h3><ul><li>A-Level subjects and grades</li><li>O-Level aggregate weight</li><li>Gender (with female bonus +1.5)</li><li>Subject combinations</li></ul></div>
       <div class="feature-card"><h3>⚡ Fast & Accurate</h3><ul><li>Essential subjects × 3 multiplier</li><li>Other principals × 2 multiplier</li><li>Subsidiary × 1 multiplier</li><li>Official cut-off points</li></ul></div>
@@ -612,7 +828,7 @@
 
   <!-- WEIGHT CALCULATION (original full) -->
   <section id="section-weight-calculation" class="content-section">
-    <h1 style="font-family:'Poppins'; font-size:2rem; background:linear-gradient(to right,#fe4f04,#ff7a2d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:2rem;">Understanding Weight Calculation</h1>
+    <h1 style="font-family:'Inter', sans-serif; font-size:2rem; background:linear-gradient(to right,#fe4f04,#ff7a2d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:2rem;">Understanding Weight Calculation</h1>
     <div class="weight-formula"><h3 style="color:white;">Ugandan Education System Weight Formula</h3><p><strong>Total Weight = (Essential Subjects × 3) + (Other Principals × 2) + Subsidiary + O-Level Weight + Gender Bonus</strong></p></div>
     <div class="features-grid">
       <div class="feature-card"><h4>Grade Points</h4><ul><li>A = 6 points</li><li>B = 5 points</li><li>C = 4 points</li><li>D = 3 points</li><li>E = 2 points</li><li>O = 1 point (Subsidiary)</li><li>F = 0 points (Fail)</li></ul></div>
@@ -624,7 +840,7 @@
 
   <!-- UNIVERSITIES (full details including fax, tel, email) -->
   <section id="section-universities" class="content-section">
-    <h1 style="font-family:'Poppins'; font-size:2rem; background:linear-gradient(to right,#fe4f04,#ff7a2d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:2rem;">Public Universities in Uganda</h1>
+    <h1 style="font-family:'Inter', sans-serif; font-size:2rem; background:linear-gradient(to right,#fe4f04,#ff7a2d); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:2rem;">Public Universities in Uganda</h1>
     <div class="university-list"><div class="university-grid">
       <div class="university-item"><strong>i. Makerere University</strong><br>Website: www.mak.ac.ug<br>Fax: +256-41-541068<br>Tel: +256-41-531202/540436<br>Email: ar@mak.ac.ug</div>
       <div class="university-item"><strong>ii. Mbarara University of Science & Technology</strong><br>Website: www.must.ac.ug<br>Fax: +256-485-20782/20388<br>Tel: +256-485-660584<br>Email: ar@must.ac.ug</div>
@@ -641,18 +857,35 @@
 
   <!-- AUTHORS (full original, with emails and Bleem Labs Co.) -->
   <section id="section-authors" class="content-section">
-    <h1 style="font-family:'Poppins'; font-size:2rem; background:linear-gradient(to right,#ffffff,#ffffff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:2rem;">Author</h1>
-    <div class="author-card"><p><strong style="color:rgb(255, 0, 0);font-size:1.7rem;">Founder & Lead Developer</strong></p><p><strong style="color:rgb(255, 255, 255);">MUYANJA ANDREW</strong></p><p>Owner of BLEEM LABS CO.</p><p>Contact: <a href="mailto:aandrewmuyanja@gmail.com">Muyanja Andrew | Founder & Lead Developer</a></p><p>Phone: +256 708 765 729</p><p>Address: Kyambogo University, Kampala, Uganda</p></div>
-    <strong style="color:white;font-size:2.2rem;">Staff</strong>
-    <div class="author-card"><p><strong style="color:rgb(255, 0, 0);font-size:1.5rem;">1. Blog Admin</strong></p><p><strong style="color:rgb(255, 255, 255);">AGATESI MAZIMA VANESSA</strong></p><p>Meet the brain behind the NUVA blogs, the updates and the Guidance </p><p>Contact: <a href="mailto:agatesivanessa05@gmail.com">Tessi@nuva.me| Project initiator</a></p><p>Phone: +256 783 572 721</p><p>Address: Kyambogo University, Kampala, Uganda</p><br><br><strong style="color:rgb(255, 0, 0);font-size:1.5rem;">2. Android Lead</strong></p>
-    <p><strong style="color:rgb(255, 255, 255);">KALINDA EMMANUEL</strong></p><p>Contributed to development of the Android and IOS Version of the NUVA System</p><p>Contact: <a href="mailto:kalindaemma92@gmail.com">Kalinda Emmanuel | Mobile App Developer</a></p><p>Phone: +256 709 606 391</p><p>Address: Kyambogo University, Kampala, Uganda</p><br><br><strong style="color:rgb(255, 0, 0);font-size:1.5rem;">3. Front End Developer</strong></p>
-    <p><strong style="color:rgb(255, 255, 255);">ATUKUNDA BLESSING FAITH</strong></p><p>Contributed to front end rendaring of the NUVA System</p><p>Contact: <a href="mailto:atukundablessing32@gmail.com">Atukunda Blessing | Front End  Developer</a></p><p>Phone: +256 700 333 340</p><p>Address: Kyambogo University, Kampala, Uganda</p></div>
+    <h1 style="font-family:'Inter', sans-serif; font-size:2rem; background:#000080; -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:2rem;">Author</h1>
+    <div class="author-card">
+      <div class="profile-placeholder">
+    <img src="./images/post.jpg" 
+         alt="C.E.O Bleem Labs Co. MUYANJA ANDREW">
+  </div>
+    <p><strong style="color:rgb(255, 0, 0);font-size:1.7rem;">Founder & Lead Developer</strong></p><p><strong style="color:#000080;">MUYANJA ANDREW</strong></p><p>Owner of BLEEM LABS CO.</p><p>Contact: <a href="mailto:aandrewmuyanja@gmail.com">Muyanja Andrew | Founder & Lead Developer</a></p><p>Phone: +256 708 765 729</p><p>Address: Kyambogo University, Kampala, Uganda</p></div>
+    <strong style="color:#000080;font-size:2.2rem;">Meet Team NUVA</strong>
+    <div class="author-card"> 
+    <p><strong style="color:rgb(255, 0, 0);font-size:1.5rem;">1. Blog Admin</strong></p><div class="profile-team">
+    <img src="./images/post.jpg" 
+         alt="Agatesi Mazima Vanessa">
+  </div><p><strong style="color:#000080;">AGATESI MAZIMA VANESSA</strong></p><p>Meet the brain behind the NUVA blogs, the updates and the Guidance </p><p>Contact: <a href="mailto:agatesivanessa05@gmail.com">Vanessa Tessi| Project initiator</a></p><p>Phone: +256 783 572 721</p><p>Address: Kyambogo University, Kampala, Uganda</p><br><br>
+  
+    <strong style="color:rgb(255, 0, 0);font-size:1.5rem;">2. Android Lead</strong></p><div class="profile-team">
+    <img src="./images/post.jpg" 
+         alt="Kalinda Emmanuel"></div>
+    <p><strong style="color:#000080;">KALINDA EMMANUEL</strong></p><p>Contributed to development of the Android and IOS Version of the NUVA System</p><p>Contact: <a href="mailto:kalindaemma92@gmail.com">Kalinda Emmanuel | Mobile App Developer</a></p><p>Phone: +256 709 606 391</p><p>Address: Kyambogo University, Kampala, Uganda</p><br><br><strong style="color:rgb(255, 0, 0);font-size:1.5rem;">3. Front End Developer</strong></p>
+
+    <div class="profile-team">
+    <img src="./images/post.jpg" 
+         alt="Atukunda Blessing Faith"></div>
+    <p><strong style="color:#000080;">ATUKUNDA BLESSING FAITH</strong></p><p>Contributed to front end rendaring of the NUVA System</p><p>Contact: <a href="mailto:atukundablessing32@gmail.com">Atukunda Blessing | Front End  Developer</a></p><p>Phone: +256 700 333 340</p><p>Address: Kyambogo University, Kampala, Uganda</p></div>
     <div class="author-card"><div class="info-item"><h4>Organization</h4><p style="color:var(--text-muted);">NUVA Org</p></div><div class="info-item"><h4>Email: </h4><a href="mailto:bleemistorg@gmail.com">NUVA Org | Email and Consultation Center</a></div><div class="info-item"><h4>Phone: </h4>+256 708 765 729</div><div class="info-item"><h4><p>Address: </h4>Kyambogo University, Kampala</p></div></div>
   </section>
 
   <!-- AGREEMENT (original full text) -->
   <section id="section-agreement" class="content-section">
-    <h1 style="font-family:'Poppins'; font-size:2rem; background:linear-gradient(to right,#fe4f04,#ff7a2d); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">User Agreement & Terms of Service</h1>
+    <h1 style="font-family:'Inter', sans-serif; font-size:2rem; background:linear-gradient(to right,#fe4f04,#ff7a2d); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">User Agreement & Terms of Service</h1>
     <div class="agreement-section"><h3>1. Acceptance of Terms</h3><p>By accessing and using the NUVA Course Guidance System, you explicitly agree to comply with all terms and conditions outlined herein. Any use of the system constitutes your legal acknowledgment and agreement to follow these rules and responsibilities.</p><p>Failure to comply may result in restricted access. Users should regularly review this agreement to ensure continued compliance.</p><p>Continued use of NUVA indicates acceptance of any updates or modifications made to the terms and conditions by BLEEM LABS CO.</p></div>
     <div class="agreement-section"><h3>2. System Purpose and Maintenance</h3><p>NUVA provides advisory guidance on university course selection based on academic performance and user inputs. While every effort is made to ensure accuracy, the system is continuously maintained and updated to enhance functionality and reliability.</p><p>The recommendations generated are advisory only, and users should not consider them as official admission guarantees. Temporary downtimes or minor system errors may occur during maintenance or updates.</p><p>Users are responsible for entering accurate information to ensure the validity of the guidance provided.</p></div>
     <div class="agreement-section"><h3>3. User Responsibilities</h3><p>All users must provide accurate and complete information including grades, subjects, and other required data. Misrepresentation or incomplete information can lead to inaccurate recommendations.</p><p>Users are expected to follow instructions and guidelines, and use the system in a responsible and ethical manner.</p></div>
@@ -661,10 +894,9 @@
     <div class="agreement-section"><h3>6. Privacy and Data Use</h3><p>All personal and academic data entered into NUVA is treated confidentially. The information is used solely to generate course guidance recommendations.</p><p>Data is never sold, leased, or shared with third parties without explicit user consent. No account creation means no personal data is permanently stored.</p></div>
     <div class="agreement-section"><h3>7. Governing Law</h3><p>This User Agreement is governed by the laws of Uganda. Any disputes arising from the use of NUVA will be handled under Ugandan jurisdiction.</p></div>
     <div class="agreement-section"><h3>8. Acknowledgment</h3><p>By accessing or using NUVA, you acknowledge that you have read, understood, and accepted all terms, conditions, and limitations outlined in this agreement.</p><p>Full ownership and all rights of NUVA are held by BLEEM LABS CO., under Muyanja Andrew.</p></div>
-  </section>
+  </section><br><br>
 
-  <!-- Footer (original with Bleem Labs Co.) -->
-  <div class="action-cards"><footer>© 2026 BLEEM Labs Co. All rights reserved. Owned by <strong>MUYANJA ANDREW</strong>. Contact: <a href="mailto:bleemistorg@gmail.com">NUVA Org | Email and Consultation Center</a><br><a href="#" onclick="showSection('agreement'); return false;">User Agreement</a> | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></footer></div>
+  <div class="action-cards"><footer>© 2026 BLEEM Labs Co. All rights reserved. Owned by <strong>MUYANJA ANDREW</strong>. Contact: <a href="mailto:bleemistorg@gmail.com">NUVA Org | Email and Consultation Center</a><br><a href="#" onclick="showSection('agreement'); return false;">User Agreement</a> | <a href="./privacy.html">Privacy Policy</a> | <a href="./privacy.html">Terms of Service</a></footer></div>
 </main>
 
 <script>
@@ -767,6 +999,12 @@ document.addEventListener('DOMContentLoaded', () => {
      data-full-width-responsive="true"></ins>
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
+
+     function scrollGallery(direction) {
+      const gallery = document.getElementById('gallery');
+      const scrollAmount = 380; // Adjust this value to scroll more/less per click
+      gallery.scrollLeft += scrollAmount * direction;
+    }
 </script>
 </body>
 </html>

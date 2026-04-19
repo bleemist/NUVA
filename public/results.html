@@ -39,17 +39,17 @@
     :root {
       --primary: #fe4f04;
       --primary-dark: #e03e00;
-      --primary-light: #ff7a2d;
-      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      --card-bg: rgba(15, 23, 42, 0.72);
-      --card-border: rgba(254, 79, 4, 0.18);
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --sidebar-bg: rgba(15, 23, 42, 0.85);
+      --primary-light: #ff0000;
+      --bg-gradient: linear-gradient(135deg, #fffffff5 0%, #ffffff 100%);
+      --card-bg: rgb(255, 255, 255);
+      --card-border: #00008030;
+      --text: #000080;
+      --text-muted: #000000ad;
+      --sidebar-bg: rgb(255, 255, 255);
       --success: #34d399;
-      --warning: #fbbf24;
+      --warning: #ff0000;
       --error: #f87171;
-      --info-bg: rgba(30, 60, 114, 0.3);
+      --info-bg: rgb(0, 0, 0);
     }
 
     * {
@@ -228,13 +228,13 @@
 
     /* Filter Notice */
     .filter-notice {
-      background: rgba(254, 79, 4, 0.08);
+      background: rgba(20, 7, 55, 0.162);
       border: 1px solid var(--card-border);
       border-radius: 12px;
       padding: 1rem 1.5rem;
       margin-bottom: 2rem;
       text-align: center;
-      color: var(--primary-light);
+      color: #000080;
       font-weight: 500;
       backdrop-filter: blur(10px);
       display: flex;
@@ -257,14 +257,14 @@
       border: 1px solid var(--card-border);
       padding: 2rem;
       margin-bottom: 2rem;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 20px 60px #00008030;
     }
 
     .weight-summary h2 {
       font-family: 'Poppins', sans-serif;
       font-size: 1.8rem;
       margin-bottom: 1.5rem;
-      background: linear-gradient(to right, var(--primary), var(--primary-light));
+      background: linear-gradient(to right, #ff0000, #ff0000b4);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -278,7 +278,7 @@
     }
 
     .student-info h3 {
-      color: var(--primary-light);
+      color: #000080;
       margin-bottom: 1rem;
       font-size: 1.2rem;
     }
@@ -305,15 +305,15 @@
     .info-value {
       font-size: 1.1rem;
       font-weight: 600;
-      color: var(--primary-light);
+      color: #000080;
     }
 
     .subsidiary-breakdown {
       margin-top: 1rem;
       padding: 1rem;
-      background: rgba(254, 79, 4, 0.1);
+      background:#ffffff;
       border-radius: 12px;
-      border-left: 4px solid var(--primary);
+      border-left: 4px solid #000080;
     }
 
     .subsidiary-row {
@@ -326,9 +326,9 @@
     .subsidiary-total {
       margin-top: 0.5rem;
       padding-top: 0.5rem;
-      border-top: 2px solid var(--primary);
+      border-top: 2px solid #000080;
       font-weight: 700;
-      color: white;
+      color: #000080;
       display: flex;
       justify-content: space-between;
     }
@@ -342,7 +342,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 0.8rem 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid #00008030;
     }
 
     .weight-item:last-child {
@@ -364,13 +364,13 @@
 
     .weight-value {
       font-weight: 600;
-      color: white;
+      color: #000080;
     }
 
     .subject-breakdown {
       margin: 1rem 0 1.5rem;
       padding-left: 1.5rem;
-      border-left: 2px solid var(--primary);
+      border-left: 2px solid #000080;
     }
 
     .subject-item {
@@ -403,7 +403,7 @@
     .total-weight {
       margin-top: 1.5rem;
       padding-top: 1.5rem;
-      border-top: 2px solid var(--primary);
+      border-top: 2px solid #000080;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -426,7 +426,7 @@
     }
 
     .calculation-explanation h4 {
-      color: var(--primary-light);
+      color: var(--text-muted);
       margin-bottom: 0.8rem;
       font-size: 1rem;
     }
@@ -451,16 +451,16 @@
 
     .results-info {
       text-align: center;
-      color: var(--text-muted);
+      color: #000080;
       margin-bottom: 1.5rem;
       padding: 1rem;
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(14, 11, 68, 0.333);
       border-radius: 12px;
       font-size: 1rem;
     }
 
     .results-info strong {
-      color: var(--primary-light);
+      color: white;
     }
 
     .result-card {
@@ -473,11 +473,12 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 20px 60px #00008030;
     }
 
     .result-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 20px 50px rgba(254, 79, 4, 0.2);
+      box-shadow: 0 20px 50px #00008058;
     }
 
     .match-score-badge {
@@ -522,7 +523,7 @@
     .course-header h3 {
       font-family: 'Poppins', sans-serif;
       font-size: 1.4rem;
-      color: white;
+      color: #000080;
       margin-bottom: 0.5rem;
     }
 
@@ -582,7 +583,7 @@
     }
 
     .comparison-value.your-weight {
-      color: var(--primary-light);
+      color: #f50000;
     }
 
     .comparison-vs {
@@ -617,7 +618,7 @@
     }
 
     .subject-section h4 {
-      color: var(--primary-light);
+      color: var(--text-muted);
       margin-bottom: 1rem;
       font-size: 1rem;
     }
@@ -771,7 +772,7 @@
       opacity: 1;
       transform: translateY(-3px);
       border-color: var(--primary);
-      color: var(--primary-light);
+      color: #00008051;
     }
 
     .admin-link svg {
@@ -793,6 +794,7 @@
       padding: 1rem 2rem;
       border-radius: 12px;
       font-weight: 600;
+      color: #000080;
       font-size: 1rem;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -810,14 +812,14 @@
     }
 
     .btn-primary {
-      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      background: linear-gradient(90deg, #000080, #000080b5);
       color: white;
-      box-shadow: 0 8px 25px rgba(254, 79, 4, 0.4);
+      box-shadow: 0 8px 25px rgba(55, 49, 79, 0.4);
     }
 
     .btn-primary:hover {
       transform: translateY(-3px);
-      box-shadow: 0 15px 35px rgba(254, 79, 4, 0.6);
+      box-shadow: 0 15px 35px rgba(4, 4, 254, 0.195);
     }
 
     .btn-secondary {
@@ -832,7 +834,7 @@
     }
 
     footer {
-      background: rgba(15, 23, 42, 0.85);
+      background: rgb(255, 255, 255);
       backdrop-filter: blur(10px);
       padding: 1.5rem;
       text-align: center;
@@ -920,7 +922,7 @@
         <div class="dot"></div><div class="dot"></div><div class="dot"></div>
       </div>
     </div>
-    <h1>Results</h1>
+    <h1 style="color: #000080;">Results</h1>
   </div>
   
   <div class="nav-links">
@@ -940,26 +942,8 @@
 </header>
 
 <div class="container">
-  <!-- Filter Notice -->
-  <div class="filter-notice" id="filterNotice">
-    <svg viewBox="0 0 24 24"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
-    <span id="filterNoticeText">Loading filter information...</span>
-  </div>
 
-  <!-- Weight Summary Card -->
-  <div class="weight-summary">
-    <h2>Your Academic Profile</h2>
-    
-    <!-- Student Information -->
-    <div class="student-info" id="studentInfo"></div>
-
-    <h2 style="margin-top: 2rem;">Weight Calculation Breakdown</h2>
-    
-    <!-- Weight Details -->
-    <div class="weight-breakdown" id="weightDetails"></div>
-  </div>
-
-  <!-- Recommendations Section -->
+    <!-- Recommendations Section -->
   <div class="recommendations">
     <!-- Results Info -->
     <div class="results-info" id="resultsInfo"></div>
@@ -978,6 +962,24 @@
         Back to Dashboard
       </button>
     </div>
+  </div>
+  <!-- Filter Notice -->
+  <div class="filter-notice" id="filterNotice">
+    <svg viewBox="0 0 24 24"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
+    <span id="filterNoticeText">Loading filter information...</span>
+  </div>
+
+  <!-- Weight Summary Card -->
+  <div class="weight-summary">
+    <h2 style="color: var(--primary-light);">Your Academic Profile</h2>
+    
+    <!-- Student Information -->
+    <div class="student-info" id="studentInfo"></div>
+
+    <h2 style="margin-top: 2rem;">Weight Calculation Breakdown</h2>
+    
+    <!-- Weight Details -->
+    <div class="weight-breakdown" id="weightDetails"></div>
   </div>
 </div>
 

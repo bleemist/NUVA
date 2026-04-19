@@ -1,93 +1,634 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3620070651069378"
+     crossorigin="anonymous"></script>
+     <meta name="description" content="NUVA is Uganda’s leading AI-powered course guidance system. Analyze your UACE results, calculate weights, and discover the best university courses at Makerere, Kyambogo, and more.">
+  <meta name="google-site-verification" content="plx3GNioDYzH32dTGY31Sufk93XF8knqO5HucXlpyE0">
+    <!-- Meta Tags for Search Engines -->
+  <meta name="description" content="NUVA is Uganda’s leading AI-powered course guidance system. Analyze your UACE results, calculate weights, and discover the best university courses at Makerere, Kyambogo, and more.">
   <meta name="keywords" content="NUVA,NUVA Uganda,NUVA course guidance,Uganda course selection,UACE results analysis, UACE weight calculator, A Level results Uganda, A Level course guidance,best courses after A level Uganda, which course should I do Uganda, university courses Uganda, top universities Uganda, Makerere University courses, Kyambogo University courses, MUBS courses, Gulu University courses, Busitema University courses, Uganda admissions guide, how to choose a course Uganda, course recommendation system, AI course recommendation, student career guidance Uganda, career guidance system Africa, university admission help Uganda, cut off points Uganda, course cut off points Makerere, course cut off points Kyambogo, science courses Uganda, arts courses Uganda, IT courses Uganda, engineering courses Uganda, medical courses Uganda, business courses Uganda, education courses Uganda, best paying courses Uganda, high demand jobs Uganda, student support Uganda, NUVA AI system, NUVA expert system, NUVA recommendations, Ugandan student platform, online course advisor Uganda, digital guidance Uganda, career path finder Uganda">
-    <meta name="description" content="NUVA is Uganda’s leading AI-powered course guidance system. Analyze your UACE results, calculate weights, and discover the best university courses at Makerere, Kyambogo, and more.">
-  <meta name="google-adsense-account" content="ca-pub-3620070651069378">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3620070651069378"
-     crossorigin="anonymous"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3620070651069378"
-     crossorigin="anonymous"></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy - NUVA</title>
+  <meta name="author" content="MUYANJA ANDREW">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph Tags (for social sharing) -->
+  <meta property="og:title" content="NUVA - Course Guidance Expert System">
+  <meta property="og:description" content="Find the perfect university course based on your grades. Trusted by thousands of Ugandan students.">
+  <meta property="og:image" content="https://nuva.me/nuva5.jpg">
+  <meta property="og:url" content="https://nuva.me">
+  <meta property="og:video" content="https://www.youtube.com/embed/3xCbuzpFSWw?si=Ij2-KtVJLi_O6mOF&amp;start=221">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://nuva.me">
+
+  <!-- Geo Tags (for Uganda targeting) --> 
+  <meta name="geo.region" content="UG">
+  <meta name="geo.placename" content="Kampala, Uganda">
+  <title>NUVA · course guidance system</title>
+
   <link rel="icon" href="icon.png" type="image/png"/>
   <link rel="apple-touch-icon" href="icon.png" type="image/png"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family='Inter', sans-serif:wght@500;600;700&display=swap" rel="stylesheet">
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      color: #f8fafc;
-      font-family: 'Inter', sans-serif;
-      padding: 2rem;
-      line-height: 1.6;
+
+    :root {
+      --primary: #fe4f04;
+      --primary-dark: #e03e00;
+      --primary-light: #ff7a2d;
+      --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --text: #000080;
+      --text-muted: #475569;
+      --sidebar-bg: #ffffff;
+      --success: #ffffff;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --info-bg: rgba(0, 0, 128, 0.05);
+      --new-blue: #000080;
     }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      font-family: 'Inter', sans-serif;
+      color: #000080;
+      overflow-x: hidden;
+      position: relative;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: white; 
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.7; 
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    h2{
+      color: #ff0000;
+    }
+
+    .action-btn,
+    button:not(.nav-tab):not(.dropdown-btn):not(.hamburger):not(.dropdown-item):not(.menu-link) {
+      background: #000080 !important;
+      color: #ffffff !important;
+      border: none;
+      padding: 1rem 1.8rem;
+      border-radius: 12px !important;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.05rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      box-shadow: 0 6px 20px rgba(0, 0, 128, 0.2) !important;
+    }
+
+    .action-btn:hover,
+    button:not(.nav-tab):not(.dropdown-btn):not(.hamburger):not(.dropdown-item):not(.menu-link):hover {
+      background: #000066 !important;
+      transform: translateY(-3px) scale(1.02) !important;
+      box-shadow: 0 10px 25px rgba(0, 0, 128, 0.35) !important;
+    }
+
+    /* particles */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .particle {
+      position: absolute;
+      background: #00008029;
+      border-radius: 50%;
+      animation: float linear infinite;
+      box-shadow: 0 0 12px #00008029;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 0.6;
+      }
+
+      90% {
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: translateY(-20vh) scale(1.1);
+        opacity: 0;
+      }
+    }
+    /* ---------- STICKY HEADER (exactly as original style) ---------- */
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 128, 0.134);
+      padding: 0.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 10px 30px rgba(0, 0, 128, 0.05);
+      transition: all 0.3s ease;
+    }
+    .footer {
+      position: bottom;
+      top: 0;
+      z-index: 200;
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 0.001rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* NUVA logo with inner grid (original) */
+    .nuva-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: conic-gradient(from 200deg, #fe4f04, #ff7a2d 90deg, #9b6aff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 4px 15px rgba(254, 79, 4, 0.25);
+      position: relative;
+      overflow: hidden;
+      animation: pulseGlow 4s infinite ease-in-out;
+      flex-shrink: 0;
+    }
+    .nuva-logo .grid {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 3px;
+      justify-items: center;
+      align-items: center;
+      opacity: 0.25;
+      padding: 6px;
+    }
+    .nuva-logo .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #fff, #cfe8ff);
+    }
+    .nuva-logo .dot.center {
+      transform: scale(1.4);
+      background: linear-gradient(180deg, #fe4f04, #ff7a2d);
+    }
+    .nuva-logo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+      animation: shine 6s infinite;
+    }
+    @keyframes pulseGlow { 0%,100% { box-shadow:0 4px 15px rgba(254,79,4,0.25); } 50% { box-shadow:0 8px 25px rgba(254,79,4,0.45); } }
+    @keyframes shine { 0% { transform:translateX(-120%); } 100% { transform:translateX(120%); } }
+
+    .brand-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      background: linear-gradient(to right, var(--primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* navigation tabs – pill style (all words included) */
+    .nav-tabs {
+      display: flex;
+      gap: 0.2rem;
+      background: rgba(255, 255, 255, 0.564);
+      padding: 0.25rem;
+      border-radius: 48px;
+      border: 1px solid #1010eba7;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+    .nav-tab svg { width: 18px; height: 18px; fill: currentColor; opacity: 0.8; }
+    .nav-tab:hover { color: #000080; background: #00008038; }
+    .nav-tab.active { background: #000080; color: white; box-shadow: 0 4px 12px #00008020; }
+    .nav-tab.active svg { fill: white; opacity: 1; }
+
+    /* hamburger (mobile) */
+    .hamburger {
+      display: none;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid var(--card-border);
+      padding: 10px 18px;
+      border-radius: 40px;
+      align-items: center;
+      gap: 8px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      border: none;
+    }
+
+    /* Dropdown Menu Styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(16px);
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  min-width: 200px;
+  z-index: 1000;
+  box-shadow: 0 8px 20px #00008029;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background: #00008030;
+  color: white;
+}
+
+.dropdown-item svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.dropdown hr {
+  margin: 8px 0;
+  border: none;
+  border-top: 1px solid #00008030;
+}
+
+/* Mobile: hide dropdown and show hamburger */
+@media (max-width: 950px) {
+  .dropdown {
+    display: none;
+  }
+}
+    .hamburger svg { width: 22px; height: 22px; fill: white; }
+    .hamburger:hover { background: var(--primary); }
+
+    /* sidebar (mobile) */
+    .sidebar {
+      width: 280px;
+      background: var(--sidebar-bg);
+      backdrop-filter: blur(16px);
+      border-right: 1px solid var(--card-border);
+      height: 100vh;
+      position: fixed;
+      left: -280px;
+      top: 0;
+      padding: 2rem 1rem;
+      transition: left 0.3s ease;
+      z-index: 300;
+      overflow-y: auto;
+    }
+    .sidebar.open { left: 0; }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 128, 0.2);
+      display: none;
+      z-index: 250;
+    }
+    .overlay.show { display: block; }
+
+    .menu-list { list-style: none; margin-top: 1.5rem; }
+    .menu-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 20px;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: 0.3s;
+      width: 100%;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+    }
+    .menu-link:hover, .menu-link.active { background: #00008033; color: #000080; }
+    .menu-link svg { width: 22px; height: 22px; fill: currentColor; }
+
+    /* main content */
+    .main-content {
+      position: relative;
+      z-index: 10;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+        /* Responsive video container - just 3 lines! */
+    .video-container {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; /* 16:9 landscape */
+        height: 0;
+        margin: 1.5rem 0;
+        background: #000;
+        border-radius: 1rem;
+        overflow: hidden;
+    }
+
+    .video-container iframe,
+    .video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
     .container {
       max-width: 800px;
       margin: 0 auto;
-      background: rgba(15, 23, 42, 0.72);
+      background: white;
       backdrop-filter: blur(16px);
       border-radius: 24px;
       border: 1px solid rgba(254, 79, 4, 0.18);
       padding: 2rem;
     }
-    h1 { color: #fe4f04; font-family: 'Poppins', sans-serif; margin-bottom: 1rem; }
-    h2 { color: #ff7a2d; margin: 1.5rem 0 0.5rem; font-size: 1.2rem; }
-    p { color: #94a3b8; margin-bottom: 1rem; }
-    a { color: #fe4f04; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .footer { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid rgba(254, 79, 4, 0.18); text-align: center; font-size: 0.8rem; }
+
+    /* Mobile adjustment */
+    @media (max-width: 640px) {
+        .video-container { border-radius: 0.75rem; margin: 1rem 0; }
+    }
+
+    /* sections */
+    .content-section { display: none; animation: fadeIn 0.3s; }
+    .content-section.active { display: block; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+    /* all original card styles preserved */
+    .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.5rem; margin:2rem 0; }
+    .stat-card { background:var(--card-bg); backdrop-filter:blur(16px); border-radius:16px; border:1px solid var(--card-border); padding:1.8rem; transition:0.3s; box-shadow:0 10px 30px #00008020; }
+    .stat-card:hover { transform:translateY(-6px); box-shadow:0 20px 50px #00008020; }
+    .stat-icon { width:32px; height:32px; background:#ff200337; border-radius:32px; display:flex; align-items:center; justify-content:center; margin-bottom:1rem; }
+    .stat-icon svg { width:28px; height:28px; fill:var(--primary); }
+    .stat-value { font-size:2.2rem; font-weight:700; margin-bottom:0.3rem; }
+    .stat-label { color:var(--text-muted); font-size:0.95rem; }
+
+    .status-message { background:var(--info-bg); border:1px solid var(--card-border); border-radius:12px; padding:1.5rem; margin-bottom:2rem; display:flex; align-items:center; gap:1rem; }
+    .status-online { background:rgba(255, 81, 0, 0.748); color:var(--success); display:inline-flex; align-items:center; gap:0.2rem; padding:0.1rem 1rem; border-radius:10px;}
+    .status-online::before { content:''; width:10px; height:10px; border-radius:50%; background:var(--success); box-shadow:0 0 8px var(--success); display:inline-block; }
+
+    .quick-actions { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; margin:2rem 0; }
+    .action-card { background:var(--card-bg); border-radius:16px; border:1px solid var(--card-border); padding:2rem; }
+    .action-cards { background:var(--card-bg); border-radius:10px; border:1px solid var(--card-border); padding:1rem;}
+    .action-title { font-size:1.3rem; font-weight:600; margin-bottom:0.8rem; color:white; }
+    .action-desc { color:var(--text-muted); margin-bottom:1.2rem; }
+    .action-btn { background:rgba(254,79,4,0.15); color:var(--primary-light); border:none; padding:0.8rem 1.4rem; border-radius:10px; cursor:pointer; font-weight:600; transition:0.25s; }
+    .action-btn:hover { background:var(--primary); color:white; transform:translateY(-2px); }
+
+    .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; margin:1.5rem 0; }
+    .feature-card { background:rgba(255,255,255,0.03); border-radius:16px; padding:1.8rem; border-left:4px solid var(--primary); }
+    .feature-card h3 { color:white; margin-bottom:1rem; }
+    .feature-card ul { list-style:none; }
+    .feature-card li { margin:0.8rem 0; color:var(--text-muted); display:flex; align-items:center; gap:0.5rem; }
+    .feature-card li::before { content:"•"; color:var(--primary); font-size:1.2rem; }
+
+    .university-list { background:var(--card-bg); border-radius:16px; padding:2rem; margin:2rem 0; }
+    .university-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem; }
+    .university-item { padding:1.2rem; background:rgba(30,41,59,0.5); border:1px solid var(--card-border); border-radius:12px; line-height:1.6; }
+    .university-item strong { color:var(--primary-light); }
+
+    .author-card { background:rgba(255,255,255,0.03); border-radius:16px; padding:2rem; border-left:4px solid var(--primary); margin:1.5rem 0; }
+    .author-card p { color:var(--text-muted); line-height:1.8; }
+    .agreement-section { background:rgba(255,255,255,0.02); border-radius:12px; padding:1.5rem; margin:1.5rem 0; }
+    .weight-formula { background:rgba(254,79,4,0.08); border:1px solid var(--card-border); border-radius:12px; padding:1.5rem; text-align:center; }
+    .example-box { background:rgba(255,255,255,0.02); border-radius:12px; padding:1.5rem; border:1px dashed var(--card-border); }
+    .calc-step::before { content:"✓"; color:var(--success); font-weight:bold; margin-right:0.5rem; }
+    footer { margin-top:3rem; padding:2rem 0; text-align:center; color:var(--text-muted); border-top:1px solid var(--card-border); }
+
+        /* sections */
+    .content-section { display: none; animation: fadeIn 0.3s; }
+    .content-section.active { display: block; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    /* responsive */
+    @media (max-width: 950px) { .nav-tabs { display: none; } .hamburger { display: flex; } }
+    @media (min-width: 951px) { .hamburger, .overlay, .sidebar { display: none; } }
+    @media (max-width: 600px) { .main-content { padding:1rem; } }
   </style>
 </head>
 <body>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3620070651069378"
-     crossorigin="anonymous"></script>
-<!-- ad 1 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-3620070651069378"
-     data-ad-slot="1315861993"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+  <!-- STICKY HEADER (with all original tabs) -->
+<header class="sticky-header">
+  <div class="header-left">
+    <div class="nuva-logo">
+      NUVA
+      <div class="grid">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot center"></div><div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+    </div>
+    <span class="brand-text">NUVA</span>
+  </div>
+
+ <!-- desktop navigation tabs with More dropdown -->
+<div class="nav-tabs">
+  <a href="./index.html#section-dashboard"><button class="nav-tab" data-section="dashboard">
+    <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+    Dashboard
+  </button></a>
+  <a href="course-input.html" class="nav-tab" style="text-decoration: none;">
+    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg>
+    Find Courses
+  </a>
+  <a href="./index.html#section-authors"><button class="nav-tab" data-section="authors">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    Authors
+  </button></a>
+  <a href="about.html" class="nav-tab" style="text-decoration: none;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+    About
+  </button>
+  <a href="privacy.html" class="nav-tab active" style="text-decoration: none;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+    Privacy
+  </a>
+  
+<!-- More Dropdown -->
+<div class="dropdown" style="position: relative; display: inline-block;">
+  <button class="dropdown-btn" id="moreDropdownBtn" type="button" style="display: flex; align-items: center; gap: 6px; padding: 0.6rem 1.2rem; border-radius: 40px; font-size: 0.9rem; font-weight: 500; color: #ffffff; background: transparent; border: none; cursor: pointer;">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+    More ▼
+  </button>
+  <div class="dropdown-content" id="moreDropdown">
+    <!-- These stay on dashboard page -->
+    <button class="dropdown-item" data-section="features">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+      Features
+    </button>
+    <button class="dropdown-item" data-section="weight-calculation">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+      Weight System
+    </button>
+    <button class="dropdown-item" data-section="universities">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM5 12h2v4H5v-4z"/></svg>
+      Universities
+    </button>
+    <button class="dropdown-item" data-section="agreement">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6z"/></svg>
+      User Agreement
+    </button>
+    <button class="dropdown-item" data-section="results" onclick="showResultsPage()">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+      Results
+    </button>
+    <hr style="margin: 8px 0;">
+    <button class="dropdown-item" onclick="window.open('https://nuva-blog-1n.onrender.com', '_blank')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM8 12H6V8h2v4zm10 0h-2V8h2v4z"/></svg>
+      Blog
+    </button>
+  </div>
+</div>
+</div>
+
+  <!-- hamburger for mobile -->
+  <button class="hamburger" onclick="toggleMenu()">
+    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg> Menu
+  </button>
+</header>
+<br><br><br>
   <div class="container">
     <h1>Privacy Policy</h1>
-    <p><strong>Last updated:</strong> March 24, 2026</p>
+    <p><strong>Last updated:</strong> March 24, 2026</p><br>
 
-    <h2>1. Information We Collect</h2>
+    <div class="feature-card">
+    <h2>1. Information We Collect</h2><br>
     <p>NUVA Course Guidance System does not store any personal data permanently. When you use our course recommendation tool, the information you enter (gender, education level, subjects, grades) is processed in real-time and stored temporarily in your browser's session storage. This data is automatically cleared when you close your browser.</p>
+    </div><br>
 
-    <h2>2. How We Use Your Information</h2>
+    <div class="feature-card">
+    <h2>2. How We Use Your Information</h2><br>
     <p>Your information is used solely to:</p>
     <p>• Calculate your course eligibility weight<br>
     • Match you with appropriate university courses<br>
     • Display personalized recommendations</p>
     <p>We do not sell, trade, or transfer your information to third parties.</p>
+</div><br>
 
-    <h2>3. Cookies</h2>
+    <div class="feature-card">
+    <h2>3. Cookies</h2><br>
     <p>NUVA uses session storage (similar to cookies) to temporarily remember your input data while you navigate between pages. No personal information is stored permanently. We do not use tracking cookies.</p>
+</div><br>
 
-    <h2>4. Third-Party Services</h2>
+    <div class="feature-card">
+    <h2>4. Third-Party Services</h2><br>
     <p>We may use Google AdSense to display advertisements. Google may use cookies to serve ads based on your prior visits to our website. You can learn more about Google's privacy practices at <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a>.</p>
+</div><br>
 
-    <h2>5. Your Rights</h2>
+    <div class="feature-card">
+    <h2>5. Your Rights</h2><br>
     <p>You have the right to:<br>
     • Use NUVA anonymously without creating an account<br>
     • Clear your session data by closing your browser<br>
     • Contact us with any privacy concerns</p>
+</div><br>
 
-    <h2>6. Contact Us</h2>
+    <div class="feature-card">
+    <h2>6. Contact Us</h2><br>
     <p>If you have questions about this Privacy Policy, contact us at:<br>
     Email: <a href="mailto:bleemistorg@gmail.com">Bleem Labs Co.</a><br>
     Phone: +256 708 765 729</p>
+    </div></div><br><br><br>
+    <div class="action-cards"><footer>© 2026 BLEEM Labs Co. All rights reserved. Owned by <strong>MUYANJA ANDREW</strong>. Contact: <a href="mailto:bleemistorg@gmail.com">NUVA Org | Email and Consultation Center</a><br><a href="#" onclick="showSection('agreement'); return false;">User Agreement</a> | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></footer></div>
 
-    <div class="footer">
-      <p>© 2026 BLEEM Labs Co. All rights reserved.</p>
-    </div>
-  </div>
+  <script>
+    function toggleMenu() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show'); }
+  function showSection(sectionId) {
+    document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+    const activeSec = document.getElementById('section-'+sectionId); if(activeSec) activeSec.classList.add('active');
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll(`.nav-tab[data-section="${sectionId}"]`).forEach(t => t.classList.add('active'));
+    document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.menu-link').forEach(l => { if(l.getAttribute('onclick') && l.getAttribute('onclick').includes(sectionId)) l.classList.add('active'); });
+  }
+  document.querySelectorAll('.nav-tab').forEach(tab => { tab.addEventListener('click', (e) => { showSection(tab.getAttribute('data-section')); if(window.innerWidth<=950) { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('show'); } }); });
+
+  </script>
 </body>
 </html>

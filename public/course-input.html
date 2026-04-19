@@ -23,18 +23,20 @@
 
   <style>
     :root {
-      --primary: #fe4f04;
+      --primary: #000080;
       --primary-dark: #e03e00;
-      --primary-light: #ff7a2d;
-      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      --card-bg: rgba(15, 23, 42, 0.72);
-      --card-border: rgba(254, 79, 4, 0.18);
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --input-bg: rgba(30, 41, 59, 0.5);
-      --error: #f87171;
-      --success: #34d399;
-      --info-bg: rgba(30, 60, 114, 0.3);
+      --primary-light: #000080;
+      --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --text: #000080;
+      --text-muted: #475569;
+      --sidebar-bg: #ffffff;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --info-bg: rgba(0, 0, 128, 0.05);
+      --new-blue: #000080;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -43,7 +45,7 @@
       min-height: 100vh;
       background: var(--bg-gradient);
       font-family: 'Inter', system-ui, sans-serif;
-      color: var(--text);
+      color: #000080;
       display: flex;
       flex-direction: column;
       position: relative;
@@ -74,23 +76,26 @@
       100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
     }
 
-    header {
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(10px);
-      padding: 1.2rem 2rem;
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 128, 0.134);
+      padding: 0.8rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid var(--card-border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      box-shadow: 0 10px 30px rgba(0, 0, 128, 0.05);
+      transition: all 0.3s ease;
     }
 
     .header-left {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.75rem;
     }
 
     .nuva-logo {
@@ -104,8 +109,8 @@
       font-family: 'Poppins', sans-serif;
       font-size: 1.3rem;
       font-weight: 700;
-      color: white;
-      box-shadow: 0 4px 20px rgba(254, 79, 4, 0.3);
+      color: #000080;
+      box-shadow: 0 4px 12px rgba(0, 0, 128, 0.1);
       position: relative;
       overflow: hidden;
       animation: pulseGlow 4s infinite ease-in-out;
@@ -115,12 +120,12 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+      background: #ffffff;
       animation: shine 6s infinite;
     }
 
     @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 4px 20px rgba(254, 79, 4, 0.3); }
+      0%, 100% { box-shadow: 0 4px 12px rgba(0, 0, 128, 0.1); }
       50%      { box-shadow: 0 8px 30px rgba(254, 79, 4, 0.5); }
     }
 
@@ -145,20 +150,12 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: linear-gradient(180deg, #fff, #cfe8ff);
+      background: #ffffff;
     }
 
     .dot.center {
       transform: scale(1.5);
-      background: linear-gradient(180deg, #fe4f04, #ff7a2d);
-    }
-
-    .header-left h1 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.6rem;
-      background: linear-gradient(to right, var(--primary), var(--primary-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      background: #ffffff;
     }
 
     .nav-links {
@@ -195,7 +192,7 @@
       backdrop-filter: blur(16px);
       border-radius: 24px;
       border: 1px solid var(--card-border);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 30px rgba(0, 0, 128, 0.08);
       width: 100%;
       max-width: 800px;
       overflow: hidden;
@@ -210,9 +207,9 @@
       font-family: 'Poppins', sans-serif;
       font-size: 1.8rem;
       margin-bottom: 0.5rem;
-      background: linear-gradient(to right, var(--primary), var(--primary-light));
+      background: #ffffff;
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #000080;
     }
 
     .card-header p {
@@ -227,7 +224,7 @@
     /* Form Styles */
     .form-section {
       margin-bottom: 2.5rem;
-      background: rgba(255, 255, 255, 0.02);
+      background: #f1f5f9;
       border-radius: 16px;
       padding: 1.5rem;
     }
@@ -293,14 +290,14 @@
       border-radius: 12px;
       border: 1px solid rgba(148, 163, 184, 0.3);
       background: var(--input-bg);
-      color: white;
+      color: #000080;
       font-size: 1rem;
       transition: all 0.25s ease;
     }
 
     select {
       appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%23fe4f04' d='M7 10L2 5h10z'/%3E%3C/svg%3E");
+      
       background-repeat: no-repeat;
       background-position: right 16px center;
       background-size: 14px;
@@ -310,7 +307,7 @@
     input:focus, select:focus {
       outline: none;
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(254, 79, 4, 0.15);
+      box-shadow: 0 0 0 3px rgba(17, 4, 254, 0.199);
     }
 
     .subject-row {
@@ -344,7 +341,7 @@
     }
 
     .grade-count-item {
-      background: rgba(255, 255, 255, 0.03);
+      background: #f8fafc;
       border-radius: 12px;
       padding: 1rem;
       text-align: center;
@@ -396,7 +393,7 @@
     }
 
     .weight-preview {
-      background: rgba(254, 79, 4, 0.1);
+      background: #5f5f5f2e;
       border-radius: 12px;
       padding: 1rem;
       margin: 1rem 0;
@@ -405,7 +402,7 @@
     }
 
     .weight-preview span {
-      color: var(--primary-light);
+      color: #ff6a00;
       font-weight: bold;
       font-size: 1.5rem;
     }
@@ -415,7 +412,7 @@
       gap: 1rem;
       margin-bottom: 1.5rem;
       padding: 0.5rem;
-      background: rgba(255, 255, 255, 0.03);
+      background: #f8fafc;
       border-radius: 12px;
     }
 
@@ -431,7 +428,7 @@
 
     .toggle-option.active {
       background: var(--primary);
-      color: white;
+      color: #000080;
     }
 
     /* Subsidiary Grid Styles - UPDATED for independence */
@@ -443,7 +440,7 @@
     }
 
     .subsidiary-group {
-      background: rgba(255, 255, 255, 0.02);
+      background: #f1f5f9;
       border-radius: 12px;
       padding: 1.2rem;
       border: 1px solid var(--card-border);
@@ -466,7 +463,7 @@
 
     .subsidiary-total-badge {
       background: var(--primary);
-      color: white;
+      color: #000080;
       padding: 0.5rem 1rem;
       border-radius: 20px;
       font-weight: 600;
@@ -501,8 +498,8 @@
     .submit-btn {
       width: 100%;
       padding: 16px;
-      background: linear-gradient(90deg, var(--primary), var(--primary-light));
-      color: white;
+      background: #ffffff;
+      color: #000080;
       font-size: 1.1rem;
       font-weight: 600;
       border: none;
@@ -588,30 +585,25 @@
       fill: var(--primary);
     }
 
-    footer {
-      background: rgba(15, 23, 42, 0.85);
+    .footer {
+      position: bottom;
+      top: 0;
+      z-index: 200;
+      background: rgba(15, 23, 42, 0.9);
       backdrop-filter: blur(10px);
-      padding: 1.5rem;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      border-top: 1px solid var(--card-border);
-      margin-top: auto;
-      z-index: 10;
+      border-bottom: 1px solid var(--card-border);
+      padding: 0.001rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
     }
 
-    footer a {
-      color: var(--primary-light);
-      text-decoration: none;
-    }
+   footer { margin-top:3rem; padding:2rem 0; text-align:center; color:var(--text-muted); border-top:1px solid var(--card-border); }
 
-    footer a:hover {
-      text-decoration: underline;
-    }
 
     @media (max-width: 768px) {
       header {
-        flex-direction: column;
         gap: 1rem;
         padding: 1rem;
       }
@@ -647,14 +639,338 @@
         right: 1rem;
       }
     }
-  </style>
+  
+/* INJECTED NAVBAR CSS */
+.sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 128, 0.08);
+      padding: 0.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 10px 30px rgba(0, 0, 128, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* NUVA logo with inner grid (original) */
+    .nuva-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: conic-gradient(from 200deg, #fe4f04, #ff7a2d 90deg, #9b6aff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 4px 15px rgba(254, 79, 4, 0.25);
+      position: relative;
+      overflow: hidden;
+      animation: pulseGlow 4s infinite ease-in-out;
+      flex-shrink: 0;
+    }
+    .nuva-logo .grid {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 3px;
+      justify-items: center;
+      align-items: center;
+      opacity: 0.25;
+      padding: 6px;
+    }
+    .nuva-logo .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, #fff, #cfe8ff);
+    }
+    .nuva-logo .dot.center {
+      transform: scale(1.4);
+      background: linear-gradient(180deg, #fe4f04, #ff7a2d);
+    }
+    .nuva-logo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+      animation: shine 6s infinite;
+    }
+    @keyframes pulseGlow { 0%,100% { box-shadow:0 4px 15px rgba(254,79,4,0.25); } 50% { box-shadow:0 8px 25px rgba(254,79,4,0.45); } }
+    @keyframes shine { 0% { transform:translateX(-120%); } 100% { transform:translateX(120%); } }
+
+    .brand-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      background: #000080;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* navigation tabs – pill style (all words included) */
+    .nav-tabs {
+      display: flex;
+      gap: 0.2rem;
+      background: rgba(255, 255, 255, 0.564);
+      padding: 0.25rem;
+      border-radius: 48px;
+      border: 1px solid #1010eba7;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav-tab {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.6rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+      white-space: nowrap;
+    }
+    .nav-tab svg { width: 18px; height: 18px; fill: currentColor; opacity: 0.8; }
+    .nav-tab:hover { color: #000080; background: #00008038; }
+    .nav-tab.active { background: #000080; color: white; box-shadow: 0 4px 12px #00008020; }
+    .nav-tab.active svg { fill: white; opacity: 1; }
+
+/* hamburger (mobile) */
+    .hamburger {
+      display: none;
+      background: #000080;
+      border: 1px solid var(--card-border);
+      padding: 10px 18px;
+      border-radius: 40px;
+      align-items: center;
+      gap: 8px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      border: none;
+    }
+
+    /* Dropdown Menu Styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(16px);
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  min-width: 200px;
+  z-index: 1000;
+  box-shadow: 0 8px 20px #00008029;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background: #00008030;
+  color: white;
+}
+
+.dropdown-item svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.dropdown hr {
+  margin: 8px 0;
+  border: none;
+  border-top: 1px solid #00008030;
+}
+
+/* Mobile: hide dropdown and show hamburger */
+@media (max-width: 950px) {
+  .dropdown {
+    display: none;
+  }
+}
+    .hamburger svg { width: 22px; height: 22px; fill: white; }
+    .hamburger:hover { background: var(--primary); }
+
+    /* sidebar (mobile) */
+    .sidebar {
+      width: 280px;
+      background: var(--sidebar-bg);
+      backdrop-filter: blur(16px);
+      border-right: 1px solid var(--card-border);
+      height: 100vh;
+      position: fixed;
+      left: -280px;
+      top: 0;
+      padding: 2rem 1rem;
+      transition: left 0.3s ease;
+      z-index: 300;
+      overflow-y: auto;
+    }
+    .sidebar.open { left: 0; }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 128, 0.2);
+      display: none;
+      z-index: 250;
+    }
+    .overlay.show { display: block; }
+
+    .menu-list { list-style: none; margin-top: 1.5rem; }
+    .menu-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 20px;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: 0.3s;
+      width: 100%;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+    }
+    .menu-link:hover, .menu-link.active { background: #00008033; color: #000080; }
+    .menu-link svg { width: 22px; height: 22px; fill: currentColor; }
+
+    /* main content */
+    .main-content {
+      position: relative;
+      z-index: 10;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+     /* responsive */
+    @media (max-width: 950px) { .nav-tabs { display: none; } .hamburger { display: flex; } }
+    @media (min-width: 951px) { .hamburger, .overlay, .sidebar { display: none; } }
+    @media (max-width: 600px) { .main-content { padding:1rem; } }
+
+    .menu-list { list-style: none; margin-top: 1.5rem; }
+    .menu-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 20px;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: 0.3s;
+      width: 100%;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+    }
+    .menu-link:hover, .menu-link.active { background: rgba(254,79,4,0.15); color: #000080; }
+    .menu-link svg { width: 22px; height: 22px; fill: currentColor; }
+
+    
+
+/* GLOBAL BUTTON OVERRIDES */
+button:not(.nav-tab):not(.dropdown-btn):not(.hamburger):not(.dropdown-item):not(.menu-link):not(.menu-btn),
+input[type="submit"], input[type="button"], .submit-btn, .action-btn {
+    background: #000080 !important;
+    color: #ffffff !important;
+    border-radius: 12px !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 128, 0.2) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+button:not(.nav-tab):not(.dropdown-btn):not(.hamburger):not(.dropdown-item):not(.menu-link):not(.menu-btn):hover,
+input[type="submit"]:hover, input[type="button"]:hover, .submit-btn:hover, .action-btn:hover {
+    background: #000066 !important;
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 128, 0.35) !important;
+}
+button:disabled, input:disabled {
+    opacity: 0.6 !important;
+    transform: none !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+}
+
+/* Mobile adjustment */
+    @media (max-width: 640px) {
+        .video-container { border-radius: 0.75rem; margin: 1rem 0; }
+        .nav-tabs {
+    display: none !important;
+  }
+
+</style>
+<script>
+  if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    var adScript = document.createElement('script');
+    adScript.async = true;
+    adScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3620070651069378";
+    adScript.crossOrigin = "anonymous";
+    document.head.appendChild(adScript);
+  }
+</script>
+
+<style>
+/* Collapse unfilled ads */
+ins.adsbygoogle[data-ad-status="unfilled"] { display: none !important; margin: 0 !important; padding: 0 !important; height: 0 !important; }
+</style>
 </head>
 <body>
 
 <!-- Background Particles -->
 <div class="particles" id="particles"></div>
 
-<header>
+<header class="sticky-header">
   <div class="header-left">
     <div class="nuva-logo">
       NUVA
@@ -664,14 +980,103 @@
         <div class="dot"></div><div class="dot"></div><div class="dot"></div>
       </div>
     </div>
-    <h1>Course Guidance</h1>
+    <span class="brand-text">Find Course</span>
   </div>
-  <div class="nav-links">
-    <a href="index.html">Dashboard</a>
-    <a href="course-input.html" style="color: var(--primary-light); border-bottom-color: var(--primary);">Find Courses</a>
-    <a href="results.html">Results</a>
+
+ <!-- desktop navigation tabs with More dropdown -->
+<div class="nav-tabs">
+  <a href="./index.html#section-dashboard"><button class="nav-tab" data-section="dashboard">
+    <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+    Dashboard
+  </button></a>
+  <a href="course-input.html" class="nav-tab active" style="text-decoration: none;">
+    <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg>
+    Find Courses
+  </a>
+  <a href="./index.html#section-authors"><button class="nav-tab" data-section="authors">
+    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+    Authors
+  </button></a>
+  <a href="about.html" class="nav-tab" style="text-decoration: none;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+    About
+  </button>
+  <a href="privacy.html" class="nav-tab" style="text-decoration: none;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+    Privacy
+  </a>
+  
+<!-- More Dropdown -->
+<div class="dropdown" style="position: relative; display: inline-block;">
+  <button class="dropdown-btn" id="moreDropdownBtn" type="button" style="display: flex; align-items: center; gap: 6px; padding: 0.6rem 1.2rem; border-radius: 40px; font-size: 0.9rem; font-weight: 500; color: #ffffff; background: transparent; border: none; cursor: pointer;">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+    More ▼
+  </button>
+  <div class="dropdown-content" id="moreDropdown">
+    <!-- These stay on dashboard page -->
+    <button class="dropdown-item" data-section="features">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+      Features
+    </button>
+    <button class="dropdown-item" data-section="weight-calculation">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+      Weight System
+    </button>
+    <button class="dropdown-item" data-section="universities">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM5 12h2v4H5v-4z"/></svg>
+      Universities
+    </button>
+    <button class="dropdown-item" data-section="agreement">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6z"/></svg>
+      User Agreement
+    </button>
+    <button class="dropdown-item" data-section="results" onclick="showResultsPage()">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+      Results
+    </button>
+    <hr style="margin: 8px 0;">
+    <button class="dropdown-item" onclick="window.open('https://nuva-blog-1n.onrender.com', '_blank')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM8 12H6V8h2v4zm10 0h-2V8h2v4z"/></svg>
+      Blog
+    </button>
   </div>
+</div>
+</div>
+
+<!-- hamburger for mobile -->
+  <button class="hamburger" onclick="toggleMenu()">
+    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg> Menu
+  </button>
 </header>
+
+<!-- overlay & sidebar (mobile) -->
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+<aside class="sidebar" id="sidebar">
+  <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:2rem;">
+    <div class="nuva-logo" style="width:42px; height:42px; font-size:1rem;">NUVA</div>
+    <span style="font-family:'Inter', sans-serif; font-size:1.4rem; background:linear-gradient(to right, #fe4f04, #ff7a2d); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">NUVA</span>
+  </div>
+  <ul class="menu-list">
+    <li><a href="./index.html#section-dashboard"><button onclick="showSection('dashboard');toggleMenu()" class="menu-link active"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg> Dashboard</button></li></a>
+    <li><a href="course-input.html" class="menu-link" onclick="toggleMenu()"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg> Find Courses</a></li>
+    <li><a href="./index.html#section-dashboard"><button onclick="showSection('features');toggleMenu()" class="menu-link"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg> Features</button></li></a>
+    <li><a href="./index.html#section-dashboard"><button onclick="showSection('how-it-works');toggleMenu()" class="menu-link"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> How It Works</button></li></a>
+    <li><a href="./index.html#section-dashboard"><button onclick="showSection('weight-calculation');toggleMenu()" class="menu-link"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/></svg> Weight System</button></li></a>
+    <li><a href="./index.html#section-dashboard"><button onclick="showSection('universities');toggleMenu()" class="menu-link"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM5 12h2v4H5v-4zm4 0h2v8H9v-8zm4 0h2v6h-2v-6zm4 0h2v10h-2V12z"/></svg> Universities</button></li></a>
+    <li><a href="./index.html#section-authors"><button onclick="showSection('authors');toggleMenu()" class="menu-link"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg> Authors</button></li></a>
+    <li><a href="./index.html#section-dashboard"><button onclick="showSection('agreement');toggleMenu()" class="menu-link"><svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg> User Agreement</button></li></a>
+    <li><a href="./index.html#section-dashboard"><button class="nav-tab"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="40" height="30" style="fill: white;"><path d="M320.5 160C320.5 177.7 306.2 192 288.5 192C270.8 192 256.5 177.7 256.5 160C256.5 142.3 270.8 128 288.5 128C306.2 128 320.5 142.3 320.5 160zM288.5 64C235.5 64 192.5 107 192.5 160C192.5 201.8 219.2 237.4 256.5 250.5L256.5 508.4C193.6 494.1 146.3 438.7 144.6 371.9L160.7 386C170.7 394.7 185.8 393.7 194.6 383.7C203.4 373.7 202.3 358.6 192.3 349.8L128.3 293.8C119.3 285.9 105.7 285.9 96.7 293.8L32.7 349.8C22.7 358.5 21.7 373.7 30.4 383.7C39.1 393.7 54.3 394.7 64.3 386L80.5 371.8C82.6 484.9 174.9 575.9 288.5 575.9C316.8 575.9 343.9 570.2 368.5 560L368.5 559.8L368.5 487.6C354.1 497.2 337.9 504.3 320.5 508.3L320.5 250.4C357.8 237.2 384.5 201.7 384.5 159.9C384.5 106.9 341.5 63.9 288.5 63.9zM560.5 368.1L560.5 416L496.5 416L496.5 368.1C496.5 350.4 510.8 336.1 528.5 336.1C546.2 336.1 560.5 350.4 560.5 368.1zM416.5 464L416.5 560C416.5 586.5 438 608 464.5 608L592.5 608C619 608 640.5 586.5 640.5 560L640.5 464C640.5 443.1 627.1 425.3 608.5 418.7L608.5 368.1C608.5 323.9 572.7 288.1 528.5 288.1C484.3 288.1 448.5 323.9 448.5 368.1L448.5 418.7C429.9 425.3 416.5 443.1 416.5 464z"/></svg><a href="privacy.html" style="color: white !important; text-decoration: none !important; display: flex; align-items: center; gap: 8px; padding: 8px 12px;">Privary Policy</a></button></li>
+    <li><a href="./index.html#section-dashboard"><button class="nav-tab"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="40" height="30" style="fill: white;"><path d="M320 576C461.4 576 576 461.4 576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 461.4 178.6 576 320 576zM288 224C288 206.3 302.3 192 320 192C337.7 192 352 206.3 352 224C352 241.7 337.7 256 320 256C302.3 256 288 241.7 288 224zM280 288L328 288C341.3 288 352 298.7 352 312L352 400L360 400C373.3 400 384 410.7 384 424C384 437.3 373.3 448 360 448L280 448C266.7 448 256 437.3 256 424C256 410.7 266.7 400 280 400L304 400L304 336L280 336C266.7 336 256 325.3 256 312C256 298.7 266.7 288 280 288z"/></svg><a href="about.html" style="color: white !important; text-decoration: none !important; display: flex; align-items: center; gap: 8px; padding: 8px 12px;">About</a></button></li>
+    <li>
+    <a href="https://nuva-blog-1n.onrender.com" style="color: white !important; text-decoration: none !important; display: flex; align-items: center; gap: 8px; padding: 8px 12px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="40" height="30" style="fill: white;">
+            <path d="M288 88C288 74.7 298.7 64 312 64C457.8 64 576 182.2 576 328C576 341.3 565.3 352 552 352C538.7 352 528 341.3 528 328C528 208.7 431.3 112 312 112C298.7 112 288 101.3 288 88zM144 160C170.5 160 192 181.5 192 208L192 432C192 458.5 213.5 480 240 480C266.5 480 288 458.5 288 432C288 405.5 266.5 384 240 384C231.2 384 224 376.8 224 368L224 304C224 295.2 231.2 288 240 288C319.5 288 384 352.5 384 432C384 511.5 319.5 576 240 576C160.5 576 96 511.5 96 432L96 208C96 181.5 117.5 160 144 160zM312 160C404.8 160 480 235.2 480 328C480 341.3 469.3 352 456 352C442.7 352 432 341.3 432 328C432 261.7 378.3 208 312 208C298.7 208 288 197.3 288 184C288 170.7 298.7 160 312 160z"/>
+        </svg>
+        Blog
+    </a>
+</li>
+  </ul>
+</aside>
 
 <div class="container">
   <div class="main-card">
@@ -714,69 +1119,79 @@
         </div>
 
         <!-- O-Level Section -->
-        <div class="form-section" id="oLevelSection" style="display: none;">
-          <h3>
-            <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
-            O-Level Information
-          </h3>
-          
-          <!-- Toggle between manual weight and grade counting -->
-          <div class="o-level-toggle" id="oLevelToggle">
-            <div class="toggle-option active" onclick="setOLevelInputMode('count')">Count Grades</div>
-            <div class="toggle-option" onclick="setOLevelInputMode('manual')">Enter Weight Manually</div>
-          </div>
+        <!-- O-Level Section - Updated with Old + New Curriculum -->
+<div class="form-section" id="oLevelSection" style="display: none;">
+  <h3>
+    <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+    O-Level Information
+  </h3>
+  
+  <!-- Toggle between manual weight and grade counting -->
+  <div class="o-level-toggle" id="oLevelToggle">
+    <div class="toggle-option active" onclick="setOLevelInputMode('count')" style="color: white;">Count Grades</div>
+    <div class="toggle-option" onclick="setOLevelInputMode('manual')">Enter Weight Manually</div>
+  </div>
 
-          <!-- Grade Counting Mode (Default) -->
-          <div id="gradeCountMode">
-            <p style="color: var(--text-muted); margin-bottom: 1rem;">
-              Enter the number of subjects you passed in each grade category. 
-              Total subjects should be between 8 and 10.
-            </p>
-            
-            <div class="grade-count-grid">
-              <div class="grade-count-item">
-                <label>D1/D2 <span class="grade-badge distinction">Distinction</span></label>
-                <input type="number" id="distinctionCount" min="0" max="10" value="0" step="1">
-              </div>
-              <div class="grade-count-item">
-                <label>C3-C6 <span class="grade-badge credit">Credit</span></label>
-                <input type="number" id="creditCount" min="0" max="10" value="0" step="1">
-              </div>
-              <div class="grade-count-item">
-                <label>P7/P8 <span class="grade-badge pass">Pass</span></label>
-                <input type="number" id="passCount" min="0" max="10" value="0" step="1">
-              </div>
-              <div class="grade-count-item">
-                <label>F9 <span class="grade-badge fail">Fail</span></label>
-                <input type="number" id="failCount" min="0" max="10" value="0" step="1">
-              </div>
-            </div>
+  <!-- Grade Counting Mode (Default) -->
+  <div id="gradeCountMode">
+    <p style="color: var(--text-muted); margin-bottom: 1rem;">
+      Select your curriculum and enter the number of subjects in each grade category.<br>
+      Total subjects must be between 8 and 10.
+    </p>
 
-            <div class="weight-preview" id="weightPreview">
-              Calculated O-Level Weight: <span id="calculatedWeight">0.0</span>
-            </div>
-            
-            <div class="info-text" id="subjectCountMessage">
-              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-              Total subjects: <span id="totalSubjects">0</span> (need 8-10)
-            </div>
-          </div>
+    <!-- === NEW: Curriculum Selector === -->
+    <div class="form-group" style="margin-bottom: 1.5rem;">
+      <select id="curriculumType" name="oLevelCurriculum">
+        <option value="old" selected>Old Curriculum (D1 - F9)</option>
+        <option value="new">New Curriculum (A - E)</option>
+      </select>
+      <label for="curriculumType">O-Level Grading System *</label>
+    </div>
 
-          <!-- Manual Weight Mode (Hidden by Default) -->
-          <div id="manualWeightMode" style="display: none;">
-            <div class="form-group full-width">
-              <input type="number" id="oLevelWeight" name="oLevelWeight" step="0.1" min="0" max="3" placeholder=" ">
-              <label for="oLevelWeight">O-Level Aggregate Weight (0.0 - 3.0)</label>
-              <div class="info-text">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                Enter your pre-calculated O-Level weight (max 3.0)
-              </div>
-            </div>
-          </div>
+    <div class="grade-count-grid">
+      <div class="grade-count-item">
+        <label id="distLabel">D1/D2 <span class="grade-badge distinction">Distinction</span></label>
+        <input type="number" id="distinctionCount" min="0" max="10" value="0" step="1">
+      </div>
+      <div class="grade-count-item">
+        <label id="creditLabel">C3-C6 <span class="grade-badge credit">Credit</span></label>
+        <input type="number" id="creditCount" min="0" max="10" value="0" step="1">
+      </div>
+      <div class="grade-count-item">
+        <label id="passLabel">P7/P8 <span class="grade-badge pass">Pass</span></label>
+        <input type="number" id="passCount" min="0" max="10" value="0" step="1">
+      </div>
+      <div class="grade-count-item">
+        <label id="failLabel">F9 <span class="grade-badge fail">Fail</span></label>
+        <input type="number" id="failCount" min="0" max="10" value="0" step="1">
+      </div>
+    </div>
 
-          <!-- Hidden input to store the final O-Level weight -->
-          <input type="hidden" id="finalOLevelWeight" name="oLevelWeight" value="0">
-        </div>
+    <div class="weight-preview" id="weightPreview">
+      Calculated O-Level Weight: <span id="calculatedWeight">0.0</span>
+    </div>
+    
+    <div class="info-text" id="subjectCountMessage">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      Total subjects: <span id="totalSubjects">0</span> (need 8-10)
+    </div>
+  </div>
+
+  <!-- Manual Weight Mode -->
+  <div id="manualWeightMode" style="display: none;">
+    <div class="form-group full-width">
+      <input type="number" id="oLevelWeight" name="oLevelWeight" step="0.1" min="0" max="3" placeholder=" ">
+      <label for="oLevelWeight">O-Level Aggregate Weight (0.0 - 3.0)</label>
+      <div class="info-text">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+        Enter your pre-calculated O-Level weight (max 3.0)
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden input that always holds the final weight -->
+  <input type="hidden" id="finalOLevelWeight" name="oLevelWeight" value="0">
+</div>
 
         <!-- A-Level Section -->
         <div class="form-section" id="aLevelSection" style="display: none;">
@@ -847,7 +1262,7 @@
           </div>
 
           <!-- Subsidiary Total Display -->
-          <div class="subsidiary-total-badge" id="subsidiaryTotal">
+          <div class="subsidiary-total-badge" id="subsidiaryTotal" style="color: white;">
             Total Subsidiary Points: 0 (GP + Other = +0)
           </div>
         </div>
@@ -914,7 +1329,7 @@
 </script>
 
 <footer>
-  © 2026 BLEEM Labs Co. All rights reserved. Owned by <strong>MUYANJA ANDREW</strong>.<br>
+  © 2026 BLEEM Labs Co. <br>All rights reserved. Owned by<br><strong>MUYANJA ANDREW</strong>.<br>
   Contact: <a href="mailto:bleemistorg@gmail.com">NUVA Org | Email and Consultation Center</a>
 </footer>
 
@@ -947,88 +1362,97 @@
 </datalist>
 
 <script>
-// DOM Elements
-const levelSelect = document.getElementById('level');
-const oLevelSection = document.getElementById('oLevelSection');
-const aLevelSection = document.getElementById('aLevelSection');
-const principalContainer = document.getElementById('principalSubjects');
-const form = document.getElementById('courseForm');
-const submitBtn = document.getElementById('submitBtn');
-const loading = document.getElementById('loading');
-const errorMsg = document.getElementById('errorMsg');
-const successMsg = document.getElementById('successMsg');
 
-// O-Level grade count elements
-const distinctionInput = document.getElementById('distinctionCount');
-const creditInput = document.getElementById('creditCount');
-const passInput = document.getElementById('passCount');
-const failInput = document.getElementById('failCount');
-const calculatedWeightSpan = document.getElementById('calculatedWeight');
-const totalSubjectsSpan = document.getElementById('totalSubjects');
-const subjectCountMessage = document.getElementById('subjectCountMessage');
-const gradeCountMode = document.getElementById('gradeCountMode');
-const manualWeightMode = document.getElementById('manualWeightMode');
-const manualWeightInput = document.getElementById('oLevelWeight');
-const finalOLevelWeight = document.getElementById('finalOLevelWeight');
-const toggleOptions = document.querySelectorAll('.toggle-option');
-const subjectError = document.getElementById('subjectError');
+  function toggleMenu() { 
+    document.getElementById('sidebar').classList.toggle('open'); 
+    document.getElementById('overlay').classList.toggle('show'); 
+  }
+  function showSection(sectionId) {
+    document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+    const activeSec = document.getElementById('section-'+sectionId); if(activeSec) activeSec.classList.add('active');
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll(`.nav-tab[data-section="${sectionId}"]`).forEach(t => t.classList.add('active'));
+    document.querySelectorAll('.menu-link').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.menu-link').forEach(l => { if(l.getAttribute('onclick') && l.getAttribute('onclick').includes(sectionId)) l.classList.add('active'); });
+  }
 
-// Subsidiary elements
-const gpResult = document.getElementById('gpResult');
-const subsidiarySubject = document.getElementById('subsidiarySubject');
-const subsidiaryResult = document.getElementById('subsidiaryResult');
-const subsidiaryTotal = document.getElementById('subsidiaryTotal');
+// ==================== DOM ELEMENTS ====================
+  const levelSelect = document.getElementById('level');
+  const oLevelSection = document.getElementById('oLevelSection');
+  const aLevelSection = document.getElementById('aLevelSection');
+  const principalContainer = document.getElementById('principalSubjects');
+  const form = document.getElementById('courseForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const loading = document.getElementById('loading');
+  const errorMsg = document.getElementById('errorMsg');
+  const successMsg = document.getElementById('successMsg');
 
-// Track entered subjects for duplicate prevention
-const enteredSubjects = new Set();
+  // O-Level Elements
+  const distinctionInput = document.getElementById('distinctionCount');
+  const creditInput = document.getElementById('creditCount');
+  const passInput = document.getElementById('passCount');
+  const failInput = document.getElementById('failCount');
+  const calculatedWeightSpan = document.getElementById('calculatedWeight');
+  const totalSubjectsSpan = document.getElementById('totalSubjects');
+  const subjectCountMessage = document.getElementById('subjectCountMessage');
+  const gradeCountMode = document.getElementById('gradeCountMode');
+  const manualWeightMode = document.getElementById('manualWeightMode');
+  const manualWeightInput = document.getElementById('oLevelWeight');
+  const finalOLevelWeight = document.getElementById('finalOLevelWeight');
+  const toggleOptions = document.querySelectorAll('.toggle-option');
+  const curriculumSelect = document.getElementById('curriculumType');
+  const subjectError = document.getElementById('subjectError');
 
-// O-Level grade weights
-const GRADE_WEIGHTS = {
+  // Subsidiary Elements
+  const gpResult = document.getElementById('gpResult');
+  const subsidiarySubject = document.getElementById('subsidiarySubject');
+  const subsidiaryResult = document.getElementById('subsidiaryResult');
+  const subsidiaryTotal = document.getElementById('subsidiaryTotal');
+
+  // Grade weights (same for both old and new curriculum)
+  const GRADE_WEIGHTS = {
     distinction: 0.3,
     credit: 0.2,
     pass: 0.1,
     fail: 0
-};
+  };
 
-// Initialize particles
-function createParticle() {
-    const particles = document.getElementById('particles');
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-    
-    const size = Math.random() * 8 + 4;
-    particle.style.width = `${size}px`;
-    particle.style.height = `${size}px`;
-    particle.style.left = Math.random() * 100 + 'vw';
-    particle.style.animationDuration = Math.random() * 10 + 15 + 's';
-    particle.style.animationDelay = Math.random() * 5 + 's';
-    
-    particles.appendChild(particle);
-    setTimeout(() => particle.remove(), 20000);
-}
-
-// Initialize particles
-for (let i = 0; i < 20; i++) createParticle();
-setInterval(createParticle, 1000);
-
-// Set O-Level input mode
-function setOLevelInputMode(mode) {
-    toggleOptions.forEach(opt => opt.classList.remove('active'));
-    if (mode === 'count') {
-        toggleOptions[0].classList.add('active');
-        gradeCountMode.style.display = 'block';
-        manualWeightMode.style.display = 'none';
-        calculateOLevelWeight();
-    } else {
-        toggleOptions[1].classList.add('active');
-        gradeCountMode.style.display = 'none';
-        manualWeightMode.style.display = 'block';
-        updateFinalWeight();
+  // Curriculum label configurations
+  const CURRICULUM_LABELS = {
+    old: {
+      distinction: { label: 'D1/D2', badgeText: 'Distinction', badgeClass: 'distinction' },
+      credit:     { label: 'C3-C6', badgeText: 'Credit',     badgeClass: 'credit' },
+      pass:       { label: 'P7/P8', badgeText: 'Pass',       badgeClass: 'pass' },
+      fail:       { label: 'F9',    badgeText: 'Fail',       badgeClass: 'fail' }
+    },
+    new: {
+      distinction: { label: 'A or B', badgeText: 'Distinction', badgeClass: 'distinction' },
+      credit:     { label: 'C',       badgeText: 'Credit',     badgeClass: 'credit' },
+      pass:       { label: 'D',       badgeText: 'Pass',       badgeClass: 'pass' },
+      fail:       { label: 'E',       badgeText: 'Fail',       badgeClass: 'fail' }
     }
-}
+  };
 
-// Calculate O-Level weight from grade counts
-function calculateOLevelWeight() {
+  // ==================== O-LEVEL FUNCTIONS ====================
+
+  function updateOLevelLabels(curriculum) {
+    const labels = CURRICULUM_LABELS[curriculum];
+    if (!labels) return;
+
+    document.getElementById('distLabel').innerHTML = 
+      `${labels.distinction.label} <span class="grade-badge ${labels.distinction.badgeClass}">${labels.distinction.badgeText}</span>`;
+    
+    document.getElementById('creditLabel').innerHTML = 
+      `${labels.credit.label} <span class="grade-badge ${labels.credit.badgeClass}">${labels.credit.badgeText}</span>`;
+    
+    document.getElementById('passLabel').innerHTML = 
+      `${labels.pass.label} <span class="grade-badge ${labels.pass.badgeClass}">${labels.pass.badgeText}</span>`;
+    
+    document.getElementById('failLabel').innerHTML = 
+      `${labels.fail.label} <span class="grade-badge ${labels.fail.badgeClass}">${labels.fail.badgeText}</span>`;
+  }
+
+  function calculateOLevelWeight() {
     const distinctions = parseInt(distinctionInput.value) || 0;
     const credits = parseInt(creditInput.value) || 0;
     const passes = parseInt(passInput.value) || 0;
@@ -1037,19 +1461,18 @@ function calculateOLevelWeight() {
     const total = distinctions + credits + passes + fails;
     totalSubjectsSpan.textContent = total;
     
-    // Validate subject count
+    // Validation
     if (total < 8) {
-        subjectCountMessage.style.color = 'var(--error)';
-        subjectCountMessage.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> Total subjects: ${total} (minimum 8 required)`;
+      subjectCountMessage.style.color = 'var(--error)';
+      subjectCountMessage.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> Total subjects: ${total} (minimum 8 required)`;
     } else if (total > 10) {
-        subjectCountMessage.style.color = 'var(--error)';
-        subjectCountMessage.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> Total subjects: ${total} (maximum 10 allowed)`;
+      subjectCountMessage.style.color = 'var(--error)';
+      subjectCountMessage.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> Total subjects: ${total} (maximum 10 allowed)`;
     } else {
-        subjectCountMessage.style.color = 'var(--text-muted)';
-        subjectCountMessage.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> Total subjects: ${total} (valid)`;
+      subjectCountMessage.style.color = 'var(--text-muted)';
+      subjectCountMessage.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> Total subjects: ${total} (valid)`;
     }
     
-    // Calculate weight
     const weight = (distinctions * GRADE_WEIGHTS.distinction) +
                    (credits * GRADE_WEIGHTS.credit) +
                    (passes * GRADE_WEIGHTS.pass) +
@@ -1057,304 +1480,250 @@ function calculateOLevelWeight() {
     
     const roundedWeight = Math.min(weight, 3.0).toFixed(1);
     calculatedWeightSpan.textContent = roundedWeight;
-    
-    // Update hidden input
-    if (total >= 8 && total <= 10) {
-        finalOLevelWeight.value = roundedWeight;
-    } else {
-        finalOLevelWeight.value = '0';
-    }
-}
+    finalOLevelWeight.value = (total >= 8 && total <= 10) ? roundedWeight : '0';
+  }
 
-// Update final weight from manual input
-function updateFinalWeight() {
+  function updateFinalWeight() {
     const manualWeight = parseFloat(manualWeightInput.value) || 0;
-    if (manualWeight >= 0 && manualWeight <= 3) {
-        finalOLevelWeight.value = manualWeight.toFixed(1);
-    } else {
-        finalOLevelWeight.value = '0';
-    }
-}
+    finalOLevelWeight.value = (manualWeight >= 0 && manualWeight <= 3) 
+      ? manualWeight.toFixed(1) 
+      : '0';
+  }
 
-// ===== NEW: Update subsidiary total display =====
-function updateSubsidiaryTotal() {
+  function setOLevelInputMode(mode) {
+    toggleOptions.forEach(opt => opt.classList.remove('active'));
+    
+    if (mode === 'count') {
+      toggleOptions[0].classList.add('active');
+      gradeCountMode.style.display = 'block';
+      manualWeightMode.style.display = 'none';
+      calculateOLevelWeight();
+    } else {
+      toggleOptions[1].classList.add('active');
+      gradeCountMode.style.display = 'none';
+      manualWeightMode.style.display = 'block';
+      updateFinalWeight();
+    }
+  }
+
+  // ==================== SUBSIDIARY ====================
+  function updateSubsidiaryTotal() {
     const gpPassed = gpResult?.value === '1';
     const otherPassed = subsidiaryResult?.value === '1';
+    const totalPoints = (gpPassed ? 1 : 0) + (otherPassed ? 1 : 0);
     
-    const gpPoints = gpPassed ? 1 : 0;
-    const otherPoints = otherPassed ? 1 : 0;
-    const totalPoints = gpPoints + otherPoints;
-    
-    subsidiaryTotal.textContent = `Total Subsidiary Points: ${totalPoints} (GP: +${gpPoints}, Other: +${otherPoints} = +${totalPoints} total)`;
+    subsidiaryTotal.textContent = `Total Subsidiary Points: ${totalPoints} (GP: +${gpPassed?1:0}, Other: +${otherPassed?1:0} = +${totalPoints} total)`;
     subsidiaryTotal.style.background = totalPoints > 1 ? 'var(--success)' : 'var(--primary)';
-}
+  }
 
-// Add event listeners for subsidiary updates
-gpResult.addEventListener('change', updateSubsidiaryTotal);
-subsidiaryResult.addEventListener('change', updateSubsidiaryTotal);
-
-// Add event listeners for grade count inputs
-[distinctionInput, creditInput, passInput, failInput].forEach(input => {
-    input.addEventListener('input', calculateOLevelWeight);
-});
-
-manualWeightInput.addEventListener('input', updateFinalWeight);
-
-// Handle level change
-levelSelect.addEventListener('change', function() {
-    const level = this.value;
-    
-    oLevelSection.style.display = level ? 'block' : 'none';
-    aLevelSection.style.display = level === 'A-Level' ? 'block' : 'none';
-    
-    if (level === 'A-Level') {
-        createPrincipalSubjects();
-    }
-    
-    hideMessages();
-});
-
-// Create A-Level principal subject fields with duplicate prevention
-function createPrincipalSubjects() {
+  // ==================== A-LEVEL ====================
+  function createPrincipalSubjects() {
     principalContainer.innerHTML = '';
-    enteredSubjects.clear();
-    
     for (let i = 1; i <= 3; i++) {
-        const div = document.createElement('div');
-        div.className = 'subject-row';
-        div.innerHTML = `
-            <div class="form-group">
-                <input type="text" id="principal${i}" name="principal${i}" list="commonSubjects" placeholder=" " ${i === 1 ? 'required' : ''}>
-                <label for="principal${i}">Subject ${i} ${i === 1 ? '*' : ''}</label>
-            </div>
-            <div class="form-group">
-                <select id="principalGrade${i}" name="principalGrade${i}" ${i === 1 ? 'required' : ''}>
-                    <option value="" disabled selected hidden></option>
-                    <option value="A">A (6 pts)</option>
-                    <option value="B">B (5 pts)</option>
-                    <option value="C">C (4 pts)</option>
-                    <option value="D">D (3 pts)</option>
-                    <option value="E">E (2 pts)</option>
-                    <option value="O">O (1 pt)</option>
-                    <option value="F">F (0 pts)</option>
-                </select>
-                <label for="principalGrade${i}">Grade ${i === 1 ? '*' : ''}</label>
-            </div>
-        `;
-        principalContainer.appendChild(div);
-        
-        // Add duplicate prevention to subject input
-        const subjectInput = document.getElementById(`principal${i}`);
-        subjectInput.addEventListener('blur', function() {
-            checkDuplicateSubjects();
-        });
-        subjectInput.addEventListener('input', function() {
-            // Clear error when typing
-            subjectError.style.display = 'none';
-        });
+      const div = document.createElement('div');
+      div.className = 'subject-row';
+      div.innerHTML = `
+        <div class="form-group">
+          <input type="text" id="principal${i}" name="principal${i}" list="commonSubjects" placeholder=" " ${i===1?'required':''}>
+          <label for="principal${i}">Subject ${i} ${i===1?'*':''}</label>
+        </div>
+        <div class="form-group">
+          <select id="principalGrade${i}" name="principalGrade${i}" ${i===1?'required':''}>
+            <option value="" disabled selected hidden></option>
+            <option value="A">A (6 pts)</option>
+            <option value="B">B (5 pts)</option>
+            <option value="C">C (4 pts)</option>
+            <option value="D">D (3 pts)</option>
+            <option value="E">E (2 pts)</option>
+            <option value="O">O (1 pt)</option>
+            <option value="F">F (0 pts)</option>
+          </select>
+          <label for="principalGrade${i}">Grade ${i===1?'*':''}</label>
+        </div>
+      `;
+      principalContainer.appendChild(div);
     }
-}
+  }
 
-// Check for duplicate subjects
-function checkDuplicateSubjects() {
+  function checkDuplicateSubjects() {
     const subjects = [];
-    let hasDuplicate = false;
-    let duplicateSubject = '';
-    
     for (let i = 1; i <= 3; i++) {
-        const input = document.getElementById(`principal${i}`);
-        if (input && input.value.trim()) {
-            const subject = input.value.trim().toLowerCase();
-            if (subjects.includes(subject)) {
-                hasDuplicate = true;
-                duplicateSubject = input.value.trim();
-                break;
-            }
-            subjects.push(subject);
+      const input = document.getElementById(`principal${i}`);
+      if (input && input.value.trim()) {
+        const subject = input.value.trim().toLowerCase();
+        if (subjects.includes(subject)) {
+          subjectError.textContent = `Duplicate subject detected: "${input.value.trim()}". Please use unique subjects.`;
+          subjectError.style.display = 'block';
+          return false;
         }
+        subjects.push(subject);
+      }
     }
-    
-    if (hasDuplicate) {
-        subjectError.textContent = `Duplicate subject detected: "${duplicateSubject}". Please enter unique subjects.`;
-        subjectError.style.display = 'block';
-        return false;
-    } else {
-        subjectError.style.display = 'none';
-        return true;
-    }
-}
+    subjectError.style.display = 'none';
+    return true;
+  }
 
-// Form submission
-form.addEventListener('submit', async function(e) {
+  // ==================== FORM SUBMISSION ====================
+  form.addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    // Check for duplicate subjects first
     if (!checkDuplicateSubjects()) {
-        showError('Please fix duplicate subjects before submitting.');
-        return;
+      showError('Please fix duplicate subjects before submitting.');
+      return;
     }
 
     const formData = new FormData(this);
     
-    // ===== FIXED: Properly capture GP and Other Subsidiary values =====
+    // Capture subsidiary values properly
     const gpPassed = gpResult?.value === '1';
     const subsidiaryPassed = subsidiaryResult?.value === '1';
     const subsidiarySubjectValue = subsidiarySubject?.value || 'None';
-    
-    // Store values separately in formData
+
     formData.set('gpResult', gpPassed ? '1' : '0');
     formData.set('subsidiaryResult', subsidiaryPassed ? '1' : '0');
     formData.set('subsidiarySubject', subsidiarySubjectValue);
-    
-    // Also set a combined field for backward compatibility
-    const combinedSubsidiary = (gpPassed || subsidiaryPassed) ? '1' : '0';
-    formData.set('subsidiaryGrade', combinedSubsidiary);
-    
+    formData.set('subsidiaryGrade', (gpPassed || subsidiaryPassed) ? '1' : '0');
+
     const data = Object.fromEntries(formData.entries());
 
-    // ===== COMPLETE VALIDATION =====
+    // Validation
     if (!data.gender || !data.level || !data.university) {
-        showError('Please fill all required fields.');
-        return;
+      showError('Please fill all required fields.');
+      return;
     }
 
     if (data.level === 'A-Level') {
-        // Validate O-Level weight
-        const oLevelWeight = parseFloat(data.oLevelWeight);
-        if (isNaN(oLevelWeight) || oLevelWeight < 0 || oLevelWeight > 3) {
-            showError('O-Level weight must be between 0 and 3.');
-            return;
+      const oLevelWeight = parseFloat(data.oLevelWeight);
+      if (isNaN(oLevelWeight) || oLevelWeight < 0 || oLevelWeight > 3) {
+        showError('O-Level weight must be between 0 and 3.');
+        return;
+      }
+
+      let hasPrincipal = false;
+      for (let i = 1; i <= 3; i++) {
+        if (data[`principal${i}`] && data[`principal${i}`].trim() && data[`principalGrade${i}`]) {
+          hasPrincipal = true;
+          break;
         }
-        
-        // Check principal subjects - at least one must be filled
-        let hasPrincipal = false;
-        for (let i = 1; i <= 3; i++) {
-            if (data[`principal${i}`] && data[`principal${i}`].trim() && 
-                data[`principalGrade${i}`]) {
-                hasPrincipal = true;
-                break;
-            }
-        }
-        
-        if (!hasPrincipal) {
-            showError('Please enter at least one principal subject and grade.');
-            return;
-        }
-        
-        // Check grade count mode validation
-        const activeMode = toggleOptions[0].classList.contains('active') ? 'count' : 'manual';
-        if (activeMode === 'count') {
-            const distinctions = parseInt(distinctionInput.value) || 0;
-            const credits = parseInt(creditInput.value) || 0;
-            const passes = parseInt(passInput.value) || 0;
-            const fails = parseInt(failInput.value) || 0;
-            const total = distinctions + credits + passes + fails;
-            
-            if (total < 8 || total > 10) {
-                showError('O-Level subjects must be between 8 and 10.');
-                return;
-            }
-        }
+      }
+      if (!hasPrincipal) {
+        showError('Please enter at least one principal subject and grade.');
+        return;
+      }
     }
+
+    setLoading(true);
+
     try {
-        const response = await fetch('/api/submit-subjects', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
+      const response = await fetch('/api/submit-subjects', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
 
-        const result = await response.json();
+      const result = await response.json();
 
-        if (result.success) {
-            // Store ALL data including subsidiary information
-            const submissionDataToStore = {
-                ...data,
-                selectedUniversity: data.university === 'Any University' ? '' : data.university,
-                // Explicitly include subsidiary data to ensure it's stored
-                gpResult: gpPassed ? '1' : '0',
-                otherSubsidiaryResult: subsidiaryPassed ? '1' : '0',
-                subsidiarySubject: subsidiarySubjectValue
-            };
-            
-            sessionStorage.setItem('courseRecommendations', JSON.stringify(result.recommendations || []));
-            sessionStorage.setItem('totalCourses', result.totalCourses || '0');
-            sessionStorage.setItem('weights', JSON.stringify(result.calculatedWeights || {}));
-            sessionStorage.setItem('principalSubjectsUsed', JSON.stringify(result.principalSubjectsUsed || []));
-            sessionStorage.setItem('principalGradesUsed', JSON.stringify(result.principalGradesUsed || []));
-            sessionStorage.setItem('submissionData', JSON.stringify(submissionDataToStore));
+      if (result.success) {
+        const submissionDataToStore = {
+          ...data,
+          selectedUniversity: data.university === 'Any University' ? '' : data.university,
+          gpResult: gpPassed ? '1' : '0',
+          otherSubsidiaryResult: subsidiaryPassed ? '1' : '0',
+          subsidiarySubject: subsidiarySubjectValue
+        };
 
-            showSuccess('Recommendations ready! Redirecting...');
-            setTimeout(() => {
-                window.location.href = 'results.html';
-            }, 1200);
-        } else {
-            showError(result.message || 'Server returned an error. Please check your input.');
-        }
+        sessionStorage.setItem('courseRecommendations', JSON.stringify(result.recommendations || []));
+        sessionStorage.setItem('totalCourses', result.totalCourses || '0');
+        sessionStorage.setItem('weights', JSON.stringify(result.calculatedWeights || {}));
+        sessionStorage.setItem('principalSubjectsUsed', JSON.stringify(result.principalSubjectsUsed || []));
+        sessionStorage.setItem('principalGradesUsed', JSON.stringify(result.principalGradesUsed || []));
+        sessionStorage.setItem('submissionData', JSON.stringify(submissionDataToStore));
+
+        showSuccess('Recommendations ready! Redirecting...');
+        setTimeout(() => window.location.href = 'results.html', 1200);
+      } else {
+        showError(result.message || 'Server error. Please check your input.');
+      }
     } catch (err) {
-        console.error(err);
-        showError('Could not connect to the server. Is the backend running?');
+      console.error(err);
+      showError('Could not connect to the server. Is the backend running?');
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-});
+  });
 
-// UI Helpers
-function setLoading(isLoading) {
+  // ==================== UI HELPERS ====================
+  function setLoading(isLoading) {
     submitBtn.disabled = isLoading;
     submitBtn.textContent = isLoading ? 'Processing...' : 'Get Course Recommendations';
     loading.style.display = isLoading ? 'block' : 'none';
-}
+  }
 
-function showError(msg) {
+  function showError(msg) {
     errorMsg.textContent = msg;
     errorMsg.style.display = 'block';
     successMsg.style.display = 'none';
-}
+  }
 
-function showSuccess(msg) {
+  function showSuccess(msg) {
     successMsg.textContent = msg;
     successMsg.style.display = 'block';
     errorMsg.style.display = 'none';
-}
+  }
 
-function hideMessages() {
+  function hideMessages() {
     errorMsg.style.display = 'none';
     successMsg.style.display = 'none';
-}
+  }
 
-// Auto-capitalize subjects
-document.addEventListener('input', function(e) {
-    if (e.target.name && (e.target.name.includes('principal'))) {
-        const words = e.target.value.split(' ');
-        const capitalized = words.map(word => 
-            word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-        ).join(' ');
-        if (capitalized !== e.target.value) {
-            e.target.value = capitalized;
-        }
+  // Auto-capitalize principal subjects
+  document.addEventListener('input', function(e) {
+    if (e.target.name && e.target.name.includes('principal')) {
+      const words = e.target.value.split(' ');
+      e.target.value = words.map(word => 
+        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+      ).join(' ');
     }
-});
+  });
 
-// Test server connection
-async function testConnection() {
-    try {
-        const response = await fetch('/api/health');
-        const result = await response.json();
-        console.log('✅ Server connected:', result.status);
-    } catch (error) {
-        console.warn('⚠️ Server not connected. Make sure backend is running.');
-    }
-}
+  // ==================== EVENT LISTENERS & INITIALIZATION ====================
+  document.addEventListener('DOMContentLoaded', function() {
+    // Curriculum change
+    curriculumSelect.addEventListener('change', function() {
+      updateOLevelLabels(this.value);
+      calculateOLevelWeight();
+    });
 
-// Initialize
-document.addEventListener('DOMContentLoaded', function() {
-    testConnection();
-    calculateOLevelWeight(); // Initialize weight calculation
-    updateSubsidiaryTotal(); // Initialize subsidiary total display
-});
+    // Grade count inputs
+    [distinctionInput, creditInput, passInput, failInput].forEach(input => {
+      input.addEventListener('input', calculateOLevelWeight);
+    });
 
-// Make functions available globally
-window.setOLevelInputMode = setOLevelInputMode;
+    manualWeightInput.addEventListener('input', updateFinalWeight);
+
+    // Subsidiary
+    gpResult.addEventListener('change', updateSubsidiaryTotal);
+    subsidiaryResult.addEventListener('change', updateSubsidiaryTotal);
+
+    // Level change
+    levelSelect.addEventListener('change', function() {
+      const level = this.value;
+      oLevelSection.style.display = level ? 'block' : 'none';
+      aLevelSection.style.display = level === 'A-Level' ? 'block' : 'none';
+      
+      if (level === 'A-Level') createPrincipalSubjects();
+      hideMessages();
+    });
+
+    // Initialize
+    updateOLevelLabels('old');
+    calculateOLevelWeight();
+    updateSubsidiaryTotal();
+  });
+
+  // Make global functions available
+  window.setOLevelInputMode = setOLevelInputMode;
+
 </script>
 </body>
 </html>
