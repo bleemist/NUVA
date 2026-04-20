@@ -248,218 +248,222 @@
     </div>
 
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <script>
-        // Firebase Configuration (Replace with your own Firebase project config)
-        // To use this, create a free Firebase project at https://console.firebase.google.com
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "firebase/app";
-        import { getAnalytics } from "firebase/analytics";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
+<script>
+    // ==================== FIREBASE CONFIG ====================
+    const firebaseConfig = {
         apiKey: "AIzaSyBTF6CR_KPF2Sh8hmp8Xkn6SGFBV3_InyI",
         authDomain: "nuva-blog.firebaseapp.com",
         projectId: "nuva-blog",
         storageBucket: "nuva-blog.firebasestorage.app",
         messagingSenderId: "1097706865856",
-        appId: "1:1097706865856:web:70b95936db33aa7dc99925",
-        measurementId: "G-HKC8D5XTBJ"
-        };
+        appId: "1:1097706865856:web:70b95936db33aa7dc99925"
+    };
 
-        
-        // For demo purposes, we'll use localStorage as fallback
-        // In production, replace with actual Firebase config
-        let useCloud = false;
-        let currentUser = null;
-        let db = null;
-        let auth = null;
-        let quill = null;
-        let posts = [];
-        let syncTimeout = null;
-        
-        // Initialize Firebase (if config provided)
-        function initFirebase() {
-            if (firebaseConfig.apiKey !== "AIzaSyBTF6CR_KPF2Sh8hmp8Xkn6SGFBV3_InyI") {
-                try {
-                    firebase.initializeApp(firebaseConfig);
-                    auth = firebase.auth();
-                    db = firebase.firestore();
-                    useCloud = true;
-                    updateSyncStatus("Ready", "synced");
-                    return true;
-                } catch(e) {
-                    console.warn("Firebase init failed:", e);
-                    useCloud = false;
-                    return false;
-                }
+    let useCloud = false;
+    let currentUser = null;
+    let db = null;
+    let auth = null;
+    let quill = null;
+    let posts = [];
+
+    // Initialize Firebase
+    function initFirebase() {
+        try {
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
             }
+            auth = firebase.auth();
+            db = firebase.firestore();
+            useCloud = true;
+            console.log("✅ Firebase initialized successfully");
+            return true;
+        } catch (e) {
+            console.error("Firebase init failed:", e);
+            useCloud = false;
             return false;
         }
-        
-        // Login with email/password
-        async function loginWithEmail() {
-            const email = document.getElementById('admin-email').value;
-            const password = document.getElementById('admin-password').value;
-            
-            if (!email || !password) {
-                alert("Please enter email and password");
-                return;
-            }
-            
-            updateSyncStatus("Signing in...", "syncing");
-            
-            if (initFirebase() && auth) {
-                try {
-                    const userCredential = await auth.signInWithEmailAndPassword(email, password);
-                    currentUser = userCredential.user;
-                    document.getElementById('user-email').textContent = currentUser.email;
-                    await loadPostsFromCloud();
-                    showAdminDashboard();
-                    updateSyncStatus("Connected", "synced");
-                } catch(error) {
-                    console.error("Login error:", error);
-                    alert("Login failed: " + error.message + "\n\nUsing demo mode instead.");
-                    useDemoMode();
-                }
-            } else {
-                // No Firebase config, use demo mode
+    }
+
+    // ==================== LOGIN ====================
+    async function loginWithEmail() {
+        const email = document.getElementById('admin-email').value.trim();
+        const password = document.getElementById('admin-password').value.trim();
+
+        if (!email || !password) {
+            alert("Please enter both email and password");
+            return;
+        }
+
+        updateSyncStatus("Signing in...", "syncing");
+
+        if (initFirebase() && auth) {
+            try {
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                currentUser = userCredential.user;
+                document.getElementById('user-email').textContent = currentUser.email || email;
+
+                await loadPostsFromCloud();
+                showAdminDashboard();
+                updateSyncStatus("Connected to Cloud", "synced");
+            } catch (error) {
+                console.error("Login error:", error);
+                alert("Login failed: " + error.message + "\n\nTrying Demo Mode...");
                 useDemoMode();
             }
-        }
-        
-        function useDemoMode() {
-            alert("Using Demo Mode (LocalStorage)\n\nPosts will only save on this device.\nFor cloud sync, configure Firebase in the code.");
-            useCloud = false;
-            loadPostsFromLocal();
-            showAdminDashboard();
-            updateSyncStatus("Local Only", "error");
-        }
-        
-        function showDemoMode() {
+        } else {
             useDemoMode();
         }
-        
-        function showAdminDashboard() {
-            document.getElementById('login-screen').classList.add('hidden');
-            document.getElementById('admin-dashboard').classList.remove('hidden');
-            switchAdminTab(0);
-            initQuill();
-        }
-        
-        // Load posts from Firestore
-        async function loadPostsFromCloud() {
-            if (!db) return;
-            updateSyncStatus("Loading from cloud...", "syncing");
-            try {
-                const snapshot = await db.collection('posts').orderBy('createdAt', 'desc').get();
-                posts = [];
-                snapshot.forEach(doc => {
-                    posts.push({ id: parseInt(doc.id), ...doc.data() });
-                });
-                if (posts.length === 0) {
-                    await seedSamplePosts();
-                }
-                savePostsToLocal(); // Cache locally
-                renderManageList();
-                renderAllComments();
-                updateSyncStatus("Cloud synced", "synced");
-            } catch(e) {
-                console.error("Load error:", e);
-                loadPostsFromLocal();
-                updateSyncStatus("Offline mode", "error");
-            }
-        }
-        
-        // Save post to Firestore
-        async function savePostToCloud(post) {
-            if (!db || !useCloud) {
-                savePostsToLocal();
-                return;
-            }
-            updateSyncStatus("Saving...", "syncing");
-            try {
-                await db.collection('posts').doc(post.id.toString()).set({
-                    ...post,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    updatedBy: currentUser?.email || 'admin'
-                });
-                updateSyncStatus("Saved to cloud", "synced");
-                setTimeout(() => updateSyncStatus("Synced", "synced"), 2000);
-            } catch(e) {
-                console.error("Save error:", e);
-                savePostsToLocal();
-                updateSyncStatus("Offline - saved locally", "error");
-            }
-        }
-        
-        async function deletePostFromCloud(postId) {
-            if (!db || !useCloud) return;
-            try {
-                await db.collection('posts').doc(postId.toString()).delete();
-                updateSyncStatus("Deleted", "synced");
-            } catch(e) {
-                console.error("Delete error:", e);
-            }
-        }
-        
-        // Local storage fallback
-        function loadPostsFromLocal() {
-            const saved = localStorage.getItem('nuvaPosts');
-            if (saved) {
-                posts = JSON.parse(saved);
-            } else {
-                seedSamplePosts();
-            }
+    }
+
+    function showDemoMode() {
+        useDemoMode();
+    }
+
+    function useDemoMode() {
+        alert("✅ Using Demo Mode (LocalStorage)\n\nPosts are saved only on this device.\n\nFor permanent cloud storage, make sure Firebase is correctly configured.");
+        useCloud = false;
+        loadPostsFromLocal();
+        showAdminDashboard();
+        updateSyncStatus("Local Only Mode", "error");
+    }
+
+    function showAdminDashboard() {
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('admin-dashboard').classList.remove('hidden');
+        switchAdminTab(0);
+        initQuill();
+    }
+
+    // ==================== POST MANAGEMENT ====================
+    async function loadPostsFromCloud() {
+        if (!db) return;
+        updateSyncStatus("Loading from cloud...", "syncing");
+        try {
+            const snapshot = await db.collection('posts').orderBy('createdAt', 'desc').get();
+            posts = [];
+            snapshot.forEach(doc => {
+                posts.push({ id: parseInt(doc.id) || Date.now(), ...doc.data() });
+            });
+            if (posts.length === 0) await seedSamplePosts();
+            savePostsToLocal();
             renderManageList();
             renderAllComments();
+            updateSyncStatus("Cloud synced", "synced");
+        } catch (e) {
+            console.error(e);
+            loadPostsFromLocal();
+            updateSyncStatus("Using local cache", "warning");
         }
-        
-        function savePostsToLocal() {
-            localStorage.setItem('nuvaPosts', JSON.stringify(posts));
-        }
-        
-        async function seedSamplePosts() {
-            if (posts.length > 0) return;
-            posts = [
-                {
-                    id: Date.now(),
-                    title: "Welcome to NUVA Cloud",
-                    excerpt: "Your posts are now synced across all devices",
-                    content: "<p>Welcome to the cloud-synced admin panel. Any changes you make will be visible on all devices where you're logged in.</p>",
-                    mediaBlocks: [],
-                    date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-                    comments: [],
-                    createdAt: new Date().toISOString()
-                }
-            ];
+    }
+
+    async function savePostToCloud(post) {
+        if (!db || !useCloud) {
             savePostsToLocal();
-            if (useCloud && db) {
-                for (const post of posts) {
-                    await savePostToCloud(post);
-                }
-            }
+            return;
         }
-        
-        // Core functions
-        function initQuill() {
-            if (!quill && document.getElementById('editor-container')) {
-                quill = new Quill('#editor-container', {
-                    theme: 'snow',
-                    placeholder: 'Write your thoughts here...',
-                    modules: { toolbar: [
-                        [{ 'header': [1, 2, 3, false] }],
-                        ['bold', 'italic', 'underline'],
-                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                        ['blockquote', 'link'],
-                        ['clean']
-                    ]}
-                });
-                quill.on('text-change', () => updatePreview());
-            }
+        try {
+            await db.collection('posts').doc(post.id.toString()).set({
+                ...post,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                updatedBy: currentUser?.email || 'admin'
+            });
+            updateSyncStatus("Saved to cloud", "synced");
+        } catch (e) {
+            console.error(e);
+            savePostsToLocal();
         }
+    }
+
+    function loadPostsFromLocal() {
+        const saved = localStorage.getItem('nuvaPosts');
+        posts = saved ? JSON.parse(saved) : [];
+        if (posts.length === 0) seedSamplePosts();
+        renderManageList();
+        renderAllComments();
+    }
+
+    function savePostsToLocal() {
+        localStorage.setItem('nuvaPosts', JSON.stringify(posts));
+    }
+
+    async function seedSamplePosts() {
+        if (posts.length > 0) return;
+        posts = [{
+            id: Date.now(),
+            title: "Welcome to NUVA Journal",
+            excerpt: "Your first cloud-synced post",
+            content: "<p>This is a sample post. Start creating your own content!</p>",
+            mediaBlocks: [],
+            date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+            comments: [],
+            createdAt: new Date().toISOString()
+        }];
+        savePostsToLocal();
+    }
+
+    function initQuill() {
+        if (quill) return;
+        quill = new Quill('#editor-container', {
+            theme: 'snow',
+            placeholder: 'Write your journal entry here...',
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    ['blockquote', 'link'],
+                    ['clean']
+                ]
+            }
+        });
+    }
+
+    async function publishNewPost() {
+        const title = document.getElementById('new-title').value.trim();
+        const excerpt = document.getElementById('new-excerpt').value.trim();
+        if (!title || !excerpt) {
+            alert("Title and excerpt are required");
+            return;
+        }
+
+        const newPost = {
+            id: Date.now(),
+            title: title,
+            excerpt: excerpt,
+            content: quill ? quill.root.innerHTML : '',
+            mediaBlocks: [],
+            date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+            comments: [],
+            createdAt: new Date().toISOString(),
+            author: currentUser?.email || 'admin'
+        };
+
+        posts.unshift(newPost);
+        savePostsToLocal();
+
+        if (useCloud && db) {
+            await savePostToCloud(newPost);
+        }
+
+        clearForm();
+        renderManageList();
+        alert(`✅ "${title}" has been published!`);
+    }
+
+    function clearForm() {
+        document.getElementById('new-title').value = '';
+        document.getElementById('new-excerpt').value = '';
+        if (quill) quill.setText('');
+    }
+
+    // Tab switching
+    function switchAdminTab(tab) {
+        document.querySelectorAll('[id^="admin-tab-"]').forEach(el => el.classList.add('hidden'));
+        document.getElementById(`admin-tab-${tab}`).classList.remove('hidden');
+
+        document.querySelectorAll('.admin-tab').forEach(btn => btn.classList.remove('bg-gray-100'));
+        document.getElementById(`tab-${tab}`).classList.add('bg-gray-100');
+    }
         
         async function publishNewPost() {
             const title = document.getElementById('new-title').value.trim();
@@ -503,12 +507,11 @@
         
         function renderManageList() {
             const container = document.getElementById('manage-list');
-            if (!container) return;
-            container.innerHTML = '';
-            if (posts.length === 0) {
-                container.innerHTML = '<div class="text-center py-20 text-gray-500">No entries yet. Create your first post!</div>';
-                return;
-            }
+        container.innerHTML = '';
+        if (posts.length === 0) {
+            container.innerHTML = '<div class="text-center py-20 text-gray-500">No entries yet.</div>';
+            return;
+        }
             posts.forEach(post => {
                 const row = document.createElement('div');
                 row.className = 'bg-white shadow-[0_4px_15px_rgba(0,0,128,0.06)] border border-gray-100 rounded-2xl p-6 flex justify-between items-start group';
@@ -553,36 +556,33 @@
             if (!hasComments) container.innerHTML = '<div class="text-center py-20 text-gray-500">No comments yet.</div>';
         }
         
-        function forceSync() {
-            if (useCloud && db) {
-                updateSyncStatus("Syncing...", "syncing");
-                loadPostsFromCloud();
-            } else {
-                alert("Cloud sync not configured. Using local storage only.");
-            }
-        }
-        
-        function updateSyncStatus(message, status) {
-            const statusDiv = document.getElementById('sync-status');
-            if (!statusDiv) return;
-            statusDiv.className = `sync-status ${status}`;
-            const icon = status === 'synced' ? 'fa-cloud-check' : (status === 'syncing' ? 'fa-cloud-upload-alt' : 'fa-cloud-slash');
-            statusDiv.innerHTML = `<i class="fa-solid ${icon} mr-2"></i><span>${message}</span>`;
-            if (status === 'synced') {
-                setTimeout(() => { if (statusDiv.classList.contains('synced')) statusDiv.style.opacity = '0.7'; }, 3000);
-                setTimeout(() => { statusDiv.style.opacity = '1'; }, 100);
-            }
-        }
-        
-        function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
-        function updatePreview() { /* simplified preview */ }
-        function previewPost() { alert("Preview feature - full version available in main code"); }
-        function clearForm() { document.getElementById('new-title').value = ''; document.getElementById('new-excerpt').value = ''; if(quill) quill.setText(''); }
-        function switchAdminTab(tab) { /* existing tab switching logic */ }
-        function editPost(id) { alert("Edit feature - open full post to edit"); }
-        function logoutAdmin() { location.reload(); }
-        
-        window.onload = () => { loadPostsFromLocal(); };
-    </script>
+        // Add missing functions with safe fallbacks
+    function updatePreview() {}
+    function previewPost() { alert("Preview coming soon"); }
+    function editPost(id) { alert("Edit feature coming soon"); }
+    function logoutAdmin() { location.reload(); }
+    function forceSync() {
+        if (useCloud && db) loadPostsFromCloud();
+        else alert("Cloud sync not active");
+    }
+
+    function updateSyncStatus(message, status) {
+        const el = document.getElementById('sync-status');
+        if (!el) return;
+        el.className = `sync-status ${status}`;
+        const icon = status === 'synced' ? 'fa-cloud-check' : (status === 'syncing' ? 'fa-cloud-upload-alt' : 'fa-cloud-slash');
+        el.innerHTML = `<i class="fa-solid ${icon} mr-2"></i><span>${message}</span>`;
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+    }
+
+    // Initialize on load
+    window.onload = () => {
+        loadPostsFromLocal();
+    };
+</script>
 </body>
 </html>
