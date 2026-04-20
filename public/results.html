@@ -903,6 +903,112 @@
         padding: 0.6rem 1rem;
       }
     }
+
+    /* =============== DECK OF CARDS STYLES =============== */
+.deck-container {
+  position: relative;
+  height: 520px;
+  margin: 2rem 0;
+  perspective: 1200px;
+}
+
+.deck-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.deck-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  border: 1px solid var(--card-border);
+  padding: 2rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 128, 0.25);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transform: scale(0.92) translateY(20px) rotate(-2deg);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.deck-card.active {
+  opacity: 1;
+  transform: scale(1) translateY(0) rotate(0deg);
+  z-index: 10;
+  pointer-events: all;
+  box-shadow: 0 30px 80px rgba(0, 0, 128, 0.35);
+}
+
+.deck-card.prev {
+  transform: scale(0.96) translateY(-15px) rotate(-4deg);
+  opacity: 0.7;
+  z-index: 5;
+}
+
+.deck-card.next {
+  transform: scale(0.96) translateY(15px) rotate(4deg);
+  opacity: 0.7;
+  z-index: 5;
+}
+
+/* Navigation Controls */
+.deck-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.deck-btn {
+  padding: 0.9rem 1.8rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  background: #000080;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.deck-btn:hover {
+  background: #000066;
+  transform: translateY(-3px);
+}
+
+.deck-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.deck-progress {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #000080;
+  min-width: 80px;
+  text-align: center;
+}
+
+/* Make cards slightly smaller on mobile */
+@media (max-width: 768px) {
+  .deck-container {
+    height: 620px;
+  }
+  .deck-card {
+    padding: 1.5rem;
+  }
+}
   </style>
 </head>
 <body>
@@ -943,13 +1049,32 @@
 
 <div class="container">
 
-    <!-- Recommendations Section -->
+    <!-- Recommendations Section - Deck Style -->
   <div class="recommendations">
     <!-- Results Info -->
     <div class="results-info" id="resultsInfo"></div>
 
-    <!-- Results Container -->
-    <div id="resultsContainer"></div>
+    <!-- Deck Container -->
+    <div class="deck-container" id="deckContainer">
+      <div class="deck-wrapper" id="deckWrapper">
+        <!-- Cards will be injected here by JavaScript -->
+      </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="deck-controls">
+      <button id="prevBtn" class="deck-btn prev-btn" title="Previous">
+        ← Previous
+      </button>
+      
+      <div class="deck-progress">
+        <span id="currentIndex">1</span> of <span id="totalCards">0</span>
+      </div>
+      
+      <button id="nextBtn" class="deck-btn next-btn" title="Next">
+        Next →
+      </button>
+    </div>
 
     <!-- Action Buttons -->
     <div class="action-buttons">
@@ -1251,59 +1376,65 @@ function getMatchScoreClass(score) {
   return 'low';
 }
 
-// ==================== DISPLAY RECOMMENDATIONS ====================
+// ==================== DECK NAVIGATION ====================
+let currentCardIndex = 0;
+let allCards = [];
+
+function showCard(index) {
+  allCards.forEach((card, i) => {
+    card.classList.remove('active', 'prev', 'next');
+    
+    if (i === index) {
+      card.classList.add('active');
+    } else if (i === index - 1) {
+      card.classList.add('prev');
+    } else if (i === index + 1) {
+      card.classList.add('next');
+    }
+  });
+
+  document.getElementById('currentIndex').textContent = index + 1;
+  document.getElementById('prevBtn').disabled = index === 0;
+  document.getElementById('nextBtn').disabled = index === allCards.length - 1;
+}
+
 function displayRecommendations() {
   if (!recommendations || recommendations.length === 0) {
     resultsContainer.innerHTML = `
       <div class="no-results">
         <h3>No Course Recommendations Found</h3>
-        <p>We couldn't find any courses that match your current qualifications and subject combination.</p>
-        <p>This could be because:</p>
-        <ul>
-          <li>Your subject combination doesn't meet the requirements for available courses</li>
-          <li>Your calculated weight (${calculatedWeights.total || 0}) is below the cut-off points for eligible courses</li>
-          <li>There might be an issue with your input data</li>
-        </ul>
-        <p>Please try adjusting your subject combination or check your input data.</p>
-        <div style="margin-top: 2rem;">
-          <button class="btn btn-primary" onclick="window.location.href='course-input.html'">
-            Try Different Subjects
-          </button>
-        </div>
+        <p>We couldn't find any courses that match your current qualifications...</p>
+        <!-- existing no results content -->
       </div>
     `;
     return;
   }
 
-  // Results info
   resultsInfo.innerHTML = `
     Found <strong>${totalCourses}</strong> eligible courses. 
-    Showing top <strong>${Math.min(recommendations.length, 15)}</strong> recommendations based on your weight score.
+    Showing top <strong>${Math.min(recommendations.length, 20)}</strong> recommendations.
   `;
 
-  let html = '';
+  const wrapper = document.getElementById('deckWrapper');
+  wrapper.innerHTML = '';
 
-  recommendations.slice(0, 15).forEach((course, index) => {
+  allCards = [];
+
+  recommendations.slice(0, 20).forEach((course, index) => {
     const isEligible = course.yourWeight >= course.cutOff;
     const matchClass = getMatchScoreClass(course.matchScore);
     const statusText = isEligible ? 'ELIGIBLE' : 'BELOW CUT-OFF';
 
-    html += `
-      <div class="result-card">
+    const cardHTML = `
+      <div class="deck-card ${index === 0 ? 'active' : ''}">
         <span class="match-score-badge ${matchClass}">${course.matchScore}% Match</span>
         
         <div class="course-header">
           <div>
             <h3>${course.name}</h3>
             <div class="course-meta">
-              <span class="meta-tag">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
-                ${course.code}
-              </span>
-              <span class="meta-tag">
-                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                ${course.university}
-              </span>
+              <span class="meta-tag">${course.code}</span>
+              <span class="meta-tag">${course.university}</span>
             </div>
           </div>
         </div>
@@ -1334,59 +1465,63 @@ function displayRecommendations() {
 
         ${course.essentialSubjects && course.essentialSubjects.length > 0 ? `
           <div class="subject-section">
-            <h4>Essential Subjects (×3 multiplier)</h4>
+            <h4>Essential Subjects</h4>
             <div class="subject-tags">
-              ${course.essentialSubjects.map(subject => 
-                `<span class="subject-tag essential">${subject}</span>`
-              ).join('')}
-            </div>
-          </div>
-        ` : ''}
-
-        ${course.requiredSubjects && course.requiredSubjects.length > 0 ? `
-          <div class="subject-section">
-            <h4>Required Subject Areas</h4>
-            <div class="subject-tags">
-              ${course.requiredSubjects.map(subject => 
-                `<span class="subject-tag">${subject}</span>`
-              ).join('')}
+              ${course.essentialSubjects.map(s => `<span class="subject-tag essential">${s}</span>`).join('')}
             </div>
           </div>
         ` : ''}
 
         ${isEligible && index < 3 ? `
           <div class="top-recommendation">
-            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            Highly Recommended Match - This course strongly aligns with your academic profile!
+            Highly Recommended Match!
           </div>
         ` : ''}
       </div>
     `;
+
+    wrapper.innerHTML += cardHTML;
   });
 
-  // Ranking explanation
-  html += `
-    <div class="ranking-explanation">
-      <h4>How Courses Are Ranked</h4>
-      <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Courses are sorted by your calculated weight score, with higher scores indicating better matches.</p>
-      <div class="legend">
-        <div class="legend-item">
-          <span class="legend-color high"></span>
-          <span class="legend-label">High Match (80-100%)</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-color medium"></span>
-          <span class="legend-label">Medium Match (60-79%)</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-color low"></span>
-          <span class="legend-label">Low Match (Below 60%)</span>
-        </div>
-      </div>
-    </div>
-  `;
+  // Get all created cards
+  allCards = Array.from(wrapper.querySelectorAll('.deck-card'));
+  
+  // Set total count
+  document.getElementById('totalCards').textContent = allCards.length;
 
-  resultsContainer.innerHTML = html;
+  // Show first card
+  currentCardIndex = 0;
+  showCard(currentCardIndex);
+
+  // Button listeners
+  document.getElementById('prevBtn').onclick = () => {
+    if (currentCardIndex > 0) {
+      currentCardIndex--;
+      showCard(currentCardIndex);
+    }
+  };
+
+  document.getElementById('nextBtn').onclick = () => {
+    if (currentCardIndex < allCards.length - 1) {
+      currentCardIndex++;
+      showCard(currentCardIndex);
+    }
+  };
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      if (currentCardIndex > 0) {
+        currentCardIndex--;
+        showCard(currentCardIndex);
+      }
+    } else if (e.key === 'ArrowRight') {
+      if (currentCardIndex < allCards.length - 1) {
+        currentCardIndex++;
+        showCard(currentCardIndex);
+      }
+    }
+  });
 }
 
 // ==================== INITIALIZE PAGE ====================

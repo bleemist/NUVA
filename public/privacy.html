@@ -495,6 +495,38 @@
 <body>
   <!-- STICKY HEADER (with all original tabs) -->
 <header class="sticky-header">
+
+  <!-- Overlay & Sidebar (Mobile) - ADD THIS -->
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+<aside class="sidebar" id="sidebar">
+  <div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:2rem;">
+    <div class="nuva-logo" style="width:42px; height:42px; font-size:1rem;">NUVA</div>
+    <span style="font-family:'Inter', sans-serif; font-size:1.4rem; background:linear-gradient(to right, #fe4f04, #ff7a2d); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">NUVA</span>
+  </div>
+  
+  <ul class="menu-list">
+    <li><a href="./index.html" class="menu-link"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg> Dashboard</a></li>
+    <li><a href="course-input.html" class="menu-link"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg> Find Courses</a></li>
+    <li><a href="about.html" class="menu-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> About</a></li>
+    <li>
+      <a href="privacy.html" class="menu-link active">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+          <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+        </svg>
+        Privacy Policy
+      </a>
+    </li>
+    <li>
+      <a href="https://nuva-blog-1n.onrender.com" target="_blank" class="menu-link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+          <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM8 12H6V8h2v4zm10 0h-2V8h2v4z"/>
+        </svg>
+        Blog
+      </a>
+    </li>
+  </ul>
+</aside>
+
   <div class="header-left">
     <div class="nuva-logo">
       NUVA
