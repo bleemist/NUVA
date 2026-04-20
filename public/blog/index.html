@@ -445,14 +445,26 @@
 
     <script>
         // Firebase Configuration - SAME as admin panel
+        // Firebase Configuration (Replace with your own Firebase project config)
+        // To use this, create a free Firebase project at https://console.firebase.google.com
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "firebase/app";
+        import { getAnalytics } from "firebase/analytics";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
+        apiKey: "AIzaSyBTF6CR_KPF2Sh8hmp8Xkn6SGFBV3_InyI",
+        authDomain: "nuva-blog.firebaseapp.com",
+        projectId: "nuva-blog",
+        storageBucket: "nuva-blog.firebasestorage.app",
+        messagingSenderId: "1097706865856",
+        appId: "1:1097706865856:web:70b95936db33aa7dc99925",
+        measurementId: "G-HKC8D5XTBJ"
         };
+
         
         let db = null;
         let useCloud = false;
@@ -462,7 +474,7 @@
         
         // Initialize Firebase
         function initFirebase() {
-            if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
+            if (firebaseConfig.apiKey !== "AIzaSyBTF6CR_KPF2Sh8hmp8Xkn6SGFBV3_InyI") {
                 try {
                     firebase.initializeApp(firebaseConfig);
                     db = firebase.firestore();
