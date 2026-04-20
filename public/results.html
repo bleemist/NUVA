@@ -1009,6 +1009,88 @@
     padding: 1.5rem;
   }
 }
+
+@media (max-width: 768px) {
+  .deck-container {
+    height: auto !important;
+    perspective: none !important;
+    overflow-x: hidden !important;
+    margin: 1.5rem 0 2rem 0;
+  }
+
+  .deck-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.8rem !important;
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow-x: hidden !important;
+    transform: none !important;
+  }
+
+  .deck-card {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: all !important;
+    z-index: 1 !important;
+    margin-bottom: 1rem !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 128, 0.15) !important;
+  }
+
+  /* Remove all deck animation states on mobile */
+  .deck-card.active,
+  .deck-card.prev,
+  .deck-card.next {
+    transform: none !important;
+    opacity: 1 !important;
+    z-index: 1 !important;
+  }
+
+  /* Completely hide deck navigation on mobile */
+  .deck-controls {
+    display: none !important;
+  }
+
+  /* Make sure no horizontal scrolling leaks */
+  .container, 
+  .recommendations,
+  .deck-container,
+  .deck-wrapper {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+  }
+
+  /* Better mobile card spacing and readability */
+  .deck-card {
+    padding: 1.75rem 1.4rem !important;
+    border-radius: 16px !important;
+  }
+
+  .course-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1rem !important;
+  }
+
+  .match-score-badge {
+    position: relative !important;
+    top: 0 !important;
+    right: 0 !important;
+    margin-bottom: 1rem !important;
+    align-self: flex-start !important;
+  }
+
+  .comparison-box {
+    flex-direction: column !important;
+    gap: 1.2rem !important;
+    text-align: center !important;
+  }
+}
   </style>
 </head>
 <body>
