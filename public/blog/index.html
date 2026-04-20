@@ -1,890 +1,298 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta name="google-adsense-account" content="ca-pub-3620070651069378">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-            <!-- Meta Tags for Search Engines -->
-        <meta name="description" content="NUVA Journal - A minimalist black & white publication dedicated to timeless ideas about education, career guidance, university life, and student success in Uganda.">
-        <meta name="keywords" content="NUVA blog, education journal, career guidance blog, university life Uganda, student success, academic advice, study tips Uganda">
-        <meta name="author" content="MUYANJA ANDREW">
-        <meta name="robots" content="index, follow">
-
-        <!-- Open Graph Tags (for social sharing) -->
-        <meta property="og:title" content="NUVA Journal | Thoughts on Education & Career Guidance">
-        <meta property="og:description" content="A minimalist journal of ideas about education, university life, and career guidance for Ugandan students.">
-        <meta property="og:image" content="https://nuva.me/nuva-og-image.png">
-        <meta property="og:url" content="https://nuva.me/blog.html">
-        <meta property="og:type" content="website">
-
-        <!-- Canonical URL -->
-        <link rel="canonical" href="https://nuva.me/blog.html">
-
-        <!-- Geo Tags (for Uganda targeting) -->
-        <meta name="geo.region" content="UG">
-        <meta name="geo.placename" content="Kampala, Uganda">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="description" content="NUVA Journal - A minimalist publication for timeless ideas">
+    <meta name="author" content="MUYANJA ANDREW">
+    <meta property="og:title" content="NUVA Journal | Thoughts on Education">
+    <meta property="og:type" content="website">
     <title>NUVA • Journal — Cloud Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        :root {
-            --nuva-orange: #fe4f04;
-            --nuva-orange-light: #ff7a2d;
-            --nuva-purple: #9b6aff;
-        }
-        
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background: #f8fafc;
-            color: #000080;
-            overflow-x: hidden;
-            width: 100%;
-            position: relative;
-            -webkit-overflow-scrolling: touch;
-        }
-        
-        html, body {
-            overflow-x: hidden;
-            width: 100%;
-            height: auto;
-            min-height: 100vh;
-        }
-        
-        .tail-container {
-            width: 100%;
-            overflow-x: hidden;
-            position: relative;
-        }
-        
-        .heading-font {
-            font-family: 'Playfair Display', serif;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #000080; overflow-x: hidden; }
+        .heading-font { font-family: 'Playfair Display', serif; }
         .nuva-logo {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
+            width: 48px; height: 48px; border-radius: 50%;
             background: conic-gradient(from 200deg, #fe4f04, #ff7a2d 90deg, #9b6aff);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: white;
-            box-shadow: 0 4px 15px rgba(254, 79, 4, 0.2);
-            flex-shrink: 0;
-            transition: transform 0.2s ease;
-            position: relative;
-            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; color: white;
         }
-        
-        .nuva-logo::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            background: linear-gradient(45deg, transparent 60%, rgba(255,255,255,0.2) 70%, transparent 80%);
-            animation: shine 8s infinite;
-            pointer-events: none;
-        }
-        
-        @keyframes shine { 
-            0% { transform: translateX(-100%) rotate(15deg); } 
-            100% { transform: translateX(200%) rotate(15deg); } 
-        }
-        
         .post-card {
-            transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s ease;
-            will-change: transform;
+            transition: transform 0.25s, box-shadow 0.3s;
+            cursor: pointer;
         }
-        
-        .post-card:active {
-            transform: scale(0.98);
-        }
-        
-        @media (hover: hover) {
-            .post-card:hover {
-                transform: translateY(-6px);
-                box-shadow: 0 20px 35px -12px rgba(0,0,0,0.6);
-            }
-        }
-        
-        .modal {
-            animation: modalPop 0.25s ease-out;
-        }
-        
-        @keyframes modalPop {
-            0% { opacity: 0; transform: scale(0.96); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        
-        .nav-link:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background: #fe4f04;
-            transition: width 0.2s ease;
-        }
-        
-        .nav-link:hover:after {
-            width: 100%;
-        }
-        
-        .rich-text {
-            line-height: 1.75;
-            font-size: 1rem;
-        }
-        
-        .rich-text p {
-            margin-bottom: 1.5rem;
-        }
-        
-        .rich-text img, 
-        .rich-text video,
-        .rich-text iframe {
-            max-width: 100%;
-            height: auto;
-            border-radius: 1.25rem;
-            margin: 1.8rem 0;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            display: block;
-        }
-        
-        @media (max-width: 640px) {
-            .nuva-logo {
-                width: 38px;
-                height: 38px;
-                font-size: 0.9rem;
-            }
-            .rich-text {
-                font-size: 0.95rem;
-                line-height: 1.65;
-            }
-            .rich-text blockquote {
-                font-size: 1.1rem;
-                padding-left: 1rem;
-                margin: 1.5rem 0;
-            }
-        }
-        
-        ::-webkit-scrollbar {
-            width: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #fe4f04;
-            border-radius: 8px;
-        }
-        
-        .line-clamp-3 {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .content-badge {
-            position: absolute;
-            top: 0.85rem;
-            left: 0.85rem;
-            background: rgba(0,0,0,0.65);
-            backdrop-filter: blur(8px);
-            padding: 0.35rem 0.85rem;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            gap: 0.45rem;
-        }
-        
-        .posts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.75rem;
-        }
-        
-        @media (max-width: 700px) {
-            .posts-grid {
-                gap: 1.25rem;
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 1.25rem;
-            background: #000;
-        }
-        
-        .video-wrapper iframe,
-        .video-wrapper video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-        
-        .loading-spinner {
-            border: 3px solid rgba(0,0,128,0.1);
-            border-top: 3px solid #fe4f04;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 40px auto;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .sync-status {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(8px);
-            padding: 6px 12px;
-            border-radius: 40px;
-            font-size: 11px;
-            z-index: 1000;
-            border-left: 3px solid #10b981;
-            pointer-events: none;
-        }
-        
-        .comment-avatar {
-            background: linear-gradient(135deg, #fe4f04, #ff7a2d);
-        }
-        
-        .online-dot {
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #10b981;
-            margin-right: 6px;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
+        .post-card:hover { transform: translateY(-6px); box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15); }
+        .modal { animation: modalPop 0.2s ease-out; }
+        @keyframes modalPop { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+        .rich-text { line-height: 1.75; }
+        .rich-text img, .rich-text video, .rich-text iframe { max-width: 100%; border-radius: 1rem; margin: 1.5rem 0; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 1rem; background: #000; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .loading-spinner { border: 3px solid rgba(0,0,128,0.1); border-top: 3px solid #fe4f04; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 40px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .sync-status { position: fixed; bottom: 20px; left: 20px; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); padding: 6px 14px; border-radius: 40px; font-size: 11px; z-index: 1000; border-left: 3px solid #10b981; pointer-events: none; }
+        .content-badge { position: absolute; top: 0.85rem; left: 0.85rem; background: rgba(0,0,0,0.65); backdrop-filter: blur(8px); padding: 0.3rem 0.85rem; border-radius: 40px; font-size: 0.7rem; z-index: 10; }
+        .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.75rem; }
+        @media (max-width: 700px) { .posts-grid { grid-template-columns: 1fr; } }
+        .comment-avatar { background: linear-gradient(135deg, #fe4f04, #ff7a2d); }
+        .online-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #10b981; margin-right: 6px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{ opacity: 1; } 50%{ opacity: 0.5; } }
+        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     </style>
 </head>
-<body class="tail-container">
+<body>
     <!-- NAVBAR -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/85 backdrop-blur-xl border-b border-blue-900/10 shadow-sm">
-        <div class="w-full max-w-7xl mx-auto px-5 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
-            <div class="flex items-center gap-2 sm:gap-3">
-                <div class="nuva-logo relative">
-                    <span class="relative z-10 text-sm tracking-tight">NUVA</span>
-                </div>
-                <div class="flex flex-col">
-                    <span class="heading-font text-2xl sm:text-3xl tracking-tighter font-bold leading-tight">NUVA</span>
-                    <span class="text-[0.55rem] sm:text-[0.65rem] tracking-[2px] text-gray-500 font-medium">JOURNAL</span>
-                </div>
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/85 backdrop-blur-xl border-b shadow-sm">
+        <div class="max-w-7xl mx-auto px-5 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="nuva-logo"><span class="text-sm">NUVA</span></div>
+                <div><span class="heading-font text-2xl font-bold">NUVA</span><span class="text-[0.55rem] tracking-[2px] text-gray-500 block -mt-1">JOURNAL</span></div>
             </div>
-            
-            <div class="flex items-center gap-5 sm:gap-8 text-xs sm:text-sm font-medium">
-                <a href="#" onclick="scrollToPosts(event)" class="nav-link text-[#000066] hover:text-[#000080] transition">JOURNAL</a>
-                <a href="#" onclick="showAboutModal(event)" class="nav-link text-[#000066] hover:text-[#000080] transition">ABOUT</a>
-                <a href="blogadmin.html" target="_blank" class="nav-link text-[#fe4f04] hover:text-[#ff7a2d] transition">
-                    <i class="fa-solid fa-lock"></i> ADMIN
-                </a>
+            <div class="flex items-center gap-5 text-xs font-medium">
+                <a href="#" onclick="scrollToPosts(event)" class="hover:text-[#fe4f04]">JOURNAL</a>
+                <a href="#" onclick="showAboutModal(event)" class="hover:text-[#fe4f04]">ABOUT</a>
+                <a href="blogadmin.html" target="_blank" class="text-[#fe4f04]"><i class="fa-solid fa-lock"></i> ADMIN</a>
             </div>
-            
-            <div class="flex items-center gap-2">
-                <button onclick="refreshPosts()" class="p-2 hover:bg-gray-100 rounded-full transition" title="Refresh">
-                    <i class="fa-solid fa-sync-alt text-sm"></i>
-                </button>
-            </div>
+            <button onclick="refreshPosts()" class="p-2 hover:bg-gray-100 rounded-full"><i class="fa-solid fa-sync-alt"></i></button>
         </div>
     </nav>
 
-    <div class="pt-20 sm:pt-24">
-        <!-- HERO SECTION -->
-        <div class="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-[radial-gradient(rgba(0,0,128,0.08)_1px,transparent_1px)] bg-[length:30px_30px]">
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/80 to-white"></div>
-            <div class="max-w-4xl mx-auto text-center px-5 relative z-10">
-                <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-5 py-2 rounded-full text-[0.65rem] tracking-widest mb-6">
-                    <div class="w-1.5 h-1.5 bg-[#fe4f04] rounded-full animate-pulse"></div>
-                    <span id="live-badge">CLOUD SYNCED</span>
-                </div>
-                <h1 class="heading-font text-5xl sm:text-7xl md:text-8xl font-bold tracking-tighter leading-[1.1] mb-5">
-                    THOUGHTS.<br>UNFILTERED.
-                </h1>
-                <p class="text-base sm:text-xl text-[#000066] max-w-md mx-auto mb-9 px-2">
-                    A minimalist journal of ideas, crafted in pure black & white.
-                </p>
-                <button onclick="scrollToPosts(event)" class="px-8 sm:px-10 py-4 bg-[#000080] text-white font-semibold rounded-2xl hover:bg-gray-200 transition flex items-center gap-2 mx-auto group text-sm shadow-lg">
-                    BEGIN READING
-                    <i class="fa-solid fa-arrow-down group-hover:translate-y-1 transition-transform"></i>
-                </button>
-            </div>
-            <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1 text-[0.6rem] tracking-widest opacity-70">
-                <span class="text-gray-500">SCROLL</span>
-                <i class="fa-solid fa-chevron-down animate-bounce text-[#fe4f04]"></i>
+    <div class="pt-20">
+        <!-- HERO -->
+        <div class="relative min-h-[70vh] flex items-center justify-center text-center px-5 bg-[radial-gradient(rgba(0,0,128,0.05)_1px,transparent_1px)]">
+            <div>
+                <div class="inline-flex items-center gap-2 bg-white/30 backdrop-blur-md px-5 py-2 rounded-full text-[0.65rem] mb-6"><div class="w-1.5 h-1.5 bg-[#fe4f04] rounded-full animate-pulse"></div><span>CLOUD SYNCED</span></div>
+                <h1 class="heading-font text-5xl sm:text-7xl md:text-8xl font-bold tracking-tighter">THOUGHTS.<br>UNFILTERED.</h1>
+                <p class="text-base sm:text-xl text-[#000066] max-w-md mx-auto mt-5 mb-8">A minimalist journal of ideas.</p>
+                <button onclick="scrollToPosts(event)" class="px-8 py-4 bg-[#000080] text-white rounded-2xl hover:bg-[#fe4f04] transition">BEGIN READING <i class="fa-solid fa-arrow-down"></i></button>
             </div>
         </div>
 
         <!-- POSTS SECTION -->
-        <div id="posts-section" class="w-full max-w-7xl mx-auto px-5 sm:px-6 py-16 sm:py-24">
-            <div class="flex flex-col sm:flex-row justify-between items-end mb-10 gap-3">
-                <div>
-                    <span class="text-[0.65rem] uppercase tracking-[2px] text-gray-500">Latest Entries</span>
-                    <h2 class="heading-font text-4xl sm:text-5xl tracking-tighter">The Journal</h2>
-                </div>
-                <div class="text-xs text-gray-500" id="post-count-display">
-                    <span class="online-dot"></span> Live from cloud
-                </div>
+        <div id="posts-section" class="max-w-7xl mx-auto px-5 py-16 sm:py-24">
+            <div class="flex justify-between items-end mb-10">
+                <div><span class="text-[0.65rem] uppercase tracking-[2px] text-gray-500">Latest Entries</span><h2 class="heading-font text-4xl sm:text-5xl">The Journal</h2></div>
+                <div class="text-xs text-gray-500" id="post-count-display"><span class="online-dot"></span> Loading...</div>
             </div>
-            
-            <!-- Loading Spinner -->
-            <div id="loading-spinner" class="flex justify-center py-20">
-                <div class="loading-spinner"></div>
-            </div>
-            
-            <!-- Posts Grid -->
+            <div id="loading-spinner" class="flex justify-center py-20"><div class="loading-spinner"></div></div>
             <div id="posts-grid" class="posts-grid hidden"></div>
-            
-            <!-- Empty State -->
-            <div id="empty-state" class="hidden text-center py-20">
-                <i class="fa-regular fa-newspaper text-6xl text-gray-700 mb-4"></i>
-                <p class="text-gray-500">No entries yet. Check back soon.</p>
-            </div>
+            <div id="empty-state" class="hidden text-center py-20"><i class="fa-regular fa-newspaper text-6xl text-gray-400 mb-4"></i><p>No entries yet.</p></div>
         </div>
 
-        <!-- FOOTER -->
-        <footer class="bg-white text-[#000080] border-t border-[#e2e8f0] py-12 sm:py-14">
-            <div class="max-w-7xl mx-auto px-5 text-center">
-                <div class="flex justify-center gap-7 text-xl sm:text-2xl mb-6">
-                    <a href="https://x.com/nuva_ug_" target="_blank" class="hover:text-[#fe4f04] transition"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#" target="_blank" class="hover:text-[#fe4f04] transition"><i class="fa-brands fa-linkedin"></i></a>
-                    <a href="#" target="_blank" class="hover:text-[#fe4f04] transition"><i class="fa-brands fa-instagram"></i></a>
-                </div>
-                <p class="text-[0.6rem] text-gray-500 tracking-widest">© 2026 NUVA JOURNAL • CLOUD SYNCED EDITION</p>
-            </div>
-        </footer>
+        <footer class="bg-white border-t py-12 text-center text-[0.6rem] text-gray-500">© 2026 NUVA JOURNAL</footer>
     </div>
 
     <!-- POST MODAL -->
-    <div id="post-modal" onclick="if(event.target===this) closeModal()" class="hidden fixed inset-0 bg-white/95 backdrop-blur-xl items-center justify-center z-[9999] p-3 sm:p-5 overflow-auto">
-        <div onclick="event.stopPropagation()" class="modal bg-white shadow-2xl border border-gray-100 w-full max-w-4xl max-h-[95vh] overflow-y-auto rounded-2xl sm:rounded-3xl shadow-2xl relative">
-            <div id="modal-media" class="relative w-full bg-cover bg-center" style="min-height: 200px;">
-                <button onclick="closeModal()" class="absolute top-4 right-4 bg-white/90 border border-gray-200 text-[#000080] shadow-sm hover:bg-white text-[#000080] text-[#000080] w-9 h-9 flex items-center justify-center rounded-xl transition z-30 backdrop-blur-xl">
-                    <i class="fa-solid fa-times"></i>
-                </button>
-            </div>
-            <div class="px-5 sm:px-10 pb-8 sm:pb-12">
-                <div id="modal-date" class="text-[0.7rem] text-gray-500 mt-5 sm:mt-7 mb-2"></div>
-                <h1 id="modal-title" class="heading-font text-3xl sm:text-5xl leading-tight tracking-tighter"></h1>
-                <div id="modal-content" class="rich-text prose prose-headings:text-[#000080] prose-p:text-gray-600 prose-a:text-[#fe4f04] max-w-none mt-8 text-gray-700"></div>
-                
-                <!-- COMMENTS -->
-                <div class="mt-12 border-t border-[#e2e8f0] pt-8">
-                    <h3 class="text-lg font-semibold mb-6 flex items-center gap-2">
-                        <i class="fa-solid fa-message text-[#fe4f04]"></i> 
-                        CONVERSATIONS
-                        <span id="comment-count" class="text-xs text-gray-500 ml-2"></span>
-                    </h3>
-                    <div id="comments-list" class="space-y-6 mb-8 max-h-80 overflow-y-auto pr-1"></div>
-                    
-                    <div class="bg-white shadow-[0_4px_15px_rgba(0,0,128,0.06)] border border-gray-100/70 rounded-2xl p-5 sm:p-7">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <input id="comment-name" type="text" placeholder="Your name *" 
-                                   class="bg-transparent border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-[#fe4f04] text-sm">
-                            <input id="comment-email" type="email" placeholder="Email (optional)" 
-                                   class="bg-transparent border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-[#fe4f04] text-sm">
-                        </div>
-                        <textarea id="comment-text" rows="3" placeholder="Share your thoughts..." 
-                                  class="mt-4 w-full bg-transparent border border-gray-300 rounded-xl px-5 py-3 outline-none focus:border-[#fe4f04] text-sm"></textarea>
-                        <button onclick="submitComment()" 
-                                class="mt-5 px-8 py-3 bg-[#000080] text-white border-none shadow-[0_4px_15px_rgba(0,0,128,0.2)] hover:bg-[#000066] rounded-xl hover:bg-[#ff7a2d] transition font-medium">
-                            POST COMMENT
-                        </button>
+    <div id="post-modal" onclick="if(event.target===this) closeModal()" class="hidden fixed inset-0 bg-white/95 backdrop-blur-xl items-center justify-center z-[9999] p-3 overflow-auto">
+        <div onclick="event.stopPropagation()" class="modal bg-white shadow-2xl w-full max-w-4xl max-h-[95vh] overflow-y-auto rounded-2xl relative">
+            <div id="modal-media" class="relative w-full bg-cover bg-center" style="min-height: 200px;"><button onclick="closeModal()" class="absolute top-4 right-4 bg-white/90 border w-9 h-9 rounded-xl z-30"><i class="fa-solid fa-times"></i></button></div>
+            <div class="px-5 sm:px-10 pb-8">
+                <div id="modal-date" class="text-[0.7rem] text-gray-500 mt-5 mb-2"></div>
+                <h1 id="modal-title" class="heading-font text-3xl sm:text-5xl"></h1>
+                <div id="modal-content" class="rich-text mt-8"></div>
+                <div class="mt-12 border-t pt-8">
+                    <h3 class="text-lg font-semibold mb-4"><i class="fa-solid fa-message text-[#fe4f04]"></i> CONVERSATIONS <span id="comment-count"></span></h3>
+                    <div id="comments-list" class="space-y-6 mb-8 max-h-80 overflow-y-auto"></div>
+                    <div class="bg-gray-50 rounded-2xl p-5">
+                        <div class="grid sm:grid-cols-2 gap-4"><input id="comment-name" placeholder="Your name *" class="border rounded-xl px-4 py-2"><input id="comment-email" placeholder="Email" class="border rounded-xl px-4 py-2"></div>
+                        <textarea id="comment-text" rows="2" placeholder="Share your thoughts..." class="mt-3 w-full border rounded-xl px-4 py-2"></textarea>
+                        <button onclick="submitComment()" class="mt-4 px-6 py-2 bg-[#000080] text-white rounded-xl hover:bg-[#fe4f04] transition">POST COMMENT</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Sync Status -->
-    <div id="sync-status" class="sync-status">
-        <i class="fa-solid fa-cloud-check mr-1"></i>
-        <span>Connected</span>
-    </div>
+    <div id="sync-status" class="sync-status"><i class="fa-solid fa-cloud-check mr-1"></i><span>Connecting...</span></div>
 
     <script>
-        // Firebase Configuration - SAME as admin panel
-        // Firebase Configuration (Replace with your own Firebase project config)
-        // To use this, create a free Firebase project at https://console.firebase.google.com
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "firebase/app";
-        import { getAnalytics } from "firebase/analytics";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
-        apiKey: "AIzaSyBTF6CR_KPF2Sh8hmp8Xkn6SGFBV3_InyI",
-        authDomain: "nuva-blog.firebaseapp.com",
-        projectId: "nuva-blog",
-        storageBucket: "nuva-blog.firebasestorage.app",
-        messagingSenderId: "1097706865856",
-        appId: "1:1097706865856:web:70b95936db33aa7dc99925",
-        measurementId: "G-HKC8D5XTBJ"
+            apiKey: "AIzaSyBTF6CR_KPF2Sh8hmp8Xkn6SGFBV3_InyI",
+            authDomain: "nuva-blog.firebaseapp.com",
+            projectId: "nuva-blog",
+            storageBucket: "nuva-blog.firebasestorage.app",
+            messagingSenderId: "1097706865856",
+            appId: "1:1097706865856:web:70b95936db33aa7dc99925"
         };
 
-        
         let db = null;
         let useCloud = false;
         let posts = [];
         let currentPostId = null;
         let unsubscribeRealtime = null;
-        
-        // Initialize Firebase
+
         function initFirebase() {
-            if (firebaseConfig.apiKey !== "AIzaSyBTF6CR_KPF2Sh8hmp8Xkn6SGFBV3_InyI") {
-                try {
-                    firebase.initializeApp(firebaseConfig);
-                    db = firebase.firestore();
-                    useCloud = true;
-                    updateSyncStatus("Cloud connected", "success");
-                    return true;
-                } catch(e) {
-                    console.warn("Firebase init failed:", e);
-                    useCloud = false;
-                    updateSyncStatus("Offline mode", "error");
-                    return false;
-                }
-            }
-            updateSyncStatus("Local only", "warning");
-            return false;
-        }
-        
-        // Load posts with real-time listener
-        function setupRealtimeListener() {
-            if (!useCloud || !db) {
-                loadFromLocalStorage();
-                return;
-            }
-            
-            updateSyncStatus("Listening for updates...", "syncing");
-            
-            // Real-time listener for posts
-            unsubscribeRealtime = db.collection('posts')
-                .orderBy('createdAt', 'desc')
-                .onSnapshot((snapshot) => {
-                    posts = [];
-                    snapshot.forEach(doc => {
-                        const postData = doc.data();
-                        posts.push({
-                            id: parseInt(doc.id),
-                            ...postData,
-                            // Ensure comments array exists
-                            comments: postData.comments || []
-                        });
-                    });
-                    
-                    // Save to localStorage as cache
-                    localStorage.setItem('nuvaPosts', JSON.stringify(posts));
-                    
-                    // Update UI
-                    renderPostsGrid();
-                    updateSyncStatus("Live", "success");
-                    
-                    // If modal is open with current post, refresh it
-                    if (currentPostId) {
-                        const updatedPost = posts.find(p => p.id === currentPostId);
-                        if (updatedPost) {
-                            refreshOpenModal(updatedPost);
-                        }
-                    }
-                }, (error) => {
-                    console.error("Firestore error:", error);
-                    updateSyncStatus("Sync error - using cache", "error");
-                    loadFromLocalStorage();
-                });
-        }
-        
-        // Load from localStorage as fallback
-        function loadFromLocalStorage() {
-            const saved = localStorage.getItem('nuvaPosts');
-            if (saved) {
-                posts = JSON.parse(saved);
-            } else {
-                posts = [];
-            }
-            renderPostsGrid();
-        }
-        
-        // Save comment to cloud
-        async function saveCommentToCloud(postId, comment) {
-            if (!useCloud || !db) {
-                // Local only mode
-                const post = posts.find(p => p.id === postId);
-                if (post) {
-                    if (!post.comments) post.comments = [];
-                    post.comments.unshift(comment);
-                    localStorage.setItem('nuvaPosts', JSON.stringify(posts));
-                }
-                return;
-            }
-            
             try {
-                const postRef = db.collection('posts').doc(postId.toString());
-                const postDoc = await postRef.get();
-                const existingComments = postDoc.exists ? (postDoc.data().comments || []) : [];
-                existingComments.unshift(comment);
-                await postRef.update({ comments: existingComments });
-                updateSyncStatus("Comment saved", "success");
-                setTimeout(() => updateSyncStatus("Live", "success"), 2000);
-            } catch(e) {
-                console.error("Error saving comment:", e);
-                // Fallback to local
-                const post = posts.find(p => p.id === postId);
-                if (post) {
-                    if (!post.comments) post.comments = [];
-                    post.comments.unshift(comment);
-                    localStorage.setItem('nuvaPosts', JSON.stringify(posts));
-                }
-                updateSyncStatus("Comment saved locally", "warning");
-            }
+                if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+                db = firebase.firestore();
+                useCloud = true;
+                updateSyncStatus("Connected", "success");
+                return true;
+            } catch(e) { useCloud = false; updateSyncStatus("Offline", "error"); return false; }
         }
-        
-        // Render posts grid
+
+        function setupRealtimeListener() {
+            if (!useCloud || !db) { loadFromLocalStorage(); return; }
+            updateSyncStatus("Syncing...", "syncing");
+            unsubscribeRealtime = db.collection('posts').orderBy('createdAt', 'desc').onSnapshot((snapshot) => {
+                posts = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    posts.push({ id: parseInt(doc.id) || doc.id, ...data, comments: data.comments || [], mediaBlocks: data.mediaBlocks || [] });
+                });
+                localStorage.setItem('nuvaPosts', JSON.stringify(posts));
+                renderPostsGrid();
+                updateSyncStatus(`Live (${posts.length} posts)`, "success");
+                if (currentPostId) { const updated = posts.find(p => p.id == currentPostId); if (updated) refreshOpenModal(updated); }
+            }, (error) => { console.error(error); loadFromLocalStorage(); });
+        }
+
+        function loadFromLocalStorage() { const saved = localStorage.getItem('nuvaPosts'); posts = saved ? JSON.parse(saved) : []; renderPostsGrid(); }
+
         function renderPostsGrid() {
             const container = document.getElementById('posts-grid');
             const loading = document.getElementById('loading-spinner');
             const emptyState = document.getElementById('empty-state');
-            
             if (!container) return;
-            
             loading.classList.add('hidden');
-            
-            if (posts.length === 0) {
-                container.classList.add('hidden');
-                emptyState.classList.remove('hidden');
-                return;
-            }
-            
-            container.classList.remove('hidden');
-            emptyState.classList.add('hidden');
-            container.innerHTML = '';
-            
-            // Update post count display
-            const countDisplay = document.getElementById('post-count-display');
-            if (countDisplay) {
-                countDisplay.innerHTML = `<span class="online-dot"></span> ${posts.length} entry${posts.length !== 1 ? 's' : ''}`;
-            }
+            if (!posts || posts.length === 0) { container.classList.add('hidden'); emptyState.classList.remove('hidden'); document.getElementById('post-count-display').innerHTML = `<span class="online-dot"></span> 0 entries`; return; }
+            container.classList.remove('hidden'); emptyState.classList.add('hidden'); container.innerHTML = '';
+            document.getElementById('post-count-display').innerHTML = `<span class="online-dot"></span> ${posts.length} entry${posts.length !== 1 ? 's' : ''}`;
             
             posts.forEach(post => {
+                let mediaPreview = ''; let contentType = 'text'; let badgeIcon = 'fa-quote-right';
+                let firstMedia = (post.mediaBlocks && post.mediaBlocks.length) ? post.mediaBlocks[0] : null;
+                if (firstMedia) {
+                    if (firstMedia.type === 'image') { contentType = 'image'; badgeIcon = 'fa-image'; mediaPreview = `<div class="h-52 sm:h-64 bg-cover bg-center" style="background-image: url('${escapeHtml(firstMedia.url)}'); background-size: cover;"></div>`; }
+                    else if (firstMedia.type === 'video') { contentType = 'video'; badgeIcon = 'fa-video'; mediaPreview = `<div class="h-52 sm:h-64 bg-black flex items-center justify-center"><i class="fa-solid fa-play-circle text-5xl text-white/80"></i></div>`; }
+                    else if (firstMedia.type === 'embed') { contentType = 'embed'; badgeIcon = 'fa-code'; mediaPreview = `<div class="h-52 sm:h-64 bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-link text-3xl text-gray-500"></i></div>`; }
+                } else { mediaPreview = `<div class="h-52 sm:h-64 bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center"><i class="fa-regular fa-file-lines text-5xl text-gray-400"></i></div>`; }
+                
                 const card = document.createElement('div');
-                card.className = 'post-card bg-white shadow-[0_4px_15px_rgba(0,0,128,0.06)] border border-gray-100 rounded-2xl overflow-hidden cursor-pointer group relative flex flex-col';
-                
-                // Determine content type for badge
-                let contentType = 'text';
-                let mediaPreview = '';
-                
-                if (post.mediaBlocks && post.mediaBlocks.length > 0) {
-                    const firstMedia = post.mediaBlocks[0];
-                    if (firstMedia.type === 'image') {
-                        contentType = 'image';
-                        mediaPreview = `<div class="h-52 sm:h-64 bg-cover bg-center transition-transform group-hover:scale-105 duration-700" style="background-image: url('${firstMedia.url}'); background-size: cover;"></div>`;
-                    } else if (firstMedia.type === 'video') {
-                        contentType = 'video';
-                        mediaPreview = `<div class="h-52 sm:h-64 bg-gray-100 flex items-center justify-center"><i class="fa-solid fa-play-circle text-5xl text-[#000080] opacity-90"></i><span class="ml-2 text-xs uppercase tracking-wide">video</span></div>`;
-                    } else if (firstMedia.type === 'gallery') {
-                        contentType = 'gallery';
-                        mediaPreview = `<div class="h-52 sm:h-64 bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center"><i class="fa-regular fa-images text-5xl text-gray-500"></i></div>`;
-                    }
-                } else {
-                    mediaPreview = `<div class="h-52 sm:h-64 bg-gradient-to-br from-gray-50 to-gray-200 flex items-center justify-center"><i class="fa-regular fa-file-lines text-5xl text-gray-500"></i></div>`;
-                }
-                
-                const badgeIcon = contentType === 'video' ? 'fa-video' : (contentType === 'image' ? 'fa-image' : (contentType === 'gallery' ? 'fa-images' : 'fa-quote-right'));
-                const badgeHtml = `<div class="content-badge"><i class="fa-solid ${badgeIcon} text-[#fe4f04] text-xs"></i><span class="text-[#000080]/90">${contentType.toUpperCase()}</span></div>`;
-                
-                card.innerHTML = `
-                    <div class="relative overflow-hidden">${mediaPreview}${badgeHtml}</div>
-                    <div class="p-5 sm:p-7 flex-1">
-                        <div class="text-[0.6rem] text-gray-500 mb-2">${post.date || 'Recent'}</div>
-                        <h3 class="heading-font text-2xl sm:text-3xl tracking-tighter leading-tight mb-2 group-hover:text-[#fe4f04] transition">${escapeHtml(post.title)}</h3>
-                        <p class="text-sm text-gray-500 line-clamp-3">${escapeHtml(post.excerpt)}</p>
-                        <div class="mt-4 flex items-center gap-3 text-xs text-gray-500">
-                            <span><i class="fa-regular fa-comment"></i> ${post.comments?.length || 0}</span>
-                        </div>
-                    </div>
-                `;
+                card.className = 'post-card bg-white shadow-md border rounded-2xl overflow-hidden group';
+                card.innerHTML = `<div class="relative overflow-hidden">${mediaPreview}<div class="content-badge"><i class="fa-solid ${badgeIcon} text-[#fe4f04] text-xs mr-1"></i><span class="text-white text-xs">${contentType.toUpperCase()}</span></div></div>
+                <div class="p-5"><div class="text-[0.6rem] text-gray-500 mb-1">${post.date || 'Recent'}</div><h3 class="heading-font text-2xl tracking-tighter mb-2 group-hover:text-[#fe4f04] transition">${escapeHtml(post.title)}</h3><p class="text-sm text-gray-500 line-clamp-3">${escapeHtml(post.excerpt)}</p><div class="mt-4 text-xs text-gray-500"><i class="fa-regular fa-comment"></i> ${post.comments?.length || 0}</div></div>`;
                 card.onclick = () => openPostModal(post.id);
                 container.appendChild(card);
             });
         }
-        
-        function refreshOpenModal(post) {
-            if (!post) return;
-            
-            // Update media if exists
-            const modalMedia = document.getElementById('modal-media');
-            if (post.mediaBlocks && post.mediaBlocks.length > 0) {
-                const firstMedia = post.mediaBlocks[0];
-                if (firstMedia.type === 'image') {
-                    modalMedia.style.backgroundImage = `url('${firstMedia.url}')`;
-                    modalMedia.style.backgroundSize = 'cover';
-                    modalMedia.style.backgroundPosition = 'center 30%';
-                    modalMedia.style.minHeight = '280px';
-                    modalMedia.innerHTML = `<button onclick="closeModal()" class="absolute top-4 right-4 bg-white/90 border border-gray-200 text-[#000080] shadow-sm hover:bg-white text-[#000080] text-[#000080] w-9 h-9 flex items-center justify-center rounded-xl z-30"><i class="fa-solid fa-times"></i></button>`;
-                }
-            }
-            
-            document.getElementById('modal-date').innerText = post.date || 'Recent';
-            document.getElementById('modal-title').innerText = post.title;
-            
-            // Build content with media blocks
-            let fullContent = '';
-            if (post.mediaBlocks) {
-                post.mediaBlocks.forEach(block => {
-                    if (block.type === 'image') {
-                        fullContent += `<img src="${block.url}" class="rounded-2xl my-4 max-w-full" />`;
-                    } else if (block.type === 'video') {
-                        if (block.url.includes('youtube') || block.url.includes('vimeo')) {
-                            let embedUrl = block.url;
-                            if (block.url.includes('watch?v=')) embedUrl = block.url.replace('watch?v=', 'embed/');
-                            fullContent += `<div class="video-wrapper my-4"><iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe></div>`;
-                        } else {
-                            fullContent += `<video controls class="rounded-2xl my-4 w-full"><source src="${block.url}" type="video/mp4"></video>`;
-                        }
-                    } else if (block.type === 'gallery' && block.images) {
-                        fullContent += `<div class="grid grid-cols-2 gap-3 my-4">`;
-                        block.images.forEach(img => {
-                            fullContent += `<img src="${img}" class="rounded-xl w-full object-cover aspect-square" />`;
-                        });
-                        fullContent += `</div>`;
-                    }
-                });
-            }
-            fullContent += post.content || '';
-            document.getElementById('modal-content').innerHTML = fullContent;
-            
-            // Update comments
-            renderCommentsForModal(post);
-        }
-        
+
         function openPostModal(id) {
-            const post = posts.find(p => p.id === id);
+            const post = posts.find(p => p.id == id);
             if (!post) return;
             currentPostId = id;
+            renderModalContent(post);
+            document.getElementById('post-modal').classList.remove('hidden');
+            document.getElementById('post-modal').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function renderModalContent(post) {
+            const modalMediaDiv = document.getElementById('modal-media');
+            let mediaHtml = `<button onclick="closeModal()" class="absolute top-4 right-4 bg-white/90 border w-9 h-9 rounded-xl z-30"><i class="fa-solid fa-times"></i></button>`;
             
-            const modalMedia = document.getElementById('modal-media');
             if (post.mediaBlocks && post.mediaBlocks.length > 0) {
-                const firstMedia = post.mediaBlocks[0];
-                if (firstMedia.type === 'image') {
-                    modalMedia.style.backgroundImage = `url('${firstMedia.url}')`;
-                    modalMedia.style.backgroundSize = 'cover';
-                    modalMedia.style.backgroundPosition = 'center 30%';
-                    modalMedia.style.minHeight = '280px';
-                    modalMedia.innerHTML = `<button onclick="closeModal()" class="absolute top-4 right-4 bg-white/90 border border-gray-200 text-[#000080] shadow-sm hover:bg-white text-[#000080] text-[#000080] w-9 h-9 flex items-center justify-center rounded-xl z-30"><i class="fa-solid fa-times"></i></button>`;
-                } else {
-                    modalMedia.style.backgroundImage = 'none';
-                    modalMedia.style.backgroundColor = '#000';
-                    modalMedia.style.minHeight = 'auto';
-                    modalMedia.innerHTML = `<button onclick="closeModal()" class="absolute top-4 right-4 bg-white/90 border border-gray-200 text-[#000080] shadow-sm hover:bg-white text-[#000080] text-[#000080] w-9 h-9 flex items-center justify-center rounded-xl z-30"><i class="fa-solid fa-times"></i></button>`;
+                const first = post.mediaBlocks[0];
+                if (first.type === 'image') {
+                    modalMediaDiv.style.backgroundImage = `url('${first.url}')`;
+                    modalMediaDiv.style.backgroundSize = 'cover';
+                    modalMediaDiv.style.backgroundPosition = 'center';
+                    modalMediaDiv.style.minHeight = '280px';
+                    modalMediaDiv.innerHTML = mediaHtml;
+                } else if (first.type === 'video') {
+                    modalMediaDiv.style.backgroundImage = 'none';
+                    modalMediaDiv.style.backgroundColor = '#000';
+                    modalMediaDiv.style.minHeight = '280px';
+                    modalMediaDiv.innerHTML = `<video controls class="w-full max-h-72" src="${first.url}"></video>` + mediaHtml;
+                } else if (first.type === 'embed') {
+                    modalMediaDiv.style.backgroundImage = 'none';
+                    modalMediaDiv.style.minHeight = '280px';
+                    modalMediaDiv.innerHTML = `<div class="w-full h-full">${first.embedCode || `<iframe src="${first.url}" class="w-full h-64" frameborder="0" allowfullscreen></iframe>`}</div>` + mediaHtml;
                 }
-            } else {
-                modalMedia.style.backgroundImage = 'none';
-                modalMedia.style.backgroundColor = 'transparent';
-                modalMedia.style.minHeight = 'auto';
-                modalMedia.innerHTML = `<button onclick="closeModal()" class="absolute top-4 right-4 bg-white/90 border border-gray-200 text-[#000080] shadow-sm hover:bg-white text-[#000080] text-[#000080] w-9 h-9 flex items-center justify-center rounded-xl z-30"><i class="fa-solid fa-times"></i></button>`;
-            }
+            } else { modalMediaDiv.style.backgroundImage = 'none'; modalMediaDiv.style.minHeight = 'auto'; modalMediaDiv.innerHTML = mediaHtml; }
             
             document.getElementById('modal-date').innerText = post.date || 'Recent';
             document.getElementById('modal-title').innerText = post.title;
-            
             let fullContent = '';
             if (post.mediaBlocks) {
                 post.mediaBlocks.forEach(block => {
-                    if (block.type === 'image') {
-                        fullContent += `<img src="${block.url}" class="rounded-2xl my-4 max-w-full" />`;
-                    } else if (block.type === 'video') {
-                        if (block.url.includes('youtube') || block.url.includes('vimeo')) {
-                            let embedUrl = block.url;
-                            if (block.url.includes('watch?v=')) embedUrl = block.url.replace('watch?v=', 'embed/');
-                            fullContent += `<div class="video-wrapper my-4"><iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe></div>`;
-                        } else {
-                            fullContent += `<video controls class="rounded-2xl my-4 w-full"><source src="${block.url}" type="video/mp4"></video>`;
-                        }
-                    } else if (block.type === 'gallery' && block.images) {
-                        fullContent += `<div class="grid grid-cols-2 gap-3 my-4">`;
-                        block.images.forEach(img => {
-                            fullContent += `<img src="${img}" class="rounded-xl w-full object-cover aspect-square" />`;
-                        });
-                        fullContent += `</div>`;
-                    }
+                    if (block.type === 'image') fullContent += `<img src="${block.url}" class="rounded-xl my-3 max-w-full">`;
+                    else if (block.type === 'video') fullContent += `<video controls class="rounded-xl my-3 w-full" src="${block.url}"></video>`;
+                    else if (block.type === 'embed') fullContent += `<div class="my-3">${block.embedCode || `<iframe src="${block.url}" width="100%" height="400" frameborder="0" allowfullscreen></iframe>`}</div>`;
                 });
             }
             fullContent += post.content || '';
             document.getElementById('modal-content').innerHTML = fullContent;
-            
             renderCommentsForModal(post);
-            
-            const modal = document.getElementById('post-modal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            document.body.style.overflow = 'hidden';
-            document.body.classList.add('modal-open');
         }
-        
+
+        function refreshOpenModal(post) { renderModalContent(post); }
         function renderCommentsForModal(post) {
             const container = document.getElementById('comments-list');
             const countSpan = document.getElementById('comment-count');
-            if (!container) return;
-            
             const comments = post.comments || [];
-            if (countSpan) countSpan.textContent = `(${comments.length})`;
-            
-            if (comments.length === 0) {
-                container.innerHTML = '<div class="text-center py-6 text-gray-500 text-sm">No comments yet. Be the first to share your thoughts.</div>';
-                return;
-            }
-            
+            countSpan.innerText = `(${comments.length})`;
+            if (!comments.length) { container.innerHTML = '<div class="text-center py-6 text-gray-400">No comments yet.</div>'; return; }
             container.innerHTML = '';
-            comments.forEach(comment => {
-                const commentDiv = document.createElement('div');
-                commentDiv.className = 'flex gap-4';
-                commentDiv.innerHTML = `
-                    <div class="comment-avatar w-8 h-8 rounded-xl flex items-center justify-center text-[#000080] text-xs font-bold">${comment.name.charAt(0).toUpperCase()}</div>
-                    <div class="flex-1">
-                        <div class="flex flex-wrap justify-between gap-1">
-                            <span class="font-medium text-sm">${escapeHtml(comment.name)}</span>
-                            <span class="text-[0.6rem] text-gray-500">${comment.date}</span>
-                        </div>
-                        <p class="text-sm text-[#000066] mt-1">${escapeHtml(comment.text)}</p>
-                    </div>
-                `;
-                container.appendChild(commentDiv);
+            comments.forEach(c => {
+                const div = document.createElement('div');
+                div.className = 'flex gap-3';
+                div.innerHTML = `<div class="comment-avatar w-8 h-8 rounded-xl flex items-center justify-center text-white text-xs font-bold">${(c.name?.[0] || '?').toUpperCase()}</div>
+                <div><div class="flex gap-2"><span class="font-medium text-sm">${escapeHtml(c.name)}</span><span class="text-[0.6rem] text-gray-400">${c.date || 'recent'}</span></div><p class="text-sm text-gray-700 mt-1">${escapeHtml(c.text)}</p></div>`;
+                container.appendChild(div);
             });
         }
-        
+
         async function submitComment() {
             const name = document.getElementById('comment-name').value.trim();
             const text = document.getElementById('comment-text').value.trim();
-            
-            if (!name || !text) {
-                alert("Please enter your name and comment.");
-                return;
-            }
-            
-            const comment = {
-                name: name,
-                text: text,
-                date: "just now",
-                timestamp: new Date().toISOString()
-            };
-            
-            await saveCommentToCloud(currentPostId, comment);
-            
-            // Clear form
+            if (!name || !text) { alert("Enter name and comment"); return; }
+            const comment = { name, text, date: new Date().toLocaleString(), timestamp: Date.now() };
+            if (useCloud && db) {
+                try {
+                    const postRef = db.collection('posts').doc(currentPostId.toString());
+                    const docSnap = await postRef.get();
+                    const existing = docSnap.exists ? (docSnap.data().comments || []) : [];
+                    existing.unshift(comment);
+                    await postRef.update({ comments: existing });
+                    updateSyncStatus("Comment added", "success");
+                } catch(e) { console.error(e); fallbackLocalComment(comment); }
+            } else { fallbackLocalComment(comment); }
             document.getElementById('comment-name').value = '';
-            document.getElementById('comment-email').value = '';
             document.getElementById('comment-text').value = '';
         }
-        
-        function closeModal() {
-            const modal = document.getElementById('post-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            document.body.style.overflow = '';
-            document.body.classList.remove('modal-open');
-            currentPostId = null;
+
+        function fallbackLocalComment(comment) {
+            const post = posts.find(p => p.id == currentPostId);
+            if (post) { if (!post.comments) post.comments = []; post.comments.unshift(comment); localStorage.setItem('nuvaPosts', JSON.stringify(posts)); renderCommentsForModal(post); }
         }
-        
-        function refreshPosts() {
-            updateSyncStatus("Refreshing...", "syncing");
-            if (unsubscribeRealtime) {
-                unsubscribeRealtime();
-                setupRealtimeListener();
-            } else {
-                setupRealtimeListener();
-            }
+
+        function closeModal() { document.getElementById('post-modal').classList.add('hidden'); document.body.style.overflow = ''; currentPostId = null; }
+        function refreshPosts() { if (unsubscribeRealtime) unsubscribeRealtime(); setupRealtimeListener(); }
+        function scrollToPosts(e) { if(e) e.preventDefault(); document.getElementById('posts-section').scrollIntoView({ behavior: 'smooth' }); }
+        function showAboutModal(e) { e?.preventDefault(); alert("NUVA Journal — Cloud Edition\n\nUpload images directly, real-time sync, and comments.\n\nCreated by Muyanja Andrew"); }
+        function updateSyncStatus(msg, status) {
+            const el = document.getElementById('sync-status'); if(!el) return;
+            let icon = 'fa-cloud', borderColor = '#f59e0b';
+            if(status === 'success') { icon = 'fa-cloud-check'; borderColor = '#10b981'; }
+            else if(status === 'error') { icon = 'fa-cloud-slash'; borderColor = '#ef4444'; }
+            el.innerHTML = `<i class="fa-solid ${icon} mr-1"></i><span>${msg}</span>`;
+            el.style.borderLeftColor = borderColor;
         }
+        function escapeHtml(str) { if(!str) return ''; return String(str).replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
         
-        function scrollToPosts(e) {
-            if (e) e.preventDefault();
-            const postsSection = document.getElementById('posts-section');
-            if (postsSection) postsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        
-        function showAboutModal(e) {
-            e?.preventDefault();
-            alert("NUVA Journal — Cloud Edition\n\nA minimalist publication dedicated to timeless ideas.\n\n✨ Features:\n• Real-time cloud sync\n• Cross-device access\n• Live comments\n• Always backed up\n\nCreated by Muyanja Andrew");
-        }
-        
-        function updateSyncStatus(message, status) {
-            const statusDiv = document.getElementById('sync-status');
-            if (!statusDiv) return;
-            
-            const icons = {
-                success: 'fa-cloud-check',
-                error: 'fa-cloud-slash',
-                warning: 'fa-cloud',
-                syncing: 'fa-sync-alt fa-spin'
-            };
-            
-            const icon = icons[status] || 'fa-cloud';
-            statusDiv.innerHTML = `<i class="fa-solid ${icon} mr-1"></i><span>${message}</span>`;
-            statusDiv.style.borderLeftColor = status === 'success' ? '#10b981' : (status === 'error' ? '#ef4444' : '#f59e0b');
-        }
-        
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
-        
-        // Handle escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape") closeModal();
-        });
-        
-        // Initialize
-        window.onload = () => {
-            initFirebase();
-            setupRealtimeListener();
-        };
+        document.addEventListener('keydown', (e) => { if(e.key === "Escape") closeModal(); });
+        window.onload = () => { initFirebase(); setupRealtimeListener(); };
     </script>
 </body>
 </html>

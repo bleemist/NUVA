@@ -12,66 +12,48 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
     
     <style>
-        /* ... (keep existing styles) ... */
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap');
         
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background: #f8fafc;
-            color: #000080;
-        }
+        body { font-family: 'Inter', system-ui, sans-serif; background: #f8fafc; color: #000080; }
+        .heading-font { font-family: 'Playfair Display', serif; }
         
-        .heading-font {
-            font-family: 'Playfair Display', serif;
-        }
+        .sync-status { position: fixed; bottom: 20px; right: 20px; background: #1a1a1a; padding: 8px 16px; border-radius: 40px; font-size: 12px; z-index: 1000; border-left: 3px solid #fe4f04; }
+        .sync-status.synced { border-left-color: #10b981; }
+        .sync-status.error { border-left-color: #ef4444; }
         
-        .sync-status {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #1a1a1a;
-            padding: 8px 16px;
-            border-radius: 40px;
-            font-size: 12px;
-            z-index: 1000;
-            border-left: 3px solid #fe4f04;
-        }
+        .media-block { background: #f1f5f9; border-radius: 1rem; padding: 1rem; margin-bottom: 1rem; }
+        .media-preview-img { max-width: 80px; max-height: 60px; object-fit: cover; border-radius: 0.5rem; }
+        .preview-panel { background: #f8fafc; border-radius: 1.5rem; padding: 1.5rem; border: 1px solid #e2e8f0; }
+        .preview-content { background: white; border-radius: 1rem; padding: 1.5rem; min-height: 400px; }
         
-        .sync-status.synced {
-            border-left-color: #10b981;
+        .upload-progress { 
+            position: fixed; 
+            bottom: 80px; 
+            right: 20px; 
+            background: #000080; 
+            color: white; 
+            padding: 12px 20px; 
+            border-radius: 40px; 
+            font-size: 13px; 
+            z-index: 1000; 
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
+        .upload-progress.show { display: block; }
         
-        .sync-status.error {
-            border-left-color: #ef4444;
-        }
-        
-        .sync-status.syncing {
-            border-left-color: #f59e0b;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        .syncing-animation {
-            animation: pulse 1s ease-in-out infinite;
-        }
-        
-        .user-badge {
-            background: linear-gradient(135deg, #fe4f04, #ff7a2d);
-        }
-        
-        .online-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #10b981;
-            display: inline-block;
-            margin-right: 6px;
-            box-shadow: 0 0 4px #10b981;
+        .debug-console {
+            background: #1e1e1e;
+            color: #0f0;
+            font-family: monospace;
+            font-size: 11px;
+            padding: 10px;
+            border-radius: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -79,510 +61,460 @@
 
     <!-- LOGIN SCREEN -->
     <div id="login-screen" class="fixed inset-0 bg-white text-[#000080] flex items-center justify-center z-50">
-        <div class="max-w-md w-full mx-4 bg-white shadow-2xl border border-gray-100 rounded-3xl p-12 border border-[#e2e8f0]">
-            <div class="flex justify-center mb-8">
-                <div class="w-16 h-16 bg-gradient-to-br from-[#fe4f04] to-[#ff7a2d] rounded-3xl flex items-center justify-center text-[#000080] font-bold text-3xl">N</div>
-            </div>
+        <div class="max-w-md w-full mx-4 bg-white shadow-2xl border border-gray-100 rounded-3xl p-12">
+            <div class="flex justify-center mb-8"><div class="w-16 h-16 bg-gradient-to-br from-[#fe4f04] to-[#ff7a2d] rounded-3xl flex items-center justify-center text-[#000080] font-bold text-3xl">N</div></div>
             <h1 class="heading-font text-4xl text-center mb-2">NUVA ADMIN</h1>
             <p class="text-gray-500 text-center mb-8">Cloud-synced dashboard</p>
-            
             <div class="space-y-4">
-                <input id="admin-email" type="email" placeholder="Email" 
-                       class="w-full bg-transparent border border-gray-300 rounded-2xl px-6 py-5 outline-none focus:border-[#fe4f04]">
-                <input id="admin-password" type="password" placeholder="Password" 
-                       class="w-full bg-transparent border border-gray-300 rounded-2xl px-6 py-5 outline-none focus:border-[#fe4f04]">
-                <button onclick="loginWithEmail()" 
-                        class="w-full bg-[#000080] text-white border-none shadow-[0_4px_15px_rgba(0,0,128,0.2)] hover:bg-[#000066] py-5 rounded-2xl font-semibold hover:bg-[#ff7a2d] transition">
-                    <i class="fa-solid fa-cloud-arrow-up mr-2"></i> SIGN IN (Cloud)
-                </button>
+                <input id="admin-email" type="email" placeholder="Email" class="w-full bg-transparent border border-gray-300 rounded-2xl px-6 py-5 outline-none focus:border-[#fe4f04]">
+                <input id="admin-password" type="password" placeholder="Password" class="w-full bg-transparent border border-gray-300 rounded-2xl px-6 py-5 outline-none focus:border-[#fe4f04]">
+                <button onclick="loginWithEmail()" class="w-full bg-[#000080] text-white py-5 rounded-2xl font-semibold hover:bg-[#ff7a2d] transition"><i class="fa-solid fa-cloud-arrow-up mr-2"></i> SIGN IN</button>
             </div>
-            
-            <div class="mt-6 text-center text-sm text-gray-500">
-                <button onclick="showDemoMode()" class="hover:text-[#fe4f04] transition">Continue as Demo (Local)</button>
-                <span class="mx-2">•</span>
-                <a href="index.html" class="hover:text-[#fe4f04] transition">← Return to Journal</a>
-            </div>
-            
-            <div class="mt-6 p-4 bg-gray-100/50 rounded-2xl text-xs text-gray-500">
-                <i class="fa-solid fa-circle-info mr-2"></i>
-                Cloud mode saves posts permanently. Access from any device with same account.
-            </div>
+            <div class="mt-6 text-center text-sm text-gray-500"><a href="index.html" class="hover:text-[#fe4f04]">← Return to Journal</a></div>
         </div>
     </div>
 
     <!-- ADMIN DASHBOARD -->
     <div id="admin-dashboard" class="hidden admin-panel min-h-screen">
         <div class="flex h-screen">
-            <!-- SIDEBAR -->
             <div class="w-72 bg-white text-[#000080] border-r border-[#e2e8f0] p-8 flex flex-col overflow-y-auto">
-                <div class="flex items-center gap-3 mb-8">
-                    <div class="w-10 h-10 bg-gradient-to-br from-[#fe4f04] to-[#ff7a2d] rounded-2xl flex items-center justify-center text-[#000080] font-bold">N</div>
-                    <div class="heading-font text-2xl">NUVA ADMIN</div>
-                </div>
-                
-                <!-- User Info -->
-                <div id="user-info" class="mb-6 p-4 bg-gray-100 rounded-2xl">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 user-badge rounded-xl flex items-center justify-center text-[#000080]">
-                            <i class="fa-solid fa-user"></i>
-                        </div>
-                        <div class="flex-1">
-                            <div id="user-email" class="text-sm font-medium truncate">Loading...</div>
-                            <div class="text-xs text-gray-500 mt-1">
-                                <span class="online-indicator"></span>
-                                Cloud Sync
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
+                <div class="flex items-center gap-3 mb-8"><div class="w-10 h-10 bg-gradient-to-br from-[#fe4f04] to-[#ff7a2d] rounded-2xl flex items-center justify-center font-bold">N</div><div class="heading-font text-2xl">NUVA ADMIN</div></div>
+                <div id="user-info" class="mb-6 p-4 bg-gray-100 rounded-2xl"><div class="flex items-center gap-3"><div class="w-10 h-10 user-badge rounded-xl flex items-center justify-center"><i class="fa-solid fa-user"></i></div><div class="flex-1"><div id="user-email" class="text-sm font-medium truncate">Loading...</div><div class="text-xs text-gray-500 mt-1"><span id="auth-status">Checking...</span></div></div></div></div>
                 <div class="space-y-2 mb-8">
-                    <button onclick="switchAdminTab(0)" id="tab-0"
-                            class="admin-tab w-full text-left px-6 py-4 rounded-3xl flex items-center gap-4 hover:bg-gray-100 transition bg-gray-100">
-                        <i class="fa-solid fa-plus"></i>
-                        <span class="font-medium">New Entry</span>
-                    </button>
-                    <button onclick="switchAdminTab(1)" id="tab-1"
-                            class="admin-tab w-full text-left px-6 py-4 rounded-3xl flex items-center gap-4 hover:bg-gray-100 transition">
-                        <i class="fa-solid fa-list"></i>
-                        <span class="font-medium">Manage Entries</span>
-                    </button>
-                    <button onclick="switchAdminTab(2)" id="tab-2"
-                            class="admin-tab w-full text-left px-6 py-4 rounded-3xl flex items-center gap-4 hover:bg-gray-100 transition">
-                        <i class="fa-solid fa-comments"></i>
-                        <span class="font-medium">Comments Overview</span>
-                    </button>
+                    <button onclick="switchAdminTab(0)" id="tab-0" class="admin-tab w-full text-left px-6 py-4 rounded-3xl flex items-center gap-4 hover:bg-gray-100 transition bg-gray-100"><i class="fa-solid fa-plus"></i><span>New Entry</span></button>
+                    <button onclick="switchAdminTab(1)" id="tab-1" class="admin-tab w-full text-left px-6 py-4 rounded-3xl flex items-center gap-4 hover:bg-gray-100 transition"><i class="fa-solid fa-list"></i><span>Manage Entries</span></button>
+                    <button onclick="switchAdminTab(2)" id="tab-2" class="admin-tab w-full text-left px-6 py-4 rounded-3xl flex items-center gap-4 hover:bg-gray-100 transition"><i class="fa-solid fa-comments"></i><span>Comments</span></button>
                 </div>
-
-                <div class="bg-gray-100 rounded-3xl p-6">
-                    <h4 class="text-xs uppercase tracking-wider text-gray-500 mb-3">Cloud Features</h4>
-                    <ul class="text-xs text-gray-500 space-y-2">
-                        <li><i class="fa-solid fa-check-circle text-green-500 mr-2 text-[10px]"></i> Real-time sync across devices</li>
-                        <li><i class="fa-solid fa-database mr-2"></i> Permanent cloud storage</li>
-                        <li><i class="fa-solid fa-users mr-2"></i> Multiple admins supported</li>
-                        <li><i class="fa-solid fa-clock mr-2"></i> Automatic backups</li>
-                    </ul>
-                </div>
-                
-                <div class="mt-auto pt-8 space-y-3">
-                    <button onclick="forceSync()" 
-                            class="w-full py-3 text-sm border border-gray-300 rounded-2xl hover:border-[#fe4f04] transition flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-sync-alt"></i>
-                        <span>Force Sync</span>
-                    </button>
-                    <button onclick="logoutAdmin()" 
-                            class="w-full py-4 text-red-400 hover:bg-red-950/30 rounded-3xl flex items-center justify-center gap-3 transition">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        <span>SIGN OUT</span>
-                    </button>
-                </div>
+                <div class="mt-auto pt-8 space-y-3"><button onclick="logoutAdmin()" class="w-full py-4 text-red-400 hover:bg-red-950/30 rounded-3xl"><i class="fa-solid fa-right-from-bracket"></i> SIGN OUT</button></div>
             </div>
 
-            <!-- MAIN CONTENT -->
             <div class="flex-1 p-8 overflow-auto">
-                <!-- Same content structure as before... -->
+                <!-- New Entry Tab -->
                 <div id="admin-tab-0">
-                    <div class="flex justify-between items-center mb-8 flex-wrap gap-4">
-                        <div>
-                            <h1 class="heading-font text-5xl mb-2">New Journal Entry</h1>
-                            <p class="text-gray-500">Cloud-synced • Visible on all devices</p>
-                        </div>
-                        <div class="flex gap-3">
-                            <button onclick="previewPost()" class="px-6 py-3 border border-gray-300 rounded-2xl hover:border-[#fe4f04] transition flex items-center gap-2">
-                                <i class="fa-solid fa-eye"></i> Preview
-                            </button>
-                            <button onclick="clearForm()" class="px-6 py-3 border border-gray-300 rounded-2xl hover:border-red-500 transition">
-                                <i class="fa-solid fa-eraser"></i> Clear
-                            </button>
-                        </div>
-                    </div>
+                    <div class="flex justify-between items-center mb-8"><div><h1 class="heading-font text-5xl mb-2">New Journal Entry</h1><p class="text-gray-500">Add text, upload images, or embed videos</p></div></div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <div class="space-y-6">
+                            <div><label class="block text-xs uppercase tracking-widest mb-2">Title *</label><input id="new-title" type="text" placeholder="Enter your title..." class="w-full bg-transparent border border-gray-300 focus:border-[#fe4f04] rounded-2xl px-6 py-4 text-2xl outline-none"></div>
+                            <div><label class="block text-xs uppercase tracking-widest mb-2">Excerpt *</label><input id="new-excerpt" type="text" placeholder="Brief description..." class="w-full bg-transparent border border-gray-300 focus:border-[#fe4f04] rounded-2xl px-6 py-4 outline-none"></div>
+                            
+                            <!-- Image Upload Section -->
                             <div>
-                                <label class="block text-xs uppercase tracking-widest mb-2">Title *</label>
-                                <input id="new-title" type="text" placeholder="Enter your title..." 
-                                       class="w-full bg-transparent border border-gray-300 focus:border-[#fe4f04] rounded-2xl px-6 py-4 text-2xl outline-none">
+                                <label class="block text-xs uppercase tracking-widest mb-2">Upload Image</label>
+                                <div id="upload-area" class="border-2 border-dashed border-gray-300 rounded-2xl p-6 text-center cursor-pointer hover:border-[#fe4f04] hover:bg-orange-50 transition" onclick="document.getElementById('image-upload-input').click()">
+                                    <i class="fa-solid fa-cloud-upload-alt text-4xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500">Click to select an image</p>
+                                    <p class="text-xs text-gray-400">PNG, JPG, GIF up to 5MB</p>
+                                </div>
+                                <input type="file" id="image-upload-input" accept="image/*" style="display: none;" onchange="uploadImageToFirebase(this)">
+                                
+                                <div class="flex gap-2 mt-3">
+                                    <button onclick="addVideoUrl()" type="button" class="px-4 py-2 bg-gray-100 rounded-xl text-sm hover:bg-gray-200"><i class="fa-solid fa-video"></i> Add Video URL</button>
+                                    <button onclick="addEmbedCode()" type="button" class="px-4 py-2 bg-gray-100 rounded-xl text-sm hover:bg-gray-200"><i class="fa-solid fa-code"></i> Add YouTube Embed</button>
+                                </div>
+                                
+                                <div id="media-blocks-list" class="space-y-3 mt-3"></div>
                             </div>
-                            <div>
-                                <label class="block text-xs uppercase tracking-widest mb-2">Excerpt *</label>
-                                <input id="new-excerpt" type="text" placeholder="Brief description..." 
-                                       class="w-full bg-transparent border border-gray-300 focus:border-[#fe4f04] rounded-2xl px-6 py-4 outline-none">
+                            
+                            <div><label class="block text-xs uppercase tracking-widest mb-2">Content (Rich Text)</label><div id="editor-container" style="height: 280px;"></div></div>
+                            
+                            <button onclick="publishNewPost()" class="w-full bg-[#000080] text-white py-6 rounded-2xl font-semibold text-lg hover:bg-[#ff7a2d] transition flex items-center justify-center gap-3"><i class="fa-solid fa-cloud-upload-alt"></i> PUBLISH</button>
+                            
+                            <!-- Debug Console -->
+                            <div class="debug-console" id="debug-console">
+                                <i class="fa-solid fa-terminal mr-2"></i> Debug Log:<br>
+                                Ready for uploads...
                             </div>
-                            <div>
-                                <label class="block text-xs uppercase tracking-widest mb-2">Content</label>
-                                <div id="editor-container" style="height: 280px;"></div>
-                            </div>
-                            <button onclick="publishNewPost()" 
-                                    class="w-full bg-[#000080] text-white border-none shadow-[0_4px_15px_rgba(0,0,128,0.2)] hover:bg-[#000066] py-6 rounded-2xl font-semibold text-lg hover:bg-[#ff7a2d] transition flex items-center justify-center gap-3">
-                                <i class="fa-solid fa-cloud-upload-alt"></i>
-                                PUBLISH (Cloud Save)
-                            </button>
                         </div>
-                        <div class="preview-panel">
-                            <h3>Live Preview</h3>
-                            <div id="live-preview" class="preview-content rich-text">
-                                <p class="text-gray-500 text-center py-8">Preview will appear here...</p>
-                            </div>
-                        </div>
+                        <div class="preview-panel"><h3 class="font-semibold mb-3">Live Preview</h3><div id="live-preview" class="preview-content rich-text"><p class="text-gray-500 text-center py-8">Preview will appear here...</p></div></div>
                     </div>
                 </div>
 
-                <div id="admin-tab-1" class="hidden">
-                    <h1 class="heading-font text-5xl mb-8">Manage Entries</h1>
-                    <div id="manage-list" class="space-y-4"></div>
-                </div>
+                <!-- Manage Entries Tab -->
+                <div id="admin-tab-1" class="hidden"><h1 class="heading-font text-5xl mb-8">Manage Entries</h1><div id="manage-list" class="space-y-4"></div></div>
 
-                <div id="admin-tab-2" class="hidden">
-                    <h1 class="heading-font text-5xl mb-8">All Comments</h1>
-                    <div id="all-comments-list" class="space-y-6"></div>
-                </div>
+                <!-- Comments Tab -->
+                <div id="admin-tab-2" class="hidden"><h1 class="heading-font text-5xl mb-8">All Comments</h1><div id="all-comments-list" class="space-y-6"></div></div>
             </div>
         </div>
     </div>
 
-    <!-- Sync Status Indicator -->
-    <div id="sync-status" class="sync-status synced">
-        <i class="fa-solid fa-cloud-check mr-2"></i>
-        <span>Synced</span>
-    </div>
+    <div id="sync-status" class="sync-status synced"><i class="fa-solid fa-cloud-check mr-2"></i><span>Ready</span></div>
+    <div id="upload-progress" class="upload-progress"><i class="fa-solid fa-spinner fa-spin mr-2"></i><span id="upload-status">Uploading...</span></div>
 
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<script>
-    // ==================== FIREBASE CONFIG ====================
-    const firebaseConfig = {
-        apiKey: "AIzaSyBTF6CR_KPF2Sh8hmp8Xkn6SGFBV3_InyI",
-        authDomain: "nuva-blog.firebaseapp.com",
-        projectId: "nuva-blog",
-        storageBucket: "nuva-blog.firebasestorage.app",
-        messagingSenderId: "1097706865856",
-        appId: "1:1097706865856:web:70b95936db33aa7dc99925"
-    };
+    <script>
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBTF6CR_KPF2Sh8hmp8Xkn6SGFBV3_InyI",
+            authDomain: "nuva-blog.firebaseapp.com",
+            projectId: "nuva-blog",
+            storageBucket: "nuva-blog.firebasestorage.app",
+            messagingSenderId: "1097706865856",
+            appId: "1:1097706865856:web:70b95936db33aa7dc99925"
+        };
 
-    let useCloud = false;
-    let currentUser = null;
-    let db = null;
-    let auth = null;
-    let quill = null;
-    let posts = [];
+        let currentUser = null;
+        let db = null;
+        let auth = null;
+        let storage = null;
+        let quill = null;
+        let posts = [];
+        let mediaBlocks = [];
 
-    // Initialize Firebase
-    function initFirebase() {
-        try {
-            if (!firebase.apps.length) {
-                firebase.initializeApp(firebaseConfig);
+        function logToDebug(msg) {
+            const consoleDiv = document.getElementById('debug-console');
+            const timestamp = new Date().toLocaleTimeString();
+            consoleDiv.innerHTML += `<br>[${timestamp}] ${msg}`;
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+            console.log(msg);
+        }
+
+        // Initialize Firebase
+        function initFirebase() {
+            try {
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                    logToDebug("✅ Firebase app initialized");
+                }
+                auth = firebase.auth();
+                db = firebase.firestore();
+                storage = firebase.storage();
+                logToDebug("✅ Firebase services ready");
+                return true;
+            } catch(e) { 
+                logToDebug("❌ Firebase init failed: " + e.message);
+                return false; 
             }
-            auth = firebase.auth();
-            db = firebase.firestore();
-            useCloud = true;
-            console.log("✅ Firebase initialized successfully");
-            return true;
-        } catch (e) {
-            console.error("Firebase init failed:", e);
-            useCloud = false;
-            return false;
-        }
-    }
-
-    // ==================== LOGIN ====================
-    async function loginWithEmail() {
-        const email = document.getElementById('admin-email').value.trim();
-        const password = document.getElementById('admin-password').value.trim();
-
-        if (!email || !password) {
-            alert("Please enter both email and password");
-            return;
         }
 
-        updateSyncStatus("Signing in...", "syncing");
-
-        if (initFirebase() && auth) {
+        // Login
+        async function loginWithEmail() {
+            const email = document.getElementById('admin-email').value.trim();
+            const password = document.getElementById('admin-password').value.trim();
+            if (!email || !password) { alert("Enter email and password"); return; }
+            
+            logToDebug("Attempting login for: " + email);
+            initFirebase();
+            
             try {
                 const userCredential = await auth.signInWithEmailAndPassword(email, password);
                 currentUser = userCredential.user;
-                document.getElementById('user-email').textContent = currentUser.email || email;
-
+                document.getElementById('user-email').textContent = currentUser.email;
+                document.getElementById('auth-status').innerHTML = '✅ Logged in - Upload ready';
+                logToDebug("✅ Login successful! User: " + currentUser.email);
+                
                 await loadPostsFromCloud();
                 showAdminDashboard();
-                updateSyncStatus("Connected to Cloud", "synced");
-            } catch (error) {
-                console.error("Login error:", error);
-                alert("Login failed: " + error.message + "\n\nTrying Demo Mode...");
-                useDemoMode();
+                updateSyncStatus("Connected", "synced");
+            } catch(error) { 
+                logToDebug("❌ Login failed: " + error.message);
+                alert("Login failed: " + error.message); 
             }
-        } else {
-            useDemoMode();
         }
-    }
 
-    function showDemoMode() {
-        useDemoMode();
-    }
-
-    function useDemoMode() {
-        alert("✅ Using Demo Mode (LocalStorage)\n\nPosts are saved only on this device.\n\nFor permanent cloud storage, make sure Firebase is correctly configured.");
-        useCloud = false;
-        loadPostsFromLocal();
-        showAdminDashboard();
-        updateSyncStatus("Local Only Mode", "error");
-    }
-
-    function showAdminDashboard() {
-        document.getElementById('login-screen').classList.add('hidden');
-        document.getElementById('admin-dashboard').classList.remove('hidden');
-        switchAdminTab(0);
-        initQuill();
-    }
-
-    // ==================== POST MANAGEMENT ====================
-    async function loadPostsFromCloud() {
-        if (!db) return;
-        updateSyncStatus("Loading from cloud...", "syncing");
-        try {
-            const snapshot = await db.collection('posts').orderBy('createdAt', 'desc').get();
-            posts = [];
-            snapshot.forEach(doc => {
-                posts.push({ id: parseInt(doc.id) || Date.now(), ...doc.data() });
-            });
-            if (posts.length === 0) await seedSamplePosts();
-            savePostsToLocal();
-            renderManageList();
-            renderAllComments();
-            updateSyncStatus("Cloud synced", "synced");
-        } catch (e) {
-            console.error(e);
-            loadPostsFromLocal();
-            updateSyncStatus("Using local cache", "warning");
+        function showAdminDashboard() { 
+            document.getElementById('login-screen').classList.add('hidden'); 
+            document.getElementById('admin-dashboard').classList.remove('hidden'); 
+            switchAdminTab(0); 
+            initQuill(); 
+            renderManageList(); 
+            renderAllComments(); 
         }
-    }
 
-    async function savePostToCloud(post) {
-        if (!db || !useCloud) {
-            savePostsToLocal();
-            return;
+        function initQuill() { 
+            if(quill) return; 
+            quill = new Quill('#editor-container', { 
+                theme: 'snow', 
+                placeholder: 'Write your journal entry...', 
+                modules: { toolbar: [ [{ 'header': [1,2,3,false]}], ['bold','italic','underline'], [{ 'list':'ordered'},{'list':'bullet'}], ['blockquote','link'], ['clean'] ] } 
+            }); 
+            quill.on('text-change', updatePreview); 
+            logToDebug("✅ Rich text editor ready");
         }
-        try {
-            await db.collection('posts').doc(post.id.toString()).set({
-                ...post,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                updatedBy: currentUser?.email || 'admin'
-            });
-            updateSyncStatus("Saved to cloud", "synced");
-        } catch (e) {
-            console.error(e);
-            savePostsToLocal();
+
+        function updatePreview() { 
+            const content = quill ? quill.root.innerHTML : ''; 
+            let mediaHtml = ''; 
+            mediaBlocks.forEach(block => { 
+                if(block.type === 'image') mediaHtml += `<img src="${block.url}" class="max-w-full rounded-xl my-3">`; 
+                else if(block.type === 'video') mediaHtml += `<video controls src="${block.url}" class="w-full rounded-xl my-3"></video>`; 
+                else if(block.type === 'embed') mediaHtml += `<div class="my-3">${block.embedCode}</div>`; 
+            }); 
+            document.getElementById('live-preview').innerHTML = mediaHtml + content || '<p class="text-gray-500 text-center py-8">Preview...</p>'; 
         }
-    }
 
-    function loadPostsFromLocal() {
-        const saved = localStorage.getItem('nuvaPosts');
-        posts = saved ? JSON.parse(saved) : [];
-        if (posts.length === 0) seedSamplePosts();
-        renderManageList();
-        renderAllComments();
-    }
-
-    function savePostsToLocal() {
-        localStorage.setItem('nuvaPosts', JSON.stringify(posts));
-    }
-
-    async function seedSamplePosts() {
-        if (posts.length > 0) return;
-        posts = [{
-            id: Date.now(),
-            title: "Welcome to NUVA Journal",
-            excerpt: "Your first cloud-synced post",
-            content: "<p>This is a sample post. Start creating your own content!</p>",
-            mediaBlocks: [],
-            date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-            comments: [],
-            createdAt: new Date().toISOString()
-        }];
-        savePostsToLocal();
-    }
-
-    function initQuill() {
-        if (quill) return;
-        quill = new Quill('#editor-container', {
-            theme: 'snow',
-            placeholder: 'Write your journal entry here...',
-            modules: {
-                toolbar: [
-                    [{ 'header': [1, 2, 3, false] }],
-                    ['bold', 'italic', 'underline'],
-                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                    ['blockquote', 'link'],
-                    ['clean']
-                ]
+        // Upload image to Firebase Storage
+        async function uploadImageToFirebase(input) {
+            if (!input.files || !input.files[0]) {
+                logToDebug("No file selected");
+                return;
             }
-        });
-    }
-
-    async function publishNewPost() {
-        const title = document.getElementById('new-title').value.trim();
-        const excerpt = document.getElementById('new-excerpt').value.trim();
-        if (!title || !excerpt) {
-            alert("Title and excerpt are required");
-            return;
+            
+            const file = input.files[0];
+            logToDebug("Selected file: " + file.name + " (" + (file.size/1024).toFixed(2) + " KB)");
+            
+            if (!file.type.startsWith('image/')) { 
+                alert("Please select an image file");
+                logToDebug("❌ Not an image file: " + file.type);
+                return; 
+            }
+            
+            if (!currentUser) {
+                alert("Please login first!");
+                logToDebug("❌ No user logged in for upload");
+                return;
+            }
+            
+            const progressDiv = document.getElementById('upload-progress');
+            const statusSpan = document.getElementById('upload-status');
+            progressDiv.classList.add('show');
+            statusSpan.innerHTML = "Starting upload...";
+            
+            try {
+                const timestamp = Date.now();
+                const safeFileName = file.name.replace(/[^a-zA-Z0-9.]/g, '_');
+                const fileName = `posts/${timestamp}_${safeFileName}`;
+                const storageRef = storage.ref(fileName);
+                
+                logToDebug("Uploading to: " + fileName);
+                
+                // Simple put operation
+                const uploadTask = storageRef.put(file);
+                
+                uploadTask.on('state_changed',
+                    (snapshot) => {
+                        const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        statusSpan.innerHTML = `Uploading: ${Math.round(percent)}%`;
+                        logToDebug(`Progress: ${Math.round(percent)}%`);
+                    },
+                    (error) => {
+                        logToDebug("❌ Upload error: " + error.code + " - " + error.message);
+                        progressDiv.classList.remove('show');
+                        alert("Upload failed: " + error.message + "\n\nCheck Firebase Storage rules. Set rules to: allow read, write: if true;");
+                    },
+                    async () => {
+                        try {
+                            const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+                            logToDebug("✅ Upload complete! URL: " + downloadURL.substring(0, 80) + "...");
+                            mediaBlocks.push({ type: 'image', url: downloadURL });
+                            renderMediaBlocksList();
+                            updatePreview();
+                            progressDiv.classList.remove('show');
+                            updateSyncStatus("Image uploaded!", "synced");
+                            setTimeout(() => updateSyncStatus("Ready", "synced"), 2000);
+                        } catch(e) {
+                            logToDebug("❌ Error getting download URL: " + e.message);
+                            progressDiv.classList.remove('show');
+                            alert("Failed to get image URL: " + e.message);
+                        }
+                    }
+                );
+            } catch(e) {
+                logToDebug("❌ Upload setup error: " + e.message);
+                progressDiv.classList.remove('show');
+                alert("Upload failed: " + e.message);
+            }
+            
+            input.value = '';
         }
 
-        const newPost = {
-            id: Date.now(),
-            title: title,
-            excerpt: excerpt,
-            content: quill ? quill.root.innerHTML : '',
-            mediaBlocks: [],
-            date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-            comments: [],
-            createdAt: new Date().toISOString(),
-            author: currentUser?.email || 'admin'
-        };
-
-        posts.unshift(newPost);
-        savePostsToLocal();
-
-        if (useCloud && db) {
-            await savePostToCloud(newPost);
+        function addVideoUrl() { 
+            let url = prompt("Enter video URL (MP4 direct link):"); 
+            if(url && url.trim()) {
+                mediaBlocks.push({ type: 'video', url: url.trim() });
+                renderMediaBlocksList(); 
+                updatePreview();
+                logToDebug("Added video URL: " + url);
+            }
         }
 
-        clearForm();
-        renderManageList();
-        alert(`✅ "${title}" has been published!`);
-    }
+        function addEmbedCode() { 
+            let url = prompt("Enter YouTube embed URL (e.g., https://www.youtube.com/embed/...):"); 
+            if(url && url.trim()) { 
+                mediaBlocks.push({ 
+                    type: 'embed', 
+                    url: url.trim(), 
+                    embedCode: `<iframe src="${url.trim()}" width="100%" height="400" frameborder="0" allowfullscreen class="rounded-xl"></iframe>` 
+                });
+                renderMediaBlocksList(); 
+                updatePreview();
+                logToDebug("Added embed: " + url);
+            } 
+        }
 
-    function clearForm() {
-        document.getElementById('new-title').value = '';
-        document.getElementById('new-excerpt').value = '';
-        if (quill) quill.setText('');
-    }
-
-    // Tab switching
-    function switchAdminTab(tab) {
-        document.querySelectorAll('[id^="admin-tab-"]').forEach(el => el.classList.add('hidden'));
-        document.getElementById(`admin-tab-${tab}`).classList.remove('hidden');
-
-        document.querySelectorAll('.admin-tab').forEach(btn => btn.classList.remove('bg-gray-100'));
-        document.getElementById(`tab-${tab}`).classList.add('bg-gray-100');
-    }
+        function renderMediaBlocksList() { 
+            const container = document.getElementById('media-blocks-list'); 
+            if(!container) return; 
+            container.innerHTML = ''; 
+            if (mediaBlocks.length === 0) {
+                container.innerHTML = '<div class="text-center py-4 text-gray-400 text-sm">No media added yet.</div>';
+                return;
+            }
+            mediaBlocks.forEach((block, idx) => { 
+                const div = document.createElement('div'); 
+                div.className = 'media-block flex justify-between items-center'; 
+                let preview = ''; 
+                if(block.type === 'image') 
+                    preview = `<img src="${block.url}" class="media-preview-img"> <span class="text-xs truncate ml-2">Image ${idx+1}</span>`; 
+                else if(block.type === 'video') 
+                    preview = `<i class="fa-solid fa-video text-xl"></i> <span class="text-xs ml-2">Video URL</span>`; 
+                else 
+                    preview = `<i class="fa-brands fa-youtube text-xl text-red-500"></i> <span class="text-xs ml-2">YouTube</span>`; 
+                div.innerHTML = `<div class="flex items-center gap-3 flex-1">${preview}</div><button onclick="removeMediaBlock(${idx})" class="text-red-400 hover:text-red-600 px-2"><i class="fa-solid fa-trash"></i></button>`; 
+                container.appendChild(div); 
+            }); 
+        }
         
+        function removeMediaBlock(idx) { 
+            mediaBlocks.splice(idx,1); 
+            renderMediaBlocksList(); 
+            updatePreview(); 
+            logToDebug("Removed media block");
+        }
+
         async function publishNewPost() {
             const title = document.getElementById('new-title').value.trim();
             const excerpt = document.getElementById('new-excerpt').value.trim();
             if (!title || !excerpt) { alert("Title and excerpt required"); return; }
             
-            const newPost = {
-                id: Date.now(),
-                title: title,
-                excerpt: excerpt,
-                content: quill ? quill.root.innerHTML : '',
-                mediaBlocks: [],
-                date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-                comments: [],
-                createdAt: new Date().toISOString(),
-                author: currentUser?.email || 'admin'
+            const newPost = { 
+                id: Date.now(), 
+                title, 
+                excerpt, 
+                content: quill ? quill.root.innerHTML : '', 
+                mediaBlocks: [...mediaBlocks], 
+                date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }), 
+                comments: [], 
+                createdAt: new Date().toISOString(), 
+                author: currentUser?.email || 'admin' 
             };
             
             posts.unshift(newPost);
-            savePostsToLocal();
+            localStorage.setItem('nuvaPosts', JSON.stringify(posts));
             
-            if (useCloud && db) {
-                await savePostToCloud(newPost);
-            }
-            
-            clearForm();
-            renderManageList();
-            alert(`✅ "${title}" published!\n\nVisible on all devices where admins are logged in.`);
-        }
-        
-        async function deletePost(id) {
-            if (!confirm("Permanently delete this entry? This will sync across all devices.")) return;
-            posts = posts.filter(p => p.id !== id);
-            savePostsToLocal();
-            if (useCloud && db) {
-                await deletePostFromCloud(id);
-            }
-            renderManageList();
-            renderAllComments();
-        }
-        
-        function renderManageList() {
-            const container = document.getElementById('manage-list');
-        container.innerHTML = '';
-        if (posts.length === 0) {
-            container.innerHTML = '<div class="text-center py-20 text-gray-500">No entries yet.</div>';
-            return;
-        }
-            posts.forEach(post => {
-                const row = document.createElement('div');
-                row.className = 'bg-white shadow-[0_4px_15px_rgba(0,0,128,0.06)] border border-gray-100 rounded-2xl p-6 flex justify-between items-start group';
-                row.innerHTML = `
-                    <div class="flex-1">
-                        <div class="font-medium text-xl">${escapeHtml(post.title)}</div>
-                        <div class="text-xs text-gray-500 mt-1">${post.date}</div>
-                        <div class="text-sm text-gray-500 mt-2">${escapeHtml(post.excerpt)}</div>
-                        <div class="text-xs text-gray-600 mt-2">💬 ${post.comments?.length || 0} comments</div>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="editPost(${post.id})" class="px-5 py-2 border border-gray-300 rounded-xl hover:border-[#fe4f04]">EDIT</button>
-                        <button onclick="deletePost(${post.id})" class="px-5 py-2 text-red-400 hover:bg-red-950/30 rounded-xl">DELETE</button>
-                    </div>
-                `;
-                container.appendChild(row);
-            });
-        }
-        
-        function renderAllComments() {
-            const container = document.getElementById('all-comments-list');
-            if (!container) return;
-            container.innerHTML = '';
-            let hasComments = false;
-            posts.forEach(post => {
-                if (post.comments?.length) {
-                    hasComments = true;
-                    const section = document.createElement('div');
-                    section.className = 'border border-[#e2e8f0] rounded-2xl p-6 mb-6';
-                    section.innerHTML = `<div class="heading-font text-2xl mb-4">${escapeHtml(post.title)}</div>`;
-                    post.comments.forEach(c => {
-                        section.innerHTML += `
-                            <div class="flex gap-4 bg-white shadow-[0_4px_15px_rgba(0,0,128,0.06)] border border-gray-100 p-4 rounded-xl mb-3">
-                                <div class="w-10 h-10 bg-[#fe4f04] rounded-xl flex items-center justify-center">${c.name[0]}</div>
-                                <div><span class="font-medium">${escapeHtml(c.name)}</span><span class="ml-3 text-xs text-gray-500">${c.date}</span><p class="mt-1">${escapeHtml(c.text)}</p></div>
-                            </div>
-                        `;
-                    });
-                    container.appendChild(section);
+            if (currentUser && db) {
+                try { 
+                    await db.collection('posts').doc(newPost.id.toString()).set(newPost); 
+                    logToDebug("✅ Post saved to Firestore");
+                    updateSyncStatus("Saved to cloud", "synced");
+                } catch(e) { 
+                    logToDebug("❌ Firestore save failed: " + e.message);
                 }
-            });
-            if (!hasComments) container.innerHTML = '<div class="text-center py-20 text-gray-500">No comments yet.</div>';
+            }
+            
+            clearForm(); 
+            renderManageList(); 
+            renderAllComments();
+            alert(`✅ "${title}" published!`);
+        }
+
+        async function deletePost(id) { 
+            if(!confirm("Delete permanently?")) return; 
+            posts = posts.filter(p => p.id !== id); 
+            localStorage.setItem('nuvaPosts', JSON.stringify(posts));
+            if(currentUser && db) await db.collection('posts').doc(id.toString()).delete(); 
+            renderManageList(); 
+            renderAllComments(); 
+        }
+
+        async function loadPostsFromCloud() { 
+            if(!db || !currentUser) return; 
+            try { 
+                const snapshot = await db.collection('posts').orderBy('createdAt','desc').get(); 
+                posts = []; 
+                snapshot.forEach(doc => { 
+                    posts.push({ id: parseInt(doc.id), ...doc.data(), comments: doc.data().comments || [], mediaBlocks: doc.data().mediaBlocks || [] }); 
+                }); 
+                localStorage.setItem('nuvaPosts', JSON.stringify(posts));
+                renderManageList(); 
+                renderAllComments(); 
+                logToDebug("✅ Loaded " + posts.length + " posts from cloud");
+            } catch(e) { 
+                logToDebug("❌ Load from cloud failed: " + e.message);
+                const saved = localStorage.getItem('nuvaPosts'); 
+                if(saved) posts = JSON.parse(saved);
+                renderManageList(); 
+                renderAllComments();
+            } 
+        }
+
+        function renderManageList() { 
+            const container = document.getElementById('manage-list'); 
+            if(!container) return; 
+            container.innerHTML = ''; 
+            if (posts.length === 0) {
+                container.innerHTML = '<div class="text-center py-20 text-gray-500">No posts yet.</div>';
+                return;
+            }
+            posts.forEach(post => { 
+                const div = document.createElement('div'); 
+                div.className = 'bg-white shadow-md border rounded-2xl p-6 flex justify-between items-start'; 
+                div.innerHTML = `<div><div class="font-medium text-xl">${escapeHtml(post.title)}</div><div class="text-xs text-gray-500 mt-1">${post.date}</div><div class="text-sm text-gray-500 mt-2">${escapeHtml(post.excerpt)}</div><div class="text-xs mt-2">📎 ${post.mediaBlocks?.length || 0} media | 💬 ${post.comments?.length || 0}</div></div><div class="flex gap-2"><button onclick="deletePost(${post.id})" class="px-4 py-2 text-red-400 border border-red-200 rounded-xl hover:bg-red-50">DELETE</button></div>`; 
+                container.appendChild(div); 
+            }); 
+        }
+
+        function renderAllComments() { 
+            const container = document.getElementById('all-comments-list'); 
+            if(!container) return; 
+            container.innerHTML = ''; 
+            let has = false; 
+            posts.forEach(post => { 
+                if(post.comments?.length) { 
+                    has=true; 
+                    const section = document.createElement('div'); 
+                    section.className = 'border rounded-2xl p-6 mb-6'; 
+                    section.innerHTML = `<div class="heading-font text-2xl mb-4">${escapeHtml(post.title)}</div>`; 
+                    post.comments.forEach(c => { 
+                        section.innerHTML += `<div class="flex gap-4 bg-gray-50 p-4 rounded-xl mb-3"><div class="w-8 h-8 bg-[#fe4f04] rounded-xl flex items-center justify-center text-white">${(c.name?.[0] || '?').toUpperCase()}</div><div><span class="font-medium">${escapeHtml(c.name)}</span><span class="ml-3 text-xs text-gray-500">${c.date}</span><p class="mt-1">${escapeHtml(c.text)}</p></div></div>`; 
+                    }); 
+                    container.appendChild(section); 
+                } 
+            }); 
+            if(!has) container.innerHTML = '<div class="text-center py-20 text-gray-500">No comments yet.</div>'; 
+        }
+
+        function switchAdminTab(tab) { 
+            document.querySelectorAll('[id^="admin-tab-"]').forEach(el => el.classList.add('hidden')); 
+            document.getElementById(`admin-tab-${tab}`).classList.remove('hidden'); 
+            document.querySelectorAll('.admin-tab').forEach(btn => btn.classList.remove('bg-gray-100')); 
+            document.getElementById(`tab-${tab}`).classList.add('bg-gray-100'); 
         }
         
-        // Add missing functions with safe fallbacks
-    function updatePreview() {}
-    function previewPost() { alert("Preview coming soon"); }
-    function editPost(id) { alert("Edit feature coming soon"); }
-    function logoutAdmin() { location.reload(); }
-    function forceSync() {
-        if (useCloud && db) loadPostsFromCloud();
-        else alert("Cloud sync not active");
-    }
-
-    function updateSyncStatus(message, status) {
-        const el = document.getElementById('sync-status');
-        if (!el) return;
-        el.className = `sync-status ${status}`;
-        const icon = status === 'synced' ? 'fa-cloud-check' : (status === 'syncing' ? 'fa-cloud-upload-alt' : 'fa-cloud-slash');
-        el.innerHTML = `<i class="fa-solid ${icon} mr-2"></i><span>${message}</span>`;
-    }
-
-    function escapeHtml(str) {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
-    }
-
-    // Initialize on load
-    window.onload = () => {
-        loadPostsFromLocal();
-    };
-</script>
+        function clearForm() { 
+            document.getElementById('new-title').value = ''; 
+            document.getElementById('new-excerpt').value = ''; 
+            if(quill) quill.setText(''); 
+            mediaBlocks = []; 
+            renderMediaBlocksList(); 
+            updatePreview(); 
+        }
+        
+        function logoutAdmin() { 
+            if(auth) auth.signOut();
+            location.reload(); 
+        }
+        
+        function updateSyncStatus(msg, status) { 
+            const el = document.getElementById('sync-status'); 
+            if(!el) return; 
+            el.className = `sync-status ${status}`; 
+            const icon = status==='synced'?'fa-cloud-check':'fa-cloud-slash'; 
+            el.innerHTML = `<i class="fa-solid ${icon} mr-2"></i><span>${msg}</span>`; 
+        }
+        
+        function escapeHtml(str) { 
+            if(!str) return ''; 
+            return String(str).replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); 
+        }
+        
+        window.onload = () => { 
+            initFirebase();
+            const saved = localStorage.getItem('nuvaPosts'); 
+            if(saved) posts = JSON.parse(saved);
+            logToDebug("Page loaded. Please login to upload images.");
+        };
+    </script>
 </body>
 </html>
