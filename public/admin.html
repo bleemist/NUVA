@@ -46,7 +46,8 @@
 
     body {
       min-height: 100vh;
-      background: var(--bg-gradient);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.94) 0%, rgba(30, 41, 59, 0.94) 100%),
+                  url('images/backgrounds/campus_hero.jpg') center/cover fixed no-repeat;
       font-family: 'Inter', sans-serif;
       color: var(--text);
       padding: 2rem;
@@ -756,6 +757,30 @@
 <script>
   const ADMIN_KEY = 'Muyanja@6872@'; // Keep your secure key
 
+  // Official University Logos Mapping
+  const uniLogos = {
+    'Makerere University': 'images/logos/mak.svg',
+    'Kyambogo University': 'images/logos/kyu.png',
+    'Mbarara University of Science and Technology': 'images/logos/must.webp',
+    'Busitema University': 'images/logos/busitema.png',
+    'Gulu University': 'images/logos/gulu.png',
+    'Muni University': 'images/logos/muni.png',
+    'Kabale University': 'images/logos/kabale.jpg',
+    'Lira University': 'images/logos/lira.png',
+    'Soroti University': 'images/logos/soroti.png',
+    'Mountains of the Moon University': 'images/logos/mmu.png'
+  };
+
+  function getUniLogo(uniName) {
+    if (!uniName) return 'icon.png';
+    for (const [name, logo] of Object.entries(uniLogos)) {
+      if (uniName.toLowerCase().includes(name.toLowerCase()) || name.toLowerCase().includes(uniName.toLowerCase())) {
+        return logo;
+      }
+    }
+    return 'icon.png';
+  }
+
   // Analytics data
   let analytics = {
     searches: [],
@@ -939,7 +964,12 @@
         uniDiv.className = 'university-item';
         uniDiv.innerHTML = `
           <div class="university-header">
-            <span class="university-name">${uni.name || key}</span>
+            <span class="university-name" style="display:flex; align-items:center; gap:12px;">
+              <span style="width:36px; height:36px; border-radius:8px; background:#ffffff; padding:4px; display:inline-flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.25); flex-shrink:0;">
+                <img src="${getUniLogo(uni.name || key)}" alt="logo" style="width:100%; height:100%; object-fit:contain;">
+              </span>
+              <span>${uni.name || key}</span>
+            </span>
             <button class="add-course-btn" onclick="openModal('${key}')">Add Course</button>
           </div>
           <table class="course-table">

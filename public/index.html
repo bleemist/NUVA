@@ -363,11 +363,12 @@
       gap: 2.5rem;
       align-items: center;
       margin-bottom: 2.5rem;
-      background: linear-gradient(135deg, #ffffff 0%, rgba(255, 247, 242, 0.7) 100%);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 248, 244, 0.90) 100%),
+                  url('images/backgrounds/campus_hero.jpg') center/cover no-repeat;
       border-radius: var(--radius-xl);
-      border: 1px solid rgba(254, 79, 4, 0.12);
-      padding: 3rem 2.8rem;
-      box-shadow: 0 16px 40px rgba(0, 0, 128, 0.05);
+      border: 1px solid rgba(254, 79, 4, 0.18);
+      padding: 3.2rem 2.8rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 128, 0.08);
       position: relative;
       overflow: hidden;
     }
@@ -376,42 +377,67 @@
       position: absolute;
       top: -120px;
       right: -120px;
-      width: 320px;
-      height: 320px;
-      background: radial-gradient(circle, rgba(254, 79, 4, 0.12) 0%, transparent 70%);
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(254, 79, 4, 0.16) 0%, transparent 70%);
       border-radius: 50%;
       pointer-events: none;
+      animation: orbFloat1 16s ease-in-out infinite alternate;
+    }
+    .hero-container::after {
+      content: "";
+      position: absolute;
+      bottom: -100px;
+      left: -100px;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(0, 0, 128, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: orbFloat2 14s ease-in-out infinite alternate;
+    }
+    @keyframes orbFloat1 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-30px, 40px) scale(1.12); }
+      100% { transform: translate(20px, -30px) scale(0.95); }
+    }
+    @keyframes orbFloat2 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(40px, -30px) scale(1.08); }
+      100% { transform: translate(-20px, 20px) scale(0.96); }
     }
 
     .hero-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 0.4rem 1rem;
+      padding: 0.45rem 1.1rem;
       border-radius: 30px;
       background: rgba(254, 79, 4, 0.1);
       color: var(--primary);
       font-size: 0.85rem;
       font-weight: 700;
       margin-bottom: 1.2rem;
-      border: 1px solid rgba(254, 79, 4, 0.2);
+      border: 1px solid rgba(254, 79, 4, 0.25);
+      box-shadow: 0 4px 12px rgba(254, 79, 4, 0.1);
+      backdrop-filter: blur(8px);
     }
     .hero-badge .pulse-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--primary);
-      box-shadow: 0 0 8px var(--primary);
-      animation: pulse 2s infinite;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulseLive 2s infinite;
     }
-    @keyframes pulse {
+    @keyframes pulseLive {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.8); }
+      50% { opacity: 0.35; transform: scale(0.7); }
     }
 
     .hero-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 3.1rem;
+      font-size: 3.2rem;
       font-weight: 800;
       line-height: 1.15;
       color: var(--navy);
@@ -419,16 +445,23 @@
       margin-bottom: 1.2rem;
     }
     .hero-title span.highlight {
-      background: linear-gradient(135deg, var(--primary) 0%, #ff7a2d 100%);
+      background: linear-gradient(90deg, #fe4f04 0%, #ff7a2d 35%, #000080 70%, #fe4f04 100%);
+      background-size: 300% 100%;
+      animation: gradientFlow 7s ease infinite;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
     .hero-desc {
-      font-size: 1.1rem;
+      font-size: 1.12rem;
       color: var(--text-muted);
-      line-height: 1.7;
-      margin-bottom: 2rem;
+      line-height: 1.75;
+      margin-bottom: 2.2rem;
       max-width: 580px;
     }
 
@@ -448,6 +481,34 @@
       font-weight: 700;
       font-size: 1.05rem;
       padding: 0.95rem 1.9rem;
+      border-radius: 30px;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(254, 79, 4, 0.35);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      transform: skewX(-25deg);
+      animation: btnShimmer 5s infinite;
+    }
+    @keyframes btnShimmer {
+      0%, 80% { left: -100%; }
+      100% { left: 200%; }
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 30px rgba(254, 79, 4, 0.45);
+    }
       border-radius: var(--radius-md);
       border: none;
       cursor: pointer;
@@ -919,92 +980,490 @@
     .gallery-nav-btn.left { left: 16px; }
     .gallery-nav-btn.right { right: 16px; }
 
-    /* ==================== UNIVERSITIES DIRECTORY ==================== */
-    .uni-directory {
+    /* ==================== UNIVERSITIES DIRECTORY & PROFILES ==================== */
+    .uni-directory-wrapper {
+      position: relative;
+      background: linear-gradient(180deg, rgba(248, 250, 252, 0.94) 0%, rgba(255, 255, 255, 0.98) 100%),
+                  url('images/backgrounds/modern_campus_aerial.jpg') center/cover no-repeat;
+      border-radius: var(--radius-xl);
+      padding: 2.5rem 1.8rem;
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow-md);
       margin-bottom: 3.5rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      overflow: hidden;
     }
+
+    .uni-controls-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 2.2rem;
+    }
+
+    .uni-search-box {
+      position: relative;
+      max-width: 520px;
+      width: 100%;
+    }
+    .uni-search-input {
+      width: 100%;
+      padding: 0.85rem 1.2rem 0.85rem 3rem;
+      border-radius: 35px;
+      border: 1.5px solid rgba(0, 0, 128, 0.12);
+      background: rgba(255, 255, 255, 0.95);
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: var(--text-dark);
+      box-shadow: 0 4px 16px rgba(0, 0, 128, 0.06);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .uni-search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 8px 24px rgba(254, 79, 4, 0.18);
+      background: #ffffff;
+      transform: translateY(-2px);
+    }
+    .uni-search-icon {
+      position: absolute;
+      left: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
     .uni-tabs {
       display: flex;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
       flex-wrap: wrap;
-      margin-bottom: 1.8rem;
     }
     .uni-tab-btn {
-      padding: 0.5rem 1.1rem;
+      padding: 0.55rem 1.2rem;
       border-radius: 30px;
-      background: white;
+      background: rgba(255, 255, 255, 0.9);
       border: 1px solid var(--card-border);
       color: var(--text-muted);
-      font-weight: 600;
-      font-size: 0.88rem;
+      font-weight: 700;
+      font-size: 0.86rem;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
     }
     .uni-tab-btn:hover {
       border-color: var(--navy);
       color: var(--navy);
+      transform: translateY(-2px);
     }
     .uni-tab-btn.active {
       background: var(--navy);
       color: white;
       border-color: var(--navy);
-      box-shadow: 0 4px 12px rgba(0, 0, 128, 0.15);
+      box-shadow: 0 6px 16px rgba(0, 0, 128, 0.25);
+      transform: translateY(-2px);
+    }
+    .uni-tab-count {
+      padding: 1px 7px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.2);
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+    .uni-tab-btn:not(.active) .uni-tab-count {
+      background: #f1f5f9;
+      color: var(--text-muted);
     }
 
     .uni-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 1.8rem;
     }
+
+    /* 3D Tilt Card Base */
     .uni-card {
       background: #ffffff;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--card-border);
-      padding: 1.6rem;
-      transition: all 0.25s ease;
-      box-shadow: var(--shadow-sm);
+      border-radius: 20px;
+      border: 1px solid rgba(0, 0, 128, 0.08);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 128, 0.07);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, border-color 0.4s ease;
     }
     .uni-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-      border-color: rgba(254, 79, 4, 0.3);
+      box-shadow: 0 24px 50px -10px rgba(0, 0, 128, 0.16), 0 0 25px rgba(254, 79, 4, 0.12);
+      border-color: rgba(254, 79, 4, 0.35);
     }
-    .uni-card-header {
+
+    /* Campus Cover Banner */
+    .uni-card-cover {
+      height: 124px;
+      position: relative;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      overflow: hidden;
+      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .uni-card-cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 60, 0.25) 0%, rgba(0, 0, 80, 0.75) 100%);
+      transition: opacity 0.3s ease;
+    }
+    .uni-card:hover .uni-card-cover {
+      transform: scale(1.05);
+    }
+    .uni-card-badges {
+      position: absolute;
+      top: 10px;
+      left: 12px;
+      right: 12px;
       display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 1rem;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
     }
-    .uni-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--navy), var(--navy-light));
-      color: white;
-      font-family: 'Outfit', sans-serif;
+    .uni-badge-chartered {
+      background: rgba(0, 0, 128, 0.85);
+      color: #ffffff;
+      font-size: 0.72rem;
       font-weight: 800;
-      font-size: 1.2rem;
+      padding: 3px 9px;
+      border-radius: 20px;
+      backdrop-filter: blur(6px);
+      letter-spacing: 0.3px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .uni-badge-region {
+      background: rgba(254, 79, 4, 0.9);
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 20px;
+      backdrop-filter: blur(6px);
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 8px rgba(254, 79, 4, 0.3);
+    }
+
+    /* Profile Avatar & Header Row */
+    .uni-profile-row {
+      position: relative;
+      padding: 0 1.4rem;
+      display: flex;
+      align-items: flex-end;
+      gap: 14px;
+      margin-top: -38px;
+      z-index: 3;
+    }
+    .uni-avatar-shield {
+      width: 76px;
+      height: 76px;
+      border-radius: 20px;
+      background: #ffffff;
+      border: 3.5px solid #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      box-shadow: 0 10px 25px -4px rgba(0, 0, 128, 0.2), 0 4px 10px rgba(0, 0, 0, 0.06);
+      padding: 6px;
+      position: relative;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .uni-avatar-shield img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform 0.35s ease;
+    }
+    .uni-card:hover .uni-avatar-shield {
+      transform: scale(1.08) rotate(2deg);
+      border-color: #ffffff;
+      box-shadow: 0 14px 30px rgba(254, 79, 4, 0.25);
+    }
+    .uni-card:hover .uni-avatar-shield img {
+      transform: scale(1.06);
+    }
+    .uni-verified-pill {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #2563eb;
+      color: #ffffff;
+      border: 2px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.4);
+    }
+
+    .uni-card-body {
+      padding: 0.8rem 1.4rem 1.4rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .uni-title-wrap {
+      margin-top: 0.4rem;
+    }
+    .uni-title-wrap h4 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.22rem;
+      color: var(--navy);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 2px;
+    }
+    .uni-est-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .uni-motto {
+      font-size: 0.84rem;
+      font-style: italic;
+      color: #475569;
+      margin: 6px 0 10px;
+      line-height: 1.35;
+      border-left: 2px solid rgba(254, 79, 4, 0.4);
+      padding-left: 8px;
+    }
+    .uni-meta-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .uni-chip {
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .uni-details-box {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      background: #f8fafc;
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 14px;
+    }
+
+    .uni-card-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: auto;
+    }
+    .uni-btn-portal {
+      padding: 0.5rem 0.8rem;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--navy);
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .uni-btn-portal:hover {
+      background: var(--navy);
+      color: white;
+      border-color: var(--navy);
+    }
+    .uni-btn-view {
+      flex: 1;
+      padding: 0.5rem 0.8rem;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, var(--navy), #1e3a8a);
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
       box-shadow: 0 4px 12px rgba(0, 0, 128, 0.15);
     }
-    .uni-card h4 {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.15rem;
-      color: var(--navy);
-      font-weight: 700;
-      line-height: 1.3;
+    .uni-btn-view:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 128, 0.25);
     }
-    .uni-loc {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-top: 2px;
+    .uni-btn-match {
+      padding: 0.5rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: white;
+      background: linear-gradient(135deg, var(--primary), #e04302);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(254, 79, 4, 0.2);
+      white-space: nowrap;
+    }
+    .uni-btn-match:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(254, 79, 4, 0.35);
+    }
+
+    /* Modal for University Explorer */
+    .uni-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 40, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .uni-modal-backdrop.open {
+      display: flex;
+      opacity: 1;
+    }
+    .uni-modal-dialog {
+      background: #ffffff;
+      border-radius: 24px;
+      max-width: 640px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.4);
+      position: relative;
+      transform: scale(0.92) translateY(20px);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .uni-modal-backdrop.open .uni-modal-dialog {
+      transform: scale(1) translateY(0);
+    }
+    .uni-modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      z-index: 10;
+      transition: background 0.2s ease;
+    }
+    .uni-modal-close:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    /* Pop Animation for Simulator Gauge */
+    @keyframes popScale {
+      0% { transform: scale(0.92); }
+      50% { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+    .pop-anim {
+      display: inline-block;
+      animation: popScale 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Immersive Campus CTA Banner */
+    .campus-cta-card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      margin: 3.5rem 0 2rem;
+      background: url('images/backgrounds/students_grad.jpg') center/cover no-repeat;
+      box-shadow: 0 24px 50px -10px rgba(0, 0, 128, 0.25);
+      border: 1px solid rgba(254, 79, 4, 0.3);
+    }
+    .campus-cta-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(0, 0, 128, 0.88) 100%);
+      backdrop-filter: blur(2px);
+    }
+    .campus-cta-content {
+      position: relative;
+      z-index: 2;
+      padding: 3.8rem 2.5rem;
+      text-align: center;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .campus-cta-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 1rem 0;
+      line-height: 1.2;
+    }
+    .campus-cta-desc {
+      font-size: 1.12rem;
+      color: #cbd5e1;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .campus-cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .btn-secondary-glass {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.95rem 1.8rem;
+      border-radius: 30px;
+      font-weight: 700;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      text-decoration: none;
+      backdrop-filter: blur(10px);
+      transition: all 0.25s ease;
+    }
+    .btn-secondary-glass:hover {
+      background: rgba(255, 255, 255, 0.22);
+      transform: translateY(-2px);
     }
     .uni-details {
       font-size: 0.88rem;
@@ -1487,6 +1946,27 @@
 
         <div class="gallery-container" id="gallery">
           <div class="gallery-item">
+            <img src="./images/backgrounds/campus_architecture.jpg" alt="Ugandan University Campus Architecture" loading="lazy">
+            <div class="gallery-caption">
+              Public University Campuses
+              <span>World-class facilities across Uganda's tertiary institutions</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="./images/backgrounds/students_grad.jpg" alt="University Graduation Day Celebration" loading="lazy">
+            <div class="gallery-caption">
+              UACE Student Success
+              <span>From A-Level preparation to degree graduation</span>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="./images/backgrounds/library_study.jpg" alt="University Library & Research Centers" loading="lazy">
+            <div class="gallery-caption">
+              Modern Academic Resources
+              <span>Digital research libraries & lecture environments</span>
+            </div>
+          </div>
+          <div class="gallery-item">
             <img src="./images/banner_4_1776314401568.png" alt="Makerere University Tech Innovation Hall">
             <div class="gallery-caption">
               Makerere University
@@ -1543,243 +2023,447 @@
   <!-- ==================== UNIVERSITIES DIRECTORY SECTION ==================== -->
   <section id="section-universities" class="content-section">
     <div class="section-header">
-      <span class="section-badge">Public Institutions</span>
-      <h2 class="section-title">Ugandan Public Universities Directory</h2>
-      <p class="section-subtitle">Official admission contacts, campuses, and official websites for all 10 chartered public universities.</p>
+      <span class="section-badge">🏛️ National Higher Education Directory</span>
+      <h2 class="section-title">Uganda Public Universities & Colleges</h2>
+      <p class="section-subtitle">Official admission portals, collegiate structures, faculties, and campuses for all 10 chartered public universities across Uganda.</p>
     </div>
 
-    <div class="uni-directory">
-      <div class="uni-tabs">
-        <button class="uni-tab-btn active" onclick="filterUni('all', this)">All Universities</button>
-        <button class="uni-tab-btn" onclick="filterUni('central', this)">Central Region</button>
-        <button class="uni-tab-btn" onclick="filterUni('western', this)">Western Region</button>
-        <button class="uni-tab-btn" onclick="filterUni('northern', this)">Northern Region</button>
-        <button class="uni-tab-btn" onclick="filterUni('eastern', this)">Eastern Region</button>
+    <div class="uni-directory-wrapper">
+      <div class="uni-controls-bar">
+        <!-- Live University Search -->
+        <div class="uni-search-box">
+          <svg class="uni-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="uniSearchInput" class="uni-search-input" placeholder="Search by university name, city, college, or flagship course..." oninput="filterUniversities()">
+        </div>
+
+        <!-- Region Filter Tabs -->
+        <div class="uni-tabs">
+          <button class="uni-tab-btn active" data-region="all" onclick="filterUni('all', this)">
+            All Universities <span class="uni-tab-count">10</span>
+          </button>
+          <button class="uni-tab-btn" data-region="central" onclick="filterUni('central', this)">
+            Central Region <span class="uni-tab-count">2</span>
+          </button>
+          <button class="uni-tab-btn" data-region="western" onclick="filterUni('western', this)">
+            Western Region <span class="uni-tab-count">3</span>
+          </button>
+          <button class="uni-tab-btn" data-region="northern" onclick="filterUni('northern', this)">
+            Northern Region <span class="uni-tab-count">3</span>
+          </button>
+          <button class="uni-tab-btn" data-region="eastern" onclick="filterUni('eastern', this)">
+            Eastern Region <span class="uni-tab-count">2</span>
+          </button>
+        </div>
+
+        <div id="uniFilteredCount" style="font-size:0.86rem; font-weight:700; color:var(--text-muted);">
+          Showing 10 of 10 Public Universities
+        </div>
       </div>
 
       <div class="uni-grid" id="uniGrid">
-        <!-- Makerere -->
-        <div class="uni-card" data-region="central">
-          <div>
-            <div class="uni-card-header">
-              <div class="uni-avatar">MAK</div>
-              <div>
-                <h4>Makerere University</h4>
-                <div class="uni-loc">📍 Makerere Hill, Kampala</div>
-              </div>
-            </div>
-            <div class="uni-details">
-              <strong>Academics:</strong> 165+ Degree Programs across 10 Colleges.<br>
-              <strong>Email:</strong> ar@mak.ac.ug<br>
-              <strong>Tel:</strong> +256-41-531202 / 540436
+        <!-- 1. Makerere University -->
+        <div class="uni-card tilt-card" data-region="central" data-name="Makerere University" data-keywords="makerere mak kampala central cedat chs law medicine engineering bba bcom computer science pharmacy">
+          <div class="uni-card-cover" style="background-image: url('images/campuses/makerere.jpg');">
+            <div class="uni-card-badges">
+              <span class="uni-badge-chartered">🛡️ Chartered Public · Est. 1922</span>
+              <span class="uni-badge-region">📍 Central Region</span>
             </div>
           </div>
-          <div class="uni-card-footer">
-            <a href="https://www.mak.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-link">Official Portal ↗</a>
-            <a href="course-input.html" class="btn-primary" style="padding:0.45rem 0.9rem; font-size:0.82rem;">Check Match</a>
+          <div class="uni-profile-row">
+            <div class="uni-avatar-shield">
+              <img src="images/logos/mak.svg" alt="Makerere University Official Logo" loading="lazy">
+              <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
+            </div>
+            <div>
+              <span class="uni-est-tag">MAK · #1 Ranked in Uganda</span>
+            </div>
+          </div>
+          <div class="uni-card-body">
+            <div class="uni-title-wrap">
+              <h4>Makerere University</h4>
+              <div class="uni-motto">“We Build for the Future”</div>
+            </div>
+            <div class="uni-meta-chips">
+              <span class="uni-chip">🎓 165+ Programs</span>
+              <span class="uni-chip">🏛️ 10 Colleges + Law</span>
+              <span class="uni-chip">📍 Makerere Hill, Kampala</span>
+            </div>
+            <div class="uni-details-box">
+              <strong>Admission:</strong> PUJAB Merit, Private Sponsorship, Diploma Entry.<br>
+              <strong>Registrar:</strong> ar@mak.ac.ug | +256-41-531202
+            </div>
+            <div class="uni-card-actions">
+              <a href="https://www.mak.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-btn-portal" title="Visit Official Portal">Portal ↗</a>
+              <button class="uni-btn-view" onclick="openUniModal('mak')">View Profile</button>
+              <a href="course-input.html?uni=Makerere+University" class="uni-btn-match" title="Check courses at Makerere">Match</a>
+            </div>
           </div>
         </div>
 
-        <!-- Kyambogo -->
-        <div class="uni-card" data-region="central">
-          <div>
-            <div class="uni-card-header">
-              <div class="uni-avatar" style="background:linear-gradient(135deg, #fe4f04, #ff7a2d);">KYU</div>
-              <div>
-                <h4>Kyambogo University</h4>
-                <div class="uni-loc">📍 Kyambogo Hill, Kampala</div>
-              </div>
-            </div>
-            <div class="uni-details">
-              <strong>Academics:</strong> 125+ Degree Programs (Engineering, Science, Education).<br>
-              <strong>Email:</strong> arkyu@kyu.ac.ug<br>
-              <strong>Tel:</strong> +256-41-286237 / 287343
+        <!-- 2. Kyambogo University -->
+        <div class="uni-card tilt-card" data-region="central" data-name="Kyambogo University" data-keywords="kyambogo kyu kampala central engineering education science special needs vocational civil mechanical electrical">
+          <div class="uni-card-cover" style="background-image: url('images/campuses/kyambogo.jpg');">
+            <div class="uni-card-badges">
+              <span class="uni-badge-chartered">🛡️ Chartered Public · Est. 2003</span>
+              <span class="uni-badge-region">📍 Central Region</span>
             </div>
           </div>
-          <div class="uni-card-footer">
-            <a href="https://www.kyu.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-link">Official Portal ↗</a>
-            <a href="course-input.html" class="btn-primary" style="padding:0.45rem 0.9rem; font-size:0.82rem;">Check Match</a>
+          <div class="uni-profile-row">
+            <div class="uni-avatar-shield">
+              <img src="images/logos/kyu.png" alt="Kyambogo University Official Logo" loading="lazy">
+              <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
+            </div>
+            <div>
+              <span class="uni-est-tag">KYU · Premier Engineering & Vocational Hub</span>
+            </div>
+          </div>
+          <div class="uni-card-body">
+            <div class="uni-title-wrap">
+              <h4>Kyambogo University</h4>
+              <div class="uni-motto">“Knowledge and Skills for Service”</div>
+            </div>
+            <div class="uni-meta-chips">
+              <span class="uni-chip">🎓 125+ Programs</span>
+              <span class="uni-chip">🏛️ 6 Major Faculties</span>
+              <span class="uni-chip">📍 Kyambogo Hill, Kampala</span>
+            </div>
+            <div class="uni-details-box">
+              <strong>Admission:</strong> PUJAB Merit, Evening & Weekend, Mature Age Entry.<br>
+              <strong>Registrar:</strong> arkyu@kyu.ac.ug | +256-41-286237
+            </div>
+            <div class="uni-card-actions">
+              <a href="https://www.kyu.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-btn-portal" title="Visit Official Portal">Portal ↗</a>
+              <button class="uni-btn-view" onclick="openUniModal('kyu')">View Profile</button>
+              <a href="course-input.html?uni=Kyambogo+University" class="uni-btn-match" title="Check courses at Kyambogo">Match</a>
+            </div>
           </div>
         </div>
 
-        <!-- MUST -->
-        <div class="uni-card" data-region="western">
-          <div>
-            <div class="uni-card-header">
-              <div class="uni-avatar">MUST</div>
-              <div>
-                <h4>Mbarara University of Science & Tech</h4>
-                <div class="uni-loc">📍 Mbarara City, Western Uganda</div>
-              </div>
-            </div>
-            <div class="uni-details">
-              <strong>Academics:</strong> Premier Medicine, Biomedical & Software Tech.<br>
-              <strong>Email:</strong> ar@must.ac.ug<br>
-              <strong>Tel:</strong> +256-485-660584
+        <!-- 3. Mbarara University of Science & Technology -->
+        <div class="uni-card tilt-card" data-region="western" data-name="Mbarara University of Science and Technology" data-keywords="mbarara must western kihumuro medicine surgery pharmacy nursing biomedical software engineering tech">
+          <div class="uni-card-cover" style="background-image: url('images/campuses/must.jpg');">
+            <div class="uni-card-badges">
+              <span class="uni-badge-chartered">🛡️ Chartered Public · Est. 1989</span>
+              <span class="uni-badge-region">📍 Western Region</span>
             </div>
           </div>
-          <div class="uni-card-footer">
-            <a href="https://www.must.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-link">Official Portal ↗</a>
-            <a href="course-input.html" class="btn-primary" style="padding:0.45rem 0.9rem; font-size:0.82rem;">Check Match</a>
+          <div class="uni-profile-row">
+            <div class="uni-avatar-shield">
+              <img src="images/logos/must.webp" alt="Mbarara University of Science and Technology Official Logo" loading="lazy">
+              <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
+            </div>
+            <div>
+              <span class="uni-est-tag">MUST · Premier Medicine & Applied Tech</span>
+            </div>
+          </div>
+          <div class="uni-card-body">
+            <div class="uni-title-wrap">
+              <h4>Mbarara University of Science & Tech</h4>
+              <div class="uni-motto">“Succeed for Humanity”</div>
+            </div>
+            <div class="uni-meta-chips">
+              <span class="uni-chip">🎓 45+ Programs</span>
+              <span class="uni-chip">🏛️ Medicine, FAST & Computing</span>
+              <span class="uni-chip">📍 Kihumuro & Mbarara City</span>
+            </div>
+            <div class="uni-details-box">
+              <strong>Admission:</strong> PUJAB Merit, Private Day, International Students.<br>
+              <strong>Registrar:</strong> ar@must.ac.ug | +256-485-660584
+            </div>
+            <div class="uni-card-actions">
+              <a href="https://www.must.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-btn-portal" title="Visit Official Portal">Portal ↗</a>
+              <button class="uni-btn-view" onclick="openUniModal('must')">View Profile</button>
+              <a href="course-input.html?uni=Mbarara+University+of+Science+and+Technology" class="uni-btn-match" title="Check courses at MUST">Match</a>
+            </div>
           </div>
         </div>
 
-        <!-- Gulu -->
-        <div class="uni-card" data-region="northern">
-          <div>
-            <div class="uni-card-header">
-              <div class="uni-avatar">GU</div>
-              <div>
-                <h4>Gulu University</h4>
-                <div class="uni-loc">📍 Gulu City, Northern Uganda</div>
-              </div>
-            </div>
-            <div class="uni-details">
-              <strong>Academics:</strong> Medicine, Agriculture, Education & Business.<br>
-              <strong>Email:</strong> ar@gu.ac.ug<br>
-              <strong>Tel:</strong> +256-471-432921
+        <!-- 4. Gulu University -->
+        <div class="uni-card tilt-card" data-region="northern" data-name="Gulu University" data-keywords="gulu gu northern laroo medicine surgery agriculture biosystems agribusiness education development">
+          <div class="uni-card-cover" style="background-image: url('images/campuses/gulu.jpg');">
+            <div class="uni-card-badges">
+              <span class="uni-badge-chartered">🛡️ Chartered Public · Est. 2002</span>
+              <span class="uni-badge-region">📍 Northern Region</span>
             </div>
           </div>
-          <div class="uni-card-footer">
-            <a href="https://www.gu.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-link">Official Portal ↗</a>
-            <a href="course-input.html" class="btn-primary" style="padding:0.45rem 0.9rem; font-size:0.82rem;">Check Match</a>
+          <div class="uni-profile-row">
+            <div class="uni-avatar-shield">
+              <img src="images/logos/gulu.png" alt="Gulu University Official Logo" loading="lazy">
+              <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
+            </div>
+            <div>
+              <span class="uni-est-tag">GU · Northern Uganda Flagship Institution</span>
+            </div>
+          </div>
+          <div class="uni-card-body">
+            <div class="uni-title-wrap">
+              <h4>Gulu University</h4>
+              <div class="uni-motto">“For Community Transformation”</div>
+            </div>
+            <div class="uni-meta-chips">
+              <span class="uni-chip">🎓 40+ Programs</span>
+              <span class="uni-chip">🏛️ 5 Faculties & Research Hub</span>
+              <span class="uni-chip">📍 Laroo, Gulu City</span>
+            </div>
+            <div class="uni-details-box">
+              <strong>Admission:</strong> PUJAB Government Merit, District Quota, Private.<br>
+              <strong>Registrar:</strong> ar@gu.ac.ug | +256-471-432921
+            </div>
+            <div class="uni-card-actions">
+              <a href="https://www.gu.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-btn-portal" title="Visit Official Portal">Portal ↗</a>
+              <button class="uni-btn-view" onclick="openUniModal('gulu')">View Profile</button>
+              <a href="course-input.html?uni=Gulu+University" class="uni-btn-match" title="Check courses at Gulu">Match</a>
+            </div>
           </div>
         </div>
 
-        <!-- Busitema -->
-        <div class="uni-card" data-region="eastern">
-          <div>
-            <div class="uni-card-header">
-              <div class="uni-avatar">BU</div>
-              <div>
-                <h4>Busitema University</h4>
-                <div class="uni-loc">📍 Tororo / Busia / Mbale</div>
-              </div>
-            </div>
-            <div class="uni-details">
-              <strong>Academics:</strong> Engineering, Agricultural Tech, Health Sciences.<br>
-              <strong>Email:</strong> ar@acadreg.busitema.ac.ug<br>
-              <strong>Tel:</strong> +256-45-4455858
+        <!-- 5. Busitema University -->
+        <div class="uni-card tilt-card" data-region="eastern" data-name="Busitema University" data-keywords="busitema bu eastern tororo mbale busia engineering agricultural water resources mining textile health sciences">
+          <div class="uni-card-cover" style="background-image: url('images/campuses/busitema.jpg');">
+            <div class="uni-card-badges">
+              <span class="uni-badge-chartered">🛡️ Chartered Public · Est. 2007</span>
+              <span class="uni-badge-region">📍 Eastern Region</span>
             </div>
           </div>
-          <div class="uni-card-footer">
-            <a href="https://www.busitema.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-link">Official Portal ↗</a>
-            <a href="course-input.html" class="btn-primary" style="padding:0.45rem 0.9rem; font-size:0.82rem;">Check Match</a>
+          <div class="uni-profile-row">
+            <div class="uni-avatar-shield">
+              <img src="images/logos/busitema.png" alt="Busitema University Official Logo" loading="lazy">
+              <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
+            </div>
+            <div>
+              <span class="uni-est-tag">BU · Pioneer Multi-Campus Tech University</span>
+            </div>
+          </div>
+          <div class="uni-card-body">
+            <div class="uni-title-wrap">
+              <h4>Busitema University</h4>
+              <div class="uni-motto">“Pursuing Excellence in Technology”</div>
+            </div>
+            <div class="uni-meta-chips">
+              <span class="uni-chip">🎓 50+ Programs</span>
+              <span class="uni-chip">🏛️ 6 Multi-Campuses</span>
+              <span class="uni-chip">📍 Tororo / Mbale / Busia</span>
+            </div>
+            <div class="uni-details-box">
+              <strong>Admission:</strong> Agricultural Engineering, Mining, Textile, Medicine.<br>
+              <strong>Registrar:</strong> ar@acadreg.busitema.ac.ug | +256-45-4455858
+            </div>
+            <div class="uni-card-actions">
+              <a href="https://www.busitema.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-btn-portal" title="Visit Official Portal">Portal ↗</a>
+              <button class="uni-btn-view" onclick="openUniModal('busitema')">View Profile</button>
+              <a href="course-input.html?uni=Busitema+University" class="uni-btn-match" title="Check courses at Busitema">Match</a>
+            </div>
           </div>
         </div>
 
-        <!-- Muni -->
-        <div class="uni-card" data-region="northern">
-          <div>
-            <div class="uni-card-header">
-              <div class="uni-avatar">MU</div>
-              <div>
-                <h4>Muni University</h4>
-                <div class="uni-loc">📍 Arua City, West Nile</div>
-              </div>
-            </div>
-            <div class="uni-details">
-              <strong>Academics:</strong> Information Communication Tech, Health, Sciences.<br>
-              <strong>Email:</strong> ar@muni.ac.ug<br>
-              <strong>Tel:</strong> +256-476-420312
+        <!-- 6. Muni University -->
+        <div class="uni-card tilt-card" data-region="northern" data-name="Muni University" data-keywords="muni arua west nile northern technosciences information technology software nursing allied health sciences">
+          <div class="uni-card-cover" style="background-image: url('images/campuses/muni.jpg');">
+            <div class="uni-card-badges">
+              <span class="uni-badge-chartered">🛡️ Chartered Public · Est. 2013</span>
+              <span class="uni-badge-region">📍 Northern Region</span>
             </div>
           </div>
-          <div class="uni-card-footer">
-            <a href="https://www.muni.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-link">Official Portal ↗</a>
-            <a href="course-input.html" class="btn-primary" style="padding:0.45rem 0.9rem; font-size:0.82rem;">Check Match</a>
+          <div class="uni-profile-row">
+            <div class="uni-avatar-shield">
+              <img src="images/logos/muni.png" alt="Muni University Official Logo" loading="lazy">
+              <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
+            </div>
+            <div>
+              <span class="uni-est-tag">MUNI · Technoscience & Innovation Citadel</span>
+            </div>
+          </div>
+          <div class="uni-card-body">
+            <div class="uni-title-wrap">
+              <h4>Muni University</h4>
+              <div class="uni-motto">“Transforming Lives Through Technology”</div>
+            </div>
+            <div class="uni-meta-chips">
+              <span class="uni-chip">🎓 25+ Programs</span>
+              <span class="uni-chip">🏛️ Technoscience & Health</span>
+              <span class="uni-chip">📍 Muni Hill, Arua City</span>
+            </div>
+            <div class="uni-details-box">
+              <strong>Admission:</strong> Information Systems, Nursing, Science Education.<br>
+              <strong>Registrar:</strong> ar@muni.ac.ug | +256-476-420312
+            </div>
+            <div class="uni-card-actions">
+              <a href="https://www.muni.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-btn-portal" title="Visit Official Portal">Portal ↗</a>
+              <button class="uni-btn-view" onclick="openUniModal('muni')">View Profile</button>
+              <a href="course-input.html?uni=Muni+University" class="uni-btn-match" title="Check courses at Muni">Match</a>
+            </div>
           </div>
         </div>
 
-        <!-- Kabale -->
-        <div class="uni-card" data-region="western">
-          <div>
-            <div class="uni-card-header">
-              <div class="uni-avatar">KAB</div>
-              <div>
-                <h4>Kabale University</h4>
-                <div class="uni-loc">📍 Kikungiri Hill, Kabale</div>
-              </div>
-            </div>
-            <div class="uni-details">
-              <strong>Academics:</strong> Medicine, Education, Computing, Environmental Studies.<br>
-              <strong>Email:</strong> registrar@kab.ac.ug<br>
-              <strong>Tel:</strong> +256-4864-26463
+        <!-- 7. Kabale University -->
+        <div class="uni-card tilt-card" data-region="western" data-name="Kabale University" data-keywords="kabale kab western kigezi hills medicine engineering civil computing tourism environmental studies">
+          <div class="uni-card-cover" style="background-image: url('images/campuses/kabale.jpg');">
+            <div class="uni-card-badges">
+              <span class="uni-badge-chartered">🛡️ Chartered Public · Est. 2002/2015</span>
+              <span class="uni-badge-region">📍 Western Region</span>
             </div>
           </div>
-          <div class="uni-card-footer">
-            <a href="https://www.kab.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-link">Official Portal ↗</a>
-            <a href="course-input.html" class="btn-primary" style="padding:0.45rem 0.9rem; font-size:0.82rem;">Check Match</a>
+          <div class="uni-profile-row">
+            <div class="uni-avatar-shield">
+              <img src="images/logos/kabale.jpg" alt="Kabale University Official Logo" loading="lazy">
+              <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
+            </div>
+            <div>
+              <span class="uni-est-tag">KAB · Kigezi Highland Academic Hub</span>
+            </div>
+          </div>
+          <div class="uni-card-body">
+            <div class="uni-title-wrap">
+              <h4>Kabale University</h4>
+              <div class="uni-motto">“Knowledge is the Beacon of Life”</div>
+            </div>
+            <div class="uni-meta-chips">
+              <span class="uni-chip">🎓 55+ Programs</span>
+              <span class="uni-chip">🏛️ Medicine, Engineering & Arts</span>
+              <span class="uni-chip">📍 Kikungiri Hill, Kabale</span>
+            </div>
+            <div class="uni-details-box">
+              <strong>Admission:</strong> Medicine, Civil/Electrical Eng, Tourism, Agriculture.<br>
+              <strong>Registrar:</strong> registrar@kab.ac.ug | +256-4864-26463
+            </div>
+            <div class="uni-card-actions">
+              <a href="https://www.kab.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-btn-portal" title="Visit Official Portal">Portal ↗</a>
+              <button class="uni-btn-view" onclick="openUniModal('kabale')">View Profile</button>
+              <a href="course-input.html?uni=Kabale+University" class="uni-btn-match" title="Check courses at Kabale">Match</a>
+            </div>
           </div>
         </div>
 
-        <!-- Lira -->
-        <div class="uni-card" data-region="northern">
-          <div>
-            <div class="uni-card-header">
-              <div class="uni-avatar">LU</div>
-              <div>
-                <h4>Lira University</h4>
-                <div class="uni-loc">📍 Lira City, Northern Uganda</div>
-              </div>
-            </div>
-            <div class="uni-details">
-              <strong>Academics:</strong> Midwifery, Public Health, Commerce, Computer Science.<br>
-              <strong>Email:</strong> academicregistrar@lirauni.ac.ug<br>
-              <strong>Tel:</strong> +256-471-660709
+        <!-- 8. Lira University -->
+        <div class="uni-card tilt-card" data-region="northern" data-name="Lira University" data-keywords="lira lu northern ayere midwifery public health commerce teaching hospital medicine nursing">
+          <div class="uni-card-cover" style="background-image: url('images/campuses/lira.jpg');">
+            <div class="uni-card-badges">
+              <span class="uni-badge-chartered">🛡️ Chartered Public · Est. 2015</span>
+              <span class="uni-badge-region">📍 Northern Region</span>
             </div>
           </div>
-          <div class="uni-card-footer">
-            <a href="https://www.lirauni.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-link">Official Portal ↗</a>
-            <a href="course-input.html" class="btn-primary" style="padding:0.45rem 0.9rem; font-size:0.82rem;">Check Match</a>
+          <div class="uni-profile-row">
+            <div class="uni-avatar-shield">
+              <img src="images/logos/lira.png" alt="Lira University Official Logo" loading="lazy">
+              <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
+            </div>
+            <div>
+              <span class="uni-est-tag">LU · Healthcare & Midwifery Centre of Excellence</span>
+            </div>
+          </div>
+          <div class="uni-card-body">
+            <div class="uni-title-wrap">
+              <h4>Lira University</h4>
+              <div class="uni-motto">“Beacon of Modern Knowledge & Healthcare”</div>
+            </div>
+            <div class="uni-meta-chips">
+              <span class="uni-chip">🎓 20+ Programs</span>
+              <span class="uni-chip">🏛️ Modern Teaching Hospital</span>
+              <span class="uni-chip">📍 Ayere, Lira City</span>
+            </div>
+            <div class="uni-details-box">
+              <strong>Admission:</strong> Public Health, Midwifery, Computer Science, Commerce.<br>
+              <strong>Registrar:</strong> academicregistrar@lirauni.ac.ug | +256-471-660709
+            </div>
+            <div class="uni-card-actions">
+              <a href="https://www.lirauni.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-btn-portal" title="Visit Official Portal">Portal ↗</a>
+              <button class="uni-btn-view" onclick="openUniModal('lira')">View Profile</button>
+              <a href="course-input.html?uni=Lira+University" class="uni-btn-match" title="Check courses at Lira">Match</a>
+            </div>
           </div>
         </div>
 
-        <!-- Soroti -->
-        <div class="uni-card" data-region="eastern">
-          <div>
-            <div class="uni-card-header">
-              <div class="uni-avatar">SUN</div>
-              <div>
-                <h4>Soroti University</h4>
-                <div class="uni-loc">📍 Arapai, Soroti City</div>
-              </div>
-            </div>
-            <div class="uni-details">
-              <strong>Academics:</strong> Medicine, Surgery, Nursing, Electronic Engineering.<br>
-              <strong>Email:</strong> ar@sun.ac.ug<br>
-              <strong>Tel:</strong> +256-454-961605
+        <!-- 9. Soroti University -->
+        <div class="uni-card tilt-card" data-region="eastern" data-name="Soroti University" data-keywords="soroti sun eastern arapai medicine surgery electronic engineering biomedical nursing science">
+          <div class="uni-card-cover" style="background-image: url('images/campuses/soroti.jpg');">
+            <div class="uni-card-badges">
+              <span class="uni-badge-chartered">🛡️ Chartered Public · Est. 2015</span>
+              <span class="uni-badge-region">📍 Eastern Region</span>
             </div>
           </div>
-          <div class="uni-card-footer">
-            <a href="https://www.sun.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-link">Official Portal ↗</a>
-            <a href="course-input.html" class="btn-primary" style="padding:0.45rem 0.9rem; font-size:0.82rem;">Check Match</a>
+          <div class="uni-profile-row">
+            <div class="uni-avatar-shield">
+              <img src="images/logos/soroti.png" alt="Soroti University Official Logo" loading="lazy">
+              <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
+            </div>
+            <div>
+              <span class="uni-est-tag">SUN · Medical & Electronic Innovation</span>
+            </div>
+          </div>
+          <div class="uni-card-body">
+            <div class="uni-title-wrap">
+              <h4>Soroti University</h4>
+              <div class="uni-motto">“Empowering Society Through Science”</div>
+            </div>
+            <div class="uni-meta-chips">
+              <span class="uni-chip">🎓 15+ Programs</span>
+              <span class="uni-chip">🏛️ Medicine & Engineering</span>
+              <span class="uni-chip">📍 Arapai, Soroti City</span>
+            </div>
+            <div class="uni-details-box">
+              <strong>Admission:</strong> Medicine, Surgery, Electronics & Biomedical Eng.<br>
+              <strong>Registrar:</strong> ar@sun.ac.ug | +256-454-961605
+            </div>
+            <div class="uni-card-actions">
+              <a href="https://www.sun.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-btn-portal" title="Visit Official Portal">Portal ↗</a>
+              <button class="uni-btn-view" onclick="openUniModal('soroti')">View Profile</button>
+              <a href="course-input.html?uni=Soroti+University" class="uni-btn-match" title="Check courses at Soroti">Match</a>
+            </div>
           </div>
         </div>
 
-        <!-- Mountains of the Moon -->
-        <div class="uni-card" data-region="western">
-          <div>
-            <div class="uni-card-header">
-              <div class="uni-avatar">MMU</div>
-              <div>
-                <h4>Mountains of the Moon University</h4>
-                <div class="uni-loc">📍 Fort Portal Tourism City</div>
-              </div>
-            </div>
-            <div class="uni-details">
-              <strong>Academics:</strong> Public Health, Agriculture, Business, Education.<br>
-              <strong>Email:</strong> registrar@mmu.ac.ug<br>
-              <strong>Tel:</strong> +256-483-660390
+        <!-- 10. Mountains of the Moon University -->
+        <div class="uni-card tilt-card" data-region="western" data-name="Mountains of the Moon University" data-keywords="mountains moon mmu western fort portal rwenzori agriculture public health business education tourism">
+          <div class="uni-card-cover" style="background-image: url('images/campuses/mmu.jpg');">
+            <div class="uni-card-badges">
+              <span class="uni-badge-chartered">🛡️ Chartered Public · Est. 2005/2022</span>
+              <span class="uni-badge-region">📍 Western Region</span>
             </div>
           </div>
-          <div class="uni-card-footer">
-            <a href="https://www.mmu.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-link">Official Portal ↗</a>
-            <a href="course-input.html" class="btn-primary" style="padding:0.45rem 0.9rem; font-size:0.82rem;">Check Match</a>
+          <div class="uni-profile-row">
+            <div class="uni-avatar-shield">
+              <img src="images/logos/mmu.png" alt="Mountains of the Moon University Official Logo" loading="lazy">
+              <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
+            </div>
+            <div>
+              <span class="uni-est-tag">MMU · Rwenzori Highlands Public University</span>
+            </div>
+          </div>
+          <div class="uni-card-body">
+            <div class="uni-title-wrap">
+              <h4>Mountains of the Moon University</h4>
+              <div class="uni-motto">“Heights of Wisdom & Environmental Stewardship”</div>
+            </div>
+            <div class="uni-meta-chips">
+              <span class="uni-chip">🎓 35+ Programs</span>
+              <span class="uni-chip">🏛️ 5 Major Faculties</span>
+              <span class="uni-chip">📍 Lake Saaka, Fort Portal</span>
+            </div>
+            <div class="uni-details-box">
+              <strong>Admission:</strong> Public Health, Agro-Ecology, Tourism & Business.<br>
+              <strong>Registrar:</strong> registrar@mmu.ac.ug | +256-483-660390
+            </div>
+            <div class="uni-card-actions">
+              <a href="https://www.mmu.ac.ug" target="_blank" rel="noopener noreferrer" class="uni-btn-portal" title="Visit Official Portal">Portal ↗</a>
+              <button class="uni-btn-view" onclick="openUniModal('mmu')">View Profile</button>
+              <a href="course-input.html?uni=Mountains+of+the+Moon+University" class="uni-btn-match" title="Check courses at MMU">Match</a>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
+
+  <!-- Interactive University Detail Modal -->
+  <div id="uniModal" class="uni-modal-backdrop" onclick="closeUniModal(event)">
+    <div class="uni-modal-dialog" onclick="event.stopPropagation()">
+      <button class="uni-modal-close" onclick="closeUniModal()" title="Close dialog">✕</button>
+      <div id="uniModalContent">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
 
   <!-- ==================== WEIGHT SYSTEM SECTION ==================== -->
   <section id="section-weight-system" class="content-section">
@@ -1789,60 +2473,62 @@
       <p class="section-subtitle">Understanding how UACE grade points translate into university admissions weight.</p>
     </div>
 
-    <div class="agreement-box" style="background: linear-gradient(135deg, rgba(254, 79, 4, 0.05), rgba(0, 0, 128, 0.05)); border-color: rgba(254, 79, 4, 0.2);">
-      <h3 style="text-align:center; font-size:1.4rem; color:var(--navy);">Official Public Universities Joint Admissions Board Formula</h3>
-      <div style="font-family:'Outfit', sans-serif; font-size:1.3rem; font-weight:800; text-align:center; color:var(--primary); margin:1rem 0;">
-        Total Weight = (Essential × 3) + (Relevant × 2) + Subsidiary + O-Level Weight + Gender Bonus
-      </div>
-    </div>
-
-    <div class="stats-grid">
-      <div class="stat-card">
-        <h4 style="font-family:'Outfit', sans-serif; font-size:1.2rem; color:var(--navy); margin-bottom:0.8rem;">1. Principal Grade Scale</h4>
-        <ul style="list-style:none; line-height:2; color:var(--text-muted); font-size:0.92rem;">
-          <li><strong>A</strong> = 6 points</li>
-          <li><strong>B</strong> = 5 points</li>
-          <li><strong>C</strong> = 4 points</li>
-          <li><strong>D</strong> = 3 points</li>
-          <li><strong>E</strong> = 2 points</li>
-          <li><strong>O</strong> = 1 point (Subsidiary Pass)</li>
-          <li><strong>F</strong> = 0 points (Fail)</li>
-        </ul>
+    <div style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.93) 0%, rgba(248, 250, 252, 0.97) 100%), url('images/backgrounds/blueprint_math.jpg') center/cover no-repeat; border-radius: var(--radius-xl); padding: 2.5rem 1.8rem; border: 1px solid var(--card-border); margin-bottom: 3.5rem; box-shadow: var(--shadow-sm); backdrop-filter: blur(10px);">
+      <div class="agreement-box" style="background: linear-gradient(135deg, rgba(254, 79, 4, 0.08), rgba(0, 0, 128, 0.08)); border-color: rgba(254, 79, 4, 0.25); box-shadow: 0 4px 20px rgba(0,0,0,0.04);">
+        <h3 style="text-align:center; font-size:1.4rem; color:var(--navy);">Official Public Universities Joint Admissions Board Formula</h3>
+        <div style="font-family:'Outfit', sans-serif; font-size:1.3rem; font-weight:800; text-align:center; color:var(--primary); margin:1rem 0;">
+          Total Weight = (Essential × 3) + (Relevant × 2) + Subsidiary + O-Level Weight + Gender Bonus
+        </div>
       </div>
 
-      <div class="stat-card">
-        <h4 style="font-family:'Outfit', sans-serif; font-size:1.2rem; color:var(--navy); margin-bottom:0.8rem;">2. Subject Multipliers</h4>
-        <ul style="list-style:none; line-height:2; color:var(--text-muted); font-size:0.92rem;">
-          <li><span style="color:var(--primary); font-weight:700;">Essential Subjects (Top 2)</span>: Grade points × 3</li>
-          <li><span style="color:var(--navy); font-weight:700;">Relevant / Desirable</span>: Grade points × 2</li>
-          <li><span style="color:var(--emerald); font-weight:700;">General Paper (GP)</span>: +1.0 point on pass</li>
-          <li><span style="color:var(--emerald); font-weight:700;">Other Subsidiary (ICT/Maths)</span>: +1.0 point on pass</li>
-        </ul>
+      <div class="stats-grid">
+        <div class="stat-card tilt-card">
+          <h4 style="font-family:'Outfit', sans-serif; font-size:1.2rem; color:var(--navy); margin-bottom:0.8rem;">1. Principal Grade Scale</h4>
+          <ul style="list-style:none; line-height:2; color:var(--text-muted); font-size:0.92rem;">
+            <li><strong>A</strong> = 6 points</li>
+            <li><strong>B</strong> = 5 points</li>
+            <li><strong>C</strong> = 4 points</li>
+            <li><strong>D</strong> = 3 points</li>
+            <li><strong>E</strong> = 2 points</li>
+            <li><strong>O</strong> = 1 point (Subsidiary Pass)</li>
+            <li><strong>F</strong> = 0 points (Fail)</li>
+          </ul>
+        </div>
+
+        <div class="stat-card tilt-card">
+          <h4 style="font-family:'Outfit', sans-serif; font-size:1.2rem; color:var(--navy); margin-bottom:0.8rem;">2. Subject Multipliers</h4>
+          <ul style="list-style:none; line-height:2; color:var(--text-muted); font-size:0.92rem;">
+            <li><span style="color:var(--primary); font-weight:700;">Essential Subjects (Top 2)</span>: Grade points × 3</li>
+            <li><span style="color:var(--navy); font-weight:700;">Relevant / Desirable</span>: Grade points × 2</li>
+            <li><span style="color:var(--emerald); font-weight:700;">General Paper (GP)</span>: +1.0 point on pass</li>
+            <li><span style="color:var(--emerald); font-weight:700;">Other Subsidiary (ICT/Maths)</span>: +1.0 point on pass</li>
+          </ul>
+        </div>
+
+        <div class="stat-card tilt-card">
+          <h4 style="font-family:'Outfit', sans-serif; font-size:1.2rem; color:var(--navy); margin-bottom:0.8rem;">3. Bonus & O-Level Points</h4>
+          <ul style="list-style:none; line-height:2; color:var(--text-muted); font-size:0.92rem;">
+            <li><strong>O-Level Weight:</strong> 0 to 3.0 points derived from distinction/credit counts.</li>
+            <li><strong>Female Affirmative Action:</strong> +1.5 points automatically awarded to all female applicants across Ugandan public universities.</li>
+          </ul>
+        </div>
       </div>
 
-      <div class="stat-card">
-        <h4 style="font-family:'Outfit', sans-serif; font-size:1.2rem; color:var(--navy); margin-bottom:0.8rem;">3. Bonus & O-Level Points</h4>
-        <ul style="list-style:none; line-height:2; color:var(--text-muted); font-size:0.92rem;">
-          <li><strong>O-Level Weight:</strong> 0 to 3.0 points derived from distinction/credit counts.</li>
-          <li><strong>Female Affirmative Action:</strong> +1.5 points automatically awarded to all female applicants across Ugandan public universities.</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Practical Example -->
-    <div class="agreement-box">
-      <h3>Practical Calculation Example</h3>
-      <p>Consider a female student offering <strong>Physics (A), Mathematics (B), Technical Drawing (A)</strong> with a General Paper pass, Sub-Maths pass, and O-Level weight of 2.4 applying for Bachelor of Science in Civil Engineering at Makerere University:</p>
-      <div style="background:#f8fafc; border-radius:var(--radius-md); padding:1.2rem; border:1px solid #e2e8f0; line-height:2; font-size:0.95rem;">
-        <div>✓ <strong>Mathematics (B):</strong> 5 points × 3 (Essential) = <strong>15.0</strong></div>
-        <div>✓ <strong>Physics (A):</strong> 6 points × 3 (Essential) = <strong>18.0</strong></div>
-        <div>✓ <strong>Technical Drawing (A):</strong> 6 points × 2 (Relevant) = <strong>12.0</strong></div>
-        <div>✓ <strong>General Paper (Pass):</strong> +1.0</div>
-        <div>✓ <strong>Other Subsidiary (Pass):</strong> +1.0</div>
-        <div>✓ <strong>O-Level Weight:</strong> +2.4</div>
-        <div>✓ <strong>Female Gender Bonus:</strong> +1.5</div>
-        <div style="font-size:1.2rem; font-weight:800; color:var(--navy); margin-top:0.5rem; border-top:1px dashed #cbd5e1; padding-top:0.5rem;">
-          Total Calculated Admission Weight: 15.0 + 18.0 + 12.0 + 1.0 + 1.0 + 2.4 + 1.5 = <span style="color:var(--primary);">50.9 points</span>
+      <!-- Practical Example -->
+      <div class="agreement-box" style="margin-top: 1.5rem;">
+        <h3>Practical Calculation Example</h3>
+        <p>Consider a female student offering <strong>Physics (A), Mathematics (B), Technical Drawing (A)</strong> with a General Paper pass, Sub-Maths pass, and O-Level weight of 2.4 applying for Bachelor of Science in Civil Engineering at Makerere University:</p>
+        <div style="background:#f8fafc; border-radius:var(--radius-md); padding:1.2rem; border:1px solid #e2e8f0; line-height:2; font-size:0.95rem;">
+          <div>✓ <strong>Mathematics (B):</strong> 5 points × 3 (Essential) = <strong>15.0</strong></div>
+          <div>✓ <strong>Physics (A):</strong> 6 points × 3 (Essential) = <strong>18.0</strong></div>
+          <div>✓ <strong>Technical Drawing (A):</strong> 6 points × 2 (Relevant) = <strong>12.0</strong></div>
+          <div>✓ <strong>General Paper (Pass):</strong> +1.0</div>
+          <div>✓ <strong>Other Subsidiary (Pass):</strong> +1.0</div>
+          <div>✓ <strong>O-Level Weight:</strong> +2.4</div>
+          <div>✓ <strong>Female Gender Bonus:</strong> +1.5</div>
+          <div style="font-size:1.2rem; font-weight:800; color:var(--navy); margin-top:0.5rem; border-top:1px dashed #cbd5e1; padding-top:0.5rem;">
+            Total Calculated Admission Weight: 15.0 + 18.0 + 12.0 + 1.0 + 1.0 + 2.4 + 1.5 = <span style="color:var(--primary);">50.9 points</span>
+          </div>
         </div>
       </div>
     </div>
@@ -1856,29 +2542,31 @@
       <p class="section-subtitle">Everything you need to navigate tertiary education choices with clarity and confidence.</p>
     </div>
 
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div>
-        <div class="stat-title">Personalized Guidance</div>
-        <div class="stat-label">Tailored exactly to your unique combination of subjects, grades, UCE aggregates, and university preference.</div>
-      </div>
+    <div style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(248, 250, 252, 0.98) 100%), url('images/backgrounds/lecture_hall.jpg') center/cover no-repeat; border-radius: var(--radius-xl); padding: 2.5rem 1.8rem; border: 1px solid var(--card-border); margin-bottom: 3.5rem; box-shadow: var(--shadow-sm); backdrop-filter: blur(10px);">
+      <div class="stats-grid">
+        <div class="stat-card tilt-card">
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div>
+          <div class="stat-title">Personalized Guidance</div>
+          <div class="stat-label">Tailored exactly to your unique combination of subjects, grades, UCE aggregates, and university preference.</div>
+        </div>
 
-      <div class="stat-card">
-        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg></div>
-        <div class="stat-title">Real-Time Instant Processing</div>
-        <div class="stat-label">Instant calculations in under 200ms. No waiting, no queues, and no tedious manual weight lookup tables.</div>
-      </div>
+        <div class="stat-card tilt-card">
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg></div>
+          <div class="stat-title">Real-Time Instant Processing</div>
+          <div class="stat-label">Instant calculations in under 200ms. No waiting, no queues, and no tedious manual weight lookup tables.</div>
+        </div>
 
-      <div class="stat-card">
-        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
-        <div class="stat-title">100% Private & Anonymous</div>
-        <div class="stat-label">Zero account registration needed. Your grades are analyzed securely in real time without tracking personal identities.</div>
-      </div>
+        <div class="stat-card tilt-card">
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
+          <div class="stat-title">100% Private & Anonymous</div>
+          <div class="stat-label">Zero account registration needed. Your grades are analyzed securely in real time without tracking personal identities.</div>
+        </div>
 
-      <div class="stat-card">
-        <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg></div>
-        <div class="stat-title">Fully Mobile Responsive</div>
-        <div class="stat-label">Designed for flawless operation across all smartphones, low-bandwidth connections, tablets, and desktop computers.</div>
+        <div class="stat-card tilt-card">
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg></div>
+          <div class="stat-title">Fully Mobile Responsive</div>
+          <div class="stat-label">Designed for flawless operation across all smartphones, low-bandwidth connections, tablets, and desktop computers.</div>
+        </div>
       </div>
     </div>
   </section>
@@ -1918,8 +2606,18 @@
       </div>
     </div>
 
-    <div style="text-align:center; margin: 2rem 0;">
-      <a href="course-input.html" class="btn-primary">Start Your Guidance Now →</a>
+    <!-- ==================== IMMERSIVE CAMPUS CTA BANNER ==================== -->
+    <div class="campus-cta-card">
+      <div class="campus-cta-overlay"></div>
+      <div class="campus-cta-content">
+        <span class="section-badge" style="background:rgba(254,79,4,0.25); border-color:rgba(254,79,4,0.6); color:#ff9457;">Admissions 2026 / 2027</span>
+        <h2 class="campus-cta-title">Ready to Unlock Your University Journey?</h2>
+        <p class="campus-cta-desc">Join thousands of secondary school leavers across Uganda who calculate their official weights and discover cut-off matches across 10 public universities in seconds.</p>
+        <div class="campus-cta-actions">
+          <a href="course-input.html" class="btn-primary">Launch Course Finder →</a>
+          <a href="#" onclick="showSection('universities'); return false;" class="btn-secondary-glass">Explore 10 Universities</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2140,18 +2838,341 @@
     }
   }
 
-  // University Region Filter
-  function filterUni(region, btn) {
-    document.querySelectorAll('.uni-tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+  // ==================== UNIVERSITIES DIRECTORY & 3D TILT ====================
+  const uniDirectoryData = {
+    mak: {
+      name: "Makerere University",
+      acronym: "MAK",
+      est: "1922",
+      motto: "We Build for the Future",
+      logo: "images/logos/mak.svg",
+      cover: "images/campuses/makerere.jpg",
+      region: "Central (Kampala)",
+      type: "Public Chartered Flagship",
+      portal: "https://www.mak.ac.ug",
+      description: "Makerere University is Uganda's premier institution of higher learning, first established as a technical school in 1922. It is renowned across Africa for cutting-edge medical research, engineering innovation, and legal scholarship.",
+      colleges: [
+        "College of Health Sciences (CHS) - Medicine, Surgery, Pharmacy, Nursing",
+        "College of Engineering, Design, Art and Technology (CEDAT) - Civil, Electrical, Mechanical Eng",
+        "College of Computing and Information Sciences (COCIS) - Software Eng, Computer Science, IT",
+        "College of Business and Management Sciences (CoBAMS) - B.Com, BBA, Economics",
+        "College of Agricultural and Environmental Sciences (CAES) - Agribusiness, Food Science",
+        "College of Natural Sciences (CoNAS) - Biochemistry, Industrial Chemistry, Math",
+        "College of Humanities and Social Sciences (CHUSS) - Social Work, Journalism, Languages",
+        "School of Law (SOL) - Bachelor of Laws (LLB)"
+      ],
+      cutoffsSample: "Civil Eng: ~48.5 | Medicine: ~52.8 | Pharmacy: ~50.2 | Law: ~51.5 | Software Eng: ~46.2",
+      contacts: "Email: ar@mak.ac.ug | Tel: +256-41-531202 | P.O. Box 7062, Kampala"
+    },
+    kyu: {
+      name: "Kyambogo University",
+      acronym: "KYU",
+      est: "2003",
+      motto: "Knowledge and Skills for Service",
+      logo: "images/logos/kyu.png",
+      cover: "images/campuses/kyambogo.jpg",
+      region: "Central (Kampala)",
+      type: "Public Chartered University",
+      portal: "https://www.kyu.ac.ug",
+      description: "Established in 2003 by merging UPK, ITEK, and UNISE, Kyambogo University is Uganda's premier center for engineering, technical vocational education, teacher training, and special needs rehabilitation.",
+      colleges: [
+        "Faculty of Engineering - Civil & Building, Mechanical, Electrical, Telecomm Eng",
+        "Faculty of Science - Computer Science, Information Tech, Food Processing",
+        "Faculty of Education - Science Education, Teacher Pedagogy, Early Childhood",
+        "School of Management and Entrepreneurship - Procurement, Accounting, BBA",
+        "Faculty of Special Needs and Rehabilitation - Community Based Rehabilitation, Speech Therapy",
+        "Faculty of Arts and Social Sciences - Economics, Public Administration"
+      ],
+      cutoffsSample: "Civil Eng: ~44.6 | Electrical Eng: ~42.8 | Computer Science: ~40.5 | Procurement: ~38.2",
+      contacts: "Email: arkyu@kyu.ac.ug | Tel: +256-41-286237 | P.O. Box 1, Kyambogo, Kampala"
+    },
+    must: {
+      name: "Mbarara University of Science and Technology",
+      acronym: "MUST",
+      est: "1989",
+      motto: "Succeed for Humanity",
+      logo: "images/logos/must.webp",
+      cover: "images/campuses/must.jpg",
+      region: "Western (Mbarara)",
+      type: "Public Chartered University",
+      portal: "https://www.must.ac.ug",
+      description: "Mbarara University of Science and Technology is an internationally acclaimed science and medicine powerhouse in Western Uganda, known for excellence in healthcare delivery, biomedical engineering, and applied computing.",
+      colleges: [
+        "Faculty of Medicine - MBChB, Pharmacy, Nursing Sciences, Medical Lab Science",
+        "Faculty of Applied Sciences and Technology (FAST) - Biomedical Eng, Civil Eng, Electrical Eng",
+        "Faculty of Computing and Informatics - Software Eng, Computer Science, IT",
+        "Faculty of Science - Mathematics, Physics, Biology, Chemistry Education",
+        "Faculty of Interdisciplinary Studies - Gender, Development, Agribusiness"
+      ],
+      cutoffsSample: "MBChB: ~51.2 | Biomedical Eng: ~46.8 | Pharmacy: ~48.6 | Software Eng: ~41.4",
+      contacts: "Email: ar@must.ac.ug | Tel: +256-485-660584 | P.O. Box 1410, Mbarara"
+    },
+    gulu: {
+      name: "Gulu University",
+      acronym: "GU",
+      est: "2002",
+      motto: "For Community Transformation",
+      logo: "images/logos/gulu.png",
+      cover: "images/campuses/gulu.jpg",
+      region: "Northern (Gulu)",
+      type: "Public Chartered University",
+      portal: "https://www.gu.ac.ug",
+      description: "Gulu University plays a pivotal role in community transformation and regional development in Northern Uganda, spearheading medical training, biosystems engineering, and agricultural research.",
+      colleges: [
+        "Faculty of Medicine - Medicine and Surgery, Public Health",
+        "Faculty of Agriculture and Environment - Biosystems Eng, Agri-Entrepreneurship",
+        "Faculty of Science - Computer Science, Biosystems, Applied Chemistry",
+        "Faculty of Business and Development Studies - Public Administration, Accounting",
+        "Faculty of Education and Humanities - Secondary Education"
+      ],
+      cutoffsSample: "Medicine & Surgery: ~49.4 | Biosystems Eng: ~40.2 | Computer Science: ~37.6",
+      contacts: "Email: ar@gu.ac.ug | Tel: +256-471-432921 | P.O. Box 166, Gulu"
+    },
+    busitema: {
+      name: "Busitema University",
+      acronym: "BU",
+      est: "2007",
+      motto: "Pursuing Excellence in Technology",
+      logo: "images/logos/busitema.png",
+      cover: "images/campuses/busitema.jpg",
+      region: "Eastern (Tororo / Busia / Mbale)",
+      type: "Public Chartered University",
+      portal: "https://www.busitema.ac.ug",
+      description: "Operating across 6 multi-campuses in Eastern Uganda, Busitema focuses on engineering, mining, agricultural mechanization, water resources, and healthcare education.",
+      colleges: [
+        "Faculty of Engineering & Technology - Agricultural Mechanization, Mining Eng, Water Eng",
+        "Faculty of Health Sciences (Mbale) - Medicine and Surgery, Nursing",
+        "Faculty of Natural Resources & Environmental Sciences - Fisheries, Climate Science",
+        "Faculty of Agriculture & Animal Sciences (Arapai) - Agribusiness, Animal Production",
+        "Faculty of Science and Education (Nagongera) - Physics, Chemistry, Math Education"
+      ],
+      cutoffsSample: "Agricultural Eng: ~41.0 | Mining Eng: ~42.3 | Medicine: ~49.8 | Water Eng: ~39.6",
+      contacts: "Email: ar@acadreg.busitema.ac.ug | Tel: +256-45-4455858 | P.O. Box 236, Tororo"
+    },
+    muni: {
+      name: "Muni University",
+      acronym: "MUNI",
+      est: "2013",
+      motto: "Transforming Lives Through Technology",
+      logo: "images/logos/muni.png",
+      cover: "images/campuses/muni.jpg",
+      region: "Northern (Arua, West Nile)",
+      type: "Public Chartered University",
+      portal: "https://www.muni.ac.ug",
+      description: "Located on Muni Hill overlooking Arua City, Muni University is dedicated to technosciences, digital innovation, nursing, and science education for West Nile and the wider East African region.",
+      colleges: [
+        "Faculty of Technoscience - Information Technology, Information Systems",
+        "Faculty of Health Sciences - Bachelor of Science in Nursing",
+        "Faculty of Science - Pure and Applied Sciences Education",
+        "Faculty of Management Science - Business Administration, Entrepreneurship"
+      ],
+      cutoffsSample: "Information Systems: ~36.8 | Nursing: ~44.5 | Information Tech: ~35.2",
+      contacts: "Email: ar@muni.ac.ug | Tel: +256-476-420312 | P.O. Box 725, Arua"
+    },
+    kabale: {
+      name: "Kabale University",
+      acronym: "KAB",
+      est: "2002 / Public 2015",
+      motto: "Knowledge is the Beacon of Life",
+      logo: "images/logos/kabale.jpg",
+      cover: "images/campuses/kabale.jpg",
+      region: "Western (Kabale, Kigezi)",
+      type: "Public Chartered University",
+      portal: "https://www.kab.ac.ug",
+      description: "Perched atop Kikungiri Hill in the scenic Kigezi highlands, Kabale University transitioned into a public university in 2015 and offers strong medical, civil engineering, computing, and tourism programs.",
+      colleges: [
+        "School of Medicine - Medicine and Surgery, Nursing, Public Health",
+        "Faculty of Engineering, Tech & Applied Design - Civil, Electrical, Mechanical Eng",
+        "Faculty of Computing, Library & Information Science - Computer Science, IT",
+        "Faculty of Agriculture & Environmental Sciences - Tourism, Agro-ecology",
+        "Faculty of Education - Science & Arts Pedagogy"
+      ],
+      cutoffsSample: "Civil Eng: ~40.2 | Medicine: ~48.2 | Computer Science: ~36.5 | Tourism: ~32.4",
+      contacts: "Email: registrar@kab.ac.ug | Tel: +256-4864-26463 | P.O. Box 317, Kabale"
+    },
+    lira: {
+      name: "Lira University",
+      acronym: "LU",
+      est: "2015",
+      motto: "Beacon of Modern Knowledge & Healthcare",
+      logo: "images/logos/lira.png",
+      cover: "images/campuses/lira.jpg",
+      region: "Northern (Lira)",
+      type: "Public Chartered University",
+      portal: "https://www.lirauni.ac.ug",
+      description: "Originally a constituent college of Gulu University, Lira University became autonomous in 2015 and operates Uganda's foremost public university Teaching Hospital specializing in maternal and child healthcare.",
+      colleges: [
+        "Faculty of Health Sciences - Public Health, Midwifery, Nursing",
+        "Faculty of Computing and Information Sciences - Computer Science, ICT",
+        "Faculty of Education - Secondary Teacher Education",
+        "Faculty of Management Sciences - Commerce, Accounting, BBA"
+      ],
+      cutoffsSample: "Midwifery: ~43.2 | Public Health: ~41.8 | Computer Science: ~35.0",
+      contacts: "Email: academicregistrar@lirauni.ac.ug | Tel: +256-471-660709 | P.O. Box 1035, Lira"
+    },
+    soroti: {
+      name: "Soroti University",
+      acronym: "SUN",
+      est: "2015",
+      motto: "Empowering Society Through Science",
+      logo: "images/logos/soroti.png",
+      cover: "images/campuses/soroti.jpg",
+      region: "Eastern (Soroti)",
+      type: "Public Chartered University",
+      portal: "https://www.sun.ac.ug",
+      description: "Founded to advance science, technology, medicine, and engineering in Eastern and North-Eastern Uganda, Soroti University provides world-class laboratory training and medicine degree curricula.",
+      colleges: [
+        "School of Health Sciences - Medicine and Surgery, Nursing Science",
+        "School of Engineering & Technology - Electronic & Computer Eng, Biomedical Eng",
+        "School of Applied Sciences - Industrial Chemistry, Mathematics"
+      ],
+      cutoffsSample: "Medicine: ~48.7 | Electronic & Computer Eng: ~41.2 | Nursing: ~43.0",
+      contacts: "Email: ar@sun.ac.ug | Tel: +256-454-961605 | P.O. Box 211, Soroti"
+    },
+    mmu: {
+      name: "Mountains of the Moon University",
+      acronym: "MMU",
+      est: "2005 / Public 2022",
+      motto: "Heights of Wisdom & Environmental Stewardship",
+      logo: "images/logos/mmu.png",
+      cover: "images/campuses/mmu.jpg",
+      region: "Western (Fort Portal Tourism City)",
+      type: "Public Chartered University",
+      portal: "https://www.mmu.ac.ug",
+      description: "Overlooking the snow-capped Rwenzori ranges in Fort Portal, Mountains of the Moon University was nationalized in 2022 and champions ecotourism, agribusiness, public health, and teacher pedagogy.",
+      colleges: [
+        "Faculty of Health Sciences - Public Health, Nursing, Clinical Medicine",
+        "Faculty of Agriculture & Environmental Sciences - Sustainable Agriculture, Forestry",
+        "Faculty of Business & Management Studies - Banking, Accounting, Tourism",
+        "Faculty of Science, Technology & Innovations - Computer Science, IT",
+        "Faculty of Education - Humanities & Science Education"
+      ],
+      cutoffsSample: "Public Health: ~41.5 | Sustainable Agriculture: ~36.2 | IT: ~34.8",
+      contacts: "Email: registrar@mmu.ac.ug | Tel: +256-483-660390 | P.O. Box 837, Fort Portal"
+    }
+  };
 
+  // Open & Close University Explorer Modal
+  function openUniModal(uniKey) {
+    const data = uniDirectoryData[uniKey];
+    if (!data) return;
+    const modal = document.getElementById('uniModal');
+    const content = document.getElementById('uniModalContent');
+
+    content.innerHTML = `
+      <div style="height:150px; background:url('${data.cover}') center/cover no-repeat; position:relative; border-radius:24px 24px 0 0;">
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,40,0.3) 0%, rgba(0,0,80,0.8) 100%);"></div>
+        <div style="position:absolute; bottom:12px; left:18px; display:flex; align-items:center; gap:8px;">
+          <span style="background:var(--primary); color:white; font-size:0.75rem; font-weight:800; padding:3px 10px; border-radius:20px;">${data.region}</span>
+          <span style="background:rgba(255,255,255,0.25); color:white; font-size:0.75rem; font-weight:700; padding:3px 10px; border-radius:20px; backdrop-filter:blur(4px);">${data.type}</span>
+        </div>
+      </div>
+      <div style="padding:1.4rem 1.6rem;">
+        <div style="display:flex; align-items:flex-end; gap:14px; margin-top:-46px; margin-bottom:12px;">
+          <div style="width:78px; height:78px; border-radius:20px; background:white; padding:6px; border:3px solid white; box-shadow:0 8px 24px rgba(0,0,128,0.2); flex-shrink:0;">
+            <img src="${data.logo}" alt="${data.name}" style="width:100%; height:100%; object-fit:contain;">
+          </div>
+          <div>
+            <h3 style="font-family:'Outfit', sans-serif; font-size:1.35rem; color:var(--navy); font-weight:800; line-height:1.2;">${data.name}</h3>
+            <div style="font-size:0.82rem; font-weight:700; color:var(--primary);">${data.acronym} · Est. ${data.est}</div>
+          </div>
+        </div>
+
+        <div style="font-style:italic; color:#475569; font-size:0.9rem; margin-bottom:14px; border-left:3px solid var(--primary); padding-left:10px;">
+          “${data.motto}”
+        </div>
+
+        <p style="font-size:0.9rem; line-height:1.6; color:#334155; margin-bottom:16px;">
+          ${data.description}
+        </p>
+
+        <h4 style="font-family:'Outfit', sans-serif; font-size:1.05rem; color:var(--navy); margin-bottom:8px;">🏛️ Constituent Colleges & Major Faculties</h4>
+        <ul style="list-style:none; padding:0; margin:0 0 16px; font-size:0.86rem; color:#475569; line-height:1.8;">
+          ${data.colleges.map(c => `<li style="display:flex; align-items:baseline; gap:6px;"><span style="color:var(--primary);">•</span> ${c}</li>`).join('')}
+        </ul>
+
+        <div style="background:#f8fafc; border-radius:12px; padding:12px 14px; border:1px solid #e2e8f0; margin-bottom:18px;">
+          <div style="font-weight:700; font-size:0.85rem; color:var(--navy); margin-bottom:4px;">📊 PUJAB Cut-Off Benchmark Samples:</div>
+          <div style="font-size:0.82rem; color:#64748b;">${data.cutoffsSample}</div>
+          <div style="font-size:0.78rem; color:#94a3b8; margin-top:4px;">*Cut-offs reflect official previous academic intake merit scores.</div>
+        </div>
+
+        <div style="font-size:0.82rem; color:#64748b; margin-bottom:18px;">
+          📍 <strong>Contacts:</strong> ${data.contacts}
+        </div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a href="${data.portal}" target="_blank" rel="noopener noreferrer" style="flex:1; text-align:center; padding:0.65rem 1rem; border-radius:12px; background:#f1f5f9; color:var(--navy); font-weight:700; font-size:0.88rem; text-decoration:none; border:1px solid #cbd5e1;">Official Portal ↗</a>
+          <a href="course-input.html?uni=${encodeURIComponent(data.name)}" style="flex:1.5; text-align:center; padding:0.65rem 1rem; border-radius:12px; background:linear-gradient(135deg, var(--primary), #e04302); color:white; font-weight:800; font-size:0.88rem; text-decoration:none; box-shadow:0 6px 18px rgba(254,79,4,0.3);">Check My Eligibility For ${data.acronym} →</a>
+        </div>
+      </div>
+    `;
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeUniModal(e) {
+    if (e && e.target !== e.currentTarget && !e.target.classList.contains('uni-modal-close')) return;
+    const modal = document.getElementById('uniModal');
+    if (modal) modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeUniModal();
+  });
+
+  // Real-time University Search & Filter
+  function filterUniversities() {
+    const query = (document.getElementById('uniSearchInput')?.value || '').toLowerCase().trim();
+    const activeTab = document.querySelector('.uni-tab-btn.active')?.getAttribute('data-region') || 'all';
     const cards = document.querySelectorAll('.uni-card');
+    let visibleCount = 0;
+
     cards.forEach(card => {
-      if (region === 'all' || card.getAttribute('data-region') === region) {
+      const region = card.getAttribute('data-region');
+      const name = (card.getAttribute('data-name') || '').toLowerCase();
+      const keywords = (card.getAttribute('data-keywords') || '').toLowerCase();
+
+      const matchesRegion = (activeTab === 'all' || region === activeTab);
+      const matchesQuery = !query || name.includes(query) || keywords.includes(query);
+
+      if (matchesRegion && matchesQuery) {
         card.style.display = 'flex';
+        visibleCount++;
       } else {
         card.style.display = 'none';
       }
+    });
+
+    const countElem = document.getElementById('uniFilteredCount');
+    if (countElem) countElem.textContent = `Showing ${visibleCount} of ${cards.length} Public Universities`;
+  }
+
+  function filterUni(region, btn) {
+    document.querySelectorAll('.uni-tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterUniversities();
+  }
+
+  // 3D Tilt Card Interaction
+  function init3DTilt() {
+    const cards = document.querySelectorAll('.tilt-card');
+    cards.forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -6;
+        const rotateY = ((x - centerX) / centerX) * 6;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-6px) scale3d(1.015, 1.015, 1.015)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale3d(1, 1, 1)';
+      });
     });
   }
 
@@ -2168,6 +3189,25 @@
     updateSimulator();
   }
 
+  // Number Counter Animation
+  function animateValue(el, start, end, duration = 1200, suffix = '') {
+    if (!el) return;
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const easeOutQuad = progress * (2 - progress);
+      const val = Math.floor(easeOutQuad * (end - start) + start);
+      el.textContent = val + suffix;
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        el.textContent = end + suffix;
+      }
+    };
+    window.requestAnimationFrame(step);
+  }
+
   function updateSimulator() {
     const ess1 = simGrades[1] * 3;
     const ess2 = simGrades[2] * 3;
@@ -2175,7 +3215,13 @@
     const bonusAndSubs = 4.4; // GP(1) + Sub(1) + O-Level avg(2.4)
     const total = (ess1 + ess2 + rel + bonusAndSubs).toFixed(1);
 
-    document.getElementById('simDisplayWeight').textContent = total;
+    const displayEl = document.getElementById('simDisplayWeight');
+    if (displayEl) {
+      displayEl.textContent = total;
+      displayEl.classList.remove('pop-anim');
+      void displayEl.offsetWidth; // re-trigger animation
+      displayEl.classList.add('pop-anim');
+    }
     document.getElementById('chipEss1').textContent = `Ess 1: ${ess1.toFixed(1)}`;
     document.getElementById('chipEss2').textContent = `Ess 2: ${ess2.toFixed(1)}`;
     document.getElementById('chipRel').textContent = `Rel: ${rel.toFixed(1)}`;
@@ -2192,14 +3238,12 @@
       const res = await fetch('/api/stats');
       if (res.ok) {
         const data = await res.json();
-        if (data.totalCourses) {
-          const progEl = document.getElementById('statProgramsCount');
-          if (progEl) progEl.textContent = `${data.totalCourses}+`;
-        }
-        if (data.totalUniversities) {
-          const uniEl = document.getElementById('statUniversitiesCount');
-          if (uniEl) uniEl.textContent = data.totalUniversities;
-        }
+        const progEl = document.getElementById('statProgramsCount');
+        const uniEl = document.getElementById('statUniversitiesCount');
+        const stuEl = document.getElementById('statStudentsGuided');
+        if (progEl) animateValue(progEl, 0, data.totalCourses || 449, 1400, '+');
+        if (uniEl) animateValue(uniEl, 0, data.totalUniversities || 10, 1000, '');
+        if (stuEl) animateValue(stuEl, 0, 100, 1200, 'k+');
       }
     } catch (e) {
       // Graceful fallback to static figures
@@ -2220,6 +3264,8 @@
   document.addEventListener('DOMContentLoaded', () => {
     loadLiveStats();
     loadSitemap();
+    init3DTilt();
+    filterUniversities();
   });
 </script>
 

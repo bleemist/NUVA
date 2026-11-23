@@ -185,8 +185,14 @@
 
     .form-header {
       margin-bottom: 2rem;
-      padding-bottom: 1.2rem;
-      border-bottom: 1px solid var(--card-border);
+      padding: 2.2rem 2.4rem;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 248, 244, 0.90) 100%),
+                  url('images/backgrounds/library_study.jpg') center/cover no-repeat;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(254, 79, 4, 0.18);
+      box-shadow: 0 4px 18px rgba(0, 0, 128, 0.05);
+      position: relative;
+      overflow: hidden;
     }
     .form-badge {
       display: inline-flex;
@@ -767,6 +773,12 @@
             <option value="Muni University">Muni University</option>
             <option value="Mountains of the Moon University">Mountains of the Moon University</option>
           </select>
+          <div id="selectedUniLogoWrap" style="display:flex; align-items:center; gap:12px; margin-top:10px; padding:8px 12px; background:#f8fafc; border-radius:12px; border:1px solid #e2e8f0;">
+            <div id="selectedUniLogoBox" style="width:38px; height:38px; border-radius:10px; background:#ffffff; border:1px solid #cbd5e1; display:flex; align-items:center; justify-content:center; padding:4px; box-shadow:0 2px 6px rgba(0,0,0,0.06); flex-shrink:0;">
+              <img id="selectedUniLogoImg" src="icon.png" alt="University Logo" style="width:100%; height:100%; object-fit:contain;">
+            </div>
+            <span id="selectedUniLogoName" style="font-size:0.9rem; font-weight:700; color:var(--navy);">All 10 Public Universities (Maximum Coverage)</span>
+          </div>
           <div class="field-hint">Choose "Any University" to maximize your chances across all institutions.</div>
         </div>
       </div>
@@ -1215,6 +1227,49 @@
     gpResult.addEventListener('change', updateSubsidiaries);
     subsidiaryResult.addEventListener('change', updateSubsidiaries);
     genderSelect.addEventListener('change', updateLiveScore);
+
+    // University Logo Preview
+    const uniLogos = {
+      'Makerere University': 'images/logos/mak.svg',
+      'Kyambogo University': 'images/logos/kyu.png',
+      'Mbarara University of Science and Technology': 'images/logos/must.webp',
+      'Busitema University': 'images/logos/busitema.png',
+      'Gulu University': 'images/logos/gulu.png',
+      'Muni University': 'images/logos/muni.png',
+      'Kabale University': 'images/logos/kabale.jpg',
+      'Lira University': 'images/logos/lira.png',
+      'Soroti University': 'images/logos/soroti.png',
+      'Mountains of the Moon University': 'images/logos/mmu.png'
+    };
+    const universitySelect = document.getElementById('university');
+    if (universitySelect) {
+      universitySelect.addEventListener('change', function() {
+        const val = this.value;
+        const logoImg = document.getElementById('selectedUniLogoImg');
+        const logoName = document.getElementById('selectedUniLogoName');
+        if (val === 'Any University') {
+          logoImg.src = 'icon.png';
+          logoName.textContent = 'All 10 Public Universities (Maximum Coverage)';
+        } else if (uniLogos[val]) {
+          logoImg.src = uniLogos[val];
+          logoName.textContent = val;
+        }
+      });
+
+      // Check for ?uni= query parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const uniQuery = urlParams.get('uni');
+      if (uniQuery) {
+        for (let i = 0; i < universitySelect.options.length; i++) {
+          const optVal = universitySelect.options[i].value;
+          if (optVal.toLowerCase().includes(uniQuery.toLowerCase()) || uniQuery.toLowerCase().includes(optVal.toLowerCase())) {
+            universitySelect.selectedIndex = i;
+            universitySelect.dispatchEvent(new Event('change'));
+            break;
+          }
+        }
+      }
+    }
 
     levelSelect.addEventListener('change', function() {
       const isALevel = this.value === 'A-Level';

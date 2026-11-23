@@ -288,16 +288,20 @@
 
     /* Celebration Banner */
     .celebration-card {
-      background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+      background: linear-gradient(135deg, rgba(6, 78, 59, 0.94) 0%, rgba(15, 23, 42, 0.90) 100%),
+                  url('images/backgrounds/students_grad.jpg') center/cover no-repeat;
       color: white;
       border-radius: var(--radius-xl);
-      padding: 2rem 2.2rem;
-      box-shadow: 0 16px 36px rgba(6, 78, 59, 0.25);
+      padding: 2.2rem 2.5rem;
+      box-shadow: 0 18px 40px rgba(6, 78, 59, 0.3);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1.5rem;
       flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(16, 185, 129, 0.35);
     }
     .celebration-title {
       font-family: 'Outfit', sans-serif;
@@ -402,15 +406,15 @@
       border: 1px solid var(--card-border);
       padding: 1.8rem;
       box-shadow: var(--shadow-sm);
-      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       position: relative;
     }
     .course-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
+      transform: translateY(-8px) scale(1.012);
+      box-shadow: 0 22px 45px -10px rgba(0, 0, 128, 0.14), 0 0 20px rgba(254, 79, 4, 0.08);
       border-color: rgba(254, 79, 4, 0.35);
     }
     .course-card.eligible {
@@ -429,14 +433,24 @@
       gap: 8px;
     }
     .uni-pill {
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
       color: var(--navy);
-      background: var(--navy-soft);
-      padding: 0.25rem 0.7rem;
+      background: #ffffff;
+      border: 1.5px solid rgba(0, 0, 128, 0.1);
+      padding: 0.35rem 0.85rem;
       border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 3px 8px rgba(0, 0, 128, 0.06);
+    }
+    .uni-pill img {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      border-radius: 4px;
+      background: #ffffff;
     }
     .match-pill {
       font-size: 0.75rem;
@@ -757,6 +771,30 @@
 </footer>
 
 <script>
+  // Official University Logos Mapping
+  const uniLogos = {
+    'Makerere University': 'images/logos/mak.svg',
+    'Kyambogo University': 'images/logos/kyu.png',
+    'Mbarara University of Science and Technology': 'images/logos/must.webp',
+    'Busitema University': 'images/logos/busitema.png',
+    'Gulu University': 'images/logos/gulu.png',
+    'Muni University': 'images/logos/muni.png',
+    'Kabale University': 'images/logos/kabale.jpg',
+    'Lira University': 'images/logos/lira.png',
+    'Soroti University': 'images/logos/soroti.png',
+    'Mountains of the Moon University': 'images/logos/mmu.png'
+  };
+
+  function getUniLogo(uniName) {
+    if (!uniName) return 'icon.png';
+    for (const [name, logo] of Object.entries(uniLogos)) {
+      if (uniName.toLowerCase().includes(name.toLowerCase()) || name.toLowerCase().includes(uniName.toLowerCase())) {
+        return logo;
+      }
+    }
+    return 'icon.png';
+  }
+
   // Retrieve cached data
   const rawRecommendations = JSON.parse(sessionStorage.getItem('courseRecommendations') || '[]');
   const calculatedWeights = JSON.parse(sessionStorage.getItem('weights') || '{}');
@@ -945,7 +983,7 @@
         <div class="course-card ${isEligible ? 'eligible' : 'ineligible'}">
           <div>
             <div class="card-top">
-              <span class="uni-pill">${c.university || 'Uganda Public Uni'}</span>
+              <span class="uni-pill"><img src="${getUniLogo(c.university)}" alt="logo" loading="lazy"> ${c.university || 'Uganda Public Uni'}</span>
               <span class="match-pill ${matchClass}">${matchScore}% Match</span>
             </div>
 
@@ -1004,7 +1042,7 @@
     deckCardContainer.innerHTML = `
       <div class="deck-card-single">
         <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
-          <span class="uni-pill" style="font-size:0.85rem;">${c.university}</span>
+          <span class="uni-pill" style="font-size:0.85rem;"><img src="${getUniLogo(c.university)}" alt="logo" loading="lazy"> ${c.university}</span>
           <span class="match-pill high" style="font-size:0.85rem;">${c.matchScore}% Match</span>
         </div>
 
