@@ -588,6 +588,7 @@
   <div class="tab-bar">
     <div class="tab active" onclick="switchTab('analytics')">Analytics</div>
     <div class="tab" onclick="switchTab('courses')">Manage Courses</div>
+    <div class="tab" onclick="switchTab('reports')">User Reports (<span id="reportsBadge">0</span>)</div>
   </div>
 
   <!-- Analytics Tab -->
@@ -609,10 +610,21 @@
         <div class="stat-value" id="uniqueVisitors">0</div>
         <div class="stat-label">Unique Visitors</div>
       </div>
+      <div class="stat-card">
+        <div class="stat-value" id="totalReports">0</div>
+        <div class="stat-label">User Reports</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="popularCourse" style="font-size:1.6rem; color:var(--primary-light);">None</div>
+        <div class="stat-label">Top Viewed Course</div>
+      </div>
     </div>
 
     <div class="searches-section">
-      <h2 style="margin-bottom: 1.5rem;">Recent Searches</h2>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2 style="margin: 0;">Recent Searches</h2>
+        <button onclick="clearSearchLogs()" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 7px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: all 0.2s ease;">🗑️ Clear Logs</button>
+      </div>
       <table class="searches-table">
         <thead>
           <tr>
@@ -637,6 +649,33 @@
     <div class="university-list">
       <h2>Manage Universities & Courses</h2>
       <div id="universitiesContainer"></div>
+    </div>
+  </div>
+
+  <!-- Reports Tab -->
+  <div id="tab-reports" class="tab-content">
+    <div class="university-list">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div>
+          <h2>User Problem Reports & Feedback</h2>
+          <p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 4px;">Live issues reported by students from the Report Problem form</p>
+        </div>
+        <button onclick="loadReportsData()" style="background: rgba(254, 79, 4, 0.15); border: 1px solid rgba(254, 79, 4, 0.4); color: #ff7a2d; padding: 7px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem;">↻ Refresh</button>
+      </div>
+      <table class="searches-table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Category</th>
+            <th>Contact</th>
+            <th>Problem Description</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="reportsTable">
+          <tr><td colspan="5" style="text-align: center; padding: 2rem;">Loading reports...</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -746,6 +785,10 @@
     
     if (tab === 'courses') {
       loadUniversities();
+    } else if (tab === 'reports') {
+      loadReportsData();
+    } else if (tab === 'analytics') {
+      loadDashboardData();
     }
   }
 
@@ -760,10 +803,96 @@
       document.getElementById('totalUniversities').textContent = data.totalUniversities || 0;
       document.getElementById('totalCourses').textContent = data.totalCourses || 0;
       document.getElementById('uniqueVisitors').textContent = data.uniqueVisitors || 0;
+      if (document.getElementById('totalReports')) {
+        document.getElementById('totalReports').textContent = data.totalReports || 0;
+      }
+      if (document.getElementById('reportsBadge')) {
+        document.getElementById('reportsBadge').textContent = data.totalReports || 0;
+      }
+      if (document.getElementById('popularCourse')) {
+        document.getElementById('popularCourse').textContent = data.popularCourse || 'None';
+      }
       
       updateSearchesTable(data.recentSearches || []);
     } catch (error) {
       console.error('Error loading dashboard data:', error);
+    }
+  }
+
+  async function loadReportsData() {
+    try {
+      const response = await fetch('/api/admin/reports', {
+        headers: { 'x-admin-key': ADMIN_KEY }
+      });
+      const data = await response.json();
+      const tbody = document.getElementById('reportsTable');
+      const reports = data.reports || [];
+
+      if (document.getElementById('reportsBadge')) {
+        document.getElementById('reportsBadge').textContent = reports.length;
+      }
+      if (document.getElementById('totalReports')) {
+        document.getElementById('totalReports').textContent = reports.length;
+      }
+
+      if (!reports || reports.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem; color: var(--text-muted);">No reports submitted yet. System running smoothly!</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = reports.map(r => `
+        <tr>
+          <td style="white-space: nowrap;">${new Date(r.timestamp).toLocaleString()}</td>
+          <td><span style="background: rgba(254,79,4,0.15); color: #ff7a2d; padding: 3px 8px; border-radius: 4px; font-size: 0.82rem; font-weight: 600;">${r.details?.category || 'General'}</span></td>
+          <td>${r.contact ? `<a href="mailto:${r.contact}" style="color: var(--primary-light); text-decoration: none;">${r.contact}</a>` : '<span style="color: var(--text-muted);">Anonymous</span>'}</td>
+          <td style="max-width: 320px; word-break: break-word;">${r.problem}</td>
+          <td>
+            <button onclick="dismissReport('${r.id}')" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); color: #fca5a5; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600;">Dismiss</button>
+          </td>
+        </tr>
+      `).join('');
+    } catch (error) {
+      console.error('Error loading reports:', error);
+    }
+  }
+
+  async function dismissReport(id) {
+    if (!confirm('Are you sure you want to dismiss this report?')) return;
+    try {
+      const res = await fetch(`/api/admin/reports/${id}`, {
+        method: 'DELETE',
+        headers: { 'x-admin-key': ADMIN_KEY }
+      });
+      if (res.ok) {
+        loadReportsData();
+        loadDashboardData();
+      } else {
+        alert('Failed to dismiss report');
+      }
+    } catch (e) {
+      alert('Error dismissing report');
+    }
+  }
+
+  async function clearSearchLogs() {
+    if (!confirm('Are you sure you want to clear search and error logs? This cannot be undone.')) return;
+    try {
+      const res = await fetch('/api/admin/clear-logs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': ADMIN_KEY
+        },
+        body: JSON.stringify({ clearReports: false })
+      });
+      if (res.ok) {
+        alert('Logs cleared successfully');
+        loadDashboardData();
+      } else {
+        alert('Failed to clear logs');
+      }
+    } catch (e) {
+      alert('Error clearing logs');
     }
   }
 
@@ -1018,7 +1147,7 @@
   // Load on page load
   loadSitemap();
 </script>
-<script src="https://nuva.me/js/sitemap-loader.js"></script>
+<script src="/js/sitemap-loader.js"></script>
 <script>
   // Use sitemap data
   NUVASitemap.load().then(sitemap => {

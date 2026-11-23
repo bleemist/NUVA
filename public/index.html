@@ -1366,7 +1366,7 @@
         <div class="stat-icon">
           <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
         </div>
-        <div class="stat-value">449+</div>
+        <div class="stat-value" id="statProgramsCount">449+</div>
         <div class="stat-title">Available Programs</div>
         <div class="stat-label">Full catalog of degree programs across Science, Medicine, Engineering, Computing, Arts, and Business.</div>
       </div>
@@ -1375,7 +1375,7 @@
         <div class="stat-icon">
           <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM5 12h2v4H5v-4zm4 0h2v8H9v-8zm4 0h2v6h-2v-6zm4 0h2v10h-2V12z"/></svg>
         </div>
-        <div class="stat-value">10</div>
+        <div class="stat-value" id="statUniversitiesCount">10</div>
         <div class="stat-title">Public Universities</div>
         <div class="stat-label">Makerere, Kyambogo, MUST, Gulu, Busitema, Muni, Kabale, Lira, Soroti, and Mountains of the Moon.</div>
       </div>
@@ -1384,7 +1384,7 @@
         <div class="stat-icon">
           <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
         </div>
-        <div class="stat-value">100k+</div>
+        <div class="stat-value" id="statStudentsGuided">100k+</div>
         <div class="stat-title">Students Guided</div>
         <div class="stat-label">Trusted nationwide by Ugandan students, parents, and secondary school career masters.</div>
       </div>
@@ -2186,6 +2186,26 @@
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   }
 
+  // Dynamic live stats loader
+  async function loadLiveStats() {
+    try {
+      const res = await fetch('/api/stats');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.totalCourses) {
+          const progEl = document.getElementById('statProgramsCount');
+          if (progEl) progEl.textContent = `${data.totalCourses}+`;
+        }
+        if (data.totalUniversities) {
+          const uniEl = document.getElementById('statUniversitiesCount');
+          if (uniEl) uniEl.textContent = data.totalUniversities;
+        }
+      }
+    } catch (e) {
+      // Graceful fallback to static figures
+    }
+  }
+
   // Sitemaps loader
   async function loadSitemap() {
     try {
@@ -2196,10 +2216,14 @@
       }
     } catch(e) {}
   }
-  loadSitemap();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadLiveStats();
+    loadSitemap();
+  });
 </script>
 
-<script src="https://nuva.me/js/sitemap-loader.js"></script>
+<script src="/js/sitemap-loader.js"></script>
 
 </body>
 </html>

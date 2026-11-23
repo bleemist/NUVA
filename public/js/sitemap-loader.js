@@ -1,6 +1,6 @@
 // sitemap-loader.js - Universal sitemap loader for NUVA
 (function() {
-  const SITEMAP_URL = 'https://nuva.me/sitemap.json';
+  const SITEMAP_URL = '/sitemap.json';
   
   // Cache sitemap data
   let cachedSitemap = null;

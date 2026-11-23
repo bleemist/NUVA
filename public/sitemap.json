@@ -35,6 +35,30 @@
       "priority": 0.8
     },
     {
+      "path": "/about.html",
+      "title": "About NUVA - Uganda's Academic Advisory System",
+      "description": "Learn about NUVA, BLEEM Labs Co, and our mission to optimize higher education access across Uganda",
+      "lastmod": "2026-03-23",
+      "changefreq": "monthly",
+      "priority": 0.7
+    },
+    {
+      "path": "/privacy.html",
+      "title": "NUVA Privacy Policy",
+      "description": "NUVA privacy policy and data protection standards for student users",
+      "lastmod": "2026-03-23",
+      "changefreq": "yearly",
+      "priority": 0.5
+    },
+    {
+      "path": "/report.html",
+      "title": "Report an Issue - NUVA Course Guidance System",
+      "description": "Report any missing course, discrepancy in cutoff points, or technical issue to the BLEEM Labs engineering team",
+      "lastmod": "2026-03-23",
+      "changefreq": "monthly",
+      "priority": 0.6
+    },
+    {
       "path": "/admin.html",
       "title": "NUVA Admin Dashboard",
       "description": "Administrative dashboard for managing course data and analytics",
