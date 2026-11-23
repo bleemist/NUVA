@@ -1,75 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="google-adsense-account" content="ca-pub-3620070651069378">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3620070651069378"
-     crossorigin="anonymous"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3620070651069378"
-     crossorigin="anonymous"></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Meta Tags for Search Engines -->
-     <meta name="description" content="NUVA is Uganda’s leading AI-powered course guidance system. Analyze your UACE results, calculate weights, and discover the best university courses at Makerere, Kyambogo, and more.">
-  <meta name="keywords" content="NUVA,NUVA Uganda,NUVA course guidance,Uganda course selection,UACE results analysis, UACE weight calculator, A Level results Uganda, A Level course guidance,best courses after A level Uganda, which course should I do Uganda, university courses Uganda, top universities Uganda, Makerere University courses, Kyambogo University courses, MUBS courses, Gulu University courses, Busitema University courses, Uganda admissions guide, how to choose a course Uganda, course recommendation system, AI course recommendation, student career guidance Uganda, career guidance system Africa, university admission help Uganda, cut off points Uganda, course cut off points Makerere, course cut off points Kyambogo, science courses Uganda, arts courses Uganda, IT courses Uganda, engineering courses Uganda, medical courses Uganda, business courses Uganda, education courses Uganda, best paying courses Uganda, high demand jobs Uganda, student support Uganda, NUVA AI system, NUVA expert system, NUVA recommendations, Ugandan student platform, online course advisor Uganda, digital guidance Uganda, career path finder Uganda">
-  <meta name="author" content="MUYANJA ANDREW">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3620070651069378" crossorigin="anonymous"></script>
+
+  <title>Your Course Recommendations · NUVA Expert System</title>
+  <meta name="description" content="View your personalized Ugandan university course recommendations, official calculated admission weights, and cut-off points comparison.">
+  <meta name="keywords" content="NUVA results, university course matches Uganda, Makerere cutoffs, Kyambogo courses, PUJAB admission recommendations">
+  <meta name="author" content="MUYANJA ANDREW - BLEEM Labs Co.">
   <meta name="robots" content="index, follow">
 
-  <!-- Open Graph Tags (for social sharing) -->
-  <meta property="og:title" content="Your NUVA Course Recommendations | Personalized University Matches">
-  <meta property="og:description" content="View your personalized university course recommendations based on your A-Level grades. See which courses at Makerere, Kyambogo, and other Ugandan universities match your profile.">
-  <meta property="og:image" content="https://nuva.me/nuva-og-image.png">
-  <meta property="og:url" content="https://nuva.me/results.html">
-  <meta property="og:type" content="website">
-
-  <!-- Canonical URL -->
   <link rel="canonical" href="https://nuva.me/results.html">
-
-  <!-- Geo Tags (for Uganda targeting) -->
-  <meta name="geo.region" content="UG">
-  <meta name="geo.placename" content="Kampala, Uganda">
-    <title>NUVA - Course Recommendations</title>
-    <link rel="icon" href="icon.png" type="image/png"/>
+  <link rel="icon" href="icon.png" type="image/png"/>
   <link rel="apple-touch-icon" href="icon.png" type="image/png"/>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
       --primary: #fe4f04;
-      --primary-dark: #e03e00;
-      --primary-light: #ff0000;
-      --bg-gradient: linear-gradient(135deg, #fffffff5 0%, #ffffff 100%);
-      --card-bg: rgb(255, 255, 255);
-      --card-border: #00008030;
-      --text: #000080;
-      --text-muted: #000000ad;
-      --sidebar-bg: rgb(255, 255, 255);
-      --success: #34d399;
-      --warning: #ff0000;
-      --error: #f87171;
-      --info-bg: rgb(0, 0, 0);
+      --primary-dark: #dc3e00;
+      --primary-light: #ff7530;
+      --primary-soft: rgba(254, 79, 4, 0.08);
+      --navy: #000080;
+      --navy-dark: #00005b;
+      --navy-light: #1a1ab2;
+      --navy-soft: rgba(0, 0, 128, 0.06);
+      --emerald: #10b981;
+      --emerald-dark: #059669;
+      --emerald-soft: rgba(16, 185, 129, 0.1);
+      --amber: #f59e0b;
+      --bg: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --card-border: rgba(226, 232, 240, 0.85);
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 128, 0.04);
+      --shadow-md: 0 8px 24px rgba(0, 0, 128, 0.07);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 128, 0.1);
+      --shadow-glow: 0 8px 30px rgba(254, 79, 4, 0.25);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       min-height: 100vh;
-      background: var(--bg-gradient);
-      font-family: 'Inter', system-ui, sans-serif;
+      background: radial-gradient(at 0% 0%, rgba(254, 79, 4, 0.04) 0px, transparent 50%),
+                  radial-gradient(at 100% 0%, rgba(0, 0, 128, 0.05) 0px, transparent 50%),
+                  #f8fafc;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       color: var(--text);
-      display: flex;
-      flex-direction: column;
-      position: relative;
       overflow-x: hidden;
+      line-height: 1.6;
     }
 
-    /* Particles Background */
+    /* Confetti Canvas */
+    #confettiCanvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* Ambient particles */
     .particles {
       position: fixed;
       inset: 0;
@@ -77,1555 +79,1036 @@
       overflow: hidden;
       z-index: 1;
     }
-
     .particle {
       position: absolute;
-      background: rgba(254, 79, 4, 0.2);
       border-radius: 50%;
-      animation: float linear infinite;
-      box-shadow: 0 0 15px rgba(254, 79, 4, 0.3);
+      background: rgba(254, 79, 4, 0.15);
+      animation: floatUp linear infinite;
     }
-
-    @keyframes float {
-      0%   { transform: translateY(100vh) scale(0.5); opacity: 0; }
-      10%  { opacity: 0.6; }
-      90%  { opacity: 0.6; }
-      100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+    @keyframes floatUp {
+      0% { transform: translateY(105vh) scale(0.6); opacity: 0; }
+      20% { opacity: 0.6; }
+      80% { opacity: 0.6; }
+      100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
     }
 
     /* Sticky Header */
-    .header {
+    .sticky-header {
       position: sticky;
       top: 0;
-      background: var(--sidebar-bg);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--card-border);
-      padding: 1rem 2rem;
+      z-index: 200;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+      padding: 0.75rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 128, 0.04);
     }
 
-    .header-logo {
+    .header-left {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.85rem;
+      text-decoration: none;
+      cursor: pointer;
     }
 
     .nuva-logo {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
-      background: conic-gradient(from 200deg, #fe4f04, #ff7a2d 90deg, #9b6aff);
+      background: conic-gradient(from 200deg, #fe4f04, #ff7a2d 90deg, #000080);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
       color: white;
-      box-shadow: 0 4px 15px rgba(254, 79, 4, 0.25);
-      position: relative;
-      overflow: hidden;
-      animation: pulseGlow 4s infinite ease-in-out;
+      box-shadow: 0 6px 18px rgba(254, 79, 4, 0.3);
     }
-
-    .nuva-logo::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
-      animation: shine 6s infinite;
+    .brand-title-wrap { display: flex; flex-direction: column; }
+    .brand-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+      line-height: 1.1;
     }
-
-    @keyframes pulseGlow {
-      0%, 100% { box-shadow: 0 4px 15px rgba(254, 79, 4, 0.25); }
-      50%      { box-shadow: 0 8px 25px rgba(254, 79, 4, 0.45); }
-    }
-
-    @keyframes shine {
-      0%   { transform: translateX(-120%); }
-      100% { transform: translateX(120%); }
-    }
-
-    .grid {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 4px;
-      justify-items: center;
-      align-items: center;
-      opacity: 0.25;
-      padding: 12px;
-    }
-
-    .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: linear-gradient(180deg, #fff, #cfe8ff);
-    }
-
-    .dot.center {
-      transform: scale(1.5);
-      background: linear-gradient(180deg, #fe4f04, #ff7a2d);
-    }
-
-    .header-logo h1 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.5rem;
-      background: linear-gradient(to right, var(--primary), var(--primary-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin: 0;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .nav-link {
-      display: flex;
-      align-items: center;
-      padding: 0.6rem 1.2rem;
-      color: var(--text-muted);
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      transition: all 0.25s ease;
-      white-space: nowrap;
-    }
-
-    .nav-link:hover, .nav-link.active {
-      background: rgba(254, 79, 4, 0.12);
-      color: white;
-    }
-
-    .nav-link svg {
-      width: 18px;
-      height: 18px;
-      margin-right: 6px;
-      fill: currentColor;
-    }
-
-    .nav-link.active {
-      color: var(--primary-light);
-      background: rgba(254, 79, 4, 0.08);
-    }
-
-    .container {
-      flex: 1;
-      padding: 2rem;
-      position: relative;
-      z-index: 10;
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    /* Filter Notice */
-    .filter-notice {
-      background: rgba(20, 7, 55, 0.162);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 1rem 1.5rem;
-      margin-bottom: 2rem;
-      text-align: center;
-      color: #000080;
-      font-weight: 500;
-      backdrop-filter: blur(10px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-
-    .filter-notice svg {
-      width: 20px;
-      height: 20px;
-      fill: var(--primary);
-    }
-
-    /* Weight Summary Card */
-    .weight-summary {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      border-radius: 24px;
-      border: 1px solid var(--card-border);
-      padding: 2rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 20px 60px #00008030;
-    }
-
-    .weight-summary h2 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.8rem;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(to right, #ff0000, #ff0000b4);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .student-info {
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      border: 1px solid var(--card-border);
-    }
-
-    .student-info h3 {
-      color: #000080;
-      margin-bottom: 1rem;
-      font-size: 1.2rem;
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-
-    .info-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-
-    .info-label {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .info-value {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #000080;
-    }
-
-    .subsidiary-breakdown {
-      margin-top: 1rem;
-      padding: 1rem;
-      background:#ffffff;
-      border-radius: 12px;
-      border-left: 4px solid #000080;
-    }
-
-    .subsidiary-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.5rem 0;
-    }
-
-    .subsidiary-total {
-      margin-top: 0.5rem;
-      padding-top: 0.5rem;
-      border-top: 2px solid #000080;
-      font-weight: 700;
-      color: #000080;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .weight-breakdown {
-      margin-top: 1.5rem;
-    }
-
-    .weight-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.8rem 0;
-      border-bottom: 1px solid #00008030;
-    }
-
-    .weight-item:last-child {
-      border-bottom: none;
-    }
-
-    .weight-label {
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .weight-label svg {
-      width: 16px;
-      height: 16px;
-      fill: var(--text-muted);
-    }
-
-    .weight-value {
-      font-weight: 600;
-      color: #000080;
-    }
-
-    .subject-breakdown {
-      margin: 1rem 0 1.5rem;
-      padding-left: 1.5rem;
-      border-left: 2px solid #000080;
-    }
-
-    .subject-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.5rem 0;
-      font-size: 0.95rem;
-      color: var(--text-muted);
-    }
-
-    .subject-item.essential {
-      color: var(--success);
-    }
-
-    .subject-item .subject-name {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .essential-badge {
-      background: rgba(52, 211, 153, 0.15);
-      color: var(--success);
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
+    .brand-tag {
       font-size: 0.7rem;
       font-weight: 600;
-    }
-
-    .total-weight {
-      margin-top: 1.5rem;
-      padding-top: 1.5rem;
-      border-top: 2px solid #000080;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 1.3rem;
-    }
-
-    .total-weight .weight-value {
-      font-size: 2rem;
-      color: var(--primary-light);
-    }
-
-    .calculation-explanation {
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 12px;
-      padding: 1.2rem;
-      margin-top: 1.5rem;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      border: 1px dashed var(--card-border);
-    }
-
-    .calculation-explanation h4 {
-      color: var(--text-muted);
-      margin-bottom: 0.8rem;
-      font-size: 1rem;
-    }
-
-    .calc-step {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin: 0.5rem 0;
-    }
-
-    .calc-step::before {
-      content: "✓";
-      color: var(--success);
-      font-weight: bold;
-    }
-
-    /* Recommendations Section */
-    .recommendations {
-      margin-top: 2rem;
-    }
-
-    .results-info {
-      text-align: center;
-      color: #000080;
-      margin-bottom: 1.5rem;
-      padding: 1rem;
-      background: rgba(14, 11, 68, 0.333);
-      border-radius: 12px;
-      font-size: 1rem;
-    }
-
-    .results-info strong {
-      color: white;
-    }
-
-    .result-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      border-radius: 20px;
-      border: 1px solid var(--card-border);
-      padding: 2rem;
-      margin-bottom: 1.5rem;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 20px 60px #00008030;
-    }
-
-    .result-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 50px #00008058;
-    }
-
-    .match-score-badge {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      padding: 0.5rem 1rem;
-      border-radius: 30px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--card-border);
-    }
-
-    .match-score-badge.high {
-      background: rgba(52, 211, 153, 0.2);
-      color: var(--success);
-      border-color: var(--success);
-    }
-
-    .match-score-badge.medium {
-      background: rgba(251, 191, 36, 0.2);
-      color: var(--warning);
-      border-color: var(--warning);
-    }
-
-    .match-score-badge.low {
-      background: rgba(248, 113, 113, 0.2);
-      color: var(--error);
-      border-color: var(--error);
-    }
-
-    .course-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 1.5rem;
-      padding-right: 100px;
-    }
-
-    .course-header h3 {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.4rem;
-      color: #000080;
-      margin-bottom: 0.5rem;
-    }
-
-    .course-meta {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .meta-tag {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
-    .meta-tag svg {
-      width: 14px;
-      height: 14px;
-      fill: var(--text-muted);
-    }
-
-    .comparison-box {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 16px;
-      padding: 1.5rem;
-      margin: 1.5rem 0;
-      border: 1px solid var(--card-border);
-    }
-
-    .comparison-item {
-      text-align: center;
-    }
-
-    .comparison-label {
-      color: var(--text-muted);
-      font-size: 0.85rem;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 0.5rem;
+      letter-spacing: 0.08em;
+      color: var(--primary);
     }
 
-    .comparison-value {
-      font-size: 2rem;
-      font-weight: 700;
-    }
-
-    .comparison-value.cutoff {
-      color: var(--warning);
-    }
-
-    .comparison-value.your-weight {
-      color: #f50000;
-    }
-
-    .comparison-vs {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    .eligibility-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1.2rem;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-
-    .eligibility-badge.eligible {
-      background: rgba(52, 211, 153, 0.15);
-      color: var(--success);
-      border: 1px solid var(--success);
-    }
-
-    .eligibility-badge.not-eligible {
-      background: rgba(248, 113, 113, 0.15);
-      color: var(--error);
-      border: 1px solid var(--error);
-    }
-
-    .subject-section {
-      margin: 1.5rem 0;
-    }
-
-    .subject-section h4 {
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-      font-size: 1rem;
-    }
-
-    .subject-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .subject-tag {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 0.4rem 1rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .subject-tag.essential {
-      background: rgba(52, 211, 153, 0.1);
-      color: var(--success);
-      border: 1px solid var(--success);
-      font-weight: 500;
-    }
-
-    .top-recommendation {
-      background: linear-gradient(90deg, var(--primary), var(--primary-light));
-      color: white;
-      padding: 1rem 1.5rem;
-      border-radius: 12px;
-      margin-top: 1.5rem;
+    .nav-actions {
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      font-weight: 600;
     }
-
-    .top-recommendation svg {
-      width: 20px;
-      height: 20px;
-      fill: white;
-    }
-
-    .no-results {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      border-radius: 24px;
-      border: 1px solid var(--card-border);
-      padding: 3rem 2rem;
-      text-align: center;
-    }
-
-    .no-results h3 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      color: var(--primary-light);
-    }
-
-    .no-results p {
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-      line-height: 1.6;
-    }
-
-    .no-results ul {
-      list-style: none;
-      display: inline-block;
-      text-align: left;
-      margin: 1.5rem 0;
-    }
-
-    .no-results li {
-      margin: 0.8rem 0;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .no-results li::before {
-      content: "•";
-      color: var(--primary);
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-
-    .ranking-explanation {
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 16px;
-      padding: 2rem;
-      margin-top: 2rem;
-      text-align: center;
-    }
-
-    .ranking-explanation h4 {
-      color: var(--primary-light);
-      margin-bottom: 1.5rem;
-    }
-
-    .legend {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
-      margin-top: 1rem;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .legend-color {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-    }
-
-    .legend-color.high { background: var(--success); }
-    .legend-color.medium { background: var(--warning); }
-    .legend-color.low { background: var(--error); }
-
-    .legend-label {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    /* Admin Link */
-    .admin-link {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: var(--card-bg);
-      backdrop-filter: blur(10px);
-      padding: 0.8rem 1.2rem;
-      border-radius: 50px;
-      border: 1px solid var(--card-border);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      z-index: 100;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      opacity: 0.7;
-    }
-
-    .admin-link:hover {
-      opacity: 1;
-      transform: translateY(-3px);
-      border-color: var(--primary);
-      color: #00008051;
-    }
-
-    .admin-link svg {
-      width: 20px;
-      height: 20px;
-      fill: var(--primary);
-    }
-
-    /* Action Buttons */
-    .action-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin: 3rem 0;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 1rem 2rem;
-      border-radius: 12px;
-      font-weight: 600;
-      color: #000080;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: none;
-      text-decoration: none;
+    .btn-action-pill {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-    }
-
-    .btn svg {
-      width: 18px;
-      height: 18px;
-      fill: currentColor;
-    }
-
-    .btn-primary {
-      background: linear-gradient(90deg, #000080, #000080b5);
-      color: white;
-      box-shadow: 0 8px 25px rgba(55, 49, 79, 0.4);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 35px rgba(4, 4, 254, 0.195);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text);
+      gap: 6px;
+      padding: 0.55rem 1.1rem;
+      border-radius: 30px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
       border: 1px solid var(--card-border);
+      background: white;
+      color: var(--navy);
+      transition: all 0.2s ease;
     }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.1);
+    .btn-action-pill:hover {
+      background: var(--navy-soft);
+      border-color: var(--navy);
+    }
+    .btn-action-pill.primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      box-shadow: 0 4px 12px rgba(254, 79, 4, 0.3);
+    }
+    .btn-action-pill.primary:hover {
       transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(254, 79, 4, 0.4);
     }
 
-    footer {
-      background: rgb(255, 255, 255);
-      backdrop-filter: blur(10px);
+    /* Container */
+    .results-layout {
+      position: relative;
+      z-index: 10;
+      max-width: 1280px;
+      margin: 2rem auto 4rem;
+      padding: 0 1.5rem;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 2.2rem;
+      align-items: start;
+    }
+
+    /* Profile & Weight Summary Sidebar */
+    .profile-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--card-border);
+      padding: 2rem 1.6rem;
+      box-shadow: var(--shadow-md);
+      position: sticky;
+      top: 5.5rem;
+    }
+    .profile-header {
+      text-align: center;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 1.4rem;
+    }
+    .profile-badge {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      margin-bottom: 0.5rem;
+    }
+    .profile-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .total-score-box {
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 100%);
+      color: white;
+      border-radius: var(--radius-lg);
       padding: 1.5rem;
       text-align: center;
-      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 128, 0.18);
+    }
+    .total-score-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1;
+      margin: 0.4rem 0;
+    }
+    .total-score-label {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.85;
+    }
+
+    .breakdown-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+    }
+    .breakdown-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0.8rem;
+      background: #f8fafc;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--card-border);
+    }
+    .breakdown-item.essential {
+      border-left: 3px solid var(--primary);
+      background: #fff7ed;
+    }
+    .breakdown-item.relevant {
+      border-left: 3px solid var(--navy);
+    }
+    .breakdown-val {
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    /* Main Results Area */
+    .results-main {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* Celebration Banner */
+    .celebration-card {
+      background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+      color: white;
+      border-radius: var(--radius-xl);
+      padding: 2rem 2.2rem;
+      box-shadow: 0 16px 36px rgba(6, 78, 59, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .celebration-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 0.3rem;
+    }
+    .celebration-desc {
+      color: #d1fae5;
+      font-size: 0.98rem;
+    }
+
+    /* Toolbar: Search, Filters & View Toggle */
+    .toolbar-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--card-border);
+      padding: 1.2rem 1.6rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .search-input-wrap {
+      flex: 1;
+      min-width: 240px;
+      position: relative;
+    }
+    .search-input-wrap svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      fill: var(--text-muted);
+    }
+    .search-input {
+      width: 100%;
+      padding: 0.7rem 1rem 0.7rem 2.6rem;
+      border-radius: 30px;
+      border: 1.5px solid var(--card-border);
+      font-family: inherit;
+      font-size: 0.92rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(254, 79, 4, 0.12);
+    }
+
+    .filter-select {
+      padding: 0.7rem 1.1rem;
+      border-radius: 30px;
+      border: 1.5px solid var(--card-border);
+      font-family: inherit;
       font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      outline: none;
+      background: white;
+    }
+    .filter-select:focus { border-color: var(--primary); }
+
+    .view-toggle {
+      display: flex;
+      background: #f1f5f9;
+      padding: 3px;
+      border-radius: 30px;
+      border: 1px solid var(--card-border);
+    }
+    .view-btn {
+      padding: 0.45rem 0.9rem;
+      border-radius: 25px;
+      border: none;
+      background: transparent;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .view-btn.active {
+      background: var(--navy);
+      color: white;
+    }
+
+    /* Course Cards Grid */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+    .course-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--card-border);
+      padding: 1.8rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+    .course-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(254, 79, 4, 0.35);
+    }
+    .course-card.eligible {
+      border-top: 4px solid var(--emerald);
+    }
+    .course-card.ineligible {
+      border-top: 4px solid #ef4444;
+      opacity: 0.85;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.8rem;
+      gap: 8px;
+    }
+    .uni-pill {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--navy);
+      background: var(--navy-soft);
+      padding: 0.25rem 0.7rem;
+      border-radius: 20px;
+    }
+    .match-pill {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+    }
+    .match-pill.high { background: #dcfce7; color: #15803d; }
+    .match-pill.medium { background: #fef3c7; color: #b45309; }
+    .match-pill.low { background: #fee2e2; color: #b91c1c; }
+
+    .course-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.22rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+    .course-code-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+    }
+
+    /* Comparison Bar */
+    .comparison-container {
+      background: #f8fafc;
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin: 1rem 0;
+      border: 1px solid var(--card-border);
+    }
+    .comp-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+      margin-bottom: 0.4rem;
+    }
+    .comp-row strong { font-size: 1.05rem; }
+    .bar-bg {
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.6s ease;
+    }
+    .bar-fill.success { background: linear-gradient(90deg, #10b981, #059669); }
+    .bar-fill.warning { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+
+    .course-meta-tags {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .meta-chip {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: #f1f5f9;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+    }
+
+    .essential-subjects-wrap {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
+      line-height: 1.5;
+    }
+    .essential-subjects-wrap strong { color: var(--text); }
+
+    .eligibility-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      width: fit-content;
+    }
+    .eligibility-status-badge.eligible {
+      background: #dcfce7;
+      color: #15803d;
+    }
+    .eligibility-status-badge.not-eligible {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    /* Deck Slider View (Alternative Focus Mode) */
+    .deck-view {
+      display: none;
+      text-align: center;
+    }
+    .deck-card-single {
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--card-border);
+      padding: 3rem 2.5rem;
+      box-shadow: var(--shadow-lg);
+      max-width: 650px;
+      margin: 0 auto 1.5rem;
+      text-align: left;
+    }
+    .deck-nav-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+    }
+
+    /* No Results State */
+    .no-results-box {
+      background: white;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--card-border);
+      padding: 3.5rem 2rem;
+      text-align: center;
+      max-width: 600px;
+      margin: 2rem auto;
+      box-shadow: var(--shadow-sm);
+    }
+    .no-results-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #ffffff;
       border-top: 1px solid var(--card-border);
-      margin-top: auto;
-      z-index: 10;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-top: 4rem;
     }
 
-    footer a {
-      color: var(--primary-light);
-      text-decoration: none;
+    /* Print Styles */
+    @media print {
+      .sticky-header, .toolbar-card, .btn-action-pill, .view-toggle, .site-footer, #confettiCanvas {
+        display: none !important;
+      }
+      .results-layout { grid-template-columns: 1fr; margin: 0; padding: 0; }
+      .profile-card { position: static; box-shadow: none; border: 1px solid #ccc; }
+      .course-card { page-break-inside: avoid; border: 1px solid #ccc; box-shadow: none; }
     }
 
-    footer a:hover {
-      text-decoration: underline;
+    @media (max-width: 950px) {
+      .results-layout { grid-template-columns: 1fr; }
+      .profile-card { position: static; }
+      .toolbar-card { flex-direction: column; align-items: stretch; }
+      .celebration-card { flex-direction: column; text-align: center; }
     }
-
-    @media (max-width: 768px) {
-      .header {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
-      }
-
-      .nav-links {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .container {
-        padding: 1rem;
-      }
-
-      .course-header {
-        flex-direction: column;
-        padding-right: 0;
-      }
-
-      .match-score-badge {
-        position: relative;
-        top: 0;
-        right: 0;
-        display: inline-block;
-        margin-bottom: 1rem;
-      }
-
-      .comparison-box {
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .action-buttons {
-        flex-direction: column;
-      }
-
-      .btn {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .admin-link {
-        bottom: 1rem;
-        right: 1rem;
-        padding: 0.6rem 1rem;
-      }
-    }
-
-    /* =============== DECK OF CARDS STYLES =============== */
-.deck-container {
-  position: relative;
-  height: 520px;
-  margin: 2rem 0;
-  perspective: 1200px;
-}
-
-.deck-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.deck-card {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: var(--card-bg);
-  backdrop-filter: blur(16px);
-  border-radius: 20px;
-  border: 1px solid var(--card-border);
-  padding: 2rem;
-  box-shadow: 0 20px 60px rgba(0, 0, 128, 0.25);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-  transform: scale(0.92) translateY(20px) rotate(-2deg);
-  z-index: 1;
-  pointer-events: none;
-}
-
-.deck-card.active {
-  opacity: 1;
-  transform: scale(1) translateY(0) rotate(0deg);
-  z-index: 10;
-  pointer-events: all;
-  box-shadow: 0 30px 80px rgba(0, 0, 128, 0.35);
-}
-
-.deck-card.prev {
-  transform: scale(0.96) translateY(-15px) rotate(-4deg);
-  opacity: 0.7;
-  z-index: 5;
-}
-
-.deck-card.next {
-  transform: scale(0.96) translateY(15px) rotate(4deg);
-  opacity: 0.7;
-  z-index: 5;
-}
-
-/* Navigation Controls */
-.deck-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  margin: 2rem 0;
-  flex-wrap: wrap;
-}
-
-.deck-btn {
-  padding: 0.9rem 1.8rem;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: none;
-  background: #000080;
-  color: white;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.deck-btn:hover {
-  background: #000066;
-  transform: translateY(-3px);
-}
-
-.deck-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.deck-progress {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #000080;
-  min-width: 80px;
-  text-align: center;
-}
-
-/* Make cards slightly smaller on mobile */
-@media (max-width: 768px) {
-  .deck-container {
-    height: 620px;
-  }
-  .deck-card {
-    padding: 1.5rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .deck-container {
-    height: auto !important;
-    perspective: none !important;
-    overflow-x: hidden !important;
-    margin: 1.5rem 0 2rem 0;
-  }
-
-  .deck-wrapper {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 1.8rem !important;
-    position: relative !important;
-    width: 100% !important;
-    height: auto !important;
-    overflow-x: hidden !important;
-    transform: none !important;
-  }
-
-  .deck-card {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    width: 100% !important;
-    transform: none !important;
-    opacity: 1 !important;
-    pointer-events: all !important;
-    z-index: 1 !important;
-    margin-bottom: 1rem !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 128, 0.15) !important;
-  }
-
-  /* Remove all deck animation states on mobile */
-  .deck-card.active,
-  .deck-card.prev,
-  .deck-card.next {
-    transform: none !important;
-    opacity: 1 !important;
-    z-index: 1 !important;
-  }
-
-  /* Completely hide deck navigation on mobile */
-  .deck-controls {
-    display: none !important;
-  }
-
-  /* Make sure no horizontal scrolling leaks */
-  .container, 
-  .recommendations,
-  .deck-container,
-  .deck-wrapper {
-    overflow-x: hidden !important;
-    max-width: 100% !important;
-  }
-
-  /* Better mobile card spacing and readability */
-  .deck-card {
-    padding: 1.75rem 1.4rem !important;
-    border-radius: 16px !important;
-  }
-
-  .course-header {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 1rem !important;
-  }
-
-  .match-score-badge {
-    position: relative !important;
-    top: 0 !important;
-    right: 0 !important;
-    margin-bottom: 1rem !important;
-    align-self: flex-start !important;
-  }
-
-  .comparison-box {
-    flex-direction: column !important;
-    gap: 1.2rem !important;
-    text-align: center !important;
-  }
-}
-
   </style>
 </head>
 <body>
-  
 
-<!-- Background Particles -->
+<canvas id="confettiCanvas"></canvas>
 <div class="particles" id="particles"></div>
 
-<!-- Sticky Header -->
-<header class="header">
-  <div class="header-logo">
-    <div class="nuva-logo">
-      NUVA
-      <div class="grid">
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        <div class="dot"></div><div class="dot center"></div><div class="dot"></div>
-        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-      </div>
+<!-- HEADER -->
+<header class="sticky-header">
+  <a href="index.html" class="header-left">
+    <div class="nuva-logo">N</div>
+    <div class="brand-title-wrap">
+      <span class="brand-text">NUVA</span>
+      <span class="brand-tag">Course Guidance System</span>
     </div>
-    <h1 style="color: #000080;">Results</h1>
-  </div>
-  
-  <div class="nav-links">
-    <a href="index.html" class="nav-link">
-      <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
-      Dashboard
-    </a>
-    <a href="course-input.html" class="nav-link">
-      <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg>
-      Find Courses
-    </a>
-    <a href="results.html" class="nav-link active">
-      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
-      Results
+  </a>
+
+  <div class="nav-actions">
+    <button onclick="shareOnWhatsApp()" class="btn-action-pill" title="Share with friends on WhatsApp">
+      <span>📱 Share Results</span>
+    </button>
+    <button onclick="window.print()" class="btn-action-pill" title="Print or save as PDF">
+      <span>🖨️ Print / Save PDF</span>
+    </button>
+    <a href="course-input.html" class="btn-action-pill primary">
+      <span>+ Recalculate</span>
     </a>
   </div>
 </header>
 
-<div class="container">
+<div class="results-layout">
 
-    <!-- Recommendations Section - Deck Style -->
-  <div class="recommendations">
-    <!-- Results Info -->
-    <div class="results-info" id="resultsInfo"></div>
+  <!-- SIDEBAR: Profile & Weight Decomposition -->
+  <aside class="profile-card">
+    <div class="profile-header">
+      <span class="profile-badge">Admissions Profile</span>
+      <h2 class="profile-title" id="studentGenderTitle">Student Profile</h2>
+      <div id="studentUniPref" style="font-size:0.85rem; color:var(--text-muted); margin-top:2px;">All Public Universities</div>
+    </div>
 
-    <!-- Deck Container -->
-    <div class="deck-container" id="deckContainer">
-      <div class="deck-wrapper" id="deckWrapper">
-        <!-- Cards will be injected here by JavaScript -->
+    <!-- Official Calculated Weight -->
+    <div class="total-score-box">
+      <div class="total-score-label">Official Admission Weight</div>
+      <div class="total-score-num" id="displayTotalWeight">0.0</div>
+      <div style="font-size:0.82rem; opacity:0.9;">PUJAB Cut-Off Formula Score</div>
+    </div>
+
+    <!-- Breakdown Details -->
+    <h3 style="font-family:'Outfit', sans-serif; font-size:1.05rem; color:var(--navy); margin-bottom:0.8rem;">Weight Decomposition</h3>
+    <div class="breakdown-list" id="breakdownList">
+      <!-- Injected by JavaScript -->
+    </div>
+
+    <!-- Subsidiary Details -->
+    <div style="margin-top:1.5rem; padding-top:1.2rem; border-top:1px solid var(--card-border);">
+      <h4 style="font-size:0.88rem; font-weight:700; color:var(--navy); margin-bottom:0.6rem;">Subsidiaries & O-Level</h4>
+      <div id="subsidiaryBreakdown" style="font-size:0.82rem; color:var(--text-muted); line-height:1.7;">
+        <!-- Injected by JavaScript -->
       </div>
     </div>
 
-    <!-- Navigation Controls -->
-    <div class="deck-controls">
-      <button id="prevBtn" class="deck-btn prev-btn" title="Previous">
-        ← Previous
-      </button>
-      
-      <div class="deck-progress">
-        <span id="currentIndex">1</span> of <span id="totalCards">0</span>
+    <div style="margin-top:1.5rem;">
+      <a href="course-input.html" class="btn-action-pill" style="width:100%; justify-content:center; padding:0.75rem;">
+        Change Subjects / Grades
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN RESULTS AREA -->
+  <main class="results-main">
+
+    <!-- Celebration Header -->
+    <div class="celebration-card" id="celebrationBanner">
+      <div>
+        <div class="celebration-title" id="celebrationHeadline">🎉 Congratulations!</div>
+        <div class="celebration-desc" id="celebrationSubtitle">
+          We matched your academic profile with official university cut-off points. Explore your recommended degree programs below.
+        </div>
       </div>
-      
-      <button id="nextBtn" class="deck-btn next-btn" title="Next">
-        Next →
-      </button>
+      <div>
+        <a href="#coursesContainer" class="btn-action-pill" style="background:#ffffff; color:#064e3b; font-weight:800;">
+          View Eligible Courses ↓
+        </a>
+      </div>
     </div>
 
-    <!-- Action Buttons -->
-    <div class="action-buttons">
-      <button class="btn btn-primary" onclick="window.location.href='course-input.html'">
-        <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-        Try New Combination
-      </button>
-      <button class="btn btn-secondary" onclick="window.location.href='index.html'">
-        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-        Back to Dashboard
-      </button>
+    <!-- Toolbar: Search, Filters, View Modes -->
+    <div class="toolbar-card">
+      <div class="search-input-wrap">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input type="text" id="courseSearch" class="search-input" placeholder="Search by course name, code (e.g. MAM, CIV), or faculty...">
+      </div>
+
+      <select id="universityFilter" class="filter-select">
+        <option value="all">All Universities</option>
+      </select>
+
+      <select id="eligibilityFilter" class="filter-select">
+        <option value="eligible" selected>Eligible Only</option>
+        <option value="all">Show All Matches</option>
+      </select>
+
+      <div class="view-toggle">
+        <button class="view-btn active" id="btnGridView" onclick="setViewMode('grid')">Grid View</button>
+        <button class="view-btn" id="btnDeckView" onclick="setViewMode('deck')">Focus Deck</button>
+      </div>
     </div>
-  </div>
-  <!-- Filter Notice -->
-  <div class="filter-notice" id="filterNotice">
-    <svg viewBox="0 0 24 24"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
-    <span id="filterNoticeText">Loading filter information...</span>
-  </div>
 
-  <!-- Weight Summary Card -->
-  <div class="weight-summary">
-    <h2 style="color: var(--primary-light);">Your Academic Profile</h2>
-    
-    <!-- Student Information -->
-    <div class="student-info" id="studentInfo"></div>
+    <!-- Results Count Status -->
+    <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.92rem; color:var(--text-muted); padding:0 0.5rem;">
+      <span id="resultsCountText">Showing matching courses</span>
+      <span id="activeFilterBadge" style="font-weight:700; color:var(--navy);"></span>
+    </div>
 
-    <h2 style="margin-top: 2rem;">Weight Calculation Breakdown</h2>
-    
-    <!-- Weight Details -->
-    <div class="weight-breakdown" id="weightDetails"></div>
-  </div>
+    <!-- GRID VIEW -->
+    <div class="courses-grid" id="coursesGrid">
+      <!-- Course cards injected here -->
+    </div>
+
+    <!-- FOCUS DECK VIEW -->
+    <div class="deck-view" id="deckView">
+      <div id="deckCardContainer"></div>
+      <div class="deck-nav-controls">
+        <button class="btn-action-pill" id="deckPrevBtn" onclick="navigateDeck(-1)">← Previous</button>
+        <span id="deckCounter" style="font-weight:700; color:var(--navy);">1 of 10</span>
+        <button class="btn-action-pill" id="deckNextBtn" onclick="navigateDeck(1)">Next →</button>
+      </div>
+    </div>
+
+    <!-- NO RESULTS FALLBACK -->
+    <div class="no-results-box" id="noResultsBox" style="display:none;">
+      <div class="no-results-icon">🔍</div>
+      <h3 style="font-family:'Outfit', sans-serif; font-size:1.5rem; color:var(--navy); margin-bottom:0.6rem;">No Matching Courses Found</h3>
+      <p style="color:var(--text-muted); font-size:0.95rem; line-height:1.6; margin-bottom:1.5rem;">
+        No courses met the cut-off criteria for this subject combination or filter. Try choosing "Any University" or exploring alternative subject combinations.
+      </p>
+      <a href="course-input.html" class="btn-action-pill primary" style="display:inline-flex;">
+        Try Another Combination
+      </a>
+    </div>
+
+  </main>
 </div>
 
-<!-- Admin Quick Link -->
-<a href="admin.html" class="admin-link" title="Admin Panel">
-  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
-  Admin
-</a>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3620070651069378"
-     crossorigin="anonymous"></script>
-<!-- ad 1 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-3620070651069378"
-     data-ad-slot="1315861993"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
-<footer>
-  © 2026 BLEEM Labs Co. All rights reserved. Owned by <strong>MUYANJA ANDREW</strong>.<br>
-  Contact: <a href="mailto:bleemistorg@gmail.com">NUVA Org | Email and Consultation Center</a>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <p>© 2026 BLEEM Labs Co. All rights reserved. Owned by <strong>MUYANJA ANDREW</strong>.</p>
+  <p style="margin-top:0.4rem;">
+    <a href="index.html" style="color:var(--navy); text-decoration:none; font-weight:600;">Home</a> · 
+    <a href="course-input.html" style="color:var(--navy); text-decoration:none; font-weight:600;">Find Courses</a> · 
+    <a href="report.html" style="color:var(--navy); text-decoration:none; font-weight:600;">Report Issue</a> · 
+    <a href="privacy.html" style="color:var(--navy); text-decoration:none; font-weight:600;">Privacy</a>
+  </p>
 </footer>
 
 <script>
-// ==================== DATA RETRIEVAL ====================
-let recommendations = JSON.parse(sessionStorage.getItem('courseRecommendations') || '[]');
-let calculatedWeights = JSON.parse(sessionStorage.getItem('weights') || '{}');
-let principalSubjectsUsed = JSON.parse(sessionStorage.getItem('principalSubjectsUsed') || '[]');
-let principalGradesUsed = JSON.parse(sessionStorage.getItem('principalGradesUsed') || '[]');
-let submissionData = JSON.parse(sessionStorage.getItem('submissionData') || '{}');
-let totalCourses = sessionStorage.getItem('totalCourses') || '0';
+  // Retrieve cached data
+  const rawRecommendations = JSON.parse(sessionStorage.getItem('courseRecommendations') || '[]');
+  const calculatedWeights = JSON.parse(sessionStorage.getItem('weights') || '{}');
+  const principalSubjectsUsed = JSON.parse(sessionStorage.getItem('principalSubjectsUsed') || '[]');
+  const principalGradesUsed = JSON.parse(sessionStorage.getItem('principalGradesUsed') || '[]');
+  const submissionData = JSON.parse(sessionStorage.getItem('submissionData') || '{}');
+  const totalCourses = sessionStorage.getItem('totalCourses') || '0';
 
-// Debug: Log what's in sessionStorage
-console.log('Session Storage Contents:');
-console.log('submissionData:', submissionData);
-console.log('recommendations:', recommendations);
-console.log('calculatedWeights:', calculatedWeights);
+  let currentView = 'grid';
+  let activeDeckIndex = 0;
+  let filteredCourses = [...rawRecommendations];
 
-// DOM Elements
-const filterNotice = document.getElementById('filterNotice');
-const filterNoticeText = document.getElementById('filterNoticeText');
-const studentInfo = document.getElementById('studentInfo');
-const weightDetails = document.getElementById('weightDetails');
-const resultsInfo = document.getElementById('resultsInfo');
-const resultsContainer = document.getElementById('resultsContainer');
+  // DOM Elements
+  const displayTotalWeight = document.getElementById('displayTotalWeight');
+  const breakdownList = document.getElementById('breakdownList');
+  const subsidiaryBreakdown = document.getElementById('subsidiaryBreakdown');
+  const studentGenderTitle = document.getElementById('studentGenderTitle');
+  const studentUniPref = document.getElementById('studentUniPref');
+  const coursesGrid = document.getElementById('coursesGrid');
+  const deckView = document.getElementById('deckView');
+  const deckCardContainer = document.getElementById('deckCardContainer');
+  const deckCounter = document.getElementById('deckCounter');
+  const courseSearch = document.getElementById('courseSearch');
+  const universityFilter = document.getElementById('universityFilter');
+  const eligibilityFilter = document.getElementById('eligibilityFilter');
+  const resultsCountText = document.getElementById('resultsCountText');
+  const noResultsBox = document.getElementById('noResultsBox');
+  const celebrationHeadline = document.getElementById('celebrationHeadline');
+  const celebrationSubtitle = document.getElementById('celebrationSubtitle');
 
-// ==================== PARTICLES BACKGROUND ====================
-function createParticle() {
-  const particles = document.getElementById('particles');
-  const particle = document.createElement('div');
-  particle.className = 'particle';
-  
-  const size = Math.random() * 8 + 4;
-  particle.style.width = `${size}px`;
-  particle.style.height = `${size}px`;
-  particle.style.left = Math.random() * 100 + 'vw';
-  particle.style.animationDuration = Math.random() * 10 + 15 + 's';
-  particle.style.animationDelay = Math.random() * 5 + 's';
-  
-  particles.appendChild(particle);
-  setTimeout(() => particle.remove(), 20000);
-}
+  // Initialize
+  document.addEventListener('DOMContentLoaded', () => {
+    populateProfile();
+    populateUniversityFilter();
+    applyFilters();
+    triggerConfetti();
 
-// Initialize particles
-for (let i = 0; i < 20; i++) createParticle();
-setInterval(createParticle, 1000);
+    courseSearch.addEventListener('input', applyFilters);
+    universityFilter.addEventListener('change', applyFilters);
+    eligibilityFilter.addEventListener('change', applyFilters);
+  });
 
-// ==================== FILTER NOTICE ====================
-function showFilterNotice() {
-  if (submissionData.selectedUniversity && submissionData.selectedUniversity.trim() !== '') {
-    filterNoticeText.textContent = `Showing courses only from: ${submissionData.selectedUniversity}`;
-    filterNotice.style.display = 'flex';
-  } else {
-    filterNoticeText.textContent = 'Showing courses from all universities';
-    filterNotice.style.display = 'flex';
-  }
-}
+  // Populate Sidebar
+  function populateProfile() {
+    const total = calculatedWeights.total || 0;
+    displayTotalWeight.textContent = Number(total).toFixed(1);
 
-// ==================== STUDENT INFORMATION ====================
-function displayStudentInfo() {
-  if (!submissionData || Object.keys(submissionData).length === 0) {
-    studentInfo.innerHTML = '<p style="color: var(--text-muted);">No student information available.</p>';
-    return;
-  }
+    const gender = submissionData.gender ? submissionData.gender.charAt(0).toUpperCase() + submissionData.gender.slice(1) : 'Candidate';
+    studentGenderTitle.textContent = `${gender} Profile`;
 
-  // Debug: Log the submission data to see what's actually stored
-  console.log('Submission Data:', submissionData);
+    if (submissionData.selectedUniversity) {
+      studentUniPref.textContent = `Target: ${submissionData.selectedUniversity}`;
+    } else {
+      studentUniPref.textContent = 'All Public Universities';
+    }
 
-  let html = `
-    <h3>Personal Information</h3>
-    <div class="info-grid">
-      <div class="info-item">
-        <span class="info-label">Gender</span>
-        <span class="info-value">${submissionData.gender ? submissionData.gender.charAt(0).toUpperCase() + submissionData.gender.slice(1) : 'Not specified'}</span>
-      </div>
-      <div class="info-item">
-        <span class="info-label">Education Level</span>
-        <span class="info-value">${submissionData.level || 'Not specified'}</span>
-      </div>
-      <div class="info-item">
-        <span class="info-label">O-Level Weight</span>
-        <span class="info-value">${submissionData.oLevelWeight || 0}</span>
-      </div>
-    </div>
-  `;
-
-  // ===== FIXED: Properly read subsidiary data with fallbacks =====
-  // Try multiple possible field names for robustness
-  const gpResult = submissionData.gpResult || submissionData.gp_result || '0';
-  const otherResult = submissionData.otherSubsidiaryResult || submissionData.subsidiaryResult || submissionData.other_subsidiary || '0';
-  const subsidiarySubject = submissionData.subsidiarySubject || submissionData.subsidiary_subject || 'None';
-  
-  const gpPassed = gpResult === '1' || gpResult === 1 || gpResult === true;
-  const otherPassed = otherResult === '1' || otherResult === 1 || otherResult === true;
-  
-  const gpPoints = gpPassed ? 1 : 0;
-  const otherPoints = otherPassed ? 1 : 0;
-  const totalSubsidiary = gpPoints + otherPoints;
-
-  html += `
-    <h3 style="margin-top: 1.5rem;">Subsidiary Information</h3>
-    <div class="subsidiary-breakdown">
-      <div class="subsidiary-row">
-        <span>General Paper:</span>
-        <span style="color: ${gpPassed ? 'var(--success)' : 'var(--error)'}; font-weight: 600;">
-          ${gpPassed ? 'Passed (+1)' : 'Not passed'}
-        </span>
-      </div>
-      <div class="subsidiary-row">
-        <span>Other Subsidiary (${subsidiarySubject}):</span>
-        <span style="color: ${otherPassed ? 'var(--success)' : 'var(--error)'}; font-weight: 600;">
-          ${otherPassed ? 'Passed (+1)' : 'Not passed'}
-        </span>
-      </div>
-      <div class="subsidiary-total">
-        <span>Total Subsidiary Points:</span>
-        <span style="color: var(--primary-light); font-size: 1.2rem;">+${totalSubsidiary}</span>
-      </div>
-    </div>
-  `;
-
-  if (principalSubjectsUsed.length > 0) {
-    html += `
-      <h3 style="margin-top: 1.5rem;">Principal Subjects</h3>
-      <div class="info-grid">
-        ${principalSubjectsUsed.map((subject, i) => `
-          <div class="info-item">
-            <span class="info-label">Subject ${i + 1}</span>
-            <span class="info-value">${subject} (${principalGradesUsed[i]})</span>
-          </div>
-        `).join('')}
+    // Breakdown list
+    let listHTML = '';
+    listHTML += `
+      <div class="breakdown-item">
+        <span>O-Level Aggregates:</span>
+        <span class="breakdown-val">+${(calculatedWeights.oLevel || 0).toFixed(1)}</span>
       </div>
     `;
-  }
 
-  studentInfo.innerHTML = html;
-}
-
-// ==================== WEIGHT BREAKDOWN ====================
-function displayWeightSummary() {
-  if (!calculatedWeights || Object.keys(calculatedWeights).length === 0) {
-    weightDetails.innerHTML = '<p style="color: var(--text-muted); text-align: center;">No weight calculation data available.</p>';
-    return;
-  }
-
-  let html = '';
-
-  // Base weights
-  html += `
-    <div class="weight-item">
-      <span class="weight-label">
-        <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
-        O-Level Weight
-      </span>
-      <span class="weight-value">${calculatedWeights.oLevel || 0}</span>
-    </div>
-  `;
-
-  if (calculatedWeights.genderBonus) {
-    html += `
-      <div class="weight-item">
-        <span class="weight-label">
-          <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-          Gender Bonus (Female)
-        </span>
-        <span class="weight-value">+${calculatedWeights.genderBonus}</span>
-      </div>
-    `;
-  }
-
-  // ===== UPDATED: Show subsidiary total clearly =====
-  html += `
-    <div class="weight-item">
-      <span class="weight-label">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
-        Subsidiary Total (GP + Other)
-      </span>
-      <span class="weight-value">+${calculatedWeights.subsidiary || 0}</span>
-    </div>
-  `;
-
-  // Principal subjects breakdown
-  if (calculatedWeights.principalSubjects && calculatedWeights.principalSubjects.length > 0) {
-    html += `<h3 style="margin: 1.5rem 0 1rem;">Principal Subjects</h3>`;
-    html += `<div class="subject-breakdown">`;
-
-    calculatedWeights.principalSubjects.forEach(subject => {
-      const isEssential = subject.category === 'Essential';
-      html += `
-        <div class="subject-item ${isEssential ? 'essential' : ''}">
-          <span class="subject-name">
-            ${subject.subject} (${subject.grade})
-            ${isEssential ? '<span class="essential-badge">ESSENTIAL</span>' : ''}
-          </span>
-          <span>${subject.points} pts ×${subject.multiplier} = ${subject.weightedPoints}</span>
+    if (calculatedWeights.genderBonus) {
+      listHTML += `
+        <div class="breakdown-item" style="border-left:3px solid #ec4899; background:#fdf2f8;">
+          <span>Female Bonus:</span>
+          <span class="breakdown-val">+${calculatedWeights.genderBonus}</span>
         </div>
       `;
+    }
+
+    listHTML += `
+      <div class="breakdown-item">
+        <span>Subsidiary Points:</span>
+        <span class="breakdown-val">+${(calculatedWeights.subsidiary || 0).toFixed(1)}</span>
+      </div>
+    `;
+
+    if (calculatedWeights.principalSubjects && calculatedWeights.principalSubjects.length > 0) {
+      calculatedWeights.principalSubjects.forEach(s => {
+        const isEss = s.category === 'Essential';
+        listHTML += `
+          <div class="breakdown-item ${isEss ? 'essential' : 'relevant'}">
+            <span>${s.subject} (${s.grade}) <small style="font-weight:700; color:${isEss?'var(--primary)':'var(--navy)'};">[×${s.multiplier}]</small></span>
+            <span class="breakdown-val">${s.weightedPoints.toFixed(1)}</span>
+          </div>
+        `;
+      });
+    }
+
+    breakdownList.innerHTML = listHTML;
+
+    // Subsidiaries note
+    const gpPassed = submissionData.gpResult === '1' || submissionData.gpResult === 1;
+    const otherPassed = submissionData.otherSubsidiaryResult === '1' || submissionData.otherSubsidiaryResult === 1;
+    const otherSubName = submissionData.subsidiarySubject || 'Subsidiary';
+
+    subsidiaryBreakdown.innerHTML = `
+      <div>General Paper: <strong style="color:${gpPassed?'var(--emerald)':'#dc2626'}">${gpPassed?'Passed (+1.0)':'Not passed'}</strong></div>
+      <div>${otherSubName}: <strong style="color:${otherPassed?'var(--emerald)':'#dc2626'}">${otherPassed?'Passed (+1.0)':'Not passed'}</strong></div>
+      <div style="margin-top:4px; font-weight:700; color:var(--navy);">Combined Subsidiary: +${((gpPassed?1:0) + (otherPassed?1:0)).toFixed(1)}</div>
+    `;
+
+    // Celebration message
+    const eligibleCount = rawRecommendations.filter(c => c.yourWeight >= c.cutOff).length;
+    if (eligibleCount > 0) {
+      celebrationHeadline.textContent = `🎉 Congratulations! ${eligibleCount} Programs Eligible!`;
+      celebrationSubtitle.textContent = `Your calculated weight of ${Number(total).toFixed(1)} points satisfies the admission cutoff for ${eligibleCount} undergraduate degree courses.`;
+    } else {
+      celebrationHeadline.textContent = `Guidance Summary Ready`;
+      celebrationSubtitle.textContent = `We reviewed 449+ university courses against your weight of ${Number(total).toFixed(1)} points. Review competitive programs and cutoff margins below.`;
+    }
+  }
+
+  // Populate University Filter
+  function populateUniversityFilter() {
+    const uniSet = new Set();
+    rawRecommendations.forEach(c => {
+      if (c.university) uniSet.add(c.university);
     });
 
-    html += `</div>`;
-
-    // Category totals
-    html += `
-      <div class="weight-item">
-        <span class="weight-label">Essential Subjects Total (×3)</span>
-        <span class="weight-value">${calculatedWeights.essentialTotal || 0}</span>
-      </div>
-      <div class="weight-item">
-        <span class="weight-label">Other Subjects Total (×2)</span>
-        <span class="weight-value">${calculatedWeights.otherTotal || 0}</span>
-      </div>
-    `;
+    uniSet.forEach(uni => {
+      const opt = document.createElement('option');
+      opt.value = uni;
+      opt.textContent = uni;
+      universityFilter.appendChild(opt);
+    });
   }
 
-  // Total weight
-  html += `
-    <div class="total-weight">
-      <span class="weight-label">Total Calculated Weight</span>
-      <span class="weight-value">${calculatedWeights.total || 0}</span>
-    </div>
-  `;
+  // Filter & Render
+  function applyFilters() {
+    const query = courseSearch.value.trim().toLowerCase();
+    const selectedUni = universityFilter.value;
+    const elig = eligibilityFilter.value;
 
-  // ===== UPDATED: Calculation explanation with independent subsidiary =====
-  html += `
-    <div class="calculation-explanation">
-      <h4>How Your Weight is Calculated:</h4>
-      <div class="calc-step">Essential Subjects: Grade Points × 3</div>
-      <div class="calc-step">Other Principal Subjects: Grade Points × 2</div>
-      <div class="calc-step">General Paper: Pass = +1 point (independent)</div>
-      <div class="calc-step">Other Subsidiary: Pass = +1 point (independent)</div>
-      <div class="calc-step">O-Level Weight: Added directly (0-3)</div>
-      <div class="calc-step">Female Bonus: +1.5 points</div>
-      <div class="calc-step" style="color: var(--success); margin-top: 0.5rem;">
-        <strong>Note:</strong> If you passed both GP and another subsidiary, you get +2 total!
-      </div>
-    </div>
-  `;
+    filteredCourses = rawRecommendations.filter(c => {
+      const matchesQuery = !query || 
+                           (c.name && c.name.toLowerCase().includes(query)) ||
+                           (c.code && c.code.toLowerCase().includes(query)) ||
+                           (c.faculty && c.faculty.toLowerCase().includes(query));
 
-  weightDetails.innerHTML = html;
-}
+      const matchesUni = selectedUni === 'all' || c.university === selectedUni;
+      const isEligible = c.yourWeight >= c.cutOff;
+      const matchesElig = elig === 'all' || (elig === 'eligible' && isEligible);
 
-// ==================== MATCH SCORE HELPER ====================
-function getMatchScoreClass(score) {
-  if (score >= 80) return 'high';
-  if (score >= 60) return 'medium';
-  return 'low';
-}
+      return matchesQuery && matchesUni && matchesElig;
+    });
 
-// ==================== DECK NAVIGATION ====================
-let currentCardIndex = 0;
-let allCards = [];
+    resultsCountText.textContent = `Found ${filteredCourses.length} programs matching criteria (Total eligible: ${rawRecommendations.filter(c=>c.yourWeight>=c.cutOff).length})`;
 
-function showCard(index) {
-  allCards.forEach((card, i) => {
-    card.classList.remove('active', 'prev', 'next');
-    
-    if (i === index) {
-      card.classList.add('active');
-    } else if (i === index - 1) {
-      card.classList.add('prev');
-    } else if (i === index + 1) {
-      card.classList.add('next');
+    if (filteredCourses.length === 0) {
+      coursesGrid.style.display = 'none';
+      deckView.style.display = 'none';
+      noResultsBox.style.display = 'block';
+      return;
     }
-  });
 
-  document.getElementById('currentIndex').textContent = index + 1;
-  document.getElementById('prevBtn').disabled = index === 0;
-  document.getElementById('nextBtn').disabled = index === allCards.length - 1;
-}
+    noResultsBox.style.display = 'none';
 
-function displayRecommendations() {
-  if (!recommendations || recommendations.length === 0) {
-    resultsContainer.innerHTML = `
-      <div class="no-results">
-        <h3>No Course Recommendations Found</h3>
-        <p>We couldn't find any courses that match your current qualifications...</p>
-        <!-- existing no results content -->
-      </div>
-    `;
-    return;
+    if (currentView === 'grid') {
+      coursesGrid.style.display = 'grid';
+      deckView.style.display = 'none';
+      renderGrid();
+    } else {
+      coursesGrid.style.display = 'none';
+      deckView.style.display = 'block';
+      renderDeck();
+    }
   }
 
-  resultsInfo.innerHTML = `
-    Found <strong>${totalCourses}</strong> eligible courses. 
-    Showing top <strong>${Math.min(recommendations.length, 20)}</strong> recommendations.
-  `;
+  // Render Grid
+  function renderGrid() {
+    coursesGrid.innerHTML = filteredCourses.map((c, i) => {
+      const isEligible = c.yourWeight >= c.cutOff;
+      const matchScore = c.matchScore || 0;
+      const matchClass = matchScore >= 80 ? 'high' : (matchScore >= 60 ? 'medium' : 'low');
+      const surplus = (c.yourWeight - c.cutOff).toFixed(1);
+      const surplusLabel = isEligible 
+        ? `<span style="color:var(--emerald); font-weight:800;">+${surplus} surplus pts</span>`
+        : `<span style="color:#ef4444; font-weight:800;">${surplus} pts below cutoff</span>`;
 
-  const wrapper = document.getElementById('deckWrapper');
-  wrapper.innerHTML = '';
-
-  allCards = [];
-
-  recommendations.slice(0, 20).forEach((course, index) => {
-    const isEligible = course.yourWeight >= course.cutOff;
-    const matchClass = getMatchScoreClass(course.matchScore);
-    const statusText = isEligible ? 'ELIGIBLE' : 'BELOW CUT-OFF';
-
-    const cardHTML = `
-      <div class="deck-card ${index === 0 ? 'active' : ''}">
-        <span class="match-score-badge ${matchClass}">${course.matchScore}% Match</span>
-        
-        <div class="course-header">
+      return `
+        <div class="course-card ${isEligible ? 'eligible' : 'ineligible'}">
           <div>
-            <h3>${course.name}</h3>
-            <div class="course-meta">
-              <span class="meta-tag">${course.code}</span>
-              <span class="meta-tag">${course.university}</span>
+            <div class="card-top">
+              <span class="uni-pill">${c.university || 'Uganda Public Uni'}</span>
+              <span class="match-pill ${matchClass}">${matchScore}% Match</span>
             </div>
+
+            <div class="course-code-tag">${c.code || 'DEGREE'}</div>
+            <h3 class="course-name">${c.name}</h3>
+
+            <div class="course-meta-tags">
+              <span class="meta-chip">🏛️ ${c.faculty || 'Faculty'}</span>
+              <span class="meta-chip">⏱️ ${c.duration || '3-5 Years'}</span>
+              <span class="meta-chip">📅 ${c.programType || 'Day'}</span>
+            </div>
+
+            <div class="comparison-container">
+              <div class="comp-row">
+                <span>Official Cutoff:</span>
+                <strong style="color:var(--navy);">${c.cutOff}</strong>
+              </div>
+              <div class="comp-row">
+                <span>Your Weight:</span>
+                <strong style="color:var(--primary);">${c.yourWeight}</strong>
+              </div>
+              <div style="font-size:0.8rem; margin-top:4px;">${surplusLabel}</div>
+
+              <div class="bar-bg">
+                <div class="bar-fill ${isEligible ? 'success' : 'warning'}" 
+                     style="width: ${Math.min(100, Math.max(10, matchScore))}%"></div>
+              </div>
+            </div>
+
+            ${c.essentialSubjects && c.essentialSubjects.length > 0 ? `
+              <div class="essential-subjects-wrap">
+                <strong>Essential Subjects:</strong> ${c.essentialSubjects.join(', ')}
+              </div>
+            ` : ''}
+          </div>
+
+          <div style="margin-top:1rem; display:flex; justify-content:space-between; align-items:center;">
+            <span class="eligibility-status-badge ${isEligible ? 'eligible' : 'not-eligible'}">
+              ${isEligible ? '✓ ELIGIBLE FOR ADMISSION' : '⚠️ BELOW CUTOFF'}
+            </span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Render Deck Focus View
+  function renderDeck() {
+    if (activeDeckIndex >= filteredCourses.length) activeDeckIndex = 0;
+    const c = filteredCourses[activeDeckIndex];
+    if (!c) return;
+
+    deckCounter.textContent = `${activeDeckIndex + 1} of ${filteredCourses.length}`;
+    const isEligible = c.yourWeight >= c.cutOff;
+
+    deckCardContainer.innerHTML = `
+      <div class="deck-card-single">
+        <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+          <span class="uni-pill" style="font-size:0.85rem;">${c.university}</span>
+          <span class="match-pill high" style="font-size:0.85rem;">${c.matchScore}% Match</span>
+        </div>
+
+        <div style="color:var(--primary); font-weight:800; font-size:1.1rem; margin-bottom:0.4rem;">${c.code}</div>
+        <h2 style="font-family:'Outfit', sans-serif; font-size:1.8rem; color:var(--navy); line-height:1.2; margin-bottom:1rem;">${c.name}</h2>
+
+        <div style="display:flex; gap:0.8rem; flex-wrap:wrap; margin-bottom:1.5rem;">
+          <span class="meta-chip" style="font-size:0.85rem;">🏛️ ${c.faculty}</span>
+          <span class="meta-chip" style="font-size:0.85rem;">⏱️ ${c.duration}</span>
+          <span class="meta-chip" style="font-size:0.85rem;">📅 ${c.programType}</span>
+        </div>
+
+        <div class="comparison-container" style="padding:1.5rem;">
+          <div class="comp-row" style="font-size:1.1rem;">
+            <span>Official University Cutoff:</span>
+            <strong style="color:var(--navy); font-size:1.4rem;">${c.cutOff}</strong>
+          </div>
+          <div class="comp-row" style="font-size:1.1rem; margin-top:0.6rem;">
+            <span>Your Calculated Weight:</span>
+            <strong style="color:var(--primary); font-size:1.4rem;">${c.yourWeight}</strong>
           </div>
         </div>
 
-        <div class="comparison-box">
-          <div class="comparison-item">
-            <div class="comparison-label">Cut-off Points</div>
-            <div class="comparison-value cutoff">${course.cutOff}</div>
-          </div>
-          <div class="comparison-vs">VS</div>
-          <div class="comparison-item">
-            <div class="comparison-label">Your Weight</div>
-            <div class="comparison-value your-weight">${course.yourWeight}</div>
-          </div>
-        </div>
-
-        <div style="display: flex; justify-content: center; margin: 1rem 0;">
-          <span class="eligibility-badge ${isEligible ? 'eligible' : 'not-eligible'}">
-            ${isEligible ? '✓' : '✗'} ${statusText}
+        <div style="margin-top:1.5rem;">
+          <span class="eligibility-status-badge ${isEligible ? 'eligible' : 'not-eligible'}" style="font-size:1rem; padding:0.6rem 1.2rem;">
+            ${isEligible ? '✓ ADMISSION CRITERIA MET' : '⚠️ BELOW CUTOFF'}
           </span>
         </div>
-
-        <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 1.5rem 0; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 12px;">
-          <div><strong>Faculty:</strong> ${course.faculty}</div>
-          <div><strong>Duration:</strong> ${course.duration}</div>
-          <div><strong>Type:</strong> ${course.programType}</div>
-        </div>
-
-        ${course.essentialSubjects && course.essentialSubjects.length > 0 ? `
-          <div class="subject-section">
-            <h4>Essential Subjects</h4>
-            <div class="subject-tags">
-              ${course.essentialSubjects.map(s => `<span class="subject-tag essential">${s}</span>`).join('')}
-            </div>
-          </div>
-        ` : ''}
-
-        ${isEligible && index < 3 ? `
-          <div class="top-recommendation">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="#FFD700" xmlns="http://www.w3.org/2000/svg" style="margin-right: 10px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
-      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-    </svg>Highly Recommended Match!
-          </div>
-        ` : ''}
       </div>
     `;
+  }
 
-    wrapper.innerHTML += cardHTML;
-  });
+  function navigateDeck(dir) {
+    activeDeckIndex += dir;
+    if (activeDeckIndex < 0) activeDeckIndex = filteredCourses.length - 1;
+    if (activeDeckIndex >= filteredCourses.length) activeDeckIndex = 0;
+    renderDeck();
+  }
 
-  // Get all created cards
-  allCards = Array.from(wrapper.querySelectorAll('.deck-card'));
-  
-  // Set total count
-  document.getElementById('totalCards').textContent = allCards.length;
+  function setViewMode(mode) {
+    currentView = mode;
+    document.getElementById('btnGridView').classList.toggle('active', mode === 'grid');
+    document.getElementById('btnDeckView').classList.toggle('active', mode === 'deck');
+    applyFilters();
+  }
 
-  // Show first card
-  currentCardIndex = 0;
-  showCard(currentCardIndex);
+  // Share on WhatsApp
+  function shareOnWhatsApp() {
+    const total = displayTotalWeight.textContent;
+    const count = rawRecommendations.filter(c => c.yourWeight >= c.cutOff).length;
+    const text = encodeURIComponent(`I just calculated my official PUJAB admission weight on NUVA: ${total} points! I matched with ${count} university degree courses. Check yours too: https://nuva.me`);
+    window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+  }
 
-  // Button listeners
-  document.getElementById('prevBtn').onclick = () => {
-    if (currentCardIndex > 0) {
-      currentCardIndex--;
-      showCard(currentCardIndex);
+  // Confetti Animation
+  function triggerConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const pieces = [];
+    const colors = ['#fe4f04', '#000080', '#10b981', '#f59e0b', '#ec4899', '#6366f1'];
+
+    for (let i = 0; i < 90; i++) {
+      pieces.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        w: Math.random() * 9 + 4,
+        h: Math.random() * 9 + 4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        vy: Math.random() * 3 + 2,
+        vx: Math.random() * 2 - 1,
+        angle: Math.random() * 360,
+        spin: Math.random() * 6 - 3
+      });
     }
-  };
 
-  document.getElementById('nextBtn').onclick = () => {
-    if (currentCardIndex < allCards.length - 1) {
-      currentCardIndex++;
-      showCard(currentCardIndex);
-    }
-  };
+    let frames = 0;
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      pieces.forEach(p => {
+        p.y += p.vy;
+        p.x += p.vx;
+        p.angle += p.spin;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.angle * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+      });
 
-  // Keyboard navigation
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-      if (currentCardIndex > 0) {
-        currentCardIndex--;
-        showCard(currentCardIndex);
+      frames++;
+      if (frames < 240) {
+        requestAnimationFrame(loop);
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
-    } else if (e.key === 'ArrowRight') {
-      if (currentCardIndex < allCards.length - 1) {
-        currentCardIndex++;
-        showCard(currentCardIndex);
-      }
     }
-  });
-}
-
-// ==================== INITIALIZE PAGE ====================
-function initializePage() {
-  showFilterNotice();
-  displayStudentInfo();
-  displayWeightSummary();
-  displayRecommendations();
-}
-
-// Run when page loads
-document.addEventListener('DOMContentLoaded', initializePage);
+    loop();
+  }
 </script>
-<script src="https://nuva.me/js/sitemap-loader.js"></script>
-<script>
-  // Use sitemap data
-  NUVASitemap.load().then(sitemap => {
-    console.log('NUVA has', sitemap.pages.length, 'pages');
-  });
-</script>
+
 </body>
 </html>

@@ -23,7 +23,8 @@ const analytics = {
     visitors: new Set(),
     subjectFrequency: {},
     courseViews: {},
-    errors: []
+    errors: [],
+    reports: []
 };
 
 // Track visitors
@@ -38,7 +39,8 @@ app.use((req, res, next) => {
 // Admin authentication
 function requireAdmin(req, res, next) {
     const adminKey = req.headers['x-admin-key'];
-    if (adminKey === 'Muyanja@6872@') {
+    const validKey = process.env.ADMIN_KEY || 'Muyanja@6872@';
+    if (adminKey === validKey) {
         next();
     } else {
         res.status(401).json({ error: 'Unauthorized' });
@@ -674,7 +676,33 @@ app.delete('/api/admin/courses', requireAdmin, async (req, res) => {
 app.post('/api/admin/clear-logs', requireAdmin, (req, res) => {
     analytics.searches = [];
     analytics.errors = [];
+    analytics.reports = [];
     res.json({ success: true });
+});
+
+/* ============================   USER REPORT ENDPOINT ============================ */
+
+app.post('/api/report-problem', (req, res) => {
+    try {
+        const { problem, contact, details } = req.body;
+        if (!problem || !problem.trim()) {
+            return res.status(400).json({ success: false, message: 'Please describe the problem.' });
+        }
+        const report = {
+            id: Date.now().toString(),
+            timestamp: new Date().toISOString(),
+            problem: problem.trim(),
+            contact: contact ? contact.trim() : null,
+            details: details || null
+        };
+        analytics.reports.unshift(report);
+        if (analytics.reports.length > 50) analytics.reports.pop();
+        console.log(`[NUVA] New problem report received at ${report.timestamp}`);
+        res.json({ success: true, message: 'Thank you! Your report has been submitted.' });
+    } catch (err) {
+        console.error('Error handling problem report:', err);
+        res.status(500).json({ success: false, message: 'Server error processing report' });
+    }
 });
 
 /* ============================   HEALTH CHECK ============================ */
@@ -689,6 +717,42 @@ app.get('/api/health', (req, res) => {
         totalCourses,
         timestamp: new Date().toISOString()
     });
+});
+
+/* ============================   SITEMAPS   ============================ */
+
+// Serve JSON sitemap
+app.get('/sitemap.json', (req, res) => {
+    try {
+        const sitemapData = require('./public/sitemap.json');
+        res.json(sitemapData);
+    } catch (e) {
+        res.status(500).json({ error: 'Sitemap not found' });
+    }
+});
+
+// Serve XML sitemap (auto-generated from JSON)
+app.get('/sitemap.xml', (req, res) => {
+    try {
+        const sitemapData = require('./public/sitemap.json');
+        let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+        xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+        
+        sitemapData.pages.forEach(page => {
+            xml += '  <url>\n';
+            xml += `    <loc>${sitemapData.domain}${page.path}</loc>\n`;
+            xml += `    <lastmod>${page.lastmod}</lastmod>\n`;
+            xml += `    <changefreq>${page.changefreq}</changefreq>\n`;
+            xml += `    <priority>${page.priority}</priority>\n`;
+            xml += '  </url>\n';
+        });
+        
+        xml += '</urlset>';
+        res.header('Content-Type', 'application/xml');
+        res.send(xml);
+    } catch (e) {
+        res.status(500).send('Error generating sitemap XML');
+    }
 });
 
 /* ============================   STATIC ROUTES ============================ */
@@ -717,29 +781,4 @@ app.listen(PORT, () => {
     console.log(`✅ Admin panel available at /admin.html`);
     console.log(`✅ Analytics tracking enabled`);
     console.log(`✅ Debug endpoint: /api/debug/universities`);
-});
-
-// Serve JSON sitemap
-app.get('/sitemap.json', (req, res) => {
-  res.json(sitemapData);
-});
-
-// Serve XML sitemap (auto-generated from JSON)
-app.get('/sitemap.xml', (req, res) => {
-  const sitemapData = require('./public/sitemap.json');
-  let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
-  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
-  
-  sitemapData.pages.forEach(page => {
-    xml += '  <url>\n';
-    xml += `    <loc>${sitemapData.domain}${page.path}</loc>\n`;
-    xml += `    <lastmod>${page.lastmod}</lastmod>\n`;
-    xml += `    <changefreq>${page.changefreq}</changefreq>\n`;
-    xml += `    <priority>${page.priority}</priority>\n`;
-    xml += '  </url>\n';
-  });
-  
-  xml += '</urlset>';
-  res.header('Content-Type', 'application/xml');
-  res.send(xml);
 });
