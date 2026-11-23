@@ -1,0 +1,295 @@
+{
+  "rotatorInitial": {
+    "found": true,
+    "wordCount": 5,
+    "phrases": [
+      "Uganda’s Top Universities",
+      "Makerere & Kyambogo",
+      "Medicine & Health Sciences",
+      "Engineering & Computing",
+      "All 10 Public Campuses"
+    ],
+    "words": [
+      {
+        "text": "Uganda’s Top Universities",
+        "index": "0",
+        "classes": [
+          "hero-rotator-word",
+          "active"
+        ],
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      {
+        "text": "Makerere & Kyambogo",
+        "index": "1",
+        "classes": [
+          "hero-rotator-word"
+        ],
+        "opacity": "0",
+        "transform": "matrix(1, 0, 0, 1, 0, 73.6)"
+      },
+      {
+        "text": "Medicine & Health Sciences",
+        "index": "2",
+        "classes": [
+          "hero-rotator-word"
+        ],
+        "opacity": "0",
+        "transform": "matrix(1, 0, 0, 1, 0, 73.6)"
+      },
+      {
+        "text": "Engineering & Computing",
+        "index": "3",
+        "classes": [
+          "hero-rotator-word"
+        ],
+        "opacity": "0",
+        "transform": "matrix(1, 0, 0, 1, 0, 73.6)"
+      },
+      {
+        "text": "All 10 Public Campuses",
+        "index": "4",
+        "classes": [
+          "hero-rotator-word"
+        ],
+        "opacity": "0",
+        "transform": "matrix(1, 0, 0, 1, 0, 73.6)"
+      }
+    ],
+    "activeText": "Uganda’s Top Universities"
+  },
+  "heroShot1": "D:\\BLEEM Labs Co\\NUVA_System\\NUVA 1.01\\screenshots\\hero_word_rotator_initial.png",
+  "rotatorAfter35s": {
+    "activeText": "Makerere & Kyambogo",
+    "leavingText": null,
+    "words": [
+      {
+        "text": "Uganda’s Top Universities",
+        "classes": [
+          "hero-rotator-word"
+        ],
+        "opacity": "0",
+        "transform": "matrix(1, 0, 0, 1, 0, 73.6)"
+      },
+      {
+        "text": "Makerere & Kyambogo",
+        "classes": [
+          "hero-rotator-word",
+          "active"
+        ],
+        "opacity": "1",
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      {
+        "text": "Medicine & Health Sciences",
+        "classes": [
+          "hero-rotator-word"
+        ],
+        "opacity": "0",
+        "transform": "matrix(1, 0, 0, 1, 0, 73.6)"
+      },
+      {
+        "text": "Engineering & Computing",
+        "classes": [
+          "hero-rotator-word"
+        ],
+        "opacity": "0",
+        "transform": "matrix(1, 0, 0, 1, 0, 73.6)"
+      },
+      {
+        "text": "All 10 Public Campuses",
+        "classes": [
+          "hero-rotator-word"
+        ],
+        "opacity": "0",
+        "transform": "matrix(1, 0, 0, 1, 0, 73.6)"
+      }
+    ]
+  },
+  "heroShot2": "D:\\BLEEM Labs Co\\NUVA_System\\NUVA 1.01\\screenshots\\hero_word_rotator_rotated.png",
+  "rotatorAfter65s": {
+    "activeText": "Engineering & Computing"
+  },
+  "tickerInfo": {
+    "found": true,
+    "stripVisible": true,
+    "stripRect": {
+      "top": 709.875,
+      "bottom": 776.359375,
+      "height": 66.484375,
+      "width": 1217
+    },
+    "heroBottom": 669.875,
+    "distanceFromHero": 40,
+    "trackAnimationName": "wordTickerScroll",
+    "trackAnimationDuration": "42s",
+    "trackAnimationTimingFunction": "linear",
+    "trackAnimationIterationCount": "infinite",
+    "itemCount": 28,
+    "sampleItems": [
+      "🏛️ Makerere University",
+      "⚡ Official PUJAB Formula",
+      "⚙️ Kyambogo Tech",
+      "🏥 MUST Mbarara Medicine",
+      "📈 Real-Time Cut-Off Weights",
+      "🌱 Busitema Agriculture",
+      "💡 449+ Degree Programs",
+      "🌍 Gulu University"
+    ]
+  },
+  "tickerShot": "D:\\BLEEM Labs Co\\NUVA_System\\NUVA 1.01\\screenshots\\word_marquee_ticker_strip.png",
+  "badgeInfo": {
+    "badge1": {
+      "name": "floating-badge-1",
+      "found": true,
+      "text": "✓ Official Formula UNEB & PUJAB Compliant",
+      "display": "flex",
+      "opacity": "1",
+      "visibility": "visible",
+      "animationName": "floatSlow",
+      "animationDuration": "4s",
+      "animationTimingFunction": "ease-in-out",
+      "transform": "matrix(1, 0, 0, 1, 0, -7.98272)",
+      "rect": {
+        "top": 133.39227294921875,
+        "left": 713.890625,
+        "width": 262.484375,
+        "height": 68.734375
+      }
+    },
+    "badge2": {
+      "name": "floating-badge-2",
+      "found": true,
+      "text": "🎓 Live Database 449+ Degree Programs",
+      "display": "flex",
+      "opacity": "1",
+      "visibility": "visible",
+      "animationName": "floatSlow",
+      "animationDuration": "4s",
+      "animationTimingFunction": "ease-in-out",
+      "transform": "matrix(1, 0, 0, 1, 0, -0.0172794)",
+      "rect": {
+        "top": 563.9358520507812,
+        "left": 968.46875,
+        "width": 246.734375,
+        "height": 68.734375
+      }
+    },
+    "badge3": {
+      "name": "floating-badge-3",
+      "found": true,
+      "text": "⚡ Real-Time Cutoffs",
+      "display": "flex",
+      "opacity": "1",
+      "visibility": "visible",
+      "animationName": "floatWordRight",
+      "animationDuration": "5s",
+      "animationTimingFunction": "ease-in-out",
+      "transform": "matrix(0.999914, 0.0131095, -0.0131095, 0.999914, 2.25343, -3.75572)",
+      "rect": {
+        "top": 299.0412292480469,
+        "left": 1039.6827392578125,
+        "width": 182.0789794921875,
+        "height": 50.109222412109375
+      }
+    },
+    "badge4": {
+      "name": "floating-badge-4",
+      "found": true,
+      "text": "🎯 PUJAB Formula",
+      "display": "flex",
+      "opacity": "1",
+      "visibility": "visible",
+      "animationName": "floatWordLeft",
+      "animationDuration": "5.5s",
+      "animationTimingFunction": "ease-in-out",
+      "transform": "matrix(0.999594, -0.0284877, 0.0284877, 0.999594, -4.89733, -9.79467)",
+      "rect": {
+        "top": 428.7340087890625,
+        "left": 704.3458251953125,
+        "width": 161.216796875,
+        "height": 52.270782470703125
+      }
+    }
+  },
+  "sectionTitlesInfo": [
+    {
+      "fullTitle": "Quick Weight Simulator",
+      "hasShimmer": true,
+      "shimmerText": "Weight Simulator",
+      "shimmerAnimation": "textShimmerMove",
+      "hasBrushAccent": true,
+      "brushText": "Weight Simulator"
+    },
+    {
+      "fullTitle": "NUVA & Campus Life",
+      "hasShimmer": true,
+      "shimmerText": "Campus Life",
+      "shimmerAnimation": "textShimmerMove",
+      "hasBrushAccent": true,
+      "brushText": "Campus Life"
+    },
+    {
+      "fullTitle": "Uganda Public Universities & Colleges",
+      "hasShimmer": true,
+      "shimmerText": "Universities & Colleges",
+      "shimmerAnimation": "textShimmerMove",
+      "hasBrushAccent": true,
+      "brushText": "Universities & Colleges"
+    },
+    {
+      "fullTitle": "The Ugandan PUJAB Weight Formula",
+      "hasShimmer": true,
+      "shimmerText": "PUJAB Weight Formula",
+      "shimmerAnimation": "textShimmerMove",
+      "hasBrushAccent": true,
+      "brushText": "PUJAB Weight Formula"
+    },
+    {
+      "fullTitle": "Why Ugandan Students Choose NUVA",
+      "hasShimmer": true,
+      "shimmerText": "Choose NUVA",
+      "shimmerAnimation": "textShimmerMove",
+      "hasBrushAccent": true,
+      "brushText": "Choose NUVA"
+    },
+    {
+      "fullTitle": "How NUVA Works",
+      "hasShimmer": true,
+      "shimmerText": "NUVA Works",
+      "shimmerAnimation": "textShimmerMove",
+      "hasBrushAccent": true,
+      "brushText": "NUVA Works"
+    },
+    {
+      "fullTitle": "Meet Team NUVA & BLEEM Labs",
+      "hasShimmer": true,
+      "shimmerText": "Team NUVA",
+      "shimmerAnimation": "textShimmerMove",
+      "hasBrushAccent": true,
+      "brushText": "Team NUVA"
+    },
+    {
+      "fullTitle": "User Agreement & Terms of Service",
+      "hasShimmer": false,
+      "shimmerText": null,
+      "shimmerAnimation": null,
+      "hasBrushAccent": false,
+      "brushText": null
+    }
+  ],
+  "sectionShot": "D:\\BLEEM Labs Co\\NUVA_System\\NUVA 1.01\\screenshots\\section_title_shimmer.png",
+  "courseInputInfo": {
+    "found": true,
+    "fullText": "Enter Your Academic Profile",
+    "hasShimmer": true,
+    "shimmerText": "Academic Profile",
+    "shimmerAnimation": "textShimmerMove",
+    "hasBrushAccent": true,
+    "brushText": "Academic Profile",
+    "backgroundClip": "text",
+    "webkitTextFillColor": "rgba(0, 0, 0, 0)"
+  },
+  "courseInputShot": "D:\\BLEEM Labs Co\\NUVA_System\\NUVA 1.01\\screenshots\\course_input_header.png"
+}
