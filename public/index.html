@@ -177,17 +177,17 @@
       display: flex;
       align-items: center;
       gap: 0.35rem;
-      background: rgba(241, 245, 249, 0.8);
+      background: rgba(241, 245, 249, 0.85);
       padding: 0.3rem;
       border-radius: 40px;
-      border: 1px solid rgba(226, 232, 240, 0.8);
+      border: 1px solid rgba(226, 232, 240, 0.9);
     }
 
     .nav-tab {
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 0.55rem 1.1rem;
+      padding: 0.55rem 1.15rem;
       border-radius: 30px;
       font-size: 0.88rem;
       font-weight: 600;
@@ -195,30 +195,50 @@
       background: transparent;
       border: none;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
       text-decoration: none;
       white-space: nowrap;
     }
     .nav-tab svg { width: 17px; height: 17px; fill: currentColor; }
-    .nav-tab:hover {
+    .nav-tab:hover:not(.active) {
       color: var(--navy);
-      background: rgba(255, 255, 255, 0.7);
+      background: rgba(0, 0, 128, 0.08);
+      transform: translateY(-1px);
     }
     .nav-tab.active {
       background: var(--navy);
       color: #ffffff;
-      box-shadow: 0 4px 12px rgba(0, 0, 128, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 128, 0.22);
     }
     .nav-tab.active svg { fill: #ffffff; }
 
-    .nav-tab-cta {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light)) !important;
-      color: white !important;
-      box-shadow: 0 4px 14px rgba(254, 79, 4, 0.3) !important;
+    /* Header Actions */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .nav-tab-cta:hover {
-      transform: translateY(-1px) scale(1.02);
-      box-shadow: 0 6px 18px rgba(254, 79, 4, 0.4) !important;
+    .header-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.55rem 1.25rem;
+      border-radius: 30px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, var(--primary), #e04302);
+      box-shadow: 0 4px 14px rgba(254, 79, 4, 0.3);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .header-cta-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 6px 18px rgba(254, 79, 4, 0.42);
+    }
+    @media (max-width: 950px) {
+      .header-cta-btn { display: none; }
     }
 
     /* Dropdown */
@@ -1160,13 +1180,12 @@
       box-shadow: 0 2px 8px rgba(254, 79, 4, 0.3);
     }
 
-    /* Profile Avatar & Header Row */
+    /* Profile Avatar Row */
     .uni-profile-row {
       position: relative;
       padding: 0 1.4rem;
       display: flex;
-      align-items: flex-end;
-      gap: 14px;
+      align-items: center;
       margin-top: -38px;
       z-index: 3;
     }
@@ -1218,27 +1237,37 @@
     }
 
     .uni-card-body {
-      padding: 0.8rem 1.4rem 1.4rem;
+      padding: 0.9rem 1.4rem 1.4rem;
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      background: #ffffff;
     }
     .uni-title-wrap {
-      margin-top: 0.4rem;
+      margin-top: 0.2rem;
     }
     .uni-title-wrap h4 {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.22rem;
+      font-size: 1.25rem;
       color: var(--navy);
       font-weight: 800;
       line-height: 1.25;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
     .uni-est-tag {
-      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
       font-weight: 700;
-      color: var(--primary);
+      color: #c2410c;
+      background: rgba(254, 79, 4, 0.08);
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(254, 79, 4, 0.2);
+      margin-bottom: 6px;
+      line-height: 1.35;
     }
     .uni-motto {
       font-size: 0.84rem;
@@ -1658,10 +1687,6 @@
       <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
       Dashboard
     </button>
-    <a href="course-input.html" class="nav-tab nav-tab-cta">
-      <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg>
-      Find Courses
-    </a>
     <button class="nav-tab" data-section="universities">
       <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM5 12h2v4H5v-4zm4 0h2v8H9v-8zm4 0h2v6h-2v-6zm4 0h2v10h-2V12z"/></svg>
       Universities
@@ -1715,11 +1740,17 @@
     </div>
   </nav>
 
-  <!-- Mobile Hamburger -->
-  <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation">
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
-    Menu
-  </button>
+  <!-- Header Right Actions -->
+  <div class="header-actions">
+    <a href="course-input.html" class="header-cta-btn">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg>
+      Find Courses
+    </a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+      Menu
+    </button>
+  </div>
 </header>
 
 <!-- Mobile Overlay & Sidebar -->
@@ -2074,12 +2105,10 @@
               <img src="images/logos/mak.svg" alt="Makerere University Official Logo" loading="lazy">
               <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
             </div>
-            <div>
-              <span class="uni-est-tag">MAK · #1 Ranked in Uganda</span>
-            </div>
           </div>
           <div class="uni-card-body">
             <div class="uni-title-wrap">
+              <span class="uni-est-tag">MAK · #1 Ranked in Uganda</span>
               <h4>Makerere University</h4>
               <div class="uni-motto">“We Build for the Future”</div>
             </div>
@@ -2113,12 +2142,10 @@
               <img src="images/logos/kyu.png" alt="Kyambogo University Official Logo" loading="lazy">
               <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
             </div>
-            <div>
-              <span class="uni-est-tag">KYU · Premier Engineering & Vocational Hub</span>
-            </div>
           </div>
           <div class="uni-card-body">
             <div class="uni-title-wrap">
+              <span class="uni-est-tag">KYU · Premier Engineering & Vocational Hub</span>
               <h4>Kyambogo University</h4>
               <div class="uni-motto">“Knowledge and Skills for Service”</div>
             </div>
@@ -2152,12 +2179,10 @@
               <img src="images/logos/must.webp" alt="Mbarara University of Science and Technology Official Logo" loading="lazy">
               <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
             </div>
-            <div>
-              <span class="uni-est-tag">MUST · Premier Medicine & Applied Tech</span>
-            </div>
           </div>
           <div class="uni-card-body">
             <div class="uni-title-wrap">
+              <span class="uni-est-tag">MUST · Premier Medicine & Applied Tech</span>
               <h4>Mbarara University of Science & Tech</h4>
               <div class="uni-motto">“Succeed for Humanity”</div>
             </div>
@@ -2191,12 +2216,10 @@
               <img src="images/logos/gulu.png" alt="Gulu University Official Logo" loading="lazy">
               <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
             </div>
-            <div>
-              <span class="uni-est-tag">GU · Northern Uganda Flagship Institution</span>
-            </div>
           </div>
           <div class="uni-card-body">
             <div class="uni-title-wrap">
+              <span class="uni-est-tag">GU · Northern Uganda Flagship Institution</span>
               <h4>Gulu University</h4>
               <div class="uni-motto">“For Community Transformation”</div>
             </div>
@@ -2230,12 +2253,10 @@
               <img src="images/logos/busitema.png" alt="Busitema University Official Logo" loading="lazy">
               <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
             </div>
-            <div>
-              <span class="uni-est-tag">BU · Pioneer Multi-Campus Tech University</span>
-            </div>
           </div>
           <div class="uni-card-body">
             <div class="uni-title-wrap">
+              <span class="uni-est-tag">BU · Pioneer Multi-Campus Tech University</span>
               <h4>Busitema University</h4>
               <div class="uni-motto">“Pursuing Excellence in Technology”</div>
             </div>
@@ -2269,12 +2290,10 @@
               <img src="images/logos/muni.png" alt="Muni University Official Logo" loading="lazy">
               <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
             </div>
-            <div>
-              <span class="uni-est-tag">MUNI · Technoscience & Innovation Citadel</span>
-            </div>
           </div>
           <div class="uni-card-body">
             <div class="uni-title-wrap">
+              <span class="uni-est-tag">MUNI · Technoscience & Innovation Citadel</span>
               <h4>Muni University</h4>
               <div class="uni-motto">“Transforming Lives Through Technology”</div>
             </div>
@@ -2308,12 +2327,10 @@
               <img src="images/logos/kabale.jpg" alt="Kabale University Official Logo" loading="lazy">
               <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
             </div>
-            <div>
-              <span class="uni-est-tag">KAB · Kigezi Highland Academic Hub</span>
-            </div>
           </div>
           <div class="uni-card-body">
             <div class="uni-title-wrap">
+              <span class="uni-est-tag">KAB · Kigezi Highland Academic Hub</span>
               <h4>Kabale University</h4>
               <div class="uni-motto">“Knowledge is the Beacon of Life”</div>
             </div>
@@ -2347,12 +2364,10 @@
               <img src="images/logos/lira.png" alt="Lira University Official Logo" loading="lazy">
               <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
             </div>
-            <div>
-              <span class="uni-est-tag">LU · Healthcare & Midwifery Centre of Excellence</span>
-            </div>
           </div>
           <div class="uni-card-body">
             <div class="uni-title-wrap">
+              <span class="uni-est-tag">LU · Healthcare & Midwifery Centre of Excellence</span>
               <h4>Lira University</h4>
               <div class="uni-motto">“Beacon of Modern Knowledge & Healthcare”</div>
             </div>
@@ -2386,12 +2401,10 @@
               <img src="images/logos/soroti.png" alt="Soroti University Official Logo" loading="lazy">
               <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
             </div>
-            <div>
-              <span class="uni-est-tag">SUN · Medical & Electronic Innovation</span>
-            </div>
           </div>
           <div class="uni-card-body">
             <div class="uni-title-wrap">
+              <span class="uni-est-tag">SUN · Medical & Electronic Innovation</span>
               <h4>Soroti University</h4>
               <div class="uni-motto">“Empowering Society Through Science”</div>
             </div>
@@ -2425,12 +2438,10 @@
               <img src="images/logos/mmu.png" alt="Mountains of the Moon University Official Logo" loading="lazy">
               <span class="uni-verified-pill" title="Verified Public Institution">✓</span>
             </div>
-            <div>
-              <span class="uni-est-tag">MMU · Rwenzori Highlands Public University</span>
-            </div>
           </div>
           <div class="uni-card-body">
             <div class="uni-title-wrap">
+              <span class="uni-est-tag">MMU · Rwenzori Highlands Public University</span>
               <h4>Mountains of the Moon University</h4>
               <div class="uni-motto">“Heights of Wisdom & Environmental Stewardship”</div>
             </div>
