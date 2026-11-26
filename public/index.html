@@ -1181,6 +1181,786 @@
     .gallery-nav-btn.left { left: 16px; }
     .gallery-nav-btn.right { right: 16px; }
 
+    /* ==================== MODERN DASHBOARD STYLES ==================== */
+    .dash-status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 0.95rem 1.4rem;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 4px 18px rgba(0, 0, 128, 0.04);
+      flex-wrap: wrap;
+    }
+    .dash-status-left {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+    .dash-pulse-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #047857;
+      background: #ecfdf5;
+      padding: 0.35rem 0.85rem;
+      border-radius: 20px;
+      border: 1px solid #a7f3d0;
+    }
+    .dash-pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulseLive 2s infinite;
+    }
+    .dash-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 0.3rem 0.75rem;
+      background: #f1f5f9;
+      border-radius: 16px;
+    }
+    .dash-status-pill strong {
+      color: var(--navy);
+    }
+    .dash-status-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .dash-status-chip {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 0.35rem 0.85rem;
+      border-radius: 14px;
+      border: 1px solid rgba(254, 79, 4, 0.2);
+    }
+
+    /* Dashboard Sub-Navigation Tabs */
+    .dash-quick-nav {
+      display: flex;
+      gap: 0.55rem;
+      overflow-x: auto;
+      padding: 0.3rem 0.2rem 1.5rem;
+      scrollbar-width: none;
+      user-select: none;
+    }
+    .dash-quick-nav::-webkit-scrollbar { display: none; }
+    .dash-nav-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+      padding: 0.6rem 1.15rem;
+      border-radius: 24px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--navy);
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-decoration: none;
+    }
+    .dash-nav-chip:hover {
+      background: var(--navy-soft);
+      border-color: var(--navy);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .dash-nav-chip.active {
+      background: var(--navy);
+      color: #ffffff;
+      border-color: var(--navy);
+      box-shadow: 0 4px 14px rgba(0, 0, 128, 0.25);
+    }
+    .dash-nav-chip svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    /* Modern KPI Metric Grid */
+    .dash-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 2.5rem;
+    }
+    .dash-kpi-card {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--card-border);
+      padding: 1.4rem 1.3rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .dash-kpi-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(254, 79, 4, 0.35);
+    }
+    .dash-kpi-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--navy));
+      opacity: 0.85;
+    }
+    .dash-kpi-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+    }
+    .dash-kpi-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy-soft);
+      color: var(--navy);
+    }
+    .dash-kpi-icon svg { width: 20px; height: 20px; fill: currentColor; }
+    .dash-kpi-icon.alt-orange { background: var(--primary-soft); color: var(--primary); }
+    .dash-kpi-icon.alt-green { background: #ecfdf5; color: #10b981; }
+    .dash-kpi-icon.alt-purple { background: #f3e8ff; color: #9333ea; }
+    .dash-kpi-icon.alt-blue { background: #e0f2fe; color: #0284c7; }
+    .dash-kpi-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 10px;
+      background: #f1f5f9;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+    }
+    .dash-kpi-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.1;
+      margin-bottom: 0.25rem;
+    }
+    .dash-kpi-label {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+    .dash-kpi-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Unified Dashboard Section Card */
+    .dash-section-card {
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--card-border);
+      padding: 2.4rem;
+      margin-bottom: 3rem;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+    .dash-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .dash-header-meta {
+      max-width: 720px;
+    }
+    .dash-header-meta h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.25;
+      margin-bottom: 0.4rem;
+    }
+    .dash-header-meta p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    /* Admissions Timeline */
+    .dash-timeline-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
+      position: relative;
+    }
+    .dash-timeline-item {
+      background: #f8fafc;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 1.3rem;
+      position: relative;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .dash-timeline-item:hover {
+      background: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-sm);
+    }
+    .dash-timeline-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+    }
+    .dash-timeline-phase {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .dash-timeline-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+    .badge-cycle { background: #e0e7ff; color: #3730a3; }
+    .badge-active { background: #dcfce7; color: #166534; }
+    .badge-crucial { background: #fee2e2; color: #991b1b; }
+    .badge-loan { background: #fef3c7; color: #92400e; }
+    .dash-timeline-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+    .dash-timeline-desc {
+      font-size: 0.85rem;
+      color: #475569;
+      line-height: 1.5;
+      margin-bottom: 0.9rem;
+    }
+    .dash-timeline-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 0.75rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .dash-timeline-date {
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* National Quotas Blueprint Grid */
+    .dash-quotas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 1.4rem;
+    }
+    .dash-quota-card {
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 1.6rem;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 2px 10px rgba(0, 0, 128, 0.03);
+    }
+    .dash-quota-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(0, 0, 128, 0.2);
+    }
+    .dash-quota-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+    .dash-quota-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .dash-quota-icon svg { width: 22px; height: 22px; fill: currentColor; }
+    .dash-quota-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.25;
+    }
+    .dash-quota-allocation {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .dash-quota-body {
+      font-size: 0.88rem;
+      color: #334155;
+      line-height: 1.55;
+      margin-bottom: 1.1rem;
+    }
+    .dash-quota-bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.1rem;
+      font-size: 0.82rem;
+      color: #475569;
+    }
+    .dash-quota-bullets li {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 0.4rem;
+    }
+    .dash-quota-bullets li::before {
+      content: "•";
+      color: var(--primary);
+      font-weight: 800;
+    }
+    .dash-quota-tip {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 0.65rem 0.9rem;
+      border-left: 3px solid var(--navy);
+      font-size: 0.8rem;
+      color: #1e293b;
+      line-height: 1.45;
+    }
+
+    /* Career Streams Explorer */
+    .dash-streams-filters {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .dash-stream-filter-btn {
+      padding: 0.45rem 1rem;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: 1px solid var(--card-border);
+      background: white;
+      color: var(--navy);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .dash-stream-filter-btn:hover {
+      background: var(--navy-soft);
+      border-color: var(--navy);
+    }
+    .dash-stream-filter-btn.active {
+      background: var(--navy);
+      color: white;
+      border-color: var(--navy);
+    }
+    .dash-streams-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.4rem;
+    }
+    .dash-stream-card {
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .dash-stream-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(254, 79, 4, 0.3);
+    }
+    .dash-stream-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 0.8rem;
+    }
+    .dash-stream-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .dash-stream-cutoff-pill {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #047857;
+      background: #ecfdf5;
+      padding: 0.3rem 0.65rem;
+      border-radius: 12px;
+      border: 1px solid #a7f3d0;
+      white-space: nowrap;
+    }
+    .dash-stream-desc {
+      font-size: 0.86rem;
+      color: #475569;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    .dash-stream-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      font-size: 0.82rem;
+      margin-bottom: 0.4rem;
+      color: #334155;
+    }
+    .dash-stream-row strong {
+      color: var(--navy);
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+    .dash-stream-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin: 0.8rem 0 1.2rem;
+    }
+    .dash-stream-chip {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 8px;
+      color: var(--navy);
+    }
+    .dash-stream-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: var(--navy-soft);
+      color: var(--navy);
+      font-size: 0.86rem;
+      font-weight: 700;
+      padding: 0.65rem 1rem;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .dash-stream-btn:hover {
+      background: var(--navy);
+      color: white;
+    }
+
+    /* Instant Program & Cut-Off Quick Explorer */
+    .dash-lookup-bar {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .dash-search-input-wrap {
+      position: relative;
+    }
+    .dash-search-input-wrap svg {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+    .dash-search-input {
+      width: 100%;
+      padding: 0.85rem 1.2rem 0.85rem 2.8rem;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--card-border);
+      background: #ffffff;
+      font-family: inherit;
+      font-size: 0.92rem;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+    .dash-search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(254, 79, 4, 0.15);
+    }
+    .dash-uni-select {
+      padding: 0.85rem 1.2rem;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--card-border);
+      background: #ffffff;
+      font-family: inherit;
+      font-size: 0.92rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .dash-uni-select:focus {
+      outline: none;
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(0, 0, 128, 0.12);
+    }
+    .dash-lookup-results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.2rem;
+      max-height: 520px;
+      overflow-y: auto;
+      padding: 0.4rem 0.2rem;
+      scrollbar-width: thin;
+    }
+    .dash-course-item {
+      background: #f8fafc;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .dash-course-item:hover {
+      background: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(0,0,128,0.06);
+    }
+    .dash-course-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+    }
+    .dash-course-code {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #ffffff;
+      background: var(--navy);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      letter-spacing: 0.05em;
+    }
+    .dash-course-uni {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .dash-course-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.3;
+      margin-bottom: 0.35rem;
+    }
+    .dash-course-faculty {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .dash-course-specs {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 0.65rem 0.8rem;
+      margin-bottom: 0.9rem;
+      font-size: 0.8rem;
+      color: #334155;
+      line-height: 1.45;
+    }
+    .dash-course-cutoffs {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 0.7rem;
+      font-size: 0.82rem;
+      margin-bottom: 0.75rem;
+    }
+    .cutoff-govt {
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .cutoff-priv {
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .dash-course-act-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      background: var(--primary);
+      color: white !important;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.55rem 0.8rem;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .dash-course-act-btn:hover {
+      background: var(--primary-dark);
+      box-shadow: 0 4px 12px rgba(254, 79, 4, 0.3);
+    }
+
+    /* Admissions Tactical Strategies Grid */
+    .dash-strategies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.3rem;
+    }
+    .dash-strat-card {
+      background: #ffffff;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 1.6rem;
+      position: relative;
+      transition: all 0.25s ease;
+    }
+    .dash-strat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(0, 0, 128, 0.25);
+    }
+    .dash-strat-badge {
+      display: inline-block;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 0.25rem 0.65rem;
+      border-radius: 8px;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .dash-strat-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+    .dash-strat-body {
+      font-size: 0.88rem;
+      color: #334155;
+      line-height: 1.6;
+    }
+
+    /* Admissions Tier Gauge in Simulator */
+    .dash-tier-gauge-wrap {
+      margin-top: 1.6rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      text-align: left;
+    }
+    .dash-tier-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0.85;
+      margin-bottom: 0.6rem;
+      color: #ffffff;
+    }
+    .dash-tier-bands {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-bottom: 0.8rem;
+    }
+    .dash-tier-band {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 0.45rem 0.4rem;
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      transition: all 0.25s ease;
+      opacity: 0.55;
+      color: #ffffff;
+    }
+    .dash-tier-band.active {
+      opacity: 1;
+      transform: scale(1.05);
+      background: #10b981;
+      color: #ffffff;
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.5);
+    }
+    .dash-tier-status {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fed7aa;
+      min-height: 1.4em;
+    }
+
+    @media (max-width: 768px) {
+      .dash-status-bar { flex-direction: column; align-items: flex-start; }
+      .dash-lookup-bar { grid-template-columns: 1fr; }
+      .dash-tier-bands { grid-template-columns: repeat(2, 1fr); }
+      .dash-section-card { padding: 1.6rem 1.2rem; }
+    }
+
     /* ==================== UNIVERSITIES DIRECTORY & PROFILES ==================== */
     .uni-directory-wrapper {
       position: relative;
@@ -2061,72 +2841,778 @@
       </div>
     </div>
 
-    <!-- WHATSAPP FRESHERS HUB -->
-    <div class="whatsapp-card">
-      <div class="whatsapp-info">
-        <div class="whatsapp-icon">
-          <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c4.54 0 8.24 3.7 8.24 8.24 0 2.2-.86 4.28-2.42 5.84-1.56 1.56-3.64 2.42-5.84 2.42-1.46 0-2.89-.39-4.14-1.13l-.3-.18-3.08.81.82-3-.2-.31c-.81-1.3-1.24-2.82-1.24-4.45 0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.57.13.17 1.75 2.68 4.25 3.75.59.26 1.05.41 1.41.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
-        </div>
-        <div class="whatsapp-text">
-          <h3>Need Personal University Admission Help?</h3>
-          <p>Join over 500+ Ugandan secondary school leavers in the official NUVA Freshers community chatrooms.</p>
-        </div>
+    <!-- ==================== DASHBOARD STATUS & COMMAND BAR ==================== -->
+    <div class="dash-status-bar" id="dashOverview">
+      <div class="dash-status-left">
+        <span class="dash-pulse-badge">
+          <span class="dash-pulse-dot"></span>
+          PUJAB Advisory Cycle 2025/2026 Live
+        </span>
+        <span class="dash-status-pill">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+          Campuses: <strong>10 Public Universities</strong>
+        </span>
+        <span class="dash-status-pill">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          Programs: <strong id="dashTotalProgramsText">449+ Degrees</strong>
+        </span>
+        <span class="dash-status-pill">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          Statutory Min: <strong>2 Principal Passes</strong>
+        </span>
       </div>
-      <div class="whatsapp-links">
-        <a href="https://chat.whatsapp.com/GLLeaXw02EXBAHYO1bO6w2" target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
-          All Freshers ChatRoom →
-        </a>
-        <a href="https://chat.whatsapp.com/Ew3VPtWmxgV2ZZSxlsFt7u" target="_blank" rel="noopener noreferrer" class="btn-whatsapp-sub">
-          Kyambogo Group
-        </a>
-      </div>
-    </div>
-
-    <!-- STATS CARDS -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-        </div>
-        <div class="stat-value" id="statProgramsCount">449+</div>
-        <div class="stat-title">Available Programs</div>
-        <div class="stat-label">Full catalog of degree programs across Science, Medicine, Engineering, Computing, Arts, and Business.</div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM5 12h2v4H5v-4zm4 0h2v8H9v-8zm4 0h2v6h-2v-6zm4 0h2v10h-2V12z"/></svg>
-        </div>
-        <div class="stat-value" id="statUniversitiesCount">10</div>
-        <div class="stat-title">Public Universities</div>
-        <div class="stat-label">Makerere, Kyambogo, MUST, Gulu, Busitema, Muni, Kabale, Lira, Soroti, and Mountains of the Moon.</div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon">
-          <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-        </div>
-        <div class="stat-value" id="statStudentsGuided">100k+</div>
-        <div class="stat-title">Students Guided</div>
-        <div class="stat-label">Trusted nationwide by Ugandan students, parents, and secondary school career masters.</div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon">
-          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-        </div>
-        <div class="stat-value">100%</div>
-        <div class="stat-title">PUJAB Verified</div>
-        <div class="stat-label">Strictly applies the official Ministry of Education multipliers (Essential ×3, Relevant ×2, GP & Sub +2).</div>
+      <div class="dash-status-right">
+        <span class="dash-status-chip">UNEB & PUJAB Compliant</span>
       </div>
     </div>
 
-    <!-- ==================== LIVE WEIGHT SIMULATOR WIDGET ==================== -->
+    <!-- DASHBOARD SUB-NAVIGATION QUICK JUMP BAR -->
+    <nav class="dash-quick-nav" aria-label="Dashboard sub navigation">
+      <a href="#dashKpis" class="dash-nav-chip active" onclick="activateDashNav(this)">
+        <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+        Executive KPIs
+      </a>
+      <a href="#dashTimeline" class="dash-nav-chip" onclick="activateDashNav(this)">
+        <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
+        Admissions Timeline
+      </a>
+      <a href="#dashQuickLookup" class="dash-nav-chip" onclick="activateDashNav(this)">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        Instant Cut-Off Lookup
+      </a>
+      <a href="#dashQuotas" class="dash-nav-chip" onclick="activateDashNav(this)">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+        National Quotas & Funding
+      </a>
+      <a href="#dashStreams" class="dash-nav-chip" onclick="activateDashNav(this)">
+        <svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
+        Career Streams Matrix
+      </a>
+      <a href="#dashTactics" class="dash-nav-chip" onclick="activateDashNav(this)">
+        <svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg>
+        Tactical Rulebook
+      </a>
+      <a href="#simulatorSection" class="dash-nav-chip" onclick="activateDashNav(this)">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"/></svg>
+        Simulator & Tier Gauge
+      </a>
+    </nav>
+
+    <!-- ==================== EXECUTIVE ADMISSIONS KPI GRID ==================== -->
+    <div class="dash-kpi-grid" id="dashKpis">
+      <div class="dash-kpi-card">
+        <div class="dash-kpi-top">
+          <div class="dash-kpi-icon alt-orange">
+            <svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
+          </div>
+          <span class="dash-kpi-tag">Full Catalog</span>
+        </div>
+        <div>
+          <div class="dash-kpi-val" id="statProgramsCount">449+</div>
+          <div class="dash-kpi-label">Degree Programs</div>
+          <div class="dash-kpi-desc">Verified bachelor's degrees across Science, Tech, Health, Law, Business & Arts.</div>
+        </div>
+      </div>
+
+      <div class="dash-kpi-card">
+        <div class="dash-kpi-top">
+          <div class="dash-kpi-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM5 12h2v4H5v-4zm4 0h2v8H9v-8zm4 0h2v6h-2v-6zm4 0h2v10h-2V12z"/></svg>
+          </div>
+          <span class="dash-kpi-tag">All Regions</span>
+        </div>
+        <div>
+          <div class="dash-kpi-val" id="statUniversitiesCount">10</div>
+          <div class="dash-kpi-label">Public Universities</div>
+          <div class="dash-kpi-desc">Chartered national universities from Makerere to Mountains of the Moon.</div>
+        </div>
+      </div>
+
+      <div class="dash-kpi-card">
+        <div class="dash-kpi-top">
+          <div class="dash-kpi-icon alt-green">
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+          </div>
+          <span class="dash-kpi-tag">Annual Quota</span>
+        </div>
+        <div>
+          <div class="dash-kpi-val">~4,000</div>
+          <div class="dash-kpi-label">Govt Merit Slots</div>
+          <div class="dash-kpi-desc">State-funded full scholarships awarded on National & District Merit.</div>
+        </div>
+      </div>
+
+      <div class="dash-kpi-card">
+        <div class="dash-kpi-top">
+          <div class="dash-kpi-icon alt-blue">
+            <svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+          </div>
+          <span class="dash-kpi-tag">HESFB Loans</span>
+        </div>
+        <div>
+          <div class="dash-kpi-val">3,000+</div>
+          <div class="dash-kpi-label">Higher Ed Student Loans</div>
+          <div class="dash-kpi-desc">100% tuition support for accredited STEM & Healthcare degree programs.</div>
+        </div>
+      </div>
+
+      <div class="dash-kpi-card">
+        <div class="dash-kpi-top">
+          <div class="dash-kpi-icon alt-purple">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </div>
+          <span class="dash-kpi-tag">Gender Policy</span>
+        </div>
+        <div>
+          <div class="dash-kpi-val">+1.5</div>
+          <div class="dash-kpi-label">Female Bonus Points</div>
+          <div class="dash-kpi-desc">Statutory affirmative action boost automatically added to total weights.</div>
+        </div>
+      </div>
+
+      <div class="dash-kpi-card">
+        <div class="dash-kpi-top">
+          <div class="dash-kpi-icon alt-green">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          </div>
+          <span class="dash-kpi-tag">Statutory Rule</span>
+        </div>
+        <div>
+          <div class="dash-kpi-val">2 Passes</div>
+          <div class="dash-kpi-label">Degree Minimum</div>
+          <div class="dash-kpi-desc">Direct university degree entry strictly requires at least 2 Principal Passes.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SECTION 1: ADMISSIONS TIMELINE & MILESTONES ==================== -->
+    <div class="dash-section-card" id="dashTimeline">
+      <div class="dash-header-row">
+        <div class="dash-header-meta">
+          <span class="section-badge">📅 National Admissions Calendar</span>
+          <h2>Uganda Higher Education <span class="highlight-shimmer word-brush-accent">Admissions Timeline</span></h2>
+          <p>Key statutory milestones from UNEB UACE results release through PUJAB selection meetings to final university registration and orientation.</p>
+        </div>
+        <div>
+          <span class="dash-pulse-badge">Annual Admission Cycle</span>
+        </div>
+      </div>
+
+      <div class="dash-timeline-grid">
+        <div class="dash-timeline-item">
+          <div>
+            <div class="dash-timeline-header">
+              <span class="dash-timeline-phase">Phase 01</span>
+              <span class="dash-timeline-badge badge-active">Results Out</span>
+            </div>
+            <h3 class="dash-timeline-title">UACE Results Release & Subject Verification</h3>
+            <p class="dash-timeline-desc">UNEB officially announces national A-Level examination results. Candidates collect result slips from their examination centers and verify grade points.</p>
+          </div>
+          <div class="dash-timeline-footer">
+            <span>Official Window</span>
+            <span class="dash-timeline-date">January – February</span>
+          </div>
+        </div>
+
+        <div class="dash-timeline-item">
+          <div>
+            <div class="dash-timeline-header">
+              <span class="dash-timeline-phase">Phase 02</span>
+              <span class="dash-timeline-badge badge-crucial">Crucial Window</span>
+            </div>
+            <h3 class="dash-timeline-title">PUJAB Application Forms & Merit Submission</h3>
+            <p class="dash-timeline-desc">Secondary schools and private applicants fill the Public Universities Joint Admissions Board forms (Choices 1 to 6) for National Merit & District Quota consideration.</p>
+          </div>
+          <div class="dash-timeline-footer">
+            <span>Deadline Strictly Observed</span>
+            <span class="dash-timeline-date">February – April</span>
+          </div>
+        </div>
+
+        <div class="dash-timeline-item">
+          <div>
+            <div class="dash-timeline-header">
+              <span class="dash-timeline-phase">Phase 03</span>
+              <span class="dash-timeline-badge badge-cycle">Selection Phase</span>
+            </div>
+            <h3 class="dash-timeline-title">PUJAB Joint Admissions Board Selection Meetings</h3>
+            <p class="dash-timeline-desc">Academic Registrars from all 10 public universities convene at Makerere Senate Building to run the national weighting algorithm and establish official cut-off points.</p>
+          </div>
+          <div class="dash-timeline-footer">
+            <span>Merit Cut-Offs Declared</span>
+            <span class="dash-timeline-date">May – June</span>
+          </div>
+        </div>
+
+        <div class="dash-timeline-item">
+          <div>
+            <div class="dash-timeline-header">
+              <span class="dash-timeline-phase">Phase 04</span>
+              <span class="dash-timeline-badge badge-active">Portals Live</span>
+            </div>
+            <h3 class="dash-timeline-title">Direct University Private Admissions Calls</h3>
+            <p class="dash-timeline-desc">Public universities open their online admission portals (AIMS, ACMIS) for direct private sponsorship applications across Day, Evening, and Weekend schedules.</p>
+          </div>
+          <div class="dash-timeline-footer">
+            <span>Online Portals</span>
+            <span class="dash-timeline-date">May – July</span>
+          </div>
+        </div>
+
+        <div class="dash-timeline-item">
+          <div>
+            <div class="dash-timeline-header">
+              <span class="dash-timeline-phase">Phase 05</span>
+              <span class="dash-timeline-badge badge-cycle">Audit Phase</span>
+            </div>
+            <h3 class="dash-timeline-title">District Quota Verification & Resident Audits</h3>
+            <p class="dash-timeline-desc">District commissioners and university admission desks verify physical residence and A-Level school attendance within each of Uganda's 135+ administrative districts.</p>
+          </div>
+          <div class="dash-timeline-footer">
+            <span>District Lists Published</span>
+            <span class="dash-timeline-date">June – July</span>
+          </div>
+        </div>
+
+        <div class="dash-timeline-item">
+          <div>
+            <div class="dash-timeline-header">
+              <span class="dash-timeline-phase">Phase 06</span>
+              <span class="dash-timeline-badge badge-loan">Financial Aid</span>
+            </div>
+            <h3 class="dash-timeline-title">HESFB Higher Education Student Loan Scheme</h3>
+            <p class="dash-timeline-desc">The Higher Education Students Financing Board invites applications for government student loans from admitted students pursuing accredited Science, Tech, and Health degrees.</p>
+          </div>
+          <div class="dash-timeline-footer">
+            <span>Online Application</span>
+            <span class="dash-timeline-date">July – August</span>
+          </div>
+        </div>
+
+        <div class="dash-timeline-item">
+          <div>
+            <div class="dash-timeline-header">
+              <span class="dash-timeline-phase">Phase 07</span>
+              <span class="dash-timeline-badge badge-active">Enrollment</span>
+            </div>
+            <h3 class="dash-timeline-title">Freshers Reporting, Orientation & Program Appeals</h3>
+            <p class="dash-timeline-desc">New university cohorts report for freshman orientation week. University registries open internal windows for inter-faculty transfers and change of program appeals.</p>
+          </div>
+          <div class="dash-timeline-footer">
+            <span>Semester I Kickoff</span>
+            <span class="dash-timeline-date">August – September</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SECTION 2: INSTANT PROGRAM & CUT-OFF QUICK EXPLORER ==================== -->
+    <div class="dash-section-card" id="dashQuickLookup">
+      <div class="dash-header-row">
+        <div class="dash-header-meta">
+          <span class="section-badge">🔍 Live Benchmark Tool</span>
+          <h2>Instant Degree & <span class="highlight-shimmer word-brush-accent">Cut-Off Quick Explorer</span></h2>
+          <p>Instantly search and inspect official PUJAB cut-off benchmarks, study duration, degree codes, and required essential subjects across all 10 public universities without filling the full questionnaire.</p>
+        </div>
+        <div>
+          <a href="course-input.html" class="btn-primary" style="padding:0.65rem 1.2rem; font-size:0.88rem;">Full Result Matcher →</a>
+        </div>
+      </div>
+
+      <div class="dash-lookup-bar">
+        <div class="dash-search-input-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="dashQuickSearchInput" class="dash-search-input" placeholder="Type course name, degree code, or subject (e.g. Medicine, MAM, Civil, SEB, Pharmacy, Law)..." oninput="runQuickCourseFilter()">
+        </div>
+        <select id="dashQuickUniSelect" class="dash-uni-select" onchange="runQuickCourseFilter()">
+          <option value="all">All 10 Public Universities</option>
+          <option value="Makerere University">Makerere University (MAK)</option>
+          <option value="Kyambogo University">Kyambogo University (KYU)</option>
+          <option value="Mbarara University of Science and Technology">MUST Mbarara</option>
+          <option value="Gulu University">Gulu University</option>
+          <option value="Busitema University">Busitema University</option>
+          <option value="Muni University">Muni University</option>
+          <option value="Kabale University">Kabale University</option>
+          <option value="Lira University">Lira University</option>
+          <option value="Soroti University">Soroti University</option>
+          <option value="Mountains of the Moon University">Mountains of the Moon (MMU)</option>
+        </select>
+      </div>
+
+      <div class="dash-streams-filters">
+        <button class="dash-stream-filter-btn active" data-stream="all" onclick="filterQuickStream('all', this)">All Disciplines</button>
+        <button class="dash-stream-filter-btn" data-stream="health" onclick="filterQuickStream('health', this)">🩺 Health & Medicine</button>
+        <button class="dash-stream-filter-btn" data-stream="engineering" onclick="filterQuickStream('engineering', this)">⚙️ Engineering & Tech</button>
+        <button class="dash-stream-filter-btn" data-stream="computing" onclick="filterQuickStream('computing', this)">💻 Computing & AI</button>
+        <button class="dash-stream-filter-btn" data-stream="business" onclick="filterQuickStream('business', this)">📊 Business & Finance</button>
+        <button class="dash-stream-filter-btn" data-stream="agriculture" onclick="filterQuickStream('agriculture', this)">🌾 Agriculture</button>
+        <button class="dash-stream-filter-btn" data-stream="law" onclick="filterQuickStream('law', this)">⚖️ Law & Humanities</button>
+      </div>
+
+      <div class="dash-lookup-results" id="dashQuickResults">
+        <!-- Rendered reactively via JS -->
+      </div>
+      <div style="margin-top:1rem; text-align:center; font-size:0.82rem; color:var(--text-muted);" id="dashQuickResultsCount">
+        Showing curated benchmarks across Uganda's top degree programs.
+      </div>
+    </div>
+
+    <!-- ==================== SECTION 3: NATIONAL QUOTAS & FUNDING BLUEPRINT ==================== -->
+    <div class="dash-section-card" id="dashQuotas">
+      <div class="dash-header-row">
+        <div class="dash-header-meta">
+          <span class="section-badge">🏛️ Sponsorship & Funding Systems</span>
+          <h2>Uganda Higher Education <span class="highlight-shimmer word-brush-accent">Funding & Quotas Blueprint</span></h2>
+          <p>Every year, the Government of Uganda funds ~4,000 public university degree slots across National Merit, District Quotas, and Affirmative Action. Here is exactly how each scheme is distributed.</p>
+        </div>
+        <div>
+          <span class="dash-pulse-badge">~4,000 Annual Government Slots</span>
+        </div>
+      </div>
+
+      <div class="dash-quotas-grid">
+        <div class="dash-quota-card">
+          <div>
+            <div class="dash-quota-top">
+              <div class="dash-quota-icon" style="background:#dbeafe; color:#1d4ed8;">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              </div>
+              <div>
+                <h3 class="dash-quota-title">National Merit Scheme</h3>
+                <span class="dash-quota-allocation">75% Allocation (~3,000 Slots)</span>
+              </div>
+            </div>
+            <p class="dash-quota-body">
+              The premier national government sponsorship awarded purely on open competitive academic merit points across all 10 public universities, regardless of an applicant's district or school.
+            </p>
+            <ul class="dash-quota-bullets">
+              <li>Covers 100% university tuition and examination fees.</li>
+              <li>Includes living, meal, and residential accommodation allowances.</li>
+              <li>Calculated strictly using the official PUJAB weighting algorithm.</li>
+            </ul>
+          </div>
+          <div class="dash-quota-tip">
+            <strong>Merit Strategy:</strong> Competition is intense. Cut-offs for Medicine, Civil Eng, and Law typically range between 49.0 and 53.5 points.
+          </div>
+        </div>
+
+        <div class="dash-quota-card">
+          <div>
+            <div class="dash-quota-top">
+              <div class="dash-quota-icon" style="background:#dcfce7; color:#15803d;">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              </div>
+              <div>
+                <h3 class="dash-quota-title">District Quota Scheme</h3>
+                <span class="dash-quota-allocation">22.2% Allocation (~896 Slots)</span>
+              </div>
+            </div>
+            <p class="dash-quota-body">
+              Equitable affirmative action scheme dividing government sponsorship slots equally among all 135+ Ugandan local government districts to empower regional and rural students.
+            </p>
+            <ul class="dash-quota-bullets">
+              <li>Equal allocation distributed per district for top-performing males & females.</li>
+              <li>Candidate must have completed A-Level education in that home district.</li>
+              <li>Cut-offs are district-specific and often 4 to 8 points lower than National Merit!</li>
+            </ul>
+          </div>
+          <div class="dash-quota-tip">
+            <strong>Key Requirement:</strong> Verified residence and secondary school attendance records must match the applicant's origin district.
+          </div>
+        </div>
+
+        <div class="dash-quota-card">
+          <div>
+            <div class="dash-quota-top">
+              <div class="dash-quota-icon" style="background:#fef3c7; color:#b45309;">
+                <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg>
+              </div>
+              <div>
+                <h3 class="dash-quota-title">Talented Sports Persons</h3>
+                <span class="dash-quota-allocation">1.0% Allocation (40 Slots)</span>
+              </div>
+            </div>
+            <p class="dash-quota-body">
+              Reserved for outstanding national athletes who represent Uganda in national or international athletic, football, rugby, netball, or track tournaments.
+            </p>
+            <ul class="dash-quota-bullets">
+              <li>Applicant must hold at least two (2) principal passes at UACE.</li>
+              <li>Verified certificates from National Sports Federations (FUFA, UAF, etc.).</li>
+              <li>Assessed by the National Council of Sports (NCS) and University Sports Board.</li>
+            </ul>
+          </div>
+          <div class="dash-quota-tip">
+            <strong>Eligibility Tip:</strong> Academic merit remains a factor—candidates are ranked by combined athletic portfolio and UACE weight.
+          </div>
+        </div>
+
+        <div class="dash-quota-card">
+          <div>
+            <div class="dash-quota-top">
+              <div class="dash-quota-icon" style="background:#fee2e2; color:#b91c1c;">
+                <svg viewBox="0 0 24 24"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/></svg>
+              </div>
+              <div>
+                <h3 class="dash-quota-title">PWD Affirmative Action</h3>
+                <span class="dash-quota-allocation">1.6% Allocation (64 Slots)</span>
+              </div>
+            </div>
+            <p class="dash-quota-body">
+              Specialized statutory quota reserved for persons with certified physical, visual, hearing, or neurological disabilities.
+            </p>
+            <ul class="dash-quota-bullets">
+              <li>Candidates undergo medical assessment at Makerere University Hospital.</li>
+              <li>Assesses level of impairment and academic degree adaptability.</li>
+              <li>Includes specialized assistive support, sign interpreters & accessible halls.</li>
+            </ul>
+          </div>
+          <div class="dash-quota-tip">
+            <strong>Medical Audit:</strong> The Medical Board convenes every June to evaluate PWD applicants before final admission lists are released.
+          </div>
+        </div>
+
+        <div class="dash-quota-card">
+          <div>
+            <div class="dash-quota-top">
+              <div class="dash-quota-icon" style="background:#f3e8ff; color:#7e22ce;">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+              </div>
+              <div>
+                <h3 class="dash-quota-title">Female Affirmative Action</h3>
+                <span class="dash-quota-allocation">+1.5 Points Bonus</span>
+              </div>
+            </div>
+            <p class="dash-quota-body">
+              Statutory gender policy initiated to address historic educational gender gaps, awarding a direct +1.5 weight points addition to all qualified female applicants across Uganda.
+            </p>
+            <ul class="dash-quota-bullets">
+              <li>Automatically added to total calculated weights for all qualifying programs.</li>
+              <li>Applies across both National Merit government slots and private merit schemes.</li>
+              <li>Has significantly increased female enrollment in Medicine, Engineering, and Law.</li>
+            </ul>
+          </div>
+          <div class="dash-quota-tip">
+            <strong>Impact Fact:</strong> A +1.5 bonus often bridges the decisive threshold between a competitive course cut-off and missing out.
+          </div>
+        </div>
+
+        <div class="dash-quota-card">
+          <div>
+            <div class="dash-quota-top">
+              <div class="dash-quota-icon" style="background:#e0f2fe; color:#0369a1;">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+              </div>
+              <div>
+                <h3 class="dash-quota-title">HESFB Government Loans</h3>
+                <span class="dash-quota-allocation">3,000+ Annual Student Loans</span>
+              </div>
+            </div>
+            <p class="dash-quota-body">
+              The Higher Education Students Financing Board "Study Now, Pay Later" state loan scheme for brilliant Ugandan students admitted on private sponsorship who lack school fees.
+            </p>
+            <ul class="dash-quota-bullets">
+              <li>Covers 100% tuition, functional fees, and practical research allowances.</li>
+              <li>Prioritizes Science, Technology, Engineering, Math (STEM) & Healthcare.</li>
+              <li>Grace period: Repayment starts 1 full year after completing university studies.</li>
+            </ul>
+          </div>
+          <div class="dash-quota-tip">
+            <strong>Application Note:</strong> You must first receive an official provisional admission letter from a chartered university before applying.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SECTION 4: CAREER STREAMS & DISCIPLINES MATRIX ==================== -->
+    <div class="dash-section-card" id="dashStreams">
+      <div class="dash-header-row">
+        <div class="dash-header-meta">
+          <span class="section-badge">🚀 Academic Clusters</span>
+          <h2>University Academic Streams & <span class="highlight-shimmer word-brush-accent">Career Horizons</span></h2>
+          <p>Explore Uganda's 6 core university career disciplines, cut-off merit brackets, essential A-Level combinations, and professional licensing councils.</p>
+        </div>
+        <div>
+          <span class="dash-status-pill">Industry Accredited Pathways</span>
+        </div>
+      </div>
+
+      <div class="dash-streams-grid">
+        <div class="dash-stream-card">
+          <div>
+            <div class="dash-stream-head">
+              <h3 class="dash-stream-title">🩺 Health, Clinical & Biomedical</h3>
+              <span class="dash-stream-cutoff-pill">Cut-Off: 45.0 – 53.5</span>
+            </div>
+            <p class="dash-stream-desc">
+              Uganda's most competitive academic track preparing clinical doctors, pharmacists, dental surgeons, and specialized nurse practitioners.
+            </p>
+            <div class="dash-stream-row">
+              <strong>Core Combos:</strong>
+              <span>BCM (Bio, Chem, Math) | PCB (Physics, Chem, Bio)</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Key Degrees:</strong>
+              <span>MBChB (MAM), Pharmacy (PHA), Dentistry (BDS), Nursing (NUR)</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Top Campuses:</strong>
+              <span>Makerere CHS, MUST Mbarara, Busitema (Mbale), Gulu, Soroti</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Licensing Body:</strong>
+              <span>Uganda Medical & Dental Practitioners Council (UMDPC)</span>
+            </div>
+            <div class="dash-stream-chips">
+              <span class="dash-stream-chip">Paid National Internship</span>
+              <span class="dash-stream-chip">High Govt Demand</span>
+              <span class="dash-stream-chip">HESFB Priority #1</span>
+            </div>
+          </div>
+          <a href="course-input.html?stream=health" class="dash-stream-btn">Check Health Eligibility →</a>
+        </div>
+
+        <div class="dash-stream-card">
+          <div>
+            <div class="dash-stream-head">
+              <h3 class="dash-stream-title">⚙️ Engineering & Infrastructure</h3>
+              <span class="dash-stream-cutoff-pill">Cut-Off: 42.0 – 52.8</span>
+            </div>
+            <p class="dash-stream-desc">
+              National technological backbone driving roads, electrical grids, telecommunication systems, manufacturing, and biomedical instrumentation.
+            </p>
+            <div class="dash-stream-row">
+              <strong>Core Combos:</strong>
+              <span>PCM (Physics, Chem, Math) | PEM (Physics, Econ, Math)</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Key Degrees:</strong>
+              <span>Civil Eng (CIV), Electrical (ELE), Mechanical (MEC), Telecom (STE)</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Top Campuses:</strong>
+              <span>Makerere CEDAT, Kyambogo Engineering, Busitema, MUST</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Licensing Body:</strong>
+              <span>Engineers Registration Board (ERB) & UIPE</span>
+            </div>
+            <div class="dash-stream-chips">
+              <span class="dash-stream-chip">ERB Accreditation</span>
+              <span class="dash-stream-chip">Infrastructure Boom</span>
+              <span class="dash-stream-chip">Consultancy Practice</span>
+            </div>
+          </div>
+          <a href="course-input.html?stream=engineering" class="dash-stream-btn">Check Engineering Eligibility →</a>
+        </div>
+
+        <div class="dash-stream-card">
+          <div>
+            <div class="dash-stream-head">
+              <h3 class="dash-stream-title">💻 Computing, AI & Software</h3>
+              <span class="dash-stream-cutoff-pill">Cut-Off: 37.5 – 48.0</span>
+            </div>
+            <p class="dash-stream-desc">
+              The fastest expanding discipline in East Africa, spanning software development, cloud infrastructure, AI modeling, and enterprise data analytics.
+            </p>
+            <div class="dash-stream-row">
+              <strong>Core Combos:</strong>
+              <span>PCM, BCM, PEM, MEG, MEA (Mathematics essential)</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Key Degrees:</strong>
+              <span>Software Eng (SEB), Computer Science (CSC), Info Tech (BIT)</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Top Campuses:</strong>
+              <span>Makerere COCIS, Kyambogo Science, Muni Technoscience, MUST</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Career Paths:</strong>
+              <span>Full-Stack Engineer, Data Scientist, DevOps, Cybersecurity</span>
+            </div>
+            <div class="dash-stream-chips">
+              <span class="dash-stream-chip">Global Remote Work</span>
+              <span class="dash-stream-chip">FinTech & Telecom</span>
+              <span class="dash-stream-chip">High Flexibility</span>
+            </div>
+          </div>
+          <a href="course-input.html?stream=computing" class="dash-stream-btn">Check Computing Eligibility →</a>
+        </div>
+
+        <div class="dash-stream-card">
+          <div>
+            <div class="dash-stream-head">
+              <h3 class="dash-stream-title">📊 Business, Commerce & Actuarial</h3>
+              <span class="dash-stream-cutoff-pill">Cut-Off: 34.0 – 47.0</span>
+            </div>
+            <p class="dash-stream-desc">
+              The financial and corporate engines of the economy, offering chartered accounting exemptions, risk modeling, and strategic supply management.
+            </p>
+            <div class="dash-stream-row">
+              <strong>Core Combos:</strong>
+              <span>MEA, HEG, MEG, BCM (Economics & Math dominant)</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Key Degrees:</strong>
+              <span>Actuarial Science (SAS), B.Com (BCO), BBA, Procurement (PLM)</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Top Campuses:</strong>
+              <span>Makerere CoBAMS, Kyambogo SME, Kabale, MMU Fort Portal</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Professional Bodies:</strong>
+              <span>ICPAU (CPA Uganda), ACCA, CIPS, CFA Institute</span>
+            </div>
+            <div class="dash-stream-chips">
+              <span class="dash-stream-chip">CPA Paper Exemptions</span>
+              <span class="dash-stream-chip">Banking & Auditing</span>
+              <span class="dash-stream-chip">Corporate Leadership</span>
+            </div>
+          </div>
+          <a href="course-input.html?stream=business" class="dash-stream-btn">Check Business Eligibility →</a>
+        </div>
+
+        <div class="dash-stream-card">
+          <div>
+            <div class="dash-stream-head">
+              <h3 class="dash-stream-title">🌾 Agriculture, Food & Veterinary</h3>
+              <span class="dash-stream-cutoff-pill">Cut-Off: 28.0 – 42.5</span>
+            </div>
+            <p class="dash-stream-desc">
+              National economic foundation enjoying significant state scholarship allocations, international development grants, and agribusiness value-addition.
+            </p>
+            <div class="dash-stream-row">
+              <strong>Core Combos:</strong>
+              <span>BCM (Biology, Chem, Math) | BAE (Biology, Agri, Econ) | PCA</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Key Degrees:</strong>
+              <span>B.Sc Agriculture (AGR), Agribusiness (AGB), Food Tech, Biosystems</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Top Campuses:</strong>
+              <span>Makerere CAES, Busitema (Arapai), Gulu University, MMU</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Career Paths:</strong>
+              <span>Agri-Enterprise CEO, NARO Research Scientist, FAO Specialist</span>
+            </div>
+            <div class="dash-stream-chips">
+              <span class="dash-stream-chip">High Govt Subsidy</span>
+              <span class="dash-stream-chip">Food Security Tech</span>
+              <span class="dash-stream-chip">Export Agro-Industry</span>
+            </div>
+          </div>
+          <a href="course-input.html?stream=agriculture" class="dash-stream-btn">Check Agriculture Eligibility →</a>
+        </div>
+
+        <div class="dash-stream-card">
+          <div>
+            <div class="dash-stream-head">
+              <h3 class="dash-stream-title">⚖️ Law, Public Policy & Humanities</h3>
+              <span class="dash-stream-cutoff-pill">Cut-Off: 46.0 – 52.5</span>
+            </div>
+            <p class="dash-stream-desc">
+              Legal jurisprudence, investigative journalism, international diplomacy, and secondary teacher education driving governance and public enlightenment.
+            </p>
+            <div class="dash-stream-row">
+              <strong>Core Combos:</strong>
+              <span>HEL, LEG, DEG, HED (History, Economics, Lit, Divinity)</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Key Degrees:</strong>
+              <span>Bachelor of Laws (LLB), Journalism (MCO), Education (EDA/EDS)</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Top Campuses:</strong>
+              <span>Makerere School of Law & CHUSS, Kyambogo Education, Gulu</span>
+            </div>
+            <div class="dash-stream-row">
+              <strong>Prerequisite:</strong>
+              <span>Pre-Entry Examination for Law (Makerere & Kyambogo)</span>
+            </div>
+            <div class="dash-stream-chips">
+              <span class="dash-stream-chip">LDC Bar Course Pathway</span>
+              <span class="dash-stream-chip">Judiciary & Parliaments</span>
+              <span class="dash-stream-chip">Diplomatic Missions</span>
+            </div>
+          </div>
+          <a href="course-input.html?stream=law" class="dash-stream-btn">Check Law & Arts Eligibility →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SECTION 5: ADMISSIONS TACTICAL SURVIVAL RULEBOOK ==================== -->
+    <div class="dash-section-card" id="dashTactics">
+      <div class="dash-header-row">
+        <div class="dash-header-meta">
+          <span class="section-badge">💡 Admissions Survival Guide</span>
+          <h2>A-Level Leaver's <span class="highlight-shimmer word-brush-accent">Tactical Rulebook</span></h2>
+          <p>Crucial statutory guidelines, subject weighting math, and strategic admissions maneuvers every Ugandan secondary school leaver must master.</p>
+        </div>
+        <div>
+          <span class="dash-pulse-badge">Official UNEB & JAB Principles</span>
+        </div>
+      </div>
+
+      <div class="dash-strategies-grid">
+        <div class="dash-strat-card">
+          <span class="dash-strat-badge">Statutory Law</span>
+          <h3 class="dash-strat-title">1. The "2 Principal Passes" Rule</h3>
+          <p class="dash-strat-body">
+            Under the Universities and Other Tertiary Institutions Act, a candidate <strong>must obtain at least two principal passes</strong> (Grades A, B, C, D, or E) in their UACE combination to legally qualify for bachelor's degree admission. Scoring only one principal pass qualifies an applicant for an Ordinary Diploma program only, regardless of high subsidiary marks.
+          </p>
+        </div>
+
+        <div class="dash-strat-card">
+          <span class="dash-strat-badge">Formula Math</span>
+          <h3 class="dash-strat-title">2. Essential (×3) vs Relevant (×2) Multiplier</h3>
+          <p class="dash-strat-body">
+            An `A` in an Essential subject contributes <strong>18.0 points</strong> (6 × 3), whereas that exact same `A` in a Relevant subject yields only <strong>12.0 points</strong> (6 × 2). If your strongest subject is Math, apply for courses where Math is classified as Essential. A simple subject category mismatch can lower your score by 4 to 6 full points!
+          </p>
+        </div>
+
+        <div class="dash-strat-card">
+          <span class="dash-strat-badge">Tie-Breaker Factor</span>
+          <h3 class="dash-strat-title">3. O-Level Aggregates: The Deciding Tie-Breaker</h3>
+          <p class="dash-strat-body">
+            In ultra-competitive programs like MBChB (Cutoff ~50.2) or Civil Engineering (~52.8), dozens of top applicants achieve straight `A`s at A-Level (maximum 50.0 pts with subs). The cut-off winner is determined entirely by O-Level aggregates! Each Distinction yields <strong>0.3 pts</strong> (up to 3.0 pts for 10 Distinctions), while Credits yield only <strong>0.2 pts</strong>.
+          </p>
+        </div>
+
+        <div class="dash-strat-card">
+          <span class="dash-strat-badge">Gender Affirmative</span>
+          <h3 class="dash-strat-title">4. How the Female +1.5 Bonus Operates</h3>
+          <p class="dash-strat-body">
+            All qualifying female applicants have a mandatory <strong>+1.5 points added</strong> to their computed total weights. This bonus is valid across both Government Merit (National and District Quotas) as well as Private Sponsorship at all 10 public universities, significantly improving access to high-demand technical degrees.
+          </p>
+        </div>
+
+        <div class="dash-strat-card">
+          <span class="dash-strat-badge">Regional Strategy</span>
+          <h3 class="dash-strat-title">5. District Quota Rural vs Urban Dynamics</h3>
+          <p class="dash-strat-body">
+            Applicants sitting their UACE examinations from upcountry and rural secondary schools often qualify for government sponsorship on District Quota with cut-offs <strong>4 to 8 points lower</strong> than national merit. Candidates must prove genuine parental residence and uninterrupted school attendance in that specific district.
+          </p>
+        </div>
+
+        <div class="dash-strat-card">
+          <span class="dash-strat-badge">Second-Chance Path</span>
+          <h3 class="dash-strat-title">6. The Strategic Inter-Program Transfer Window</h3>
+          <p class="dash-strat-body">
+            If you narrowly miss the cut-off for your primary dream degree (e.g. Pharmacy) by 0.5 points, accept admission in a related program within the same college (e.g. Biomedical Laboratory Technology). Maintain an outstanding first-year GPA (above 4.0 First Class), and submit a formal application for internal Change of Program during the university registry window.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SECTION 6: INTERACTIVE LIVE WEIGHT SIMULATOR & TIER GAUGE ==================== -->
     <div class="simulator-card" id="simulatorSection">
       <div class="section-header">
-        <span class="section-badge">Interactive Tool</span>
+        <span class="section-badge">Interactive Tool & Tier Gauge</span>
         <h2 class="section-title">Quick <span class="highlight-shimmer word-brush-accent">Weight Simulator</span></h2>
-        <p class="section-subtitle">Test your subject grades below to see how the PUJAB weighting algorithm calculates points in real-time.</p>
+        <p class="section-subtitle">Test your subject grades below to see how the PUJAB weighting algorithm calculates points in real-time, and watch your admissions tier light up.</p>
       </div>
 
       <div class="sim-grid">
@@ -2134,7 +3620,7 @@
           <div class="sim-row">
             <div class="sim-label">
               1st Essential Subject (×3)
-              <span>Physics / Biology / History</span>
+              <span>Physics / Biology / History / Economics</span>
             </div>
             <div class="grade-selector" id="simSub1">
               <button class="grade-pill active" onclick="setSimGrade(1, 'A', 6)">A</button>
@@ -2147,7 +3633,7 @@
           <div class="sim-row">
             <div class="sim-label">
               2nd Essential Subject (×3)
-              <span>Math / Chemistry / Economics</span>
+              <span>Math / Chemistry / Geography / Literature</span>
             </div>
             <div class="grade-selector" id="simSub2">
               <button class="grade-pill" onclick="setSimGrade(2, 'A', 6)">A</button>
@@ -2160,7 +3646,7 @@
           <div class="sim-row">
             <div class="sim-label">
               Relevant Subject (×2)
-              <span>3rd Principal Subject</span>
+              <span>3rd Principal Subject in Combination</span>
             </div>
             <div class="grade-selector" id="simSub3">
               <button class="grade-pill active" onclick="setSimGrade(3, 'A', 6)">A</button>
@@ -2182,17 +3668,61 @@
         <div class="sim-result-box">
           <div style="font-size:0.85rem; text-transform:uppercase; letter-spacing:0.08em; opacity:0.85;">Simulated Admission Weight</div>
           <div class="sim-total-weight" id="simDisplayWeight">49.4</div>
-          <div style="font-size:0.95rem; opacity:0.9;">Qualifies for Competitive Government & Private Merit Programs!</div>
+          <div id="simTierFeedback" style="font-size:0.95rem; opacity:0.95; font-weight:600;">Qualifies for Competitive Government & Private Merit Programs!</div>
           <div class="sim-breakdown-chips">
             <span class="sim-chip" id="chipEss1">Ess 1: 18.0</span>
             <span class="sim-chip" id="chipEss2">Ess 2: 15.0</span>
             <span class="sim-chip" id="chipRel">Rel: 12.0</span>
             <span class="sim-chip">Subs & O-L: +4.4</span>
           </div>
+
+          <!-- Dynamic Tier Gauge -->
+          <div class="dash-tier-gauge-wrap">
+            <div class="dash-tier-title">Admissions Opportunity Bracket</div>
+            <div class="dash-tier-bands">
+              <div class="dash-tier-band" id="bandTier4">
+                <span>Tier 4</span><br>20–31.9
+              </div>
+              <div class="dash-tier-band" id="bandTier3">
+                <span>Tier 3</span><br>32–39.9
+              </div>
+              <div class="dash-tier-band" id="bandTier2">
+                <span>Tier 2</span><br>40–47.9
+              </div>
+              <div class="dash-tier-band active" id="bandTier1">
+                <span>Tier 1</span><br>48–54.0
+              </div>
+            </div>
+            <div class="dash-tier-status" id="bandTierStatus">
+              🌟 Tier 1: Elite Government Merit Zone (Medicine, Law, Electrical Eng)
+            </div>
+          </div>
+
           <div style="margin-top:1.5rem;">
             <a href="course-input.html" class="btn-primary" style="padding:0.75rem 1.4rem; font-size:0.95rem;">Run Full Calculation →</a>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- ==================== WHATSAPP FRESHERS COMMUNITY HUB ==================== -->
+    <div class="whatsapp-card" id="dashCommunity">
+      <div class="whatsapp-info">
+        <div class="whatsapp-icon">
+          <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c4.54 0 8.24 3.7 8.24 8.24 0 2.2-.86 4.28-2.42 5.84-1.56 1.56-3.64 2.42-5.84 2.42-1.46 0-2.89-.39-4.14-1.13l-.3-.18-3.08.81.82-3-.2-.31c-.81-1.3-1.24-2.82-1.24-4.45 0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.57.13.17 1.75 2.68 4.25 3.75.59.26 1.05.41 1.41.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+        </div>
+        <div class="whatsapp-text">
+          <h3>Need Personal University Admission Help?</h3>
+          <p>Join over 500+ Ugandan secondary school leavers in the official NUVA Freshers community chatrooms.</p>
+        </div>
+      </div>
+      <div class="whatsapp-links">
+        <a href="https://chat.whatsapp.com/GLLeaXw02EXBAHYO1bO6w2" target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+          All Freshers ChatRoom →
+        </a>
+        <a href="https://chat.whatsapp.com/Ew3VPtWmxgV2ZZSxlsFt7u" target="_blank" rel="noopener noreferrer" class="btn-whatsapp-sub">
+          Kyambogo Group
+        </a>
       </div>
     </div>
 
@@ -3426,8 +4956,13 @@
     simGrades[subIndex] = points;
     const parent = document.getElementById('simSub' + subIndex);
     if (parent) {
-      parent.querySelectorAll('.grade-pill').forEach(pill => pill.classList.remove('active'));
-      event.target.classList.add('active');
+      parent.querySelectorAll('.grade-pill').forEach(pill => {
+        if (pill.textContent.trim() === gradeLetter) {
+          pill.classList.add('active');
+        } else {
+          pill.classList.remove('active');
+        }
+      });
     }
     updateSimulator();
   }
@@ -3451,6 +4986,43 @@
     window.requestAnimationFrame(step);
   }
 
+  // Dashboard Sub-navigation active tab switcher
+  function activateDashNav(el) {
+    document.querySelectorAll('.dash-nav-chip').forEach(c => c.classList.remove('active'));
+    if (el) el.classList.add('active');
+  }
+
+  // Dynamic Tier Gauge Updater for Weight Simulator
+  function updateTierGauge(weight) {
+    const w = parseFloat(weight);
+    const t1 = document.getElementById('bandTier1');
+    const t2 = document.getElementById('bandTier2');
+    const t3 = document.getElementById('bandTier3');
+    const t4 = document.getElementById('bandTier4');
+    const statusEl = document.getElementById('bandTierStatus');
+    const feedbackEl = document.getElementById('simTierFeedback');
+
+    [t1, t2, t3, t4].forEach(b => { if (b) b.classList.remove('active'); });
+
+    if (w >= 48.0) {
+      if (t1) t1.classList.add('active');
+      if (statusEl) statusEl.textContent = '🌟 Tier 1: Elite Government Merit Zone (Medicine, Law, Electrical Eng)';
+      if (feedbackEl) feedbackEl.textContent = 'Exceptional Score! Qualifies for National Merit Govt Sponsorship & Top Competitive Programs.';
+    } else if (w >= 40.0) {
+      if (t2) t2.classList.add('active');
+      if (statusEl) statusEl.textContent = '🚀 Tier 2: High-Demand STEM & Professional Zone (Civil Eng, CS, Nursing, B.Com)';
+      if (feedbackEl) feedbackEl.textContent = 'Strong Competitive Score! High probability for District Quota, HESFB Loans & Private Merit.';
+    } else if (w >= 32.0) {
+      if (t3) t3.classList.add('active');
+      if (statusEl) statusEl.textContent = '📚 Tier 3: Core Science, Agribusiness & Education Zone (IT, Agriculture, Economics)';
+      if (feedbackEl) feedbackEl.textContent = 'Solid Merit Score! Qualifies for essential science education, agriculture & commerce pathways.';
+    } else {
+      if (t4) t4.classList.add('active');
+      if (statusEl) statusEl.textContent = '🎯 Tier 4: Accessible Degree & Diploma Zone (Humanities, Development, Diplomas)';
+      if (feedbackEl) feedbackEl.textContent = 'Degree & Diploma Entry! Eligible for arts, humanities, private entry & diploma advancement.';
+    }
+  }
+
   function updateSimulator() {
     const ess1 = simGrades[1] * 3;
     const ess2 = simGrades[2] * 3;
@@ -3465,14 +5037,561 @@
       void displayEl.offsetWidth; // re-trigger animation
       displayEl.classList.add('pop-anim');
     }
-    document.getElementById('chipEss1').textContent = `Ess 1: ${ess1.toFixed(1)}`;
-    document.getElementById('chipEss2').textContent = `Ess 2: ${ess2.toFixed(1)}`;
-    document.getElementById('chipRel').textContent = `Rel: ${rel.toFixed(1)}`;
+    const c1 = document.getElementById('chipEss1');
+    const c2 = document.getElementById('chipEss2');
+    const c3 = document.getElementById('chipRel');
+    if (c1) c1.textContent = `Ess 1: ${ess1.toFixed(1)}`;
+    if (c2) c2.textContent = `Ess 2: ${ess2.toFixed(1)}`;
+    if (c3) c3.textContent = `Rel: ${rel.toFixed(1)}`;
+
+    updateTierGauge(total);
   }
 
   function scrollToSimulator() {
     const el = document.getElementById('simulatorSection');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ==================== INSTANT COURSE & CUT-OFF EXPLORER DATA & LOGIC ====================
+  const dashQuickCourseData = [
+    // Health & Medicine
+    {
+      code: "MAM",
+      name: "Bachelor of Medicine & Bachelor of Surgery (MBChB)",
+      uni: "Makerere University",
+      faculty: "College of Health Sciences",
+      duration: "5 Years",
+      stream: "health",
+      essential: "Biology, Chemistry",
+      cutoffGovt: "50.2",
+      cutoffPriv: "43.5",
+      notes: "Direct hospital clinical internship bonding upon graduation"
+    },
+    {
+      code: "PHA",
+      name: "Bachelor of Pharmacy",
+      uni: "Makerere University",
+      faculty: "College of Health Sciences",
+      duration: "5 Years",
+      stream: "health",
+      essential: "Biology, Chemistry",
+      cutoffGovt: "48.5",
+      cutoffPriv: "42.0",
+      notes: "Pharmaceutical formulation, hospital & clinical pharmacy"
+    },
+    {
+      code: "BDS",
+      name: "Bachelor of Dental Surgery",
+      uni: "Makerere University",
+      faculty: "College of Health Sciences",
+      duration: "5 Years",
+      stream: "health",
+      essential: "Biology, Chemistry",
+      cutoffGovt: "49.8",
+      cutoffPriv: "41.5",
+      notes: "Oral and maxillofacial clinical surgery & dental pathology"
+    },
+    {
+      code: "NUR",
+      name: "Bachelor of Science in Nursing",
+      uni: "Makerere University",
+      faculty: "College of Health Sciences",
+      duration: "4 Years",
+      stream: "health",
+      essential: "Biology, Chemistry",
+      cutoffGovt: "46.5",
+      cutoffPriv: "39.0",
+      notes: "Advanced intensive care and clinical nursing practice"
+    },
+    {
+      code: "MBChB",
+      name: "Bachelor of Medicine & Bachelor of Surgery",
+      uni: "Mbarara University of Science and Technology",
+      faculty: "Faculty of Medicine",
+      duration: "5 Years",
+      stream: "health",
+      essential: "Biology, Chemistry",
+      cutoffGovt: "51.2",
+      cutoffPriv: "43.0",
+      notes: "Flagship medical teaching hospital in Western Uganda"
+    },
+    {
+      code: "BME",
+      name: "Bachelor of Science in Biomedical Engineering",
+      uni: "Mbarara University of Science and Technology",
+      faculty: "Faculty of Applied Sciences & Tech",
+      duration: "4 Years",
+      stream: "health",
+      essential: "Mathematics, Physics, Biology",
+      cutoffGovt: "46.8",
+      cutoffPriv: "38.5",
+      notes: "Medical imaging, biomedical instrumentation & hospital tech"
+    },
+    {
+      code: "MED",
+      name: "Bachelor of Medicine & Bachelor of Surgery",
+      uni: "Busitema University",
+      faculty: "Faculty of Health Sciences (Mbale)",
+      duration: "5 Years",
+      stream: "health",
+      essential: "Biology, Chemistry",
+      cutoffGovt: "49.8",
+      cutoffPriv: "41.2",
+      notes: "Mbale Regional Referral Teaching Hospital campus"
+    },
+    {
+      code: "GMS",
+      name: "Bachelor of Medicine & Bachelor of Surgery",
+      uni: "Gulu University",
+      faculty: "Faculty of Medicine",
+      duration: "5 Years",
+      stream: "health",
+      essential: "Biology, Chemistry",
+      cutoffGovt: "49.4",
+      cutoffPriv: "41.0",
+      notes: "Community medicine & surgery in Northern Uganda"
+    },
+    {
+      code: "BSM",
+      name: "Bachelor of Science in Midwifery",
+      uni: "Lira University",
+      faculty: "Faculty of Health Sciences",
+      duration: "4 Years",
+      stream: "health",
+      essential: "Biology, Chemistry",
+      cutoffGovt: "43.2",
+      cutoffPriv: "34.5",
+      notes: "Lira University Teaching Hospital maternal care center"
+    },
+    {
+      code: "SMS",
+      name: "Bachelor of Medicine & Bachelor of Surgery",
+      uni: "Soroti University",
+      faculty: "School of Health Sciences",
+      duration: "5 Years",
+      stream: "health",
+      essential: "Biology, Chemistry",
+      cutoffGovt: "48.7",
+      cutoffPriv: "40.2",
+      notes: "Modern state-of-the-art anatomy & clinical laboratories"
+    },
+    {
+      code: "KMB",
+      name: "Bachelor of Medicine & Bachelor of Surgery",
+      uni: "Kabale University",
+      faculty: "School of Medicine",
+      duration: "5 Years",
+      stream: "health",
+      essential: "Biology, Chemistry",
+      cutoffGovt: "48.2",
+      cutoffPriv: "39.5",
+      notes: "Kabale Regional Referral Teaching Hospital"
+    },
+    {
+      code: "NSM",
+      name: "Bachelor of Science in Nursing",
+      uni: "Muni University",
+      faculty: "Faculty of Health Sciences",
+      duration: "4 Years",
+      stream: "health",
+      essential: "Biology, Chemistry",
+      cutoffGovt: "44.5",
+      cutoffPriv: "36.0",
+      notes: "Clinical nursing practice for West Nile & regional clinics"
+    },
+    {
+      code: "MPH",
+      name: "Bachelor of Science in Public Health",
+      uni: "Mountains of the Moon University",
+      faculty: "Faculty of Health Sciences",
+      duration: "3 Years",
+      stream: "health",
+      essential: "Biology, Chemistry",
+      cutoffGovt: "41.5",
+      cutoffPriv: "32.5",
+      notes: "Epidemiology, disease surveillance & health policy"
+    },
+
+    // Engineering & Technology
+    {
+      code: "CIV",
+      name: "Bachelor of Science in Civil Engineering",
+      uni: "Makerere University",
+      faculty: "College of Engineering (CEDAT)",
+      duration: "4 Years",
+      stream: "engineering",
+      essential: "Mathematics, Physics",
+      cutoffGovt: "52.8",
+      cutoffPriv: "44.8",
+      notes: "Structural, transport, hydraulic & environmental engineering"
+    },
+    {
+      code: "ELE",
+      name: "Bachelor of Science in Electrical Engineering",
+      uni: "Makerere University",
+      faculty: "College of Engineering (CEDAT)",
+      duration: "4 Years",
+      stream: "engineering",
+      essential: "Mathematics, Physics",
+      cutoffGovt: "52.2",
+      cutoffPriv: "44.1",
+      notes: "Power systems, renewable energy, electronics & automation"
+    },
+    {
+      code: "MEC",
+      name: "Bachelor of Science in Mechanical Engineering",
+      uni: "Makerere University",
+      faculty: "College of Engineering (CEDAT)",
+      duration: "4 Years",
+      stream: "engineering",
+      essential: "Mathematics, Physics",
+      cutoffGovt: "49.5",
+      cutoffPriv: "42.0",
+      notes: "Thermodynamics, manufacturing, machine design & robotics"
+    },
+    {
+      code: "TCB",
+      name: "Bachelor of Engineering in Civil & Building Engineering",
+      uni: "Kyambogo University",
+      faculty: "Faculty of Engineering",
+      duration: "4 Years",
+      stream: "engineering",
+      essential: "Mathematics, Physics",
+      cutoffGovt: "44.6",
+      cutoffPriv: "38.5",
+      notes: "Hands-on structural design, building construction & materials"
+    },
+    {
+      code: "BEL",
+      name: "Bachelor of Engineering in Electrical Engineering",
+      uni: "Kyambogo University",
+      faculty: "Faculty of Engineering",
+      duration: "4 Years",
+      stream: "engineering",
+      essential: "Mathematics, Physics",
+      cutoffGovt: "42.8",
+      cutoffPriv: "36.4",
+      notes: "Industrial power distribution, control & electronics"
+    },
+    {
+      code: "AMI",
+      name: "B.Sc Agricultural Mechanization & Irrigation Engineering",
+      uni: "Busitema University",
+      faculty: "Faculty of Engineering",
+      duration: "4 Years",
+      stream: "engineering",
+      essential: "Mathematics, Physics",
+      cutoffGovt: "41.0",
+      cutoffPriv: "32.0",
+      notes: "Irrigation systems, farm machinery & agro-processing"
+    },
+    {
+      code: "MEB",
+      name: "Bachelor of Science in Mining Engineering",
+      uni: "Busitema University",
+      faculty: "Faculty of Engineering",
+      duration: "4 Years",
+      stream: "engineering",
+      essential: "Mathematics, Physics",
+      cutoffGovt: "42.3",
+      cutoffPriv: "33.8",
+      notes: "Mineral exploration, extraction geology & metallurgy"
+    },
+    {
+      code: "ECE",
+      name: "Bachelor of Engineering in Electronic & Computer Engineering",
+      uni: "Soroti University",
+      faculty: "School of Engineering",
+      duration: "4 Years",
+      stream: "engineering",
+      essential: "Mathematics, Physics",
+      cutoffGovt: "41.2",
+      cutoffPriv: "33.0",
+      notes: "Embedded hardware, telecommunications & signal processing"
+    },
+    {
+      code: "KCE",
+      name: "Bachelor of Civil Engineering",
+      uni: "Kabale University",
+      faculty: "Faculty of Engineering",
+      duration: "4 Years",
+      stream: "engineering",
+      essential: "Mathematics, Physics",
+      cutoffGovt: "40.2",
+      cutoffPriv: "32.0",
+      notes: "Infrastructure development in hilly & mountainous terrain"
+    },
+
+    // Computing & AI
+    {
+      code: "SEB",
+      name: "Bachelor of Science in Software Engineering",
+      uni: "Makerere University",
+      faculty: "College of Computing (COCIS)",
+      duration: "4 Years",
+      stream: "computing",
+      essential: "Mathematics, and Physics or Economics",
+      cutoffGovt: "46.2",
+      cutoffPriv: "39.4",
+      notes: "Software architecture, cloud systems, mobile & AI solutions"
+    },
+    {
+      code: "CSC",
+      name: "Bachelor of Science in Computer Science",
+      uni: "Makerere University",
+      faculty: "College of Computing (COCIS)",
+      duration: "3 Years",
+      stream: "computing",
+      essential: "Mathematics, and any other principal",
+      cutoffGovt: "44.8",
+      cutoffPriv: "38.0",
+      notes: "Algorithms, machine learning, systems programming & cybersecurity"
+    },
+    {
+      code: "CSJ",
+      name: "Bachelor of Science in Computer Science",
+      uni: "Kyambogo University",
+      faculty: "Faculty of Science",
+      duration: "3 Years",
+      stream: "computing",
+      essential: "Mathematics, Physics",
+      cutoffGovt: "40.5",
+      cutoffPriv: "33.2",
+      notes: "Applied computing, database management & software development"
+    },
+    {
+      code: "SWE",
+      name: "Bachelor of Science in Software Engineering",
+      uni: "Mbarara University of Science and Technology",
+      faculty: "Faculty of Computing & Informatics",
+      duration: "4 Years",
+      stream: "computing",
+      essential: "Mathematics, and Physics or Economics",
+      cutoffGovt: "41.4",
+      cutoffPriv: "33.5",
+      notes: "Enterprise software, mobile computing & full-stack development"
+    },
+    {
+      code: "ITM",
+      name: "Bachelor of Science in Information Technology",
+      uni: "Muni University",
+      faculty: "Faculty of Technoscience",
+      duration: "3 Years",
+      stream: "computing",
+      essential: "Mathematics, and any other principal",
+      cutoffGovt: "35.2",
+      cutoffPriv: "27.0",
+      notes: "Network engineering, cloud systems & cybersecurity"
+    },
+    {
+      code: "LCS",
+      name: "Bachelor of Science in Computer Science",
+      uni: "Lira University",
+      faculty: "Faculty of Computing & Info Sciences",
+      duration: "3 Years",
+      stream: "computing",
+      essential: "Mathematics, Physics",
+      cutoffGovt: "35.0",
+      cutoffPriv: "26.5",
+      notes: "Applied health informatics & software systems"
+    },
+
+    // Business & Finance
+    {
+      code: "BCO",
+      name: "Bachelor of Commerce (B.Com)",
+      uni: "Makerere University",
+      faculty: "College of Business (CoBAMS)",
+      duration: "3 Years",
+      stream: "business",
+      essential: "Economics, Mathematics",
+      cutoffGovt: "43.6",
+      cutoffPriv: "35.8",
+      notes: "Accounting, Finance, Banking, Marketing & CPA exemptions"
+    },
+    {
+      code: "SAS",
+      name: "Bachelor of Science in Actuarial Science",
+      uni: "Makerere University",
+      faculty: "College of Natural Sciences (CoNAS)",
+      duration: "3 Years",
+      stream: "business",
+      essential: "Mathematics, and Economics or Physics",
+      cutoffGovt: "47.0",
+      cutoffPriv: "37.5",
+      notes: "Financial mathematics, insurance risk modeling & pension science"
+    },
+    {
+      code: "PLM",
+      name: "Bachelor of Procurement & Logistics Management",
+      uni: "Kyambogo University",
+      faculty: "School of Management (SME)",
+      duration: "3 Years",
+      stream: "business",
+      essential: "Economics, and one other principal",
+      cutoffGovt: "38.2",
+      cutoffPriv: "31.0",
+      notes: "Strategic supply chain, public procurement & logistics"
+    },
+    {
+      code: "BBA",
+      name: "Bachelor of Business Administration",
+      uni: "Makerere University",
+      faculty: "College of Business (CoBAMS)",
+      duration: "3 Years",
+      stream: "business",
+      essential: "Economics, and one other principal",
+      cutoffGovt: "41.2",
+      cutoffPriv: "33.6",
+      notes: "Corporate governance, international business & HR management"
+    },
+
+    // Agriculture
+    {
+      code: "AGR",
+      name: "Bachelor of Science in Agriculture",
+      uni: "Makerere University",
+      faculty: "College of Agricultural Sciences (CAES)",
+      duration: "4 Years",
+      stream: "agriculture",
+      essential: "Biology, Chemistry",
+      cutoffGovt: "41.5",
+      cutoffPriv: "32.4",
+      notes: "Crop production, soil science, agricultural extension & breeding"
+    },
+    {
+      code: "GBE",
+      name: "Bachelor of Science in Biosystems Engineering",
+      uni: "Gulu University",
+      faculty: "Faculty of Agriculture & Environment",
+      duration: "4 Years",
+      stream: "agriculture",
+      essential: "Mathematics, Physics, Chemistry",
+      cutoffGovt: "40.2",
+      cutoffPriv: "31.5",
+      notes: "Agro-processing technology, bio-energy & post-harvest systems"
+    },
+    {
+      code: "BSA",
+      name: "Bachelor of Science in Sustainable Agriculture",
+      uni: "Mountains of the Moon University",
+      faculty: "Faculty of Agriculture",
+      duration: "3 Years",
+      stream: "agriculture",
+      essential: "Biology, and Agriculture or Chemistry",
+      cutoffGovt: "36.2",
+      cutoffPriv: "27.0",
+      notes: "Agro-ecology, organic farming & environmental sustainability"
+    },
+
+    // Law & Humanities
+    {
+      code: "LLB",
+      name: "Bachelor of Laws (LL.B)",
+      uni: "Makerere University",
+      faculty: "School of Law",
+      duration: "4 Years",
+      stream: "law",
+      essential: "Any two principal subjects + Pre-Entry Exam",
+      cutoffGovt: "51.5",
+      cutoffPriv: "45.2",
+      notes: "Constitutional law, commercial jurisprudence & LDC Bar entry"
+    },
+    {
+      code: "MCO",
+      name: "Bachelor of Journalism and Communication",
+      uni: "Makerere University",
+      faculty: "College of Humanities (CHUSS)",
+      duration: "4 Years",
+      stream: "law",
+      essential: "Any two principal subjects",
+      cutoffGovt: "46.4",
+      cutoffPriv: "38.2",
+      notes: "Broadcast media, investigative journalism & public relations"
+    },
+    {
+      code: "ESB",
+      name: "Bachelor of Science with Education (Science)",
+      uni: "Kyambogo University",
+      faculty: "Faculty of Education",
+      duration: "3 Years",
+      stream: "law",
+      essential: "Any two science subjects (Math, Phys, Chem, Bio)",
+      cutoffGovt: "38.0",
+      cutoffPriv: "28.5",
+      notes: "Secondary school science pedagogy & teacher certification"
+    }
+  ];
+
+  let activeQuickStream = 'all';
+
+  function filterQuickStream(streamKey, btn) {
+    activeQuickStream = streamKey;
+    document.querySelectorAll('.dash-stream-filter-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    runQuickCourseFilter();
+  }
+
+  function runQuickCourseFilter() {
+    const searchVal = (document.getElementById('dashQuickSearchInput')?.value || '').toLowerCase().trim();
+    const uniVal = document.getElementById('dashQuickUniSelect')?.value || 'all';
+    const container = document.getElementById('dashQuickResults');
+    const countEl = document.getElementById('dashQuickResultsCount');
+    if (!container) return;
+
+    const filtered = dashQuickCourseData.filter(course => {
+      const matchStream = (activeQuickStream === 'all' || course.stream === activeQuickStream);
+      const matchUni = (uniVal === 'all' || course.uni.toLowerCase().includes(uniVal.toLowerCase()));
+      const matchSearch = !searchVal ||
+        course.name.toLowerCase().includes(searchVal) ||
+        course.code.toLowerCase().includes(searchVal) ||
+        course.uni.toLowerCase().includes(searchVal) ||
+        course.faculty.toLowerCase().includes(searchVal) ||
+        course.essential.toLowerCase().includes(searchVal);
+      return matchStream && matchUni && matchSearch;
+    });
+
+    if (filtered.length === 0) {
+      container.innerHTML = `
+        <div style="grid-column:1/-1; padding:2.5rem 1rem; text-align:center; color:var(--text-muted); background:#f8fafc; border-radius:12px; border:1px dashed #cbd5e1;">
+          <div style="font-size:2rem; margin-bottom:0.5rem;">🔍</div>
+          <div style="font-weight:700; color:var(--navy); font-size:1rem; margin-bottom:0.3rem;">No Degree Matches Found</div>
+          <div style="font-size:0.86rem;">Try clearing your search query or selecting "All 10 Public Universities".</div>
+        </div>
+      `;
+      if (countEl) countEl.textContent = 'Showing 0 matching courses';
+      return;
+    }
+
+    container.innerHTML = filtered.map(c => `
+      <div class="dash-course-item">
+        <div>
+          <div class="dash-course-top">
+            <span class="dash-course-code">${c.code}</span>
+            <span class="dash-course-uni">${c.uni}</span>
+          </div>
+          <h4 class="dash-course-name">${c.name}</h4>
+          <div class="dash-course-faculty">🏛️ ${c.faculty} · ⏳ ${c.duration}</div>
+          <div class="dash-course-specs">
+            <div><strong>Essential:</strong> ${c.essential}</div>
+            <div style="color:var(--text-muted); font-size:0.76rem; margin-top:2px;">${c.notes}</div>
+          </div>
+        </div>
+        <div>
+          <div class="dash-course-cutoffs">
+            <span class="cutoff-govt">Govt: ~${c.cutoffGovt} pts</span>
+            <span class="cutoff-priv">Private: ~${c.cutoffPriv} pts</span>
+          </div>
+          <a href="course-input.html?uni=${encodeURIComponent(c.uni)}&course=${encodeURIComponent(c.code)}" class="dash-course-act-btn">
+            Calculate My Weight For ${c.code} →
+          </a>
+        </div>
+      </div>
+    `).join('');
+
+    if (countEl) {
+      countEl.textContent = `Showing ${filtered.length} of ${dashQuickCourseData.length} curated public university benchmarks`;
+    }
   }
 
   // Dynamic live stats loader
@@ -3484,7 +5603,9 @@
         const progEl = document.getElementById('statProgramsCount');
         const uniEl = document.getElementById('statUniversitiesCount');
         const stuEl = document.getElementById('statStudentsGuided');
+        const dashProgEl = document.getElementById('dashTotalProgramsText');
         if (progEl) animateValue(progEl, 0, data.totalCourses || 449, 1400, '+');
+        if (dashProgEl) dashProgEl.textContent = (data.totalCourses || 449) + '+ Degrees';
         if (uniEl) animateValue(uniEl, 0, data.totalUniversities || 10, 1000, '');
         if (stuEl) animateValue(stuEl, 0, 100, 1200, 'k+');
       }
@@ -3548,6 +5669,8 @@
     loadSitemap();
     init3DTilt();
     filterUniversities();
+    runQuickCourseFilter();
+    updateSimulator();
   });
 </script>
 
